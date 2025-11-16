@@ -1,40 +1,50 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type ScheduleTodayByRouteInput,
-  type ScheduleTodayByTerminalsInput,
   scheduleTodayByRouteSchema,
   scheduleTodayByTerminalsInputSchema,
 } from "./scheduleToday.input";
-import { type Schedule, scheduleSchema } from "./scheduleToday.output";
+import { scheduleSchema } from "./scheduleToday.output";
 
-export const scheduleTodayResource = {
+export const scheduleTodayGroup: EndpointGroup = {
   name: "schedule-today",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Today's schedule provides current day sailing information for ferry routes, with options to show only remaining times for real-time schedule information.",
-    businessContext: "",
+    summary: "Today's sailing schedule for ferry routes.",
+    description:
+      "Current day sailing information with option to show only remaining departures. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Show today's remaining sailings in real-time apps.",
+      "Display current day schedule with all departures.",
+      "Filter to only upcoming sailings for today.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchScheduleTodayByRoute: {
-      endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
-      inputSchema: scheduleTodayByRouteSchema,
-      outputSchema: scheduleSchema,
-      sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
-      endpointDescription: "Returns today's schedule for the specified route.",
-    } satisfies EndpointDefinition<ScheduleTodayByRouteInput, Schedule>,
-    fetchScheduleTodayByTerminals: {
-      endpoint:
-        "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
-      inputSchema: scheduleTodayByTerminalsInputSchema,
-      outputSchema: scheduleSchema,
-      sampleParams: {
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-        OnlyRemainingTimes: false,
-      },
-      endpointDescription:
-        "Returns today's schedule for the specified terminal pair.",
-    } satisfies EndpointDefinition<ScheduleTodayByTerminalsInput, Schedule>,
+};
+
+export const fetchScheduleTodayByRoute = createEndpoint({
+  api: apis.wsfSchedule,
+  group: scheduleTodayGroup,
+  functionName: "fetchScheduleTodayByRoute",
+  endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
+  inputSchema: scheduleTodayByRouteSchema,
+  outputSchema: scheduleSchema,
+  sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
+  endpointDescription: "Get today's schedule for a specific route.",
+});
+
+export const fetchScheduleTodayByTerminals = createEndpoint({
+  api: apis.wsfSchedule,
+  group: scheduleTodayGroup,
+  functionName: "fetchScheduleTodayByTerminals",
+  endpoint:
+    "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
+  inputSchema: scheduleTodayByTerminalsInputSchema,
+  outputSchema: scheduleSchema,
+  sampleParams: {
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
+    OnlyRemainingTimes: false,
   },
-} satisfies EndpointGroup;
+  endpointDescription: "Get today's schedule for a terminal pair.",
+});

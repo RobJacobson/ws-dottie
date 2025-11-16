@@ -1,37 +1,36 @@
-import type { ApiDefinition } from "@/apis/types";
-
-import { activeSeasonsResource } from "./activeSeasons/activeSeasons.endpoints";
-import { cacheFlushDateSchedule } from "./cacheFlushDate/cacheFlushDate.endpoints";
-import { routeDetailsResource } from "./routeDetails/routeDetails.endpoints";
-import { routesResource } from "./routes/routes.endpoints";
-import { sailingsResource } from "./sailings/sailings.endpoints";
-import { scheduleAlertsResource } from "./scheduleAlerts/scheduleAlerts.endpoints";
-import { scheduledRoutesResource } from "./scheduledRoutes/scheduledRoutes.endpoints";
-import { schedulesResource } from "./schedules/schedules.endpoints";
-import { scheduleTodayResource } from "./scheduleToday/scheduleToday.endpoints";
-import { serviceDisruptionsResource } from "./serviceDisruptions/serviceDisruptions.endpoints";
-import { scheduleTerminalMatesResource } from "./terminalMates/terminalMates.endpoints";
-import { scheduleTerminalsResource } from "./terminals/terminals.endpoints";
-import { timeAdjustmentsResource } from "./timeAdjustments/timeAdjustments.endpoints";
-import { scheduleValidDateRangeResource } from "./validDateRange/validDateRange.endpoints";
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
+import { activeSeasonsGroup } from "./activeSeasons/activeSeasons.endpoints";
+import { cacheFlushDateScheduleGroup } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { routeDetailsGroup } from "./routeDetails/routeDetails.endpoints";
+import { routesGroup } from "./routes/routes.endpoints";
+import { sailingsGroup } from "./sailings/sailings.endpoints";
+import { scheduleAlertsGroup } from "./scheduleAlerts/scheduleAlerts.endpoints";
+import { scheduledRoutesGroup } from "./scheduledRoutes/scheduledRoutes.endpoints";
+import { schedulesGroup } from "./schedules/schedules.endpoints";
+import { scheduleTodayGroup } from "./scheduleToday/scheduleToday.endpoints";
+import { serviceDisruptionsGroup } from "./serviceDisruptions/serviceDisruptions.endpoints";
+import { scheduleTerminalMatesGroup } from "./terminalMates/terminalMates.endpoints";
+import { scheduleTerminalsGroup } from "./terminals/terminals.endpoints";
+import { timeAdjustmentsGroup } from "./timeAdjustments/timeAdjustments.endpoints";
+import { scheduleValidDateRangeGroup } from "./validDateRange/validDateRange.endpoints";
 
 export const wsfScheduleApi = {
-  name: "wsf-schedule",
-  baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
+  api: apis.wsfSchedule,
   endpointGroups: [
-    activeSeasonsResource,
-    sailingsResource,
-    cacheFlushDateSchedule,
-    routeDetailsResource,
-    routesResource,
-    serviceDisruptionsResource,
-    scheduleAlertsResource,
-    schedulesResource,
-    scheduledRoutesResource,
-    scheduleTodayResource,
-    scheduleValidDateRangeResource,
-    scheduleTerminalMatesResource,
-    scheduleTerminalsResource,
-    timeAdjustmentsResource,
+    activeSeasonsGroup,
+    sailingsGroup,
+    cacheFlushDateScheduleGroup,
+    routeDetailsGroup,
+    routesGroup,
+    serviceDisruptionsGroup,
+    scheduleAlertsGroup,
+    schedulesGroup,
+    scheduledRoutesGroup,
+    scheduleTodayGroup,
+    scheduleValidDateRangeGroup,
+    scheduleTerminalMatesGroup,
+    scheduleTerminalsGroup,
+    timeAdjustmentsGroup,
   ],
 } satisfies ApiDefinition;

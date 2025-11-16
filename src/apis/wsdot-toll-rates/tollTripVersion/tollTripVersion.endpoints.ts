@@ -1,29 +1,32 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import {
-  type TollTripVersionInput,
-  tollTripVersionInputSchema,
-} from "./tollTripVersion.input";
-import {
-  type TollTripVersion,
-  tollTripVersionSchema,
-} from "./tollTripVersion.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { tollTripVersionInputSchema } from "./tollTripVersion.input";
+import { tollTripVersionSchema } from "./tollTripVersion.output";
 
-export const tollTripVersionResource = {
+export const tollTripVersionGroup: EndpointGroup = {
   name: "toll-trip-version",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "TollTripVersion provides version and timestamp information for toll trip data, enabling cache management and data freshness tracking.",
-    businessContext: "",
+    summary: "Version and timestamp information for toll trip data.",
+    description:
+      "Current version number and timestamp for toll trip rates data, enabling cache management and data freshness tracking.",
+    useCases: [
+      "Check data freshness before fetching toll rates.",
+      "Determine when to invalidate cached toll rate data.",
+      "Track version changes for toll trip rates.",
+    ],
+    updateFrequency: "5m",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchTollTripVersion: {
-      endpoint: "/getTollTripVersionAsJson",
-      inputSchema: tollTripVersionInputSchema,
-      outputSchema: tollTripVersionSchema,
-      sampleParams: {},
-      endpointDescription:
-        "Returns current version and timestamp information for toll trip data.",
-    } satisfies EndpointDefinition<TollTripVersionInput, TollTripVersion>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchTollTripVersion = createEndpoint({
+  api: apis.wsdotTollRates,
+  group: tollTripVersionGroup,
+  functionName: "fetchTollTripVersion",
+  endpoint: "/getTollTripVersionAsJson",
+  inputSchema: tollTripVersionInputSchema,
+  outputSchema: tollTripVersionSchema,
+  sampleParams: {},
+  endpointDescription: "Get current version and timestamp for toll trip data.",
+});

@@ -1,11 +1,8 @@
-import type { ApiDefinition } from "@/apis/types";
-
-// Import all resources
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
 import { flowDataGroup } from "./flowData/flowData.endpoints";
 
 export const wsdotTrafficFlowApi = {
-  name: "wsdot-traffic-flow",
-  baseUrl:
-    "https://www.wsdot.wa.gov/traffic/api/trafficflow/trafficflowrest.svc",
+  api: apis.wsdotTrafficFlow,
   endpointGroups: [flowDataGroup],
 } satisfies ApiDefinition;

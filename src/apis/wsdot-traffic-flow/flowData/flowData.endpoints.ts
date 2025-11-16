@@ -1,38 +1,49 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type TrafficFlowByIdInput,
-  type TrafficFlowsInput,
   trafficFlowByIdInputSchema,
   trafficFlowsInputSchema,
 } from "./flowData.input";
-import { type FlowData, flowDataSchema } from "./flowData.output";
+import { flowDataSchema } from "./flowData.output";
 
-export const flowDataGroup = {
+export const flowDataGroup: EndpointGroup = {
   name: "flow-data",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each FlowData item represents real-time traffic flow information from sensor stations across Washington state. Data includes traffic conditions, station locations, timestamps, and regional maintenance information for traffic monitoring.",
-    businessContext:
-      "Use to monitor current traffic conditions by providing real-time flow data and station information for traffic management and traveler information systems.",
+    summary:
+      "Real-time traffic flow conditions from sensor stations across Washington state.",
+    description:
+      "Current traffic flow readings, station locations, and timestamps for traffic monitoring and congestion detection.",
+    useCases: [
+      "Monitor real-time traffic flow conditions across Washington highways.",
+      "Detect congestion and traffic patterns for route planning.",
+      "Display current traffic status in traveler information systems.",
+    ],
+    updateFrequency: "90s",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchTrafficFlows: {
-      endpoint: "/getTrafficFlowsAsJson",
-      inputSchema: trafficFlowsInputSchema,
-      outputSchema: z.array(flowDataSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple FlowData items for all traffic flow stations across Washington state.",
-    } satisfies EndpointDefinition<TrafficFlowsInput, FlowData[]>,
-    fetchTrafficFlowById: {
-      endpoint: "/getTrafficFlowAsJson?FlowDataID={FlowDataID}",
-      inputSchema: trafficFlowByIdInputSchema,
-      outputSchema: flowDataSchema,
-      sampleParams: { FlowDataID: 2482 },
-      endpointDescription:
-        "Returns a single FlowData item for a specific traffic flow station by FlowDataID.",
-    } satisfies EndpointDefinition<TrafficFlowByIdInput, FlowData>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchTrafficFlows = createEndpoint({
+  api: apis.wsdotTrafficFlow,
+  group: flowDataGroup,
+  functionName: "fetchTrafficFlows",
+  endpoint: "/getTrafficFlowsAsJson",
+  inputSchema: trafficFlowsInputSchema,
+  outputSchema: flowDataSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List current traffic flow conditions for all stations statewide.",
+});
+
+export const fetchTrafficFlowById = createEndpoint({
+  api: apis.wsdotTrafficFlow,
+  group: flowDataGroup,
+  functionName: "fetchTrafficFlowById",
+  endpoint: "/getTrafficFlowAsJson?FlowDataID={FlowDataID}",
+  inputSchema: trafficFlowByIdInputSchema,
+  outputSchema: flowDataSchema,
+  sampleParams: { FlowDataID: 2482 },
+  endpointDescription:
+    "Get current traffic flow condition for a specific station by ID.",
+});

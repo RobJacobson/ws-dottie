@@ -1,15 +1,10 @@
 import { z } from "@/shared/zod";
 
-/**
- * VesselStats input schema
- *
- * This operation provides details regarding vessel specifications (engine count, length of vessel, year built, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
- */
 export const vesselStatsInputSchema = z
   .object({})
   .strict()
   .describe(
-    "Retrieves vessel technical specifications for all vessels, returning dimensions, capacity, speed, propulsion, and build details. E.g., vessel Chimacum built 2017, 362 feet long, 1500 passenger capacity, 17 knots speed. Use for vessel comparison, capacity planning, and technical reference information."
+    "Input parameters for retrieving vessel technical specifications for all vessels."
   );
 
 export type VesselStatsInput = z.infer<typeof vesselStatsInputSchema>;
@@ -19,15 +14,10 @@ export type VesselStatsInput = z.infer<typeof vesselStatsInputSchema>;
  */
 export const vesselStatsByIdInputSchema = z
   .object({
-    VesselID: z
-      .number()
-      .int()
-      .describe(
-        "Unique vessel identifier, as an integer ID. E.g., '74' for vessel Chimacum, '1' for vessel Cathlamet. Required to retrieve technical specifications for a specific vessel."
-      ),
+    VesselID: z.number().int().describe("Numeric ID of the vessel."),
   })
   .describe(
-    "Retrieves vessel technical specifications for a specific vessel by VesselID, returning dimensions, capacity, speed, propulsion, and build details. E.g., vessel Tacoma built 1997, Jumbo Mark II class, with beam, length, and horsepower specifications. Use for vessel comparison, capacity planning, and technical reference information when you need specifications for a single vessel."
+    "Input parameters for retrieving vessel technical specifications for a specific vessel."
   );
 
 export type VesselStatsByIdInput = z.infer<typeof vesselStatsByIdInputSchema>;

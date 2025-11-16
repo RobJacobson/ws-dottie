@@ -7,15 +7,10 @@
 
 import { z } from "@/shared/zod";
 
-/**
- * Input schema for ValidDateRange endpoint
- *
- * This operation retrieves a date range for which fares data is currently published & available.
- */
 export const faresValidDateRangeInputSchema = z
   .object({})
   .describe(
-    "Retrieves date range for which fares data is currently published and available, returning start and end dates. Use to determine valid trip dates for fare queries before calling other endpoints."
+    "Input parameters for retrieving the validity date range for fares data."
   );
 
 export type FaresValidDateRangeInput = z.infer<

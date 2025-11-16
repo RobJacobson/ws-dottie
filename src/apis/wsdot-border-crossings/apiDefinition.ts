@@ -1,11 +1,8 @@
-import type { ApiDefinition } from "@/apis/types";
-
-// Import all resources
-import { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData.endpoints";
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
+import { borderCrossingDataGroup } from "./borderCrossingData/borderCrossingData.endpoints";
 
 export const wsdotBorderCrossingsApi = {
-  name: "wsdot-border-crossings",
-  baseUrl:
-    "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc",
-  endpointGroups: [borderCrossingDataResource],
+  api: apis.wsdotBorderCrossings,
+  endpointGroups: [borderCrossingDataGroup],
 } satisfies ApiDefinition;

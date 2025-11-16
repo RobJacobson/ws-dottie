@@ -23,7 +23,7 @@ import type { Endpoint } from "../../src/shared/types.ts";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, "../..");
-const docsRoot = join(projectRoot, "docs", "sample-data");
+const docsRoot = join(projectRoot, "docs", "generated", "sample-data");
 
 /**
  * Endpoints that should be skipped due to known server-side issues
@@ -78,7 +78,7 @@ const fetchSample = async (
     return result;
   } catch (error) {
     console.error(
-      `  ✗ Failed to fetch ${endpoint.function}: ${error instanceof Error ? error.message : String(error)}`
+      `  ✗ Failed to fetch ${endpoint.functionName}: ${error instanceof Error ? error.message : String(error)}`
     );
     return null;
   }
@@ -97,7 +97,7 @@ const saveSample = (
   const apiDir = join(docsRoot, endpoint.api);
   mkdirSync(apiDir, { recursive: true });
 
-  const filePath = join(apiDir, `${endpoint.function}.json`);
+  const filePath = join(apiDir, `${endpoint.functionName}.json`);
   writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
 };
 
@@ -110,10 +110,10 @@ const createPlaceholderFile = (endpoint: Endpoint<unknown, unknown>): void => {
   const apiDir = join(docsRoot, endpoint.api);
   mkdirSync(apiDir, { recursive: true });
 
-  const filePath = join(apiDir, `${endpoint.function}.json`);
+  const filePath = join(apiDir, `${endpoint.functionName}.json`);
   const placeholderData = {
     message: `This endpoint is skipped due to known server-side issues. See fetch-sample-data.ts SKIP_ENDPOINTS list for details.`,
-    endpoint: `${endpoint.api}.${endpoint.function}`,
+    endpoint: `${endpoint.api}.${endpoint.functionName}`,
     reason: "Server-side issues prevent reliable data fetching",
   };
   writeFileSync(filePath, JSON.stringify(placeholderData, null, 2), "utf-8");
@@ -128,19 +128,19 @@ const processEndpoint = async (
   total: number
 ): Promise<{ success: boolean; endpoint: Endpoint<unknown, unknown> }> => {
   process.stdout.write(
-    `  [${index + 1}/${total}] Fetching ${endpoint.api}.${endpoint.function}...\r`
+    `  [${index + 1}/${total}] Fetching ${endpoint.api}.${endpoint.functionName}...\r`
   );
 
-  const endpointKey = `${endpoint.api}.${endpoint.function}`;
+  const endpointKey = `${endpoint.api}.${endpoint.functionName}`;
 
   // Check if this is a skipped endpoint
   if (SKIP_ENDPOINTS.has(endpointKey)) {
     process.stdout.write(
-      `  [${index + 1}/${total}] Creating placeholder for ${endpoint.api}.${endpoint.function}...\r`
+      `  [${index + 1}/${total}] Creating placeholder for ${endpoint.api}.${endpoint.functionName}...\r`
     );
     createPlaceholderFile(endpoint);
     process.stdout.write(
-      `  [${index + 1}/${total}] ✓ Created placeholder for ${endpoint.api}.${endpoint.function}      \n`
+      `  [${index + 1}/${total}] ✓ Created placeholder for ${endpoint.api}.${endpoint.functionName}      \n`
     );
     return { success: true, endpoint };
   }
@@ -149,12 +149,12 @@ const processEndpoint = async (
   if (data !== null) {
     saveSample(endpoint, data);
     process.stdout.write(
-      `  [${index + 1}/${total}] ✓ Fetched ${endpoint.api}.${endpoint.function}      \n`
+      `  [${index + 1}/${total}] ✓ Fetched ${endpoint.api}.${endpoint.functionName}      \n`
     );
     return { success: true, endpoint };
   } else {
     process.stdout.write(
-      `  [${index + 1}/${total}] ✗ Failed ${endpoint.api}.${endpoint.function}      \n`
+      `  [${index + 1}/${total}] ✗ Failed ${endpoint.api}.${endpoint.functionName}      \n`
     );
     return { success: false, endpoint };
   }
@@ -180,7 +180,7 @@ const main = async (): Promise<void> => {
     if (apiFilter && endpoint.api !== apiFilter) {
       return false;
     }
-    if (endpointFilter && endpoint.function !== endpointFilter) {
+    if (endpointFilter && endpoint.functionName !== endpointFilter) {
       return false;
     }
     return true;

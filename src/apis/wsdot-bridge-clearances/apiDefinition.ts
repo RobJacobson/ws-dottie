@@ -1,10 +1,8 @@
-import type { ApiDefinition } from "@/apis/types";
-
-// Import all resources
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
 import { bridgeClearancesGroup } from "./bridgeClearances/bridgeClearances.endpoints";
 
 export const wsdotBridgeClearancesApi = {
-  name: "wsdot-bridge-clearances",
-  baseUrl: "https://www.wsdot.wa.gov/traffic/api/bridges/clearancerest.svc",
+  api: apis.wsdotBridgeClearances,
   endpointGroups: [bridgeClearancesGroup],
 } satisfies ApiDefinition;

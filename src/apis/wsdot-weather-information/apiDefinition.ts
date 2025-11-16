@@ -1,11 +1,8 @@
-import type { ApiDefinition } from "@/apis/types";
-
-// Import the resource
-import { weatherInfoResource } from "./weatherInfo/weatherInfo.endpoints";
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
+import { weatherInfoGroup } from "./weatherInfo/weatherInfo.endpoints";
 
 export const wsdotWeatherInformationApi = {
-  name: "wsdot-weather-information",
-  baseUrl:
-    "https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc",
-  endpointGroups: [weatherInfoResource],
+  api: apis.wsdotWeatherInformation,
+  endpointGroups: [weatherInfoGroup],
 } satisfies ApiDefinition;

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Generate OpenAPI 3.1 specifications from all API definitions
+ * Generate OpenAPI 3.0 specifications from all API definitions
  *
  * This script converts Zod schemas to OpenAPI format and generates
  * complete OpenAPI specifications for all APIs in the ws-dottie project.
@@ -12,18 +12,15 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   OpenAPIRegistry,
-  OpenApiGeneratorV31,
+  OpenApiGeneratorV3,
 } from "@asteasolutions/zod-to-openapi";
 import yaml from "js-yaml";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
-import type {
-  ApiDefinition,
-  EndpointDefinition,
-} from "../../src/apis/types.ts";
+import type { ApiDefinition } from "../../src/apis/types.ts";
 import { apis, endpoints } from "../../src/shared/endpoints.ts";
-import { fetchDottie } from "../../src/shared/fetching/fetchDottie.ts";
-import { z } from "../../src/shared/zod-openapi-init.ts";
+import type { Endpoint } from "../../src/shared/types.ts";
+import { z } from "../../src/shared/zod.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -59,13 +56,8 @@ const formatSampleData = (
   const isArray = Array.isArray(data);
 
   if (isArray && data.length > 1) {
-    // For arrays with multiple items, return first item + truncation indicator
-    const truncatedArray = [
-      data[0],
-      {
-        _note: `... ${data.length - 1} more item${data.length - 1 === 1 ? "" : "s"}`,
-      },
-    ];
+    // For arrays with multiple items, return first item only
+    const truncatedArray = [data[0]];
     return {
       data: truncatedArray,
       isTruncated: true,
@@ -95,35 +87,48 @@ const formatSampleData = (
 };
 
 /**
- * Fetch actual API response data using fetchDottie and save to sample-data directory
+ * Finds the endpoint group name for a given endpoint
  *
- * Downloads real API responses for all endpoints and saves them to the
- * docs/sample-data directory for use in documentation generation.
+ * This function matches endpoints to their groups by examining the endpoint's
+ * function name and matching it to group patterns. Since endpoints don't directly
+ * reference their groups, we match them based on function name patterns.
  *
  * @param api - The API definition containing endpoint groups
- * @param endpoint - The endpoint definition containing function name and sample parameters
- * @returns Promise resolving to formatted sample data with truncation metadata
+ * @param endpoint - The endpoint to find the group for
+ * @returns The group name, or a default group name if not found
  */
-const resolveFunctionName = (
-  providedName: string | undefined,
-  endpoint: EndpointDefinition<unknown, unknown>
+const findEndpointGroup = (
+  api: ApiDefinition,
+  endpoint: Endpoint<unknown, unknown>
 ): string => {
-  if (providedName && providedName.trim().length > 0) {
-    return providedName.trim();
+  // Try to match endpoint to a group by checking function name patterns
+  // This is a heuristic approach - we match based on common naming patterns
+  const functionNameLower = endpoint.functionName
+    .toLowerCase()
+    .replace(/^fetch/, "");
+
+  for (const group of api.endpointGroups) {
+    // Check if the function name matches common patterns for this group
+    // For example, "fetchVesselLocations" might belong to "vessel-locations" group
+    const groupNameLower = group.name.toLowerCase().replace(/-/g, "");
+
+    // Check if function name contains group name keywords (after removing "fetch" prefix)
+    if (
+      functionNameLower.includes(groupNameLower) ||
+      groupNameLower.includes(functionNameLower)
+    ) {
+      return group.name;
+    }
   }
 
-  const fn = (endpoint as { function?: unknown }).function;
-  if (typeof fn === "string" && fn.length > 0) {
-    return fn;
-  }
-
-  throw new Error("Endpoint definition missing function name");
+  // Fallback: use the first group or create a default
+  return api.endpointGroups[0]?.name || "default";
 };
 
 const fetchAndSaveSampleData = async (
   api: ApiDefinition,
   functionName: string,
-  endpoint: EndpointDefinition<unknown, unknown>
+  _endpoint: Endpoint<unknown, unknown>
 ): Promise<{
   data: unknown;
   isTruncated: boolean;
@@ -132,77 +137,50 @@ const fetchAndSaveSampleData = async (
   const samplesPath = join(
     projectRoot,
     "docs",
+    "generated",
     "sample-data",
-    api.name,
+    api.api.name,
     `${functionName}.json`
   );
 
   try {
-    // Find the endpoint object from the endpoints array
-    const endpointObj = endpoints.find(
-      (e) => e.api === api.name && e.function === functionName
-    );
-
-    if (!endpointObj) {
-      throw new Error(`Endpoint not found: ${api.name}:${functionName}`);
+    // Read existing sample data from file instead of fetching fresh data
+    if (!existsSync(samplesPath)) {
+      throw new Error(
+        `Sample data file not found: ${samplesPath}. Please ensure sample data exists.`
+      );
     }
 
-    // Fetch fresh data using fetchDottie with the endpoint object
-    const data = await fetchDottie({
-      endpoint: endpointObj,
-      params: endpoint.sampleParams || {},
-      fetchMode: "native",
-      validate: true,
-    });
-
-    // Ensure directory exists
-    const dirPath = dirname(samplesPath);
-    if (!existsSync(dirPath)) {
-      mkdirSync(dirPath, { recursive: true });
-    }
-
-    // Save the sample data
-    writeFileSync(samplesPath, JSON.stringify(data, null, 2), "utf-8");
-    process.stderr.write(`  [sample] fetched and saved for ${functionName}\r`);
+    const data = JSON.parse(readFileSync(samplesPath, "utf-8"));
+    process.stderr.write(`  [sample] loaded from file for ${functionName}\r`);
 
     // Return formatted data for use in documentation
     return formatSampleData(data);
   } catch (error) {
-    if (existsSync(samplesPath)) {
-      try {
-        const cachedData = JSON.parse(readFileSync(samplesPath, "utf-8"));
-        process.stderr.write(
-          `  [sample] using cached data for ${functionName} (fetch failed)\r`
-        );
-        return formatSampleData(cachedData);
-      } catch {
-        // If cached data can't be read, fall through to the error handling below
-      }
-    }
-
     process.stderr.write(
-      `  [sample] fetch error for ${functionName}: ${JSON.stringify(error)}\r`
+      `  [sample] error loading ${functionName}: ${error instanceof Error ? error.message : JSON.stringify(error)}\r`
     );
     throw new Error(
-      `Failed to fetch sample data for ${functionName}: ${JSON.stringify(error)}`
+      `Failed to load sample data for ${functionName}: ${error instanceof Error ? error.message : JSON.stringify(error)}`
     );
   }
 };
 
 /**
- * Generate fetchDottie code example as a template string
+ * Generate code example as a template string
  *
  * Creates a complete, executable code example showing how to use the endpoint
- * with fetchDottie, including imports, function call, and proper formatting.
+ * with the fetch function directly, including imports, function call, and proper formatting.
+ * Matches the format used in README.md and documentation.
  *
- * @param api - The API definition (needed for sample cache lookup)
+ * @param api - The API definition (needed for import path)
  * @param endpoint - The endpoint definition containing function name and sample parameters
  * @returns A formatted string containing the complete code example
  */
 const generateCodeExample = (
   api: ApiDefinition,
   functionName: string,
-  endpoint: EndpointDefinition<unknown, unknown>
+  endpoint: Endpoint<unknown, unknown>
 ): string => {
   const sampleParams = endpoint.sampleParams;
   const hasParams =
@@ -217,13 +195,11 @@ const generateCodeExample = (
         .join("\n")},\n`
     : "";
 
-  const apiCoreImportPath = `ws-dottie/${api.name}/core`;
+  const apiCoreImportPath = `ws-dottie/${api.api.name}/core`;
 
-  return `import { fetchDottie } from 'ws-dottie';
-import { ${functionName} } from '${apiCoreImportPath}';
+  return `import { ${functionName} } from '${apiCoreImportPath}';
 
-const data = await fetchDottie({
-  endpoint: ${functionName},
+const data = await ${functionName}({
 ${paramsLine}  fetchMode: 'native',
   validate: true
 });
@@ -390,16 +366,15 @@ const registerSchema = (
 const registerEndpoint = async (
   registry: OpenAPIRegistry,
   api: ApiDefinition,
-  functionName: string,
-  endpoint: EndpointDefinition<unknown, unknown>,
-  endpointPath: string,
+  endpoint: Endpoint<unknown, unknown>,
   groupName: string
 ): Promise<void> => {
-  const operationId = functionName;
-  const summary = endpoint.endpointDescription || endpoint.description || "";
+  const operationId = endpoint.functionName;
+  const summary = endpoint.endpointDescription || "";
 
   // Register output schema in components/schemas
   const rawOutputSchema = endpoint.outputSchema ?? z.any();
+  const endpointPath = endpoint.endpoint;
   let responseSchema: z.ZodSchema = rawOutputSchema;
 
   // Handle array schemas - register the item schema
@@ -560,7 +535,7 @@ const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);
 /**
  * Generate OpenAPI specification for a single API
  *
- * Creates a complete OpenAPI 3.1 specification document from an API definition,
+ * Creates a complete OpenAPI 3.0 specification document from an API definition,
  * including all endpoints, schemas, tags, and metadata. The zod-to-openapi library
  * handles automatic schema conversion.
  *
@@ -568,7 +543,7 @@ const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);
  * @returns The complete OpenAPI specification object
  */
 const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
-  process.stderr.write(`Processing ${api.name}...\r`);
+  process.stderr.write(`Processing ${api.api.name}...\r`);
   const registry = new OpenAPIRegistry();
 
   // Pre-register shared schemas with canonical names to enable deduplication
@@ -577,56 +552,38 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
     registerSchema(registry, roadwayLocationSchema, "RoadwayLocation");
   }
 
-  // Register all endpoints from all groups
-  let endpointCount = 0;
-  const totalEndpoints = api.endpointGroups.reduce(
-    (sum, group) => sum + Object.keys(group.endpoints).length,
-    0
-  );
+  // Filter endpoints for this API from the flat registry
+  const apiEndpoints = endpoints.filter((e) => e.api.name === api.api.name);
+  const totalEndpoints = apiEndpoints.length;
 
   // Register all endpoints and wait for completion
-  const endpointPromises = api.endpointGroups.map(async (group) => {
-    const groupEntries = Object.entries(group.endpoints) as [
-      string,
-      EndpointDefinition<unknown, unknown>,
-    ][];
-
-    // Register all endpoints in this group
-    await Promise.all(
-      groupEntries.map(async ([functionName, endpoint]) => {
-        const resolvedName = resolveFunctionName(functionName, endpoint);
-        endpointCount++;
-        process.stderr.write(
-          `  [${endpointCount}/${totalEndpoints}] Registering ${resolvedName}...\r`
-        );
-        await registerEndpoint(
-          registry,
-          api,
-          resolvedName,
-          endpoint,
-          endpoint.endpoint,
-          group.name
-        );
-      })
+  const endpointPromises = apiEndpoints.map(async (endpoint, index) => {
+    process.stderr.write(
+      `  [${index + 1}/${totalEndpoints}] Registering ${endpoint.functionName}...\r`
     );
+
+    // Find the group name for this endpoint
+    const groupName = findEndpointGroup(api, endpoint);
+
+    await registerEndpoint(registry, api, endpoint, groupName);
   });
 
   // Wait for all endpoints to be registered
   await Promise.all(endpointPromises);
 
-  process.stderr.write(`  Generating OpenAPI spec for ${api.name}...\r`);
-  const generator = new OpenApiGeneratorV31(registry.definitions);
+  process.stderr.write(`  Generating OpenAPI spec for ${api.api.name}...\r`);
+  const generator = new OpenApiGeneratorV3(registry.definitions);
 
   // Create a title from the API name (e.g., "wsf-vessels" -> "WSF Vessels API")
   const title =
     // biome-ignore lint/style/useTemplate: OK here
-    api.name
+    api.api.name
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ") + " API";
 
   const openApiDoc = generator.generateDocument({
-    openapi: "3.1.0",
+    openapi: "3.0.0",
     info: {
       title,
       version: "1.0.0",
@@ -634,22 +591,47 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
     },
     servers: [
       {
-        url: api.baseUrl,
+        url: api.api.baseUrl,
         description: "Production server",
       },
     ],
   });
 
   // Add tags with descriptions
-  const tags = api.endpointGroups.map((group) => ({
-    name: group.name,
-    description: group.documentation.resourceDescription,
-    ...(group.documentation.businessContext && {
-      externalDocs: {
-        description: group.documentation.businessContext,
-      },
-    }),
-  }));
+  const tags = api.endpointGroups.map((group) => {
+    const documentation = group.documentation ?? {};
+
+    const description =
+      documentation.summary ??
+      documentation.description ??
+      documentation.resourceDescription ??
+      "";
+
+    return {
+      name: group.name,
+      description,
+      // Add extended description as a custom field
+      ...(documentation.description && documentation.description !== documentation.summary && {
+        "x-description": documentation.description,
+      }),
+      // Add cache strategy information
+      ...(group.cacheStrategy && {
+        "x-cacheStrategy": group.cacheStrategy,
+      }),
+      // Keep existing fields for backward compatibility
+      ...(documentation.businessContext && {
+        externalDocs: {
+          description: documentation.businessContext,
+        },
+      }),
+      ...(documentation.useCases && {
+        "x-useCases": documentation.useCases,
+      }),
+      ...(documentation.updateFrequency && {
+        "x-updateFrequency": documentation.updateFrequency,
+      }),
+    };
+  });
 
   return {
     ...openApiDoc,
@@ -668,13 +650,13 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
 const generateAndSaveOpenApiSpec = async (
   api: ApiDefinition
 ): Promise<void> => {
-  process.stderr.write(`Generating spec for ${api.name}...\r`);
+  process.stderr.write(`Generating spec for ${api.api.name}...\r`);
   const spec = await generateOpenApiSpec(api);
-  const outputDir = join(projectRoot, "docs", "openapi");
+  const outputDir = join(projectRoot, "docs", "generated", "openapi");
   mkdirSync(outputDir, { recursive: true });
 
-  const outputPath = join(outputDir, `${api.name}.yaml`);
-  process.stderr.write(`  Writing ${api.name}.yaml...\r`);
+  const outputPath = join(outputDir, `${api.api.name}.yaml`);
+  process.stderr.write(`  Writing ${api.api.name}.yaml...\r`);
   writeFileSync(
     outputPath,
     yaml.dump(spec, { indent: 2, lineWidth: -1, noRefs: false }),
@@ -690,7 +672,7 @@ const generateAndSaveOpenApiSpec = async (
       ?.schemas || {}
   ).length;
 
-  console.log(`✓ ${api.name}: ${outputPath}`);
+  console.log(`✓ ${api.api.name}: ${outputPath}`);
   console.log(
     `  - ${pathsCount} paths, ${tagsCount} tags, ${schemasCount} schemas`
   );
@@ -711,7 +693,7 @@ const main = async (): Promise<void> => {
     ALL_APIS.map(async (api, index) => {
       try {
         process.stderr.write(
-          `[${index + 1}/${ALL_APIS.length}] Processing ${api.name}...\n`
+          `[${index + 1}/${ALL_APIS.length}] Processing ${api.api.name}...\n`
         );
         await generateAndSaveOpenApiSpec(api);
         const spec = await generateOpenApiSpec(api);
@@ -729,11 +711,11 @@ const main = async (): Promise<void> => {
           errors: [] as Array<{ api: string; error: unknown }>,
         };
       } catch (error) {
-        process.stderr.write(`  ✗ Error in ${api.name}\n`);
-        console.error(`✗ Error generating spec for ${api.name}:`, error);
+        process.stderr.write(`  ✗ Error in ${api.api.name}\n`);
+        console.error(`✗ Error generating spec for ${api.api.name}:`, error);
         return {
           totals: { paths: 0, tags: 0, schemas: 0 },
-          errors: [{ api: api.name, error }],
+          errors: [{ api: api.api.name, error }],
         };
       }
     })

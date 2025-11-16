@@ -5,7 +5,6 @@
  * WSDOT API endpoints.
  */
 
-export { createCacheFlushDateEndpointGroup } from "@/shared/factories/createCacheFlushDateEndpoint";
 export {
   type CacheFlushDateInput,
   type CacheFlushDateOutput,

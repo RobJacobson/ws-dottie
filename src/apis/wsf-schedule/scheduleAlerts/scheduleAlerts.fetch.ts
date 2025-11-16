@@ -1,17 +1,3 @@
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { scheduleAlertsResource } from "./scheduleAlerts.endpoints";
-import type { ScheduleAlertsInput } from "./scheduleAlerts.input";
-import type { AlertDetail } from "./scheduleAlerts.output";
+import * as endpoints from "./scheduleAlerts.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsfScheduleApi,
-  scheduleAlertsResource
-);
-
-export const fetchScheduleAlerts: (
-  params?: FetchFunctionParams<ScheduleAlertsInput>
-) => Promise<AlertDetail[]> = fetchFunctions.fetchScheduleAlerts;
+export const fetchScheduleAlerts = endpoints.fetchScheduleAlerts.fetch;

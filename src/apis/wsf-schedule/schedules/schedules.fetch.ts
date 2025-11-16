@@ -1,22 +1,7 @@
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { schedulesResource } from "./schedules.endpoints";
-import type {
-  ScheduleByTripDateAndRouteIdInput,
-  ScheduleByTripDateAndTerminalsInput,
-} from "./schedules.input";
-import type { Schedule } from "./schedules.output";
+import * as endpoints from "./schedules.endpoints";
 
-const fetchFunctions = createFetchFunctions(wsfScheduleApi, schedulesResource);
+export const fetchScheduleByTripDateAndRouteId =
+  endpoints.fetchScheduleByTripDateAndRouteId.fetch;
 
-export const fetchScheduleByTripDateAndRouteId: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndRouteIdInput>
-) => Promise<Schedule> = fetchFunctions.fetchScheduleByTripDateAndRouteId;
-
-export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndTerminalsInput>
-) => Promise<Schedule> =
-  fetchFunctions.fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;
+export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds =
+  endpoints.fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds.fetch;

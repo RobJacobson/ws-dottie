@@ -17,12 +17,10 @@ export const scheduledRoutesInputSchema = z
       .number()
       .optional()
       .describe(
-        "Unique identifier for schedule season, as an integer ID. E.g., '193' for Fall 2025 schedule. Use GetActiveSeasons to retrieve valid schedule IDs. Optional - if omitted, returns all scheduled routes across current and upcoming seasons. Used to filter scheduled routes by specific season."
+        "Numeric ID of the schedule season. Optional; if omitted, returns all scheduled routes across current and upcoming seasons."
       ),
   })
-  .describe(
-    "Retrieves listing of routes that are active for specified season or all current/upcoming seasons, returning scheduled route IDs, route information, contingency adjustments, and service disruptions. Routes must be scheduled to run during season to be included. Use GetActiveSeasons to find valid schedule IDs. Use for route discovery and season-based route filtering."
-  );
+  .describe("Input parameters for retrieving scheduled routes.");
 
 export type ScheduledRoutesInput = z.infer<typeof scheduledRoutesInputSchema>;
 
@@ -36,12 +34,10 @@ export const scheduledRoutesByIdInputSchema = z
       .number()
       .optional()
       .describe(
-        "Unique identifier for schedule season, as an integer ID. E.g., '193' for Fall 2025 schedule. Use GetActiveSeasons to retrieve valid schedule IDs. Optional - if omitted, returns all scheduled routes across current and upcoming seasons. Used to filter scheduled routes by specific season."
+        "Numeric ID of the schedule season. Optional; if omitted, returns all scheduled routes across current and upcoming seasons."
       ),
   })
-  .describe(
-    "Retrieves listing of routes that are active for specified season or all current/upcoming seasons by schedule ID, returning scheduled route IDs, route information, contingency adjustments, and service disruptions. Routes must be scheduled to run during season to be included. Use GetActiveSeasons to find valid schedule IDs. Use for route discovery and season-based route filtering."
-  );
+  .describe("Input parameters for retrieving scheduled routes by schedule ID.");
 
 export type ScheduledRoutesByIdInput = z.infer<
   typeof scheduledRoutesByIdInputSchema

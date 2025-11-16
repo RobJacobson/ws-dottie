@@ -1,5 +1,6 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselLocationsByIdInput,
   type VesselLocationsInput,
@@ -11,32 +12,48 @@ import {
   vesselLocationSchema,
 } from "./vesselLocations.output";
 
-export const vesselLocationsGroup = {
+export const vesselLocationsGroup: EndpointGroup = {
   name: "vessel-locations",
+  cacheStrategy: "REALTIME",
   documentation: {
-    resourceDescription:
-      "Each VesselLocation item represents real-time vessel tracking data for Washington State Ferries. These include current position (latitude and longitude), speed and heading information, whether or not the vessel is at dock, departure and arrival terminal details, and estimated time of arrival.",
-    businessContext:
-      "Use to track real-time vessel positions and calculate arrival times by providing GPS coordinates, speed/heading data, and terminal departure/arrival information for WSF fleet monitoring. Determine current trip status, including start terminal, destination terminal, scheduled departure, at-dock status and ETA for this trip.",
+    summary: "Real-time vessel positions and status for WSF fleet.",
+    description:
+      "Current GPS coordinates, speed, heading, terminal assignments, and ETAs. This endpoint is real-time; cacheFlushDate is not used for cache invalidation.",
+    useCases: [
+      "Show live vessel positions and ETAs in rider apps.",
+      "Monitor fleet operations in internal dashboards.",
+      "Calculate arrival times and voyage progress.",
+    ],
+    updateFrequency: "5s",
   },
-  // Using REALTIME strategy because vessel locations update every few seconds as vessels move
-  cacheStrategy: "REALTIME" as const,
-  endpoints: {
-    fetchVesselLocations: {
-      endpoint: "/vesselLocations",
-      inputSchema: vesselLocationsInputSchema,
-      outputSchema: z.array(vesselLocationSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple VesselLocation objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<VesselLocationsInput, VesselLocation[]>,
-    fetchVesselLocationsByVesselId: {
-      endpoint: "/vesselLocations/{VesselID}",
-      inputSchema: vesselLocationsByIdInputSchema,
-      outputSchema: vesselLocationSchema,
-      sampleParams: { VesselID: 18 },
-      endpointDescription:
-        "Returns a VesselLocation object containing real-time position and status information for the specified vessel.",
-    } satisfies EndpointDefinition<VesselLocationsByIdInput, VesselLocation>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchVesselLocations = createEndpoint<
+  VesselLocationsInput,
+  VesselLocation[]
+>({
+  api: apis.wsfVessels,
+  group: vesselLocationsGroup,
+  functionName: "fetchVesselLocations",
+  endpoint: "/vesselLocations",
+  inputSchema: vesselLocationsInputSchema,
+  outputSchema: vesselLocationSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List current locations and status for all active vessels.",
+});
+
+export const fetchVesselLocationsByVesselId = createEndpoint<
+  VesselLocationsByIdInput,
+  VesselLocation
+>({
+  api: apis.wsfVessels,
+  group: vesselLocationsGroup,
+  functionName: "fetchVesselLocationsByVesselId",
+  endpoint: "/vesselLocations/{VesselID}",
+  inputSchema: vesselLocationsByIdInputSchema,
+  sampleParams: { VesselID: 18 },
+  outputSchema: vesselLocationSchema,
+  endpointDescription:
+    "Get current location and status for a specific vessel by ID.",
+});

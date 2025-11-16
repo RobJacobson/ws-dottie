@@ -1,52 +1,58 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
 import {
-  type TerminalComboFaresVerboseInput,
-  type TerminalComboInput,
   terminalComboFaresVerboseInputSchema,
   terminalComboInputSchema,
 } from "./terminalCombo.input";
 import {
-  type TerminalComboFares,
-  type TerminalComboFaresVerbose,
   terminalComboFaresSchema,
   terminalComboFaresVerboseSchema,
 } from "./terminalCombo.output";
 
-export const terminalComboGroup = {
+export const terminalComboGroup: EndpointGroup = {
   name: "terminal-combo",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalCombo item represents valid route pairings between Washington State Ferries terminals with associated fare collection methods and scheduling details. These combinations define which terminals are connected and how fares are collected for specific routes.",
-    businessContext:
-      "Use to determine route availability and fare collection requirements by providing terminal pairing information for journey planning and ticket purchasing systems.",
+    summary:
+      "Valid terminal pairings with fare collection procedures for WSF routes.",
+    description:
+      "Terminal combinations define which terminals are connected and describe where and how fares are collected for each route. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Determine route availability between terminal pairs.",
+      "Understand fare collection procedures for specific routes.",
+      "Build journey planning interfaces with fare collection details.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminalComboFares: {
-      endpoint:
-        "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: terminalComboInputSchema,
-      outputSchema: terminalComboFaresSchema,
-      sampleParams: {
-        TripDate: datesHelper.tomorrow(),
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-      },
-      endpointDescription:
-        "Returns fare collection descriptions for the specified terminal combination and trip date.",
-    } satisfies EndpointDefinition<TerminalComboInput, TerminalComboFares>,
-    fetchTerminalComboFaresVerbose: {
-      endpoint: "/terminalComboVerbose/{TripDate}",
-      inputSchema: terminalComboFaresVerboseInputSchema,
-      outputSchema: z.array(terminalComboFaresVerboseSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription:
-        "Returns fare collection descriptions for all terminal combinations available on the specified trip date.",
-    } satisfies EndpointDefinition<
-      TerminalComboFaresVerboseInput,
-      TerminalComboFaresVerbose[]
-    >,
+};
+
+export const fetchTerminalComboFares = createEndpoint({
+  api: apis.wsfFares,
+  group: terminalComboGroup,
+  functionName: "fetchTerminalComboFares",
+  endpoint:
+    "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+  inputSchema: terminalComboInputSchema,
+  outputSchema: terminalComboFaresSchema,
+  sampleParams: {
+    TripDate: datesHelper.tomorrow(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
   },
-} satisfies EndpointGroup;
+  endpointDescription:
+    "Get fare collection description for a specific terminal combination and trip date.",
+});
+
+export const fetchTerminalComboFaresVerbose = createEndpoint({
+  api: apis.wsfFares,
+  group: terminalComboGroup,
+  functionName: "fetchTerminalComboFaresVerbose",
+  endpoint: "/terminalComboVerbose/{TripDate}",
+  inputSchema: terminalComboFaresVerboseInputSchema,
+  outputSchema: terminalComboFaresVerboseSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription:
+    "Get fare collection descriptions for all terminal combinations on a trip date.",
+});

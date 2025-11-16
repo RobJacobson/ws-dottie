@@ -18,31 +18,23 @@ export const terminalBasicSchema = terminalBaseSchema
     OverheadPassengerLoading: z
       .boolean()
       .describe(
-        "Indicator whether overhead passenger loading facility is available, as a boolean. E.g., true for terminals with overhead walkway/ramp for passenger boarding, false for terminals without overhead loading. Used to determine passenger boarding method and accessibility."
+        "True if overhead passenger loading facility is available; otherwise false."
       ),
     Elevator: z
       .boolean()
-      .describe(
-        "Indicator whether terminal has elevator access, as a boolean. E.g., false for terminals without elevators, true for terminals with elevator access. Used to determine accessibility for passengers with mobility needs."
-      ),
+      .describe("True if terminal has elevator access; otherwise false."),
     WaitingRoom: z
       .boolean()
-      .describe(
-        "Indicator whether terminal has waiting room facility, as a boolean. E.g., true for terminals with indoor waiting areas, false for terminals without waiting rooms. Used to determine passenger comfort amenities."
-      ),
+      .describe("True if terminal has waiting room facility; otherwise false."),
     FoodService: z
       .boolean()
-      .describe(
-        "Indicator whether terminal offers food service, as a boolean. E.g., true for terminals with cafés or food vendors, false for terminals without food service. Used to determine passenger amenities."
-      ),
+      .describe("True if terminal offers food service; otherwise false."),
     Restroom: z
       .boolean()
-      .describe(
-        "Indicator whether terminal has restroom facilities, as a boolean. E.g., true for terminals with restrooms, false for terminals without restrooms. Used to determine passenger amenities."
-      ),
+      .describe("True if terminal has restroom facilities; otherwise false."),
   })
   .describe(
-    "Represents basic terminal information including terminal identification, region, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. E.g., Anacortes terminal (ID 1) with overhead loading, waiting room, food service, and restrooms. Used for terminal discovery, terminal identification, and amenity display."
+    "Basic terminal information including identification, amenities, and regional assignments."
   );
 
 export type TerminalBasic = z.infer<typeof terminalBasicSchema>;
@@ -54,9 +46,7 @@ export type TerminalBasic = z.infer<typeof terminalBasicSchema>;
  */
 export const getAllTerminalBasicSchema = z
   .array(terminalBasicSchema)
-  .describe(
-    "Array of basic terminal information including terminal IDs, names, abbreviations, amenities, and sort order. E.g., array containing all terminals with their basic information. Used for terminal discovery and terminal list display."
-  );
+  .describe("Array of basic terminal information for all terminals.");
 
 export type GetAllTerminalBasic = z.infer<typeof getAllTerminalBasicSchema>;
 

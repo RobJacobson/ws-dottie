@@ -13,8 +13,6 @@ import { z } from "@/shared/zod";
  * This operation provides alert information tailored for routes, bulletins, service disruptions, etc. */
 export const scheduleAlertsInputSchema = z
   .object({})
-  .describe(
-    "Retrieves all schedule alerts including bulletins, route alerts, service disruptions, and communications announcements. Returns alert details with multiple text formats (bulletin, route alert, homepage, IVR) and affected route information. Use for comprehensive alert monitoring and display."
-  );
+  .describe("Input parameters for retrieving all schedule alerts.");
 
 export type ScheduleAlertsInput = z.infer<typeof scheduleAlertsInputSchema>;

@@ -1,28 +1,33 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type ActiveSeasonsInput,
-  activeSeasonsInputSchema,
-} from "./activeSeasons.input";
-import { type ScheduleBase, scheduleBaseSchema } from "./activeSeasons.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { activeSeasonsInputSchema } from "./activeSeasons.input";
+import { scheduleBaseSchema } from "./activeSeasons.output";
 
-export const activeSeasonsResource = {
+export const activeSeasonsGroup: EndpointGroup = {
   name: "active-seasons",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each ActiveSeasons item represents a scheduling period for Washington State Ferry routes. Each season defines the time period when specific schedules are active and available for passenger travel planning.",
-    businessContext:
-      "Use to identify current scheduling periods by providing season dates and availability status for ferry service planning and schedule selection.",
+    summary: "Active schedule seasons for WSF routes.",
+    description:
+      "Scheduling periods defining when specific ferry schedules are active, including season dates, names, and PDF URLs.",
+    useCases: [
+      "Identify which schedule seasons are currently active.",
+      "Determine valid date ranges for schedule queries.",
+      "Access printable schedule PDF documents.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchActiveSeasons: {
-      endpoint: "/activeseasons",
-      inputSchema: activeSeasonsInputSchema,
-      outputSchema: z.array(scheduleBaseSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple of ActiveSeasons for all scheduling periods.",
-    } satisfies EndpointDefinition<ActiveSeasonsInput, ScheduleBase[]>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchActiveSeasons = createEndpoint({
+  api: apis.wsfSchedule,
+  group: activeSeasonsGroup,
+  functionName: "fetchActiveSeasons",
+  endpoint: "/activeseasons",
+  inputSchema: activeSeasonsInputSchema,
+  outputSchema: scheduleBaseSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List all active schedule seasons with dates and PDF URLs.",
+});

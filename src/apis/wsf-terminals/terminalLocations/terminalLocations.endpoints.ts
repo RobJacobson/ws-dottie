@@ -1,45 +1,46 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type TerminalLocationsByIdInput,
-  type TerminalLocationsInput,
   terminalLocationsByIdInputSchema,
   terminalLocationsInputSchema,
 } from "./terminalLocations.input";
-import {
-  type TerminalLocation,
-  terminalLocationSchema,
-} from "./terminalLocations.output";
+import { terminalLocationSchema } from "./terminalLocations.output";
 
-export const terminalLocationsResource = {
+export const terminalLocationsGroup: EndpointGroup = {
   name: "terminal-locations",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalLocation item represents geographical location data for Washington State Ferry terminals, including coordinates, address details, and mapping information. These items enable precise terminal identification and navigation for travelers.",
-    businessContext:
-      "Use to locate ferry terminals and plan travel routes by providing geographical coordinates, address details, and GIS mapping data for navigation systems.",
+    summary: "Geographical location data for ferry terminals.",
+    description:
+      "Location information for Washington State Ferry terminals including coordinates, addresses, map links, driving directions, and GIS zoom-level coordinates. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display terminal locations on maps and navigation systems.",
+      "Provide driving directions and address information.",
+      "Integrate with GIS mapping applications.",
+    ],
   },
-  // Using STATIC strategy because terminal locations rarely change (only when terminals are added/removed)
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminalLocations: {
-      endpoint: "/terminalLocations",
-      inputSchema: terminalLocationsInputSchema,
-      outputSchema: z.array(terminalLocationSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple TerminalLocation objects for all terminals.",
-    } satisfies EndpointDefinition<TerminalLocationsInput, TerminalLocation[]>,
-    fetchTerminalLocationsByTerminalId: {
-      endpoint: "/terminalLocations/{TerminalID}",
-      inputSchema: terminalLocationsByIdInputSchema,
-      outputSchema: terminalLocationSchema,
-      sampleParams: { TerminalID: 5 },
-      endpointDescription:
-        "Returns a single TerminalLocation object for specified terminal.",
-    } satisfies EndpointDefinition<
-      TerminalLocationsByIdInput,
-      TerminalLocation
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchTerminalLocations = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalLocationsGroup,
+  functionName: "fetchTerminalLocations",
+  endpoint: "/terminalLocations",
+  inputSchema: terminalLocationsInputSchema,
+  outputSchema: terminalLocationSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List location information for all terminals.",
+});
+
+export const fetchTerminalLocationsByTerminalId = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalLocationsGroup,
+  functionName: "fetchTerminalLocationsByTerminalId",
+  endpoint: "/terminalLocations/{TerminalID}",
+  inputSchema: terminalLocationsByIdInputSchema,
+  outputSchema: terminalLocationSchema,
+  sampleParams: { TerminalID: 5 },
+  endpointDescription:
+    "Get location information for a specific terminal by ID.",
+});

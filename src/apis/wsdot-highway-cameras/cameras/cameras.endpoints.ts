@@ -1,55 +1,62 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type HighwayCameraByCameraIdInput,
-  type HighwayCamerasByRouteAndMilepostInput,
-  type HighwayCamerasInput,
   highwayCameraByCameraIdInputSchema,
   highwayCamerasByRouteAndMilepostInputSchema,
   highwayCamerasInputSchema,
 } from "./cameras.input";
-import { type Camera, cameraSchema } from "./cameras.output";
+import { cameraSchema } from "./cameras.output";
 
-export const camerasGroup = {
+export const camerasGroup: EndpointGroup = {
   name: "cameras",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each Camera item represents a traffic monitoring camera located on Washington state highways. Cameras provide real-time visual information about current traffic conditions, weather impacts, and roadway status for travelers and traffic management centers.",
-    businessContext:
-      "Use to monitor real-time traffic conditions by providing camera locations, images, and metadata for route planning and traffic management decisions.",
+    summary: "Traffic monitoring cameras on Washington state highways.",
+    description:
+      "Camera locations, image URLs, status, and metadata for real-time traffic condition visibility.",
+    useCases: [
+      "Display live camera feeds in traffic monitoring applications.",
+      "Show road conditions and weather impacts for route planning.",
+      "Provide visual traffic status in traveler information systems.",
+    ],
+    updateFrequency: "5m",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchHighwayCameras: {
-      endpoint: "/getCamerasAsJson",
-      inputSchema: highwayCamerasInputSchema,
-      outputSchema: z.array(cameraSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple Camera items for statewide coverage.",
-    } satisfies EndpointDefinition<HighwayCamerasInput, Camera[]>,
-    searchHighwayCamerasByRouteAndMilepost: {
-      endpoint: "/searchCamerasAsJson",
-      inputSchema: highwayCamerasByRouteAndMilepostInputSchema,
-      outputSchema: z.array(cameraSchema),
-      sampleParams: {
-        StateRoute: "I-5",
-        StartingMilepost: 10,
-        EndingMilepost: 20,
-      },
-      endpointDescription:
-        "Returns multiple Camera items for specified route and milepost range.",
-    } satisfies EndpointDefinition<
-      HighwayCamerasByRouteAndMilepostInput,
-      Camera[]
-    >,
-    fetchHighwayCameraByCameraId: {
-      endpoint: "/getCameraAsJson?CameraID={CameraID}",
-      inputSchema: highwayCameraByCameraIdInputSchema,
-      outputSchema: cameraSchema,
-      sampleParams: { CameraID: 9818 },
-      endpointDescription:
-        "Returns single Camera item for specific camera identifier.",
-    } satisfies EndpointDefinition<HighwayCameraByCameraIdInput, Camera>,
+};
+
+export const fetchHighwayCameras = createEndpoint({
+  api: apis.wsdotHighwayCameras,
+  group: camerasGroup,
+  functionName: "fetchHighwayCameras",
+  endpoint: "/getCamerasAsJson",
+  inputSchema: highwayCamerasInputSchema,
+  outputSchema: cameraSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List all highway cameras statewide.",
+});
+
+export const searchHighwayCamerasByRouteAndMilepost = createEndpoint({
+  api: apis.wsdotHighwayCameras,
+  group: camerasGroup,
+  functionName: "searchHighwayCamerasByRouteAndMilepost",
+  endpoint: "/searchCamerasAsJson",
+  inputSchema: highwayCamerasByRouteAndMilepostInputSchema,
+  outputSchema: cameraSchema.array(),
+  sampleParams: {
+    StateRoute: "I-5",
+    StartingMilepost: 10,
+    EndingMilepost: 20,
   },
-} satisfies EndpointGroup;
+  endpointDescription: "Search cameras by route and milepost range.",
+});
+
+export const fetchHighwayCameraByCameraId = createEndpoint({
+  api: apis.wsdotHighwayCameras,
+  group: camerasGroup,
+  functionName: "fetchHighwayCameraByCameraId",
+  endpoint: "/getCameraAsJson?CameraID={CameraID}",
+  inputSchema: highwayCameraByCameraIdInputSchema,
+  outputSchema: cameraSchema,
+  sampleParams: { CameraID: 9818 },
+  endpointDescription: "Get camera details by camera ID.",
+});

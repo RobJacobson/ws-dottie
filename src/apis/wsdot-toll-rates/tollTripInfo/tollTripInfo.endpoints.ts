@@ -1,26 +1,33 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type TollTripInfoInput,
-  tollTripInfoInputSchema,
-} from "./tollTripInfo.input";
-import { type TollTripInfo, tollTripInfoSchema } from "./tollTripInfo.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { tollTripInfoInputSchema } from "./tollTripInfo.input";
+import { tollTripInfoSchema } from "./tollTripInfo.output";
 
-export const tollTripInfoResource = {
+export const tollTripInfoGroup: EndpointGroup = {
   name: "toll-trip-info",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "TollTripInfo provides detailed trip information including geographical data, location names, mileposts, and geometry information for toll trips across statewide coverage areas.",
-    businessContext: "",
+    summary:
+      "Trip route information for HOV toll lanes including locations, mileposts, and geometry.",
+    description:
+      "Reference data for toll trip routes including start and end locations, coordinates, mileposts, travel direction, and optional geometry data for mapping.",
+    useCases: [
+      "Display toll trip routes on maps.",
+      "Look up trip information by location or route.",
+      "Build trip selection interfaces for toll rate queries.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchTollTripInfo: {
-      endpoint: "/getTollTripInfoAsJson",
-      inputSchema: tollTripInfoInputSchema,
-      outputSchema: z.array(tollTripInfoSchema),
-      sampleParams: {},
-      endpointDescription: "Returns trip information for all toll trips.",
-    } satisfies EndpointDefinition<TollTripInfoInput, TollTripInfo[]>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchTollTripInfo = createEndpoint({
+  api: apis.wsdotTollRates,
+  group: tollTripInfoGroup,
+  functionName: "fetchTollTripInfo",
+  endpoint: "/getTollTripInfoAsJson",
+  inputSchema: tollTripInfoInputSchema,
+  outputSchema: tollTripInfoSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List trip information for all toll trips statewide.",
+});

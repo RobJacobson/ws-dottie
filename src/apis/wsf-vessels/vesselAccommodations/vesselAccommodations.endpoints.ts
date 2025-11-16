@@ -1,47 +1,58 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import type {
+  VesselAccommodationsByIdInput,
+  VesselAccommodationsInput,
+} from "./vesselAccommodations.input";
 import {
-  type VesselAccommodationsByIdInput,
-  type VesselAccommodationsInput,
   vesselAccommodationsByIdInputSchema,
   vesselAccommodationsInputSchema,
 } from "./vesselAccommodations.input";
-import {
-  type VesselAccommodation,
-  vesselAccommodationSchema,
-} from "./vesselAccommodations.output";
+import type { VesselAccommodation } from "./vesselAccommodations.output";
+import { vesselAccommodationSchema } from "./vesselAccommodations.output";
 
-export const vesselAccommodationsResource = {
+export const vesselAccommodationsGroup: EndpointGroup = {
   name: "vessel-accommodations",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselAccommodation item represents passenger amenity and accessibility information for Washington State Ferries vessels. These items include ADA compliance features, restroom facilities, food service availability, and connectivity options for each vessel.",
-    businessContext:
-      "Use to plan accessible travel by providing amenity and accessibility information for passenger information applications. Supports trip planning tools and accessibility compliance systems for Washington State Ferry services.",
+    summary: "Passenger amenities and accessibility features for WSF vessels.",
+    description:
+      "Amenity and accessibility information including ADA compliance, restrooms, food service, elevators, and connectivity. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display vessel amenities in passenger information systems.",
+      "Plan accessible travel for passengers with disabilities.",
+      "Compare vessel features for trip planning.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchVesselAccommodations: {
-      endpoint: "/vesselAccommodations",
-      inputSchema: vesselAccommodationsInputSchema,
-      outputSchema: z.array(vesselAccommodationSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple VesselAccommodation objects for all vessels in fleet.",
-    } satisfies EndpointDefinition<
-      VesselAccommodationsInput,
-      VesselAccommodation[]
-    >,
-    fetchVesselAccommodationsByVesselId: {
-      endpoint: "/vesselAccommodations/{VesselID}",
-      inputSchema: vesselAccommodationsByIdInputSchema,
-      outputSchema: vesselAccommodationSchema,
-      sampleParams: { VesselID: 65 },
-      endpointDescription:
-        "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",
-    } satisfies EndpointDefinition<
-      VesselAccommodationsByIdInput,
-      VesselAccommodation
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchVesselAccommodations = createEndpoint<
+  VesselAccommodationsInput,
+  VesselAccommodation[]
+>({
+  api: apis.wsfVessels,
+  group: vesselAccommodationsGroup,
+  functionName: "fetchVesselAccommodations",
+  endpoint: "/vesselAccommodations",
+  inputSchema: vesselAccommodationsInputSchema,
+  outputSchema: vesselAccommodationSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List amenities and accessibility features for all vessels.",
+});
+
+export const fetchVesselAccommodationsByVesselId = createEndpoint<
+  VesselAccommodationsByIdInput,
+  VesselAccommodation
+>({
+  api: apis.wsfVessels,
+  group: vesselAccommodationsGroup,
+  functionName: "fetchVesselAccommodationsByVesselId",
+  endpoint: "/vesselAccommodations/{VesselID}",
+  inputSchema: vesselAccommodationsByIdInputSchema,
+  outputSchema: vesselAccommodationSchema,
+  sampleParams: { VesselID: 65 },
+  endpointDescription:
+    "Get amenities and accessibility features for a specific vessel.",
+});

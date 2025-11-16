@@ -1,60 +1,67 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
 import {
-  type RouteDetailsByTripDateAndRouteIdInput,
-  type RouteDetailsByTripDateAndTerminalsInput,
-  type RouteDetailsByTripDateInput,
   routeDetailsByTripDateAndRouteIdInputSchema,
   routeDetailsByTripDateAndTerminalsInputSchema,
   routeDetailsByTripDateInputSchema,
 } from "./routeDetails.input";
-import { type RouteDetail, routeDetailSchema } from "./routeDetails.output";
+import { routeDetailSchema } from "./routeDetails.output";
 
-export const routeDetailsResource = {
+export const routeDetailsGroup: EndpointGroup = {
   name: "route-details",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each RouteDetails item represents a ferry route with complete service information. Each route includes departure and arrival terminals, sailing times, vessel assignments, and route-specific details for travel planning.",
-    businessContext:
-      "Use to plan ferry travel by providing comprehensive route information including terminals, schedules, and vessel details for trip planning and navigation.",
+    summary: "Detailed ferry route information with service details.",
+    description:
+      "Comprehensive route data including terminals, crossing times, vessel assignments, alerts, and route-specific notes for trip planning.",
+    useCases: [
+      "Display detailed route information for trip planning.",
+      "Show route alerts and service disruptions.",
+      "Access route-specific notes and accessibility information.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchRouteDetailsByTripDate: {
-      endpoint: "/routedetails/{TripDate}",
-      inputSchema: routeDetailsByTripDateInputSchema,
-      outputSchema: z.array(routeDetailSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription:
-        "Returns multiple of RouteDetails for specified date.",
-    } satisfies EndpointDefinition<RouteDetailsByTripDateInput, RouteDetail[]>,
-    fetchRouteDetailsByTripDateAndRouteId: {
-      endpoint: "/routedetails/{TripDate}/{RouteID}",
-      inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
-      outputSchema: routeDetailSchema,
-      sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
-      endpointDescription:
-        "Returns single of RouteDetails for specified route.",
-    } satisfies EndpointDefinition<
-      RouteDetailsByTripDateAndRouteIdInput,
-      RouteDetail
-    >,
-    fetchRouteDetailsByTripDateAndTerminals: {
-      endpoint:
-        "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: routeDetailsByTripDateAndTerminalsInputSchema,
-      outputSchema: z.array(routeDetailSchema),
-      sampleParams: {
-        TripDate: datesHelper.tomorrow(),
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-      },
-      endpointDescription:
-        "Returns multiple of RouteDetails for terminal pair.",
-    } satisfies EndpointDefinition<
-      RouteDetailsByTripDateAndTerminalsInput,
-      RouteDetail[]
-    >,
+};
+
+export const fetchRouteDetailsByTripDate = createEndpoint({
+  api: apis.wsfSchedule,
+  group: routeDetailsGroup,
+  functionName: "fetchRouteDetailsByTripDate",
+  endpoint: "/routedetails/{TripDate}",
+  inputSchema: routeDetailsByTripDateInputSchema,
+  outputSchema: routeDetailSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription:
+    "List detailed route information for all routes on specified date.",
+});
+
+export const fetchRouteDetailsByTripDateAndRouteId = createEndpoint({
+  api: apis.wsfSchedule,
+  group: routeDetailsGroup,
+  functionName: "fetchRouteDetailsByTripDateAndRouteId",
+  endpoint: "/routedetails/{TripDate}/{RouteID}",
+  inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
+  outputSchema: routeDetailSchema,
+  sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
+  endpointDescription:
+    "Get detailed route information for specific route on date.",
+});
+
+export const fetchRouteDetailsByTripDateAndTerminals = createEndpoint({
+  api: apis.wsfSchedule,
+  group: routeDetailsGroup,
+  functionName: "fetchRouteDetailsByTripDateAndTerminals",
+  endpoint:
+    "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+  inputSchema: routeDetailsByTripDateAndTerminalsInputSchema,
+  outputSchema: routeDetailSchema.array(),
+  sampleParams: {
+    TripDate: datesHelper.tomorrow(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
   },
-} satisfies EndpointGroup;
+  endpointDescription:
+    "List detailed route information for terminal pair on date.",
+});

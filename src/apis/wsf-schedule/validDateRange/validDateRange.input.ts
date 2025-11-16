@@ -14,7 +14,7 @@ import { z } from "@/shared/zod";
 export const scheduleValidDateRangeInputSchema = z
   .object({})
   .describe(
-    "Retrieves date range for which schedule data is currently published and available, returning start and end dates. Use to determine valid trip dates for schedule queries before calling other endpoints."
+    "Input parameters for retrieving the valid date range for schedule data."
   );
 
 export type ScheduleValidDateRangeInput = z.infer<

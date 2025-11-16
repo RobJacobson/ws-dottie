@@ -1,44 +1,47 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type TerminalVerboseByTerminalIdInput,
-  type TerminalVerboseInput,
   terminalVerboseByTerminalIdInputSchema,
   terminalVerboseInputSchema,
 } from "./terminalVerbose.input";
-import {
-  type TerminalVerbose,
-  terminalVerboseSchema,
-} from "./terminalVerbose.output";
+import { terminalVerboseSchema } from "./terminalVerbose.output";
 
-export const terminalVerboseResource = {
+export const terminalVerboseGroup: EndpointGroup = {
   name: "terminal-verbose",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalVerbose item represents comprehensive terminal information for Washington State Ferry terminals. These items include basic details, bulletins, location data, sailing space information, transportation options, wait times, and facility information.",
-    businessContext:
-      "Use to retrieve comprehensive terminal information by providing complete facility details for integrated ferry terminal planning.",
+    summary:
+      "Comprehensive terminal information combining all terminal data types.",
+    description:
+      "Complete terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints. Includes identification, amenities, bulletins, locations, transportation info, sailing space, wait times, and additional details. Use when you need to reduce API calls and don't mind larger payloads. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Retrieve all terminal information in a single API call.",
+      "Reduce application chattiness when comprehensive data is needed.",
+      "Build integrated terminal information displays.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminalVerbose: {
-      endpoint: "/terminalVerbose",
-      inputSchema: terminalVerboseInputSchema,
-      outputSchema: z.array(terminalVerboseSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple TerminalVerbose objects for all terminals.",
-    } satisfies EndpointDefinition<TerminalVerboseInput, TerminalVerbose[]>,
-    fetchTerminalVerboseByTerminalId: {
-      endpoint: "/terminalVerbose/{TerminalID}",
-      inputSchema: terminalVerboseByTerminalIdInputSchema,
-      outputSchema: terminalVerboseSchema,
-      sampleParams: { TerminalID: 4 },
-      endpointDescription:
-        "Returns TerminalVerbose data for the terminal with the specified terminal.",
-    } satisfies EndpointDefinition<
-      TerminalVerboseByTerminalIdInput,
-      TerminalVerbose
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchTerminalVerbose = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalVerboseGroup,
+  functionName: "fetchTerminalVerbose",
+  endpoint: "/terminalVerbose",
+  inputSchema: terminalVerboseInputSchema,
+  outputSchema: terminalVerboseSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List comprehensive information for all terminals.",
+});
+
+export const fetchTerminalVerboseByTerminalId = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalVerboseGroup,
+  functionName: "fetchTerminalVerboseByTerminalId",
+  endpoint: "/terminalVerbose/{TerminalID}",
+  inputSchema: terminalVerboseByTerminalIdInputSchema,
+  outputSchema: terminalVerboseSchema,
+  sampleParams: { TerminalID: 4 },
+  endpointDescription:
+    "Get comprehensive information for a specific terminal by ID.",
+});

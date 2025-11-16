@@ -1,44 +1,46 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type TerminalBulletinsByIdInput,
-  type TerminalBulletinsInput,
   terminalBulletinsByIdInputSchema,
   terminalBulletinsInputSchema,
 } from "./terminalBulletins.input";
-import {
-  type TerminalBulletin,
-  terminalBulletinSchema,
-} from "./terminalBulletins.output";
+import { terminalBulletinSchema } from "./terminalBulletins.output";
 
-export const terminalBulletinsResource = {
+export const terminalBulletinsGroup: EndpointGroup = {
   name: "terminal-bulletins",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalBulletin item represents important notices and alerts associated with Washington State Ferry terminals. These items include service updates, travel advisories, and critical announcements for terminal users.",
-    businessContext:
-      "Use to inform travelers of terminal conditions by providing current alerts and service notices for ferry terminal planning.",
+    summary: "Service alerts and notifications for ferry terminals.",
+    description:
+      "Important notices and alerts associated with Washington State Ferry terminals including service updates, travel advisories, and critical announcements. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display terminal alerts and service notices in rider apps.",
+      "Show travel advisories and critical announcements.",
+      "Monitor terminal-specific and system-wide notifications.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminalBulletins: {
-      endpoint: "/terminalBulletins",
-      inputSchema: terminalBulletinsInputSchema,
-      outputSchema: z.array(terminalBulletinSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple TerminalBulletin objects for all terminals.",
-    } satisfies EndpointDefinition<TerminalBulletinsInput, TerminalBulletin[]>,
-    fetchTerminalBulletinsByTerminalId: {
-      endpoint: "/terminalBulletins/{TerminalID}",
-      inputSchema: terminalBulletinsByIdInputSchema,
-      outputSchema: terminalBulletinSchema,
-      sampleParams: { TerminalID: 3 },
-      endpointDescription:
-        "Returns TerminalBulletin data for the terminal with the specified terminal.",
-    } satisfies EndpointDefinition<
-      TerminalBulletinsByIdInput,
-      TerminalBulletin
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchTerminalBulletins = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalBulletinsGroup,
+  functionName: "fetchTerminalBulletins",
+  endpoint: "/terminalBulletins",
+  inputSchema: terminalBulletinsInputSchema,
+  outputSchema: terminalBulletinSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List bulletins and alerts for all terminals.",
+});
+
+export const fetchTerminalBulletinsByTerminalId = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalBulletinsGroup,
+  functionName: "fetchTerminalBulletinsByTerminalId",
+  endpoint: "/terminalBulletins/{TerminalID}",
+  inputSchema: terminalBulletinsByIdInputSchema,
+  outputSchema: terminalBulletinSchema,
+  sampleParams: { TerminalID: 3 },
+  endpointDescription:
+    "Get bulletins and alerts for a specific terminal by ID.",
+});

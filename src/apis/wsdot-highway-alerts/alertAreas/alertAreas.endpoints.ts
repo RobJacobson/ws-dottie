@@ -1,25 +1,33 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import { type MapAreasInput, mapAreasInputSchema } from "./alertAreas.input";
-import { type Area, areaSchema } from "./alertAreas.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { mapAreasInputSchema } from "./alertAreas.input";
+import { areaSchema } from "./alertAreas.output";
 
-export const alertAreasGroup = {
+export const alertAreasGroup: EndpointGroup = {
   name: "alertAreas",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each Area item represents a geographic region used for organizing and filtering highway alerts across Washington State. These include unique area codes and descriptive names for different regions.",
-    businessContext:
-      "Use to filter highway alerts by geographic region by providing area codes and descriptions for targeted traffic information retrieval.",
+    summary: "Geographic map areas for filtering highway alerts by region.",
+    description:
+      "Area codes and names used to organize and filter highway alerts across Washington State geographic regions.",
+    useCases: [
+      "Filter highway alerts by geographic map area.",
+      "Obtain valid area codes for alert queries.",
+      "Display regional alert organization in user interfaces.",
+    ],
+    updateFrequency: "5m",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchMapAreas: {
-      endpoint: "/getMapAreasAsJson",
-      inputSchema: mapAreasInputSchema,
-      outputSchema: z.array(areaSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of Area objects for all available geographic regions.",
-    } satisfies EndpointDefinition<MapAreasInput, Area[]>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchMapAreas = createEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: alertAreasGroup,
+  functionName: "fetchMapAreas",
+  endpoint: "/getMapAreasAsJson",
+  inputSchema: mapAreasInputSchema,
+  outputSchema: areaSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List all available geographic map areas for filtering alerts.",
+});

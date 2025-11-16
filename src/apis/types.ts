@@ -13,16 +13,27 @@ import type { CacheStrategy } from "@/shared/types";
  * API definition structure for endpoint files
  *
  * This interface defines the structure that endpoint files return as POJOs,
- * containing the API name, base URL, and array of endpoint group definitions with
+ * containing API metadata and array of endpoint group definitions with
  * truncated URLs that can be combined with the base URL.
  */
 export interface ApiDefinition {
-  /** The internal API name (e.g., "wsf-schedule") */
-  name: string;
-  /** The base URL for the API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
-  baseUrl: string;
+  /** The API metadata containing name and baseUrl */
+  api: ApiMetadata;
   /** Array of endpoint group definitions */
   endpointGroups: EndpointGroup[];
+}
+
+/**
+ * API metadata containing name and base URL
+ *
+ * This type is used to pass API information to endpoint definitions
+ * without creating circular dependencies.
+ */
+export interface ApiMetadata {
+  /** The internal API name (e.g., "wsf-vessels") */
+  name: string;
+  /** The base URL for API (e.g., "https://www.wsdot.wa.gov/ferries/api/vessels/rest") */
+  baseUrl: string;
 }
 
 /**
@@ -38,30 +49,48 @@ export interface EndpointGroup {
   documentation: ResourceDocumentation;
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
-  /**
-   * Record of endpoint definitions keyed by canonical function name
-   * (e.g., "fetchVesselBasics" or "searchAlerts")
-   */
-  endpoints: Record<string, EndpointDefinition<unknown, unknown>>;
 }
 
 /**
  * Documentation structure for API resources
  *
- * This interface defines the documentation fields for API resources,
- * providing comprehensive information about the resource and its usage.
+ * This interface defines the documentation fields for API resources.
+ * It supports both the new Proposal B shape (summary, description, etc.)
+ * and legacy fields for backward compatibility during migration.
  */
 export interface ResourceDocumentation {
-  /** Description of the resource being returned */
-  resourceDescription: string;
-  /** Business context for the resource */
-  businessContext: string;
-  /** Update frequency for the resource */
-  // updateFrequency: string;
-  /** Related endpoints for the resource */
-  // relatedEndpoints: string[];
-  /** Usage examples for the resource */
-  // usageExamples: string[];
+  /**
+   * Short, high-signal summary of this endpoint group.
+   *
+   * Prefer this over legacy resourceDescription when adding new docs.
+   */
+  summary?: string;
+  /**
+   * Optional longer description adding nuance or caveats.
+   */
+  description?: string;
+  /**
+   * Recommended use cases for this group, kept as short phrases.
+   */
+  useCases?: string[];
+  /**
+   * Approximate update frequency identifier (for example "5s", "5m").
+   */
+  updateFrequency?: string;
+
+  /**
+   * Deprecated: legacy description of the resource being returned.
+   *
+   * Existing groups may still populate this; new code should prefer summary.
+   */
+  resourceDescription?: string;
+  /**
+   * Deprecated: legacy business context for the resource.
+   *
+   * Existing groups may still populate this; new code should prefer
+   * description and useCases.
+   */
+  businessContext?: string;
 }
 
 /**

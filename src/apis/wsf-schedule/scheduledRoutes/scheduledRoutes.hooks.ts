@@ -1,30 +1,8 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { scheduledRoutesResource } from "./scheduledRoutes.endpoints";
-import * as fetchFunctions from "./scheduledRoutes.fetch";
-import type {
-  ScheduledRoutesByIdInput,
-  ScheduledRoutesInput,
-} from "./scheduledRoutes.input";
-import type { SchedRoute } from "./scheduledRoutes.output";
+  fetchScheduledRoutes,
+  fetchScheduledRoutesById,
+} from "./scheduledRoutes.endpoints";
 
-const hooks = createHooks(
-  wsfScheduleApi,
-  scheduledRoutesResource,
-  fetchFunctions
-);
+export const useScheduledRoutes = fetchScheduledRoutes.useQuery;
 
-export const useScheduledRoutes: (
-  params?: FetchFunctionParams<ScheduledRoutesInput>,
-  options?: QueryHookOptions<SchedRoute[]>
-) => UseQueryResult<SchedRoute[], Error> = hooks.useScheduledRoutes;
-
-export const useScheduledRoutesById: (
-  params?: FetchFunctionParams<ScheduledRoutesByIdInput>,
-  options?: QueryHookOptions<SchedRoute[]>
-) => UseQueryResult<SchedRoute[], Error> = hooks.useScheduledRoutesById;
+export const useScheduledRoutesById = fetchScheduledRoutesById.useQuery;

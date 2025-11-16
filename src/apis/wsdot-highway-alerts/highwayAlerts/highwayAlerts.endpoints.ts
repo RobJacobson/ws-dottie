@@ -1,77 +1,94 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
 import {
-  type AlertByIdInput,
-  type AlertsByMapAreaInput,
-  type AlertsByRegionIDInput,
-  type AlertsInput,
   alertByIdInputSchema,
   alertsByMapAreaInputSchema,
   alertsByRegionIDInputSchema,
   alertsInputSchema,
-  type SearchAlertsInput,
   searchAlertsInputSchema,
 } from "./highwayAlerts.input";
-import { type Alert, alertSchema } from "./highwayAlerts.output";
+import { alertSchema } from "./highwayAlerts.output";
 
-export const highwayAlertsGroup = {
+export const highwayAlertsGroup: EndpointGroup = {
   name: "highwayAlerts",
-  documentation: {
-    resourceDescription:
-      "Each Alert item represents real-time traffic incidents, road conditions, construction, and other events affecting Washington State highways. These include location details, impact levels, start/end times, and estimated duration.",
-    businessContext:
-      "Use to monitor traffic incidents and plan alternate routes by providing real-time highway alerts, incident locations, and impact assessments for Washington State roads.",
-  },
   // Using FREQUENT strategy because highway alerts can change every few minutes as incidents occur
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchAlerts: {
-      endpoint: "/getAlertsAsJson",
-      inputSchema: alertsInputSchema,
-      outputSchema: z.array(alertSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of Alert objects for all current highway incidents.",
-    } satisfies EndpointDefinition<AlertsInput, Alert[]>,
-    fetchAlertById: {
-      endpoint: "/getAlertAsJson?AlertID={AlertID}",
-      inputSchema: alertByIdInputSchema,
-      outputSchema: alertSchema,
-      sampleParams: { AlertID: 468632 },
-      endpointDescription:
-        "Returns a single Alert object for specified AlertID.",
-    } satisfies EndpointDefinition<AlertByIdInput, Alert>,
-    fetchAlertsByRegionId: {
-      endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
-      inputSchema: alertsByRegionIDInputSchema,
-      outputSchema: z.array(alertSchema),
-      sampleParams: { RegionID: 9 },
-      endpointDescription:
-        "Returns an array of Alert objects for specified WSDOT region.",
-    } satisfies EndpointDefinition<AlertsByRegionIDInput, Alert[]>,
-    fetchAlertsByMapArea: {
-      endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
-      inputSchema: alertsByMapAreaInputSchema,
-      outputSchema: z.array(alertSchema),
-      sampleParams: { MapArea: "Seattle" },
-      endpointDescription:
-        "Returns an array of Alert objects for specified geographic area.",
-    } satisfies EndpointDefinition<AlertsByMapAreaInput, Alert[]>,
-    searchAlerts: {
-      endpoint:
-        "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
-      inputSchema: searchAlertsInputSchema,
-      outputSchema: z.array(alertSchema),
-      sampleParams: {
-        StateRoute: "405",
-        StartingMilepost: 10,
-        EndingMilepost: 20,
-        SearchTimeStart: datesHelper.yesterday(),
-        SearchTimeEnd: datesHelper.today(),
-      },
-      endpointDescription:
-        "Returns an array of Alert objects matching specified search criteria.",
-    } satisfies EndpointDefinition<SearchAlertsInput, Alert[]>,
+  cacheStrategy: "FREQUENT",
+  documentation: {
+    summary:
+      "Real-time highway alerts for traffic incidents and road conditions.",
+    description:
+      "Traffic incidents, construction, maintenance, and other events affecting Washington State highways, including location details, impact levels, timestamps, and event classifications.",
+    useCases: [
+      "Monitor real-time traffic incidents and road conditions.",
+      "Plan alternate routes based on current highway alerts.",
+      "Display active alerts filtered by location, region, or category.",
+      "Track alert status and estimated resolution times.",
+    ],
+    updateFrequency: "5m",
   },
-} satisfies EndpointGroup;
+};
+
+export const fetchAlerts = createEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: highwayAlertsGroup,
+  functionName: "fetchAlerts",
+  endpoint: "/getAlertsAsJson",
+  inputSchema: alertsInputSchema,
+  outputSchema: alertSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List all current highway alerts statewide.",
+});
+
+export const fetchAlertById = createEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: highwayAlertsGroup,
+  functionName: "fetchAlertById",
+  endpoint: "/getAlertAsJson?AlertID={AlertID}",
+  inputSchema: alertByIdInputSchema,
+  outputSchema: alertSchema,
+  sampleParams: { AlertID: 468632 },
+  endpointDescription: "Get highway alert details for a specific alert ID.",
+});
+
+export const fetchAlertsByRegionId = createEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: highwayAlertsGroup,
+  functionName: "fetchAlertsByRegionId",
+  endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
+  inputSchema: alertsByRegionIDInputSchema,
+  outputSchema: alertSchema.array(),
+  sampleParams: { RegionID: 4 },
+  endpointDescription: "List highway alerts filtered by WSDOT region ID.",
+});
+
+export const fetchAlertsByMapArea = createEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: highwayAlertsGroup,
+  functionName: "fetchAlertsByMapArea",
+  endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
+  inputSchema: alertsByMapAreaInputSchema,
+  outputSchema: alertSchema.array(),
+  sampleParams: { MapArea: "Seattle" },
+  endpointDescription: "List highway alerts filtered by map area code.",
+});
+
+export const searchAlerts = createEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: highwayAlertsGroup,
+  functionName: "searchAlerts",
+  endpoint:
+    "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
+  inputSchema: searchAlertsInputSchema,
+  outputSchema: alertSchema.array(),
+  sampleParams: {
+    StateRoute: "405",
+    StartingMilepost: 10,
+    EndingMilepost: 20,
+    SearchTimeStart: datesHelper.yesterday(),
+    SearchTimeEnd: datesHelper.today(),
+  },
+  endpointDescription:
+    "Search highway alerts by route, region, time range, and milepost.",
+});

@@ -14,9 +14,7 @@ import { z } from "@/shared/zod";
  */
 export const terminalBasicsInputSchema = z
   .object({})
-  .describe(
-    "Retrieves basic terminal information including terminal IDs, names, abbreviations, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. Returns all terminals or specific terminal if TerminalID is provided. Use for terminal discovery and basic terminal information display."
-  );
+  .describe("Input parameters for retrieving basic terminal information.");
 
 export type TerminalBasicsInput = z.infer<typeof terminalBasicsInputSchema>;
 
@@ -27,15 +25,10 @@ export type TerminalBasicsInput = z.infer<typeof terminalBasicsInputSchema>;
  */
 export const terminalBasicsByIdInputSchema = z
   .object({
-    TerminalID: z
-      .number()
-      .int()
-      .describe(
-        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for basic information lookup."
-      ),
+    TerminalID: z.number().int().describe("Numeric ID of the terminal."),
   })
   .describe(
-    "Retrieves basic terminal information for specified terminal including terminal ID, name, abbreviation, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific basic information display."
+    "Input parameters for retrieving basic information for a specific terminal."
   );
 
 export type TerminalBasicsByIdInput = z.infer<

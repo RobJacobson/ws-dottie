@@ -1,36 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { scheduleTerminalsResource } from "./terminals.endpoints";
-import * as fetchFunctions from "./terminals.fetch";
-import type {
-  TerminalsAndMatesByRouteInput,
-  TerminalsAndMatesInput,
-  TerminalsInput,
-} from "./terminals.input";
-import type { Terminal, TerminalMate } from "./terminals.output";
+  fetchTerminals,
+  fetchTerminalsAndMates,
+  fetchTerminalsAndMatesByRoute,
+} from "./terminals.endpoints";
 
-const hooks = createHooks(
-  wsfScheduleApi,
-  scheduleTerminalsResource,
-  fetchFunctions
-);
+export const useTerminals = fetchTerminals.useQuery;
 
-export const useTerminals: (
-  params?: FetchFunctionParams<TerminalsInput>,
-  options?: QueryHookOptions<Terminal[]>
-) => UseQueryResult<Terminal[], Error> = hooks.useTerminals;
+export const useTerminalsAndMates = fetchTerminalsAndMates.useQuery;
 
-export const useTerminalsAndMates: (
-  params?: FetchFunctionParams<TerminalsAndMatesInput>,
-  options?: QueryHookOptions<TerminalMate[]>
-) => UseQueryResult<TerminalMate[], Error> = hooks.useTerminalsAndMates;
-
-export const useTerminalsAndMatesByRoute: (
-  params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>,
-  options?: QueryHookOptions<TerminalMate[]>
-) => UseQueryResult<TerminalMate[], Error> = hooks.useTerminalsAndMatesByRoute;
+export const useTerminalsAndMatesByRoute =
+  fetchTerminalsAndMatesByRoute.useQuery;

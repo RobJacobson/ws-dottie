@@ -1,30 +1,38 @@
-import {
-  type ValidDateRange,
-  validDateRangeSchema,
-} from "@/apis/shared/validDateRange.output";
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type FaresValidDateRangeInput,
   faresValidDateRangeInputSchema,
 } from "./validDateRange.input";
 
-export const validDateRangeGroup = {
+export const validDateRangeGroup: EndpointGroup = {
   name: "valid-date-range",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each ValidDateRange item represents the current validity period for Washington State Ferries fare data. This endpoint provides the start and end dates between which fare information is accurate and published for all ferry routes.",
-    businessContext:
-      "Use to determine valid fare calculation periods by providing DateFrom and DateThru dates for accurate fare queries and booking systems.",
+    summary: "Validity period for published WSF fare data.",
+    description:
+      "Returns the start and end dates between which fare information is accurate and available for all ferry routes. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Determine valid trip dates for fare queries.",
+      "Validate trip date inputs before calling other endpoints.",
+      "Display available date ranges in booking interfaces.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchFaresValidDateRange: {
-      endpoint: "/validdaterange",
-      inputSchema: faresValidDateRangeInputSchema,
-      outputSchema: validDateRangeSchema,
-      sampleParams: {},
-      endpointDescription:
-        "Returns a single ValidDateRange object for the current fares data validity period.",
-    } satisfies EndpointDefinition<FaresValidDateRangeInput, ValidDateRange>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchFaresValidDateRange = createEndpoint<
+  FaresValidDateRangeInput,
+  any
+>({
+  api: apis.wsfFares,
+  group: validDateRangeGroup,
+  functionName: "fetchFaresValidDateRange",
+  endpoint: "/validdaterange",
+  inputSchema: faresValidDateRangeInputSchema,
+  outputSchema: validDateRangeSchema,
+  sampleParams: {},
+  endpointDescription: "Get the validity date range for published fares data.",
+});

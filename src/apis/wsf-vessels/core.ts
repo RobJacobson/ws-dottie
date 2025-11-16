@@ -5,7 +5,10 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from "./cacheFlushDate/cacheFlushDate.endpoints";
+export type {
+  CacheFlushDateInput as CacheFlushDateVesselsInput,
+  CacheFlushDateOutput as CacheFlushDateVessels,
+} from "@/apis/shared/cacheFlushDate";
 export * from "./cacheFlushDate/cacheFlushDate.fetch";
 export * from "./vesselAccommodations/vesselAccommodations.fetch";
 export * from "./vesselAccommodations/vesselAccommodations.input";

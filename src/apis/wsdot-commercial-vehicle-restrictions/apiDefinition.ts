@@ -1,12 +1,9 @@
-import type { ApiDefinition } from "@/apis/types";
-
-// Import all resources
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
 import { cvRestrictionDataGroup } from "./cvRestrictionData/cvRestrictionData.endpoints";
 import { cvRestrictionDataWithIdGroup } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.endpoints";
 
 export const wsdotCommercialVehicleRestrictionsApi = {
-  name: "wsdot-commercial-vehicle-restrictions",
-  baseUrl:
-    "https://www.wsdot.wa.gov/traffic/api/cvrestrictions/cvrestrictionsrest.svc",
+  api: apis.wsdotCommercialVehicleRestrictions,
   endpointGroups: [cvRestrictionDataGroup, cvRestrictionDataWithIdGroup],
 } satisfies ApiDefinition;

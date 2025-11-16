@@ -1,11 +1,8 @@
-import type { ApiDefinition } from "@/apis/types";
-
-// Import all resources
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
 import { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes.endpoints";
 
 export const wsdotTravelTimesApi = {
-  name: "wsdot-travel-times",
-  baseUrl:
-    "https://www.wsdot.wa.gov/traffic/api/traveltimes/traveltimesrest.svc",
+  api: apis.wsdotTravelTimes,
   endpointGroups: [travelTimeRoutesGroup],
 } satisfies ApiDefinition;

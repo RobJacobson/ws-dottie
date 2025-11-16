@@ -16,23 +16,19 @@ export const routesByTripDateInputSchema = z
     TripDate: z
       .string()
       .describe(
-        "Trip date for which to retrieve routes, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter routes by trip date availability."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange."
       ),
     DepartingTerminalID: z
       .number()
       .optional()
-      .describe(
-        "Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to filter routes by origin terminal. Optional - if omitted, returns all routes for trip date."
-      ),
+      .describe("Numeric ID of the departing terminal. Optional."),
     ArrivingTerminalID: z
       .number()
       .optional()
-      .describe(
-        "Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalsAndMates to retrieve valid arriving terminals. Used to filter routes by destination terminal. Optional - if omitted, returns all routes for trip date."
-      ),
+      .describe("Numeric ID of the arriving terminal. Optional."),
   })
   .describe(
-    "Retrieves basic route information for specified trip date, optionally filtered by terminal combination. Returns route IDs, abbreviations, descriptions, region IDs, and service disruptions. Use GetScheduleValidDateRange to determine valid trip dates. Use for route discovery and route identification."
+    "Input parameters for routes endpoint. Trip date required; terminal IDs optional for filtering."
   );
 
 export type RoutesByTripDateInput = z.infer<typeof routesByTripDateInputSchema>;
@@ -46,11 +42,11 @@ export const routesHavingServiceDisruptionsByTripDateInputSchema = z
     TripDate: z
       .string()
       .describe(
-        "Trip date for which to retrieve routes with service disruptions, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter disrupted routes by trip date."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range."
       ),
   })
   .describe(
-    "Retrieves basic route information for routes currently experiencing service disruptions on specified trip date. Returns route IDs, abbreviations, descriptions, and disruption details. Use GetScheduleValidDateRange to determine valid trip dates. Use for identifying routes affected by service disruptions."
+    "Input parameters for retrieving routes with service disruptions by trip date."
   );
 
 export type RoutesHavingServiceDisruptionsByTripDateInput = z.infer<
@@ -104,15 +100,14 @@ export type RouteDetailsInput = z.infer<typeof routeDetailsSchema>;
  */
 export const routeDetailsByTripDateInputSchema = z
   .object({
-    /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
       .string()
       .describe(
-        "Trip date for which to retrieve detailed route information, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter routes by trip date availability."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange."
       ),
   })
   .describe(
-    "Retrieves highly detailed information for all routes available on specified trip date, returning route details including descriptions, alerts, crossing times, and schedule information. Use GetScheduleValidDateRange to determine valid trip dates. Use for comprehensive route overview for a specific date."
+    "Input parameters for route details by trip date endpoint. Trip date required."
   );
 
 export type RouteDetailsByTripDateInput = z.infer<
@@ -126,21 +121,15 @@ export type RouteDetailsByTripDateInput = z.infer<
  */
 export const routeDetailsByTripDateAndRouteIdInputSchema = z
   .object({
-    /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
       .string()
       .describe(
-        "Trip date for which to retrieve detailed route information, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter route by trip date availability."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange."
       ),
-    /** Unique identifier for a route. */
-    RouteID: z
-      .number()
-      .describe(
-        "Unique identifier for route, as an integer ID. E.g., '9' for Anacortes/San Juan Islands route, '6' for Edmonds/Kingston route. Use GetRoutes to retrieve valid routes. Used to identify specific route for detailed information."
-      ),
+    RouteID: z.number().describe("Numeric ID of the route."),
   })
   .describe(
-    "Retrieves highly detailed information for specific route on specified trip date, returning route details including descriptions, alerts, crossing times, terminal combinations, and schedule information. Use GetRoutes to find valid routes and GetScheduleValidDateRange for valid trip dates. Use for route-specific detailed queries."
+    "Input parameters for route details by trip date and route ID endpoint."
   );
 
 export type RouteDetailsByTripDateAndRouteIdInput = z.infer<
@@ -154,27 +143,20 @@ export type RouteDetailsByTripDateAndRouteIdInput = z.infer<
  */
 export const routeDetailsByTripDateAndTerminalsInputSchema = z
   .object({
-    /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
       .string()
       .describe(
-        "Trip date for which to retrieve detailed route information, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter routes by trip date availability."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange."
       ),
-    /** Unique identifier for the departing terminal. */
     DepartingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalsAndMates to retrieve valid departing terminals. Used to filter routes by origin terminal."
-      ),
-    /** Unique identifier for the arriving terminal. */
+      .describe("Numeric ID of the departing terminal."),
     ArrivingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalsAndMates to retrieve valid arriving terminals. Used to filter routes by destination terminal."
-      ),
+      .describe("Numeric ID of the arriving terminal."),
   })
   .describe(
-    "Retrieves highly detailed information for routes matching specific trip date and terminal combination, returning route details including descriptions, alerts, crossing times, and schedule information. Use GetTerminalsAndMates to find valid terminal combinations and GetScheduleValidDateRange for valid trip dates. Use for terminal-specific route queries."
+    "Input parameters for route details by trip date and terminals endpoint."
   );
 
 export type RouteDetailsByTripDateAndTerminalsInput = z.infer<
@@ -188,28 +170,19 @@ export type RouteDetailsByTripDateAndTerminalsInput = z.infer<
  */
 export const routesByTripDateAndTerminalsInputSchema = z
   .object({
-    /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
       .string()
       .describe(
-        "Trip date for which to retrieve routes, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter routes by trip date availability."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange."
       ),
-    /** Unique identifier for the departing terminal. */
     DepartingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalsAndMates to retrieve valid departing terminals. Used to filter routes by origin terminal."
-      ),
-    /** Unique identifier for the arriving terminal. */
+      .describe("Numeric ID of the departing terminal."),
     ArrivingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalsAndMates to retrieve valid arriving terminals. Used to filter routes by destination terminal."
-      ),
+      .describe("Numeric ID of the arriving terminal."),
   })
-  .describe(
-    "Retrieves basic route information for routes matching specific trip date and terminal combination, returning route IDs, abbreviations, descriptions, and service disruptions. Use GetTerminalsAndMates to find valid terminal combinations and GetScheduleValidDateRange for valid trip dates. Use for terminal-specific route discovery."
-  );
+  .describe("Input parameters for routes by trip date and terminals endpoint.");
 
 export type RoutesByTripDateAndTerminalsInput = z.infer<
   typeof routesByTripDateAndTerminalsInputSchema

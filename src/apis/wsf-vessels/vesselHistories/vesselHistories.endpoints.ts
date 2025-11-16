@@ -1,5 +1,6 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselHistoriesByVesselNameAndDateRangeInput,
   type VesselHistoriesInput,
@@ -11,37 +12,50 @@ import {
   vesselHistorySchema,
 } from "./vesselHistories.output";
 
-export const vesselHistoriesResource = {
+export const vesselHistoriesGroup: EndpointGroup = {
   name: "vessel-histories",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselHistory item represents a historical record for a single sailing between terminals, including the vessel, the departure details (including departure terminal, scheduled departure time, and actual departure time), and the arrival details (including arrival terminal and estimated arrival time).",
-    businessContext: "",
+    summary: "Historical sailing records for WSF vessels.",
+    description:
+      "Historical voyage data including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Analyze on-time performance and voyage patterns.",
+      "Track historical vessel movements and routes.",
+      "Generate reports on operational history.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchVesselHistories: {
-      endpoint: "/vesselHistory",
-      inputSchema: vesselHistoriesInputSchema,
-      outputSchema: z.array(vesselHistorySchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple VesselHistory objects for all vessels in fleet.",
-    } satisfies EndpointDefinition<VesselHistoriesInput, VesselHistory[]>,
-    fetchVesselHistoriesByVesselNameAndDateRange: {
-      endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
-      inputSchema: vesselHistoriesByVesselNameAndDateRangeInputSchema,
-      outputSchema: z.array(vesselHistorySchema),
-      sampleParams: {
-        VesselName: "Tacoma",
-        DateStart: "2025-09-01",
-        DateEnd: "2025-10-01",
-      },
-      endpointDescription:
-        "Returns multiple VesselHistory objects for the specified vessel and date range.",
-    } satisfies EndpointDefinition<
-      VesselHistoriesByVesselNameAndDateRangeInput,
-      VesselHistory[]
-    >,
+};
+
+export const fetchVesselHistories = createEndpoint<
+  VesselHistoriesInput,
+  VesselHistory[]
+>({
+  api: apis.wsfVessels,
+  group: vesselHistoriesGroup,
+  functionName: "fetchVesselHistories",
+  endpoint: "/vesselHistory",
+  inputSchema: vesselHistoriesInputSchema,
+  outputSchema: vesselHistorySchema.array(),
+  sampleParams: {},
+  endpointDescription: "List historical sailing records for all vessels.",
+});
+
+export const fetchVesselHistoriesByVesselNameAndDateRange = createEndpoint<
+  VesselHistoriesByVesselNameAndDateRangeInput,
+  VesselHistory[]
+>({
+  api: apis.wsfVessels,
+  group: vesselHistoriesGroup,
+  functionName: "fetchVesselHistoriesByVesselNameAndDateRange",
+  endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
+  inputSchema: vesselHistoriesByVesselNameAndDateRangeInputSchema,
+  outputSchema: vesselHistorySchema.array(),
+  sampleParams: {
+    VesselName: "Tacoma",
+    DateStart: "2025-09-01",
+    DateEnd: "2025-10-01",
   },
-} satisfies EndpointGroup;
+  endpointDescription:
+    "Get historical sailing records for a vessel within a date range.",
+});

@@ -1,46 +1,46 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type TerminalSailingSpaceByTerminalIdInput,
-  type TerminalSailingSpaceInput,
   terminalSailingSpaceByTerminalIdInputSchema,
   terminalSailingSpaceInputSchema,
 } from "./terminalSailingSpace.input";
-import {
-  type TerminalSailingSpace,
-  terminalSailingSpaceSchema,
-} from "./terminalSailingSpace.output";
+import { terminalSailingSpaceSchema } from "./terminalSailingSpace.output";
 
-export const terminalSailingSpaceResource = {
+export const terminalSailingSpaceGroup: EndpointGroup = {
   name: "terminal-sailing-space",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability.",
-    businessContext: "",
+    summary: "Real-time sailing space availability for upcoming departures.",
+    description:
+      "Terminal condition data including drive-up and reservation spaces available for select departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group. Do not cache results for extended periods.",
+    useCases: [
+      "Display real-time space availability for upcoming sailings.",
+      "Show drive-up and reservation space counts with color indicators.",
+      "Monitor vessel assignments and departure cancellations.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminalSailingSpace: {
-      endpoint: "/terminalSailingSpace",
-      inputSchema: terminalSailingSpaceInputSchema,
-      outputSchema: z.array(terminalSailingSpaceSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple TerminalSailingSpace objects for all terminals.",
-    } satisfies EndpointDefinition<
-      TerminalSailingSpaceInput,
-      TerminalSailingSpace[]
-    >,
-    fetchTerminalSailingSpaceByTerminalId: {
-      endpoint: "/terminalSailingSpace/{TerminalID}",
-      inputSchema: terminalSailingSpaceByTerminalIdInputSchema,
-      outputSchema: terminalSailingSpaceSchema,
-      sampleParams: { TerminalID: 7 },
-      endpointDescription:
-        "Returns TerminalSailingSpace data for the terminal with the given identifier.",
-    } satisfies EndpointDefinition<
-      TerminalSailingSpaceByTerminalIdInput,
-      TerminalSailingSpace
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchTerminalSailingSpace = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalSailingSpaceGroup,
+  functionName: "fetchTerminalSailingSpace",
+  endpoint: "/terminalSailingSpace",
+  inputSchema: terminalSailingSpaceInputSchema,
+  outputSchema: terminalSailingSpaceSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List sailing space availability for all terminals.",
+});
+
+export const fetchTerminalSailingSpaceByTerminalId = createEndpoint({
+  api: apis.wsfTerminals,
+  group: terminalSailingSpaceGroup,
+  functionName: "fetchTerminalSailingSpaceByTerminalId",
+  endpoint: "/terminalSailingSpace/{TerminalID}",
+  inputSchema: terminalSailingSpaceByTerminalIdInputSchema,
+  outputSchema: terminalSailingSpaceSchema,
+  sampleParams: { TerminalID: 7 },
+  endpointDescription:
+    "Get sailing space availability for a specific terminal by ID.",
+});

@@ -1,28 +1,17 @@
 import { z } from "@/shared/zod";
 
-/**
- * GetVesselHistory input schema
- */
 export const vesselHistoriesByVesselNameAndDateRangeInputSchema = z
   .object({
-    VesselName: z
-      .string()
-      .describe(
-        "Vessel name for history query, as a human-readable description. E.g., 'Tacoma' for vessel Tacoma, 'Chelan' for vessel Chelan. Required to filter history records for a specific vessel."
-      ),
+    VesselName: z.string().describe("Display name of the vessel."),
     DateStart: z
       .string()
-      .describe(
-        "Start date for history query date range, as a date string. E.g., '2025-09-01' for September 1, 2025. Defines the beginning of the date range for retrieving historical vessel departure and arrival records."
-      ),
+      .describe("Start date for history query in YYYY-MM-DD format."),
     DateEnd: z
       .string()
-      .describe(
-        "End date for history query date range, as a date string. E.g., '2025-09-30' for September 30, 2025. Defines the end of the date range for retrieving historical vessel departure and arrival records."
-      ),
+      .describe("End date for history query in YYYY-MM-DD format."),
   })
   .describe(
-    "Filters vessel history records by vessel name and date range, returning departure and arrival details for matching voyages. E.g., vessel Tacoma from September 1-30, 2025 showing departures from Bainbridge and Colman terminals. Use for analyzing vessel operational history, on-time performance, and route patterns."
+    "Input parameters for retrieving vessel history by vessel name and date range."
   );
 
 export type VesselHistoriesByVesselNameAndDateRangeInput = z.infer<
@@ -31,8 +20,6 @@ export type VesselHistoriesByVesselNameAndDateRangeInput = z.infer<
 
 export const vesselHistoriesInputSchema = z
   .object({})
-  .describe(
-    "Retrieves vessel history records for all vessels without filtering, returning departure and arrival details. Use when you need complete historical vessel data across all vessels in the fleet."
-  );
+  .describe("Input parameters for retrieving vessel history for all vessels.");
 
 export type VesselHistoriesInput = z.infer<typeof vesselHistoriesInputSchema>;

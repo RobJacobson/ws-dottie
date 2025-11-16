@@ -1,5 +1,6 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselVerboseByIdInput,
   type VesselVerboseInput,
@@ -11,31 +12,47 @@ import {
   vesselVerboseSchema,
 } from "./vesselVerbose.output";
 
-export const vesselVerboseResource = {
+export const vesselVerboseGroup: EndpointGroup = {
   name: "vessel-verbose",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselVerbose item represents complete vessel information combining basic details, technical specifications, and accommodation data. These items provide comprehensive vessel profiles in a single response for Washington State Ferries fleet.",
-    businessContext:
-      "Use to display complete vessel information by providing comprehensive vessel data for passenger information applications. Supports trip planning tools and fleet management systems for Washington State Ferry services.",
+    summary:
+      "Complete vessel information combining basics, stats, and accommodations.",
+    description:
+      "Comprehensive vessel profiles combining identification, operational status, technical specifications, and amenities in a single response. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display complete vessel profiles in passenger information systems.",
+      "Reduce API calls by fetching all vessel data at once.",
+      "Support comprehensive vessel comparison and selection.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchVesselsVerbose: {
-      endpoint: "/vesselVerbose",
-      inputSchema: vesselVerboseInputSchema,
-      outputSchema: z.array(vesselVerboseSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple VesselVerbose objects for all vessels in fleet.",
-    } satisfies EndpointDefinition<VesselVerboseInput, VesselVerbose[]>,
-    fetchVesselsVerboseByVesselId: {
-      endpoint: "/vesselVerbose/{VesselID}",
-      inputSchema: vesselVerboseByIdInputSchema,
-      outputSchema: vesselVerboseSchema,
-      sampleParams: { VesselID: 68 },
-      endpointDescription:
-        "Returns a single VesselVerbose object for the specified vessel identifier.",
-    } satisfies EndpointDefinition<VesselVerboseByIdInput, VesselVerbose>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchVesselsVerbose = createEndpoint<
+  VesselVerboseInput,
+  VesselVerbose[]
+>({
+  api: apis.wsfVessels,
+  group: vesselVerboseGroup,
+  functionName: "fetchVesselsVerbose",
+  endpoint: "/vesselVerbose",
+  inputSchema: vesselVerboseInputSchema,
+  outputSchema: vesselVerboseSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List complete vessel information for all vessels.",
+});
+
+export const fetchVesselsVerboseByVesselId = createEndpoint<
+  VesselVerboseByIdInput,
+  VesselVerbose
+>({
+  api: apis.wsfVessels,
+  group: vesselVerboseGroup,
+  functionName: "fetchVesselsVerboseByVesselId",
+  endpoint: "/vesselVerbose/{VesselID}",
+  inputSchema: vesselVerboseByIdInputSchema,
+  outputSchema: vesselVerboseSchema,
+  sampleParams: { VesselID: 68 },
+  endpointDescription:
+    "Get complete vessel information for a specific vessel by ID.",
+});

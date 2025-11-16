@@ -1,24 +1,22 @@
-import type { ApiDefinition } from "@/apis/types";
-
-// Import all resources
-import { cacheFlushDateVesselsResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
-import { vesselAccommodationsResource } from "./vesselAccommodations/vesselAccommodations.endpoints";
-import { vesselBasicsResource } from "./vesselBasics/vesselBasics.endpoints";
-import { vesselHistoriesResource } from "./vesselHistories/vesselHistories.endpoints";
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
+import { cacheFlushDateVesselsGroup } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { vesselAccommodationsGroup } from "./vesselAccommodations/vesselAccommodations.endpoints";
+import { vesselBasicsGroup } from "./vesselBasics/vesselBasics.endpoints";
+import { vesselHistoriesGroup } from "./vesselHistories/vesselHistories.endpoints";
 import { vesselLocationsGroup } from "./vesselLocations/vesselLocations.endpoints";
-import { vesselStatsResource } from "./vesselStats/vesselStats.endpoints";
-import { vesselVerboseResource } from "./vesselVerbose/vesselVerbose.endpoints";
+import { vesselStatsGroup } from "./vesselStats/vesselStats.endpoints";
+import { vesselVerboseGroup } from "./vesselVerbose/vesselVerbose.endpoints";
 
 export const wsfVesselsApi = {
-  name: "wsf-vessels",
-  baseUrl: "https://www.wsdot.wa.gov/ferries/api/vessels/rest",
+  api: apis.wsfVessels,
   endpointGroups: [
-    cacheFlushDateVesselsResource,
-    vesselAccommodationsResource,
-    vesselBasicsResource,
-    vesselHistoriesResource,
+    cacheFlushDateVesselsGroup,
+    vesselAccommodationsGroup,
+    vesselBasicsGroup,
+    vesselHistoriesGroup,
     vesselLocationsGroup,
-    vesselStatsResource,
-    vesselVerboseResource,
+    vesselStatsGroup,
+    vesselVerboseGroup,
   ],
 } satisfies ApiDefinition;

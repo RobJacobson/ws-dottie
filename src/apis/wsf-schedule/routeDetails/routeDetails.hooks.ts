@@ -1,34 +1,13 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { routeDetailsResource } from "./routeDetails.endpoints";
-import * as fetchFunctions from "./routeDetails.fetch";
-import type {
-  RouteDetailsByTripDateAndRouteIdInput,
-  RouteDetailsByTripDateAndTerminalsInput,
-  RouteDetailsByTripDateInput,
-} from "./routeDetails.input";
-import type { RouteDetail } from "./routeDetails.output";
+  fetchRouteDetailsByTripDate,
+  fetchRouteDetailsByTripDateAndRouteId,
+  fetchRouteDetailsByTripDateAndTerminals,
+} from "./routeDetails.endpoints";
 
-const hooks = createHooks(wsfScheduleApi, routeDetailsResource, fetchFunctions);
+export const useRouteDetailsByTripDate = fetchRouteDetailsByTripDate.useQuery;
 
-export const useRouteDetailsByTripDate: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateInput>,
-  options?: QueryHookOptions<RouteDetail[]>
-) => UseQueryResult<RouteDetail[], Error> = hooks.useRouteDetailsByTripDate;
+export const useRouteDetailsByTripDateAndRouteId =
+  fetchRouteDetailsByTripDateAndRouteId.useQuery;
 
-export const useRouteDetailsByTripDateAndRouteId: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>,
-  options?: QueryHookOptions<RouteDetail>
-) => UseQueryResult<RouteDetail, Error> =
-  hooks.useRouteDetailsByTripDateAndRouteId;
-
-export const useRouteDetailsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<RouteDetail[]>
-) => UseQueryResult<RouteDetail[], Error> =
-  hooks.useRouteDetailsByTripDateAndTerminals;
+export const useRouteDetailsByTripDateAndTerminals =
+  fetchRouteDetailsByTripDateAndTerminals.useQuery;

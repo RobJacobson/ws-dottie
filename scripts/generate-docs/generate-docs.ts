@@ -15,8 +15,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, "../..");
 
-const openApiSpecDir = join(projectRoot, "docs", "openapi");
-const outputDir = join(projectRoot, "docs", "redoc");
+const openApiSpecDir = join(projectRoot, "docs", "generated", "openapi");
+const outputDir = join(projectRoot, "docs", "api-reference");
 
 /**
  * Generate HTML documentation for a single OpenAPI spec
@@ -25,6 +25,7 @@ function generateHtmlForSpec(yamlFile: string): void {
   const apiName = yamlFile.replace(".yaml", "");
   const openApiSpecPath = join(openApiSpecDir, yamlFile);
   const outputPath = join(outputDir, `${apiName}.html`);
+  const templatePath = join(__dirname, "templates", "redoc-template.html");
 
   // Check if OpenAPI spec exists
   if (!existsSync(openApiSpecPath)) {
@@ -37,7 +38,7 @@ function generateHtmlForSpec(yamlFile: string): void {
   try {
     // Generate HTML using redocly CLI with custom configuration
     execSync(
-      `npx @redocly/cli build-docs "${openApiSpecPath}" --output "${outputPath}" --theme.openapi.expandResponses "200" --theme.schema.description "expanded" --theme.schema.maxDisplayedProperties 20 --theme.schema.sectionsOrder "example|properties|description"`,
+      `npx @redocly/cli build-docs "${openApiSpecPath}" --output "${outputPath}" --theme.openapi.expandResponses "200" --theme.schema.description "expanded" --theme.schema.maxDisplayedProperties 20 --theme.schema.sectionsOrder "example|properties|description" --theme.showTagDescriptions true --theme.expandTagGroups true`,
       {
         stdio: "pipe",
         cwd: projectRoot,
@@ -45,6 +46,25 @@ function generateHtmlForSpec(yamlFile: string): void {
     );
 
     console.log(`✓ ${apiName}: ${outputPath}`);
+
+    // Post-process the generated HTML to enhance tag documentation
+    console.log(`  Post-processing ${apiName}...`);
+    try {
+      execSync(
+        `npx tsx "${join(__dirname, "post-process-html.ts")}" "${outputPath}"`,
+        {
+          stdio: "pipe",
+          cwd: projectRoot,
+        }
+      );
+      console.log(`  Enhanced ${apiName} with custom tag documentation`);
+    } catch (postProcessError) {
+      console.error(
+        `  Warning: Post-processing failed for ${apiName}:`,
+        postProcessError
+      );
+      console.log(`  Continuing without post-processing...`);
+    }
   } catch (error) {
     console.error(`✗ Error generating HTML for ${apiName}:`, error);
     throw error;

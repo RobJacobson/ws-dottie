@@ -1,27 +1,33 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { z } from "@/shared/zod";
-import {
-  type EventCategoriesInput,
-  eventCategoriesInputSchema,
-} from "./eventCategories.input";
+import { eventCategoriesInputSchema } from "./eventCategories.input";
 
-export const eventCategoriesGroup = {
+export const eventCategoriesGroup: EndpointGroup = {
   name: "event-categories",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each EventCategory item represents a classification type for highway alerts including collisions, maintenance work, construction, weather-related events, and other traffic incidents. These categories help organize and filter alerts by incident type.",
-    businessContext:
-      "Use to categorize and filter highway alerts by incident type by providing standardized event classifications for targeted traffic information retrieval.",
+    summary: "Event category classifications for highway alerts.",
+    description:
+      "Standardized category names used to classify and filter highway alerts by incident type, such as construction, collisions, maintenance, and weather events.",
+    useCases: [
+      "Filter highway alerts by event category type.",
+      "Obtain valid category names for alert searches.",
+      "Categorize alerts in user interfaces by incident type.",
+    ],
+    updateFrequency: "5m",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchEventCategories: {
-      endpoint: "/getEventCategoriesAsJson",
-      inputSchema: eventCategoriesInputSchema,
-      outputSchema: z.array(z.string()),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of strings for all available event categories.",
-    } satisfies EndpointDefinition<EventCategoriesInput, string[]>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchEventCategories = createEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: eventCategoriesGroup,
+  functionName: "fetchEventCategories",
+  endpoint: "/getEventCategoriesAsJson",
+  inputSchema: eventCategoriesInputSchema,
+  outputSchema: z.string().array(),
+  sampleParams: {},
+  endpointDescription:
+    "List all available event category names for filtering alerts.",
+});

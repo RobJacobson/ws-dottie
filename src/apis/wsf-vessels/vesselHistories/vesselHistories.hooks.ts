@@ -1,31 +1,8 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { vesselHistoriesResource } from "./vesselHistories.endpoints";
-import * as fetchFunctions from "./vesselHistories.fetch";
-import type {
-  VesselHistoriesByVesselNameAndDateRangeInput,
-  VesselHistoriesInput,
-} from "./vesselHistories.input";
-import type { VesselHistory } from "./vesselHistories.output";
+  fetchVesselHistories,
+  fetchVesselHistoriesByVesselNameAndDateRange,
+} from "./vesselHistories.endpoints";
 
-const hooks = createHooks(
-  wsfVesselsApi,
-  vesselHistoriesResource,
-  fetchFunctions
-);
-
-export const useVesselHistories: (
-  params?: FetchFunctionParams<VesselHistoriesInput>,
-  options?: QueryHookOptions<VesselHistory[]>
-) => UseQueryResult<VesselHistory[], Error> = hooks.useVesselHistories;
-
-export const useVesselHistoriesByVesselNameAndDateRange: (
-  params?: FetchFunctionParams<VesselHistoriesByVesselNameAndDateRangeInput>,
-  options?: QueryHookOptions<VesselHistory[]>
-) => UseQueryResult<VesselHistory[], Error> =
-  hooks.useVesselHistoriesByVesselNameAndDateRange;
+export const useVesselHistories = fetchVesselHistories.useQuery;
+export const useVesselHistoriesByVesselNameAndDateRange =
+  fetchVesselHistoriesByVesselNameAndDateRange.useQuery;

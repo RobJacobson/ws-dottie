@@ -1,5 +1,6 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselStatsByIdInput,
   type VesselStatsInput,
@@ -8,31 +9,43 @@ import {
 } from "./vesselStats.input";
 import { type VesselStat, vesselStatSchema } from "./vesselStats.output";
 
-export const vesselStatsResource = {
+export const vesselStatsGroup: EndpointGroup = {
   name: "vessel-stats",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselStat item represents technical specifications and capacity data for Washington State Ferries vessels. These items include physical dimensions, engine details, passenger and vehicle capacity, and construction information for each vessel in the fleet.",
-    businessContext:
-      "Use to compare vessel capabilities and plan capacity by providing technical specifications and capacity data for fleet management applications. Supports vessel selection tools and maintenance planning systems for Washington State Ferry services.",
+    summary: "Technical specifications and capacity data for WSF vessels.",
+    description:
+      "Physical dimensions, engine details, passenger and vehicle capacity, and construction information. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Compare vessel capabilities and specifications.",
+      "Plan capacity and route assignments.",
+      "Support maintenance and technical reference.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchVesselStats: {
-      endpoint: "/vesselStats",
-      inputSchema: vesselStatsInputSchema,
-      outputSchema: z.array(vesselStatSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple VesselStat objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<VesselStatsInput, VesselStat[]>,
-    fetchVesselStatsByVesselId: {
-      endpoint: "/vesselStats/{VesselID}",
-      inputSchema: vesselStatsByIdInputSchema,
-      outputSchema: vesselStatSchema,
-      sampleParams: { VesselID: 32 },
-      endpointDescription:
-        "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
-    } satisfies EndpointDefinition<VesselStatsByIdInput, VesselStat>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchVesselStats = createEndpoint<VesselStatsInput, VesselStat[]>({
+  api: apis.wsfVessels,
+  group: vesselStatsGroup,
+  functionName: "fetchVesselStats",
+  endpoint: "/vesselStats",
+  inputSchema: vesselStatsInputSchema,
+  outputSchema: vesselStatSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List technical specifications for all vessels.",
+});
+
+export const fetchVesselStatsByVesselId = createEndpoint<
+  VesselStatsByIdInput,
+  VesselStat
+>({
+  api: apis.wsfVessels,
+  group: vesselStatsGroup,
+  functionName: "fetchVesselStatsByVesselId",
+  endpoint: "/vesselStats/{VesselID}",
+  inputSchema: vesselStatsByIdInputSchema,
+  sampleParams: { VesselID: 32 },
+  outputSchema: vesselStatSchema,
+  endpointDescription:
+    "Get technical specifications for a specific vessel by ID.",
+});

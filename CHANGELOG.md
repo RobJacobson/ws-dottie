@@ -2,8 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
+This file serves as the single source of truth for both internal tracking and GitHub releases.
+
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
+
+## [1.3.0] - 2025-11-16
+
+- Features
+  - **Major Endpoint System Refactor**: Completely redesigned endpoint generation system with unified factory approach that combines fetch and hook creation in a single step
+  - **Simplified API Architecture**: Streamlined endpoint definitions by consolidating multiple factory functions into a single `createEndpoint` function
+  - **Enhanced Cache Management**: Implemented centralized cache management system with automatic cache flush date endpoints for all APIs
+  - **Improved Type Safety**: Strengthened type inference throughout the endpoint system with better TypeScript integration
+  - **Standardized API Structure**: Unified API definitions with consistent metadata and naming conventions across all 16 APIs
+
+- Improvements
+  - **Endpoint Factory Unification**: Replaced `defineEndpoint` and `createFetchFunction` with unified `createEndpoint` factory
+  - **API Definition Consolidation**: Centralized API metadata in shared registry with consistent naming patterns
+  - **Schema Naming Standardization**: Standardized schema naming conventions across all APIs for better developer experience
+  - **Reduced Code Duplication**: Eliminated redundant endpoint creation patterns and consolidated shared utilities
+  - **Enhanced Documentation Generation**: Improved OpenAPI documentation with group-level details from endpoint files
+  - **Post-Processing Enhancements**: Added custom CSS and JavaScript injection into generated HTML documentation
+
+- Fixes
+  - **Circular Dependency Resolution**: Resolved circular dependencies in cache management by creating isolated cache flush endpoints
+  - **Type Export Issues**: Fixed type export paths and resolved import inconsistencies across API modules
+  - **Documentation Display**: Fixed issue where custom JavaScript was not accessing OpenAPI spec data correctly
+  - **HTML Template Handling**: Corrected Redoc CLI integration to properly handle custom templates
+
+- Docs
+  - **Documentation Guide**: Created comprehensive documentation for the new endpoint generation system
+  - **API Reference Updates**: Updated all API documentation to reflect new factory-based approach
+  - **Troubleshooting Guide**: Added troubleshooting guide for documentation display issues
+
+- Build/Chore
+  - **Package Structure**: Reorganized package exports to align with new API structure
+  - **Build Configuration**: Updated build configuration to support new endpoint system
+  - **Removed Deprecated Files**: Cleaned up deprecated endpoint and documentation files
+
+Upgrade notes
+- Breaking changes: Endpoint import paths have changed to use the new factory-based structure
+- Migration steps: Update imports to use new `createEndpoint` factory pattern; see updated documentation for examples
 
 ## [1.2.0] - 2025-11-08
 

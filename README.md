@@ -1,4 +1,4 @@
-# WS-Dottie 🚢
+# WS-Dottie 🚢 v1.2.0
 
 <div align="center">
   <img src="assets/dottie.png" alt="WS-Dottie Logo" width="400">
@@ -13,6 +13,60 @@
 [![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)                                                                               
 [![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5+-orange.svg)](https://tanstack.com/query)                                                    
 
+## Table of Contents
+
+- [Why WS-Dottie is Special](#why-ws-dottie-is-special)
+- [Zod-powered validation](#zod-powered-validation-zod-4)
+- [What You Can Build](#-what-you-can-build)
+- [Quick Start](#-quick-start)
+  - [Get Your Free API Key](#1-get-your-free-api-key)
+  - [Install WS-Dottie](#2-install-ws-dottie)
+  - [Configure Your API Key](#3-configure-your-api-key)
+  - [Module Format Support](#4-module-format-support)
+  - [Import Patterns](#5-import-patterns)
+  - [TypeScript Types](#typescript-types)
+  - [Start Building](#6-start-building)
+- [Command Line Interface](#-command-line-interface)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Usage](#usage)
+  - [Examples](#examples)
+  - [Available Functions](#available-functions)
+  - [CLI Options](#cli-options)
+- [Available Data Sources](#-available-data-sources-16-apis-98-endpoints)
+  - [WSDOT APIs](#wsdot-apis)
+  - [WSF APIs](#wsf-apis)
+- [Core Features](#-core-features)
+  - [Comprehensive API Coverage](#-comprehensive-api-coverage)
+  - [Smart Caching & React Integration](#-smart-caching--react-integration)
+  - [Flexible Fetching Strategies](#-flexible-fetching-strategies)
+  - [Production-Ready Developer Experience](#-production-ready-developer-experience)
+  - [Automated Documentation](#-automated-documentation)
+  - [Developer-Friendly Design](#-developer-friendly-design)
+- [Production vs Development](#-production-vs-development)
+  - [When to Use Validation](#when-to-use-validation)
+  - [Development vs Production Patterns](#development-vs-production-patterns)
+  - [Bundle Size Optimization](#bundle-size-optimization)
+- [TanStack Query Integration](#-tanstack-query-integration)
+  - [Cache Strategies](#-cache-strategies)
+  - [Parameterized Queries](#-parameterized-queries)
+  - [Advanced Query Options](#-advanced-query-options)
+  - [Cache Strategy Details](#-cache-strategy-details)
+- [Documentation](#-documentation)
+- [Implementation Examples](#-implementation-examples)
+  - [React Dashboard (Recommended)](#-react-dashboard-recommended)
+  - [Server-Side API Integration](#-server-side-api-integration)
+  - [Browser Application (CORS-Safe)](#-browser-application-cors-safe)
+  - [CLI Automation & Testing](#-cli-automation--testing)
+- [Example Projects](#-example-projects)
+  - [For Hobbyists](#-for-hobbyists)
+  - [For Developers](#-for-developers)
+  - [For Enterprise](#-for-enterprise)
+- [Testing](#-testing)
+- [Governance](#-governance)
+- [Contributing](#-contributing)
+- [License](#-license)
+
 
 Meet Dottie — your comprehensive TypeScript companion for fetching real-time Washington State transportation data. This production-ready library provides type-safe access to **16 WSDOT and WSF APIs** with **98 endpoints**, transforming complex government APIs into a modern, developer-friendly interface.
 
@@ -20,7 +74,7 @@ Meet Dottie — your comprehensive TypeScript companion for fetching real-time W
 
 **🚀 Comprehensive Coverage**: Access full spectrum of Washington State transportation data — from real-time ferry locations and traffic cameras to weather stations, highway alerts, toll rates, and border crossings.
 
-**🎯 Production-Ready**: Built for real applications with smart caching strategies, comprehensive error handling, and environment-aware logging. Works seamlessly in browsers (JSONP), servers (native fetch), and CLI environments.
+**🎯 Production-Ready**: Built for real applications with smart caching strategies, comprehensive error handling, and environment-aware logging. Works seamlessly in browsers (JSONP), servers (native fetch), and CLI environments.c
 
 **⚡ Developer Experience**: Type-safe from end-to-end with Zod validation, automatic .NET datetime conversion, and sensible defaults. Includes a powerful CLI for debugging and testing.
 
@@ -32,35 +86,10 @@ Meet Dottie — your comprehensive TypeScript companion for fetching real-time W
 
 WS‑Dottie uses Zod 4 schemas for **optional** runtime validation and type inference across all APIs. Validation is **disabled by default** (`validate: false`) for optimal performance, but you can enable it when you need extra safety.
 
-**With validation enabled** (`validate: true`):
-- Strong, generated TypeScript types from a single source of truth
-- Early detection of upstream shape drifts and edge cases
-- Safe transformations of date strings and nullable fields
-- Pass‑through philosophy for unknown fields (we don't strip upstream data)
-- Runtime type checking catches API response changes immediately
+- **With validation** (`validate: true`): Strong runtime type safety, early detection of API changes, and safe data transformations
+- **Without validation** (`validate: false` - default): Faster performance, smaller bundles, and still type-safe with TypeScript
 
-**Without validation** (`validate: false` - default):
-- Faster performance — no schema parsing overhead
-- Smaller bundle size — Zod schemas can be tree-shaken out
-- Still type-safe — TypeScript types are always available
-- Automatic .NET date conversion still applies
-- Perfect for production when you trust the API stability
-
-**When schemas are missing**: If you request validation (`validate: true`) but schemas aren't available (e.g., using a light build), WS-Dottie will throw a clear error directing you to use the full build or import schemas from the `/schemas` subpath.
-
-```javascript
-// With validation (recommended for production)
-const vessels = await fetchVesselLocations({
-  fetchMode: 'native',
-  validate: true  // Validates response against Zod schema
-});
-
-// Without validation (faster, lighter - default)
-const vessels = await fetchVesselLocations({
-  fetchMode: 'native',
-  validate: false  // Raw fetch with .NET date conversion only
-});
-```                                                       
+For detailed information about validation, performance trade-offs, and best practices, see the [Validation Guide](./docs/guides/advanced/validation-guide.md).
 
 ## ✨ What You Can Build
 
@@ -728,17 +757,78 @@ function CustomQueryExample() {
 || `MODERATE` | 1 hour | Weather conditions, road status | 1h | 1h |
 || `STATIC` | 1 day | Terminals, vessels, routes | 1d | 1d |
 
+## 📚 Quick Reference
+
+### Common Import Patterns
+```javascript
+// React hooks (recommended for UI)
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
+
+// Server-side functions (no React)
+import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
+import { fetchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
+
+// TypeScript types only
+import type { VesselLocation } from 'ws-dottie/wsf-vessels';
+```
+
+### Basic Usage Examples
+```javascript
+// Get all vessel locations
+const { data: vessels } = useVesselLocations({
+  fetchMode: 'native',
+  validate: false
+});
+
+// Get specific vessel by ID
+const { data: vessel } = useVesselLocationsByVesselId({
+  params: { VesselID: 18 },
+  fetchMode: 'native',
+  validate: true
+});
+
+// Get highway alerts for a region
+const { data: alerts } = useAlertsByRegionId({
+  params: { RegionID: 9 },
+  fetchMode: 'jsonp', // For browser
+  validate: true
+});
+```
+
+### Configuration Options
+```javascript
+// Set API key
+import { configManager } from 'ws-dottie';
+configManager.setApiKey('your_api_key_here');
+
+// Environment variable
+export WSDOT_ACCESS_TOKEN=your_api_key_here
+```
+
+### CLI Commands
+```bash
+# List all endpoints
+fetch-dottie --list
+
+# Get vessel locations
+fetch-dottie fetchVesselLocations
+
+# Get specific vessel with pretty output
+fetch-dottie fetchVesselLocationsByVesselId '{"VesselID": 18}' --pretty
+```
+
 ## 📚 Documentation
 
-- **[API Overview](./docs/overview/README.md)** - Complete overview of all available endpoints
-- **[Getting Started Guide](./docs/overview/getting-started.md)** - Setup and usage guide
-- **[API Guide](./docs/overview/api-guide.md)** - Detailed API usage guide
-- **[Interactive Documentation](./docs/redoc/)** - Interactive HTML documentation with examples
+- **[Documentation Home](./docs/)** - Complete documentation with getting started guides and API reference
+- **[Getting Started](./docs/getting-started/)** - New to WS-Dottie? Start here
+- **[API Guide](./docs/guides/api-guide.md)** - High-level API overview and use cases
+- **[Interactive Documentation](./docs/api-reference/redoc/)** - Browse APIs with live examples
 
 ### 🔗 Detailed API Documentation
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
-- **[OpenAPI Specifications](./docs/openapi/)** - API specifications in YAML format
-- **[HTML Documentation](./docs/redoc/)** - Interactive HTML documentation with examples
+- **[OpenAPI Specifications](./docs/generated/openapi/)** - API specifications in YAML format
+- **[HTML Documentation](./docs/api-reference/redoc/)** - Interactive HTML documentation with examples
 
 Our documentation is automatically generated from API definitions, ensuring it stays synchronized with the latest code changes.
 
@@ -972,7 +1062,7 @@ npm run docs:samples:fetch           # Fetch fresh sample data for documentation
 
 **JSONP Testing**: Use `--jsonp` flag or `JSONP=true` environment variable to test browser environment compatibility.                                           
 
-📖 **For detailed testing information, see [Testing Architecture](./docs/overview/testing.md)**
+📖 **For detailed testing information, see [Testing Architecture](./docs/guides/testing.md)**
 
 ## 🏛️ Governance
 

@@ -1,26 +1,31 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type ScheduleAlertsInput,
-  scheduleAlertsInputSchema,
-} from "./scheduleAlerts.input";
-import { type AlertDetail, alertDetailSchema } from "./scheduleAlerts.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
+import { alertDetailSchema } from "./scheduleAlerts.output";
 
-export const scheduleAlertsResource = {
+export const scheduleAlertsGroup: EndpointGroup = {
   name: "schedule-alerts",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.",
-    businessContext: "",
+    summary: "Service alerts and notifications for ferry schedules.",
+    description:
+      "Important notifications about ferry service including delays, cancellations, terminal updates, and service-related announcements. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display service alerts and notifications in rider apps.",
+      "Monitor schedule changes and disruptions.",
+      "Show route-specific and system-wide announcements.",
+    ],
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchScheduleAlerts: {
-      endpoint: "/alerts",
-      inputSchema: scheduleAlertsInputSchema,
-      outputSchema: z.array(alertDetailSchema),
-      sampleParams: {},
-      endpointDescription: "Returns all current schedule alerts.",
-    } satisfies EndpointDefinition<ScheduleAlertsInput, AlertDetail[]>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchScheduleAlerts = createEndpoint({
+  api: apis.wsfSchedule,
+  group: scheduleAlertsGroup,
+  functionName: "fetchScheduleAlerts",
+  endpoint: "/alerts",
+  inputSchema: scheduleAlertsInputSchema,
+  outputSchema: alertDetailSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List all current schedule alerts.",
+});

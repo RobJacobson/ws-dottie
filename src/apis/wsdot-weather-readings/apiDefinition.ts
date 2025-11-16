@@ -1,15 +1,14 @@
-import type { ApiDefinition } from "@/apis/types";
-import { subSurfaceMeasurementsResource } from "./subSurfaceMeasurements/subSurfaceMeasurements.endpoints";
-import { surfaceMeasurementsResource } from "./surfaceMeasurements/surfaceMeasurements.endpoints";
-// Import all resources
-import { weatherReadingsResource } from "./weatherReadings/weatherReadings.endpoints";
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
+import { subSurfaceMeasurementsGroup } from "./subSurfaceMeasurements/subSurfaceMeasurements.endpoints";
+import { surfaceMeasurementsGroup } from "./surfaceMeasurements/surfaceMeasurements.endpoints";
+import { weatherReadingsGroup } from "./weatherReadings/weatherReadings.endpoints";
 
 export const wsdotWeatherReadingsApi = {
-  name: "wsdot-weather-readings",
-  baseUrl: "https://www.wsdot.wa.gov/traffic/api/api",
+  api: apis.wsdotWeatherReadings,
   endpointGroups: [
-    weatherReadingsResource,
-    surfaceMeasurementsResource,
-    subSurfaceMeasurementsResource,
+    weatherReadingsGroup,
+    surfaceMeasurementsGroup,
+    subSurfaceMeasurementsGroup,
   ],
 } satisfies ApiDefinition;

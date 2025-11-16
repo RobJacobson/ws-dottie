@@ -1,34 +1,34 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type SubSurfaceMeasurementsInput,
-  subSurfaceMeasurementsInputSchema,
-} from "./subSurfaceMeasurements.input";
-import {
-  type SubsurfaceMeasurement,
-  subsurfaceMeasurementSchema,
-} from "./subSurfaceMeasurements.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { subSurfaceMeasurementsInputSchema } from "./subSurfaceMeasurements.input";
+import { subsurfaceMeasurementSchema } from "./subSurfaceMeasurements.output";
 
-export const subSurfaceMeasurementsResource = {
+export const subSurfaceMeasurementsGroup: EndpointGroup = {
   name: "sub-surface-measurements",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each SubSurfaceMeasurements item represents temperature data collected from sensors embedded 12-18 inches below road pavement surfaces. These measurements help transportation officials monitor ground temperature conditions that affect road safety and maintenance decisions.",
-    businessContext:
-      "Use to assess road surface conditions by providing subsurface temperature data for winter maintenance operations and travel safety assessments.",
+    summary:
+      "Subsurface temperature measurements from sensors embedded below road pavement.",
+    description:
+      "Ground temperature data from sensors embedded 12-18 inches below road pavement surfaces for monitoring ground temperature conditions.",
+    useCases: [
+      "Monitor ground temperature conditions for winter maintenance operations.",
+      "Predict road surface conditions based on subsurface temperature trends.",
+      "Assess travel safety by understanding ground temperature patterns.",
+    ],
+    updateFrequency: "5m",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchSubSurfaceMeasurements: {
-      endpoint: "/Scanweb/SubSurfaceMeasurements",
-      inputSchema: subSurfaceMeasurementsInputSchema,
-      outputSchema: z.array(subsurfaceMeasurementSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns array of SubSurfaceMeasurements for all weather stations statewide.",
-    } satisfies EndpointDefinition<
-      SubSurfaceMeasurementsInput,
-      SubsurfaceMeasurement[]
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchSubSurfaceMeasurements = createEndpoint({
+  api: apis.wsdotWeatherReadings,
+  group: subSurfaceMeasurementsGroup,
+  functionName: "fetchSubSurfaceMeasurements",
+  endpoint: "/Scanweb/SubSurfaceMeasurements",
+  inputSchema: subSurfaceMeasurementsInputSchema,
+  outputSchema: subsurfaceMeasurementSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List subsurface measurements from all weather stations statewide.",
+});

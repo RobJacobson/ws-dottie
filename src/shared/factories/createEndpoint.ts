@@ -1,56 +1,68 @@
 /**
- * @fileoverview Endpoint Generator Factory
+ * @fileoverview Unified Endpoint Factory
  *
- * This module provides a factory function to create a typed Endpoint object
- * from an endpoint definition with all properties needed by fetchDottie.
+ * This module provides a single factory function to create endpoints with
+ * fetch and hook methods, combining functionality of defineEndpoint
+ * and createFetchFunction.
  */
 
+import { fetchDottie } from "@/shared/fetching";
+import { createHookFunction } from "./createHookFunction";
 import type {
-  ApiDefinition,
-  EndpointDefinition,
-  EndpointGroup,
-} from "@/apis/types";
-import type { Endpoint } from "@/shared/types";
+  DefineEndpointConfig,
+  EndpointConfig,
+  EndpointResult,
+  FetchFunctionParams,
+} from "./types";
 
 /**
- * Creates a typed endpoint for a specific endpoint definition.
+ * Creates a complete endpoint with fetch and hook methods
  *
- * This is a pure function that transforms endpoint definitions into fully
- * configured Endpoint objects with computed properties like URL templates
- * and unique identifiers.
+ * This factory function creates an endpoint object with descriptor, fetch,
+ * and useQuery methods in a single step, reducing abstraction layers.
  *
- * @template TInput - The input parameters type for the endpoint
- * @template TOutput - The output response type for the endpoint
- * @param apiDefinition - The API definition containing name and baseUrl
- * @param endpointGroup - The endpoint group containing cacheStrategy
- * @param endpointDef - The endpoint definition with path and schemas
- * @param functionName - The canonical function name for this endpoint
- * @returns A fully configured Endpoint object with all computed properties
+ * @template I - Input type for endpoint
+ * @template O - Output type for endpoint
+ * @param config - Configuration for endpoint
+ * @returns An object with descriptor, fetch, and useQuery methods
  *
  * @example
  * ```typescript
- * const endpoint = createEndpoint(
- *   wsfVesselsApi,
- *   vesselStatsResource,
- *   vesselStatsResource.endpoints.fetchVesselStats,
- *   "fetchVesselStats"
- * );
+ * const endpoint = createEndpoint({
+ *   api: wsfVesselsApi,
+ *   group: vesselLocationsGroup,
+ *   functionName: "fetchVesselLocations",
+ *   endpoint: "/vesselLocations",
+ *   inputSchema: vesselLocationsInputSchema,
+ *   outputSchema: vesselLocationSchema.array(),
+ * });
  * ```
  */
-export const createEndpoint = <TInput, TOutput>(
-  apiDefinition: ApiDefinition,
-  endpointGroup: EndpointGroup,
-  endpointDef: EndpointDefinition<TInput, TOutput>,
-  functionName: string
-): Endpoint<TInput, TOutput> => ({
-  api: apiDefinition.name,
-  function: functionName,
-  endpoint: endpointDef.endpoint,
-  inputSchema: endpointDef.inputSchema,
-  outputSchema: endpointDef.outputSchema,
-  sampleParams: endpointDef.sampleParams,
-  cacheStrategy: endpointGroup.cacheStrategy,
-  functionName,
-  urlTemplate: `${apiDefinition.baseUrl}${endpointDef.endpoint}`,
-  id: `${apiDefinition.name}:${functionName}`,
-});
+export const createEndpoint = <I, O>(
+  config: DefineEndpointConfig<I, O>
+): EndpointResult<I, O> => {
+  // Create complete endpoint configuration with computed properties
+  const endpointConfig: EndpointConfig<I, O> = {
+    ...config,
+    urlTemplate: `${config.api.baseUrl}${config.endpoint}`,
+    id: `${config.api.name}:${config.functionName}`,
+    cacheStrategy: config.group.cacheStrategy,
+  };
+
+  // Create fetch function directly without additional abstraction layer
+  const fetchFn = (params: FetchFunctionParams<I> = {}): Promise<O> => {
+    return fetchDottie({
+      endpoint: endpointConfig,
+      ...params,
+    });
+  };
+
+  // Create hook function
+  const hookFn = createHookFunction<I, O>(endpointConfig, fetchFn);
+
+  return {
+    descriptor: endpointConfig,
+    fetch: fetchFn,
+    useQuery: hookFn,
+  } as const;
+};

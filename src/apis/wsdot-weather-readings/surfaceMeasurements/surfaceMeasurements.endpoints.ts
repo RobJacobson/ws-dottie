@@ -1,33 +1,33 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type SurfaceMeasurementsInput,
-  surfaceMeasurementsInputSchema,
-} from "./surfaceMeasurements.input";
-import {
-  type SurfaceMeasurement,
-  surfaceMeasurementSchema,
-} from "./surfaceMeasurements.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { surfaceMeasurementsInputSchema } from "./surfaceMeasurements.input";
+import { surfaceMeasurementSchema } from "./surfaceMeasurements.output";
 
-export const surfaceMeasurementsResource = {
+export const surfaceMeasurementsGroup: EndpointGroup = {
   name: "surface-measurements",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "SurfaceMeasurements provides surface sensor data including surface temperature, road freezing temperature, and road surface condition from weather stations. Coverage Area: Statewide.",
-    businessContext: "",
+    summary:
+      "Surface sensor measurements from WSDOT weather stations statewide.",
+    description:
+      "Pavement surface temperature, road freezing temperature, and road surface condition codes from sensors embedded in or mounted on road surfaces.",
+    useCases: [
+      "Monitor road surface conditions for winter maintenance operations.",
+      "Assess pavement temperature and freezing risk.",
+      "Evaluate travel safety based on surface condition codes.",
+    ],
+    updateFrequency: "5m",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchSurfaceMeasurements: {
-      endpoint: "/Scanweb/SurfaceMeasurements",
-      inputSchema: surfaceMeasurementsInputSchema,
-      outputSchema: z.array(surfaceMeasurementSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns surface measurements from all weather stations.",
-    } satisfies EndpointDefinition<
-      SurfaceMeasurementsInput,
-      SurfaceMeasurement[]
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchSurfaceMeasurements = createEndpoint({
+  api: apis.wsdotWeatherReadings,
+  group: surfaceMeasurementsGroup,
+  functionName: "fetchSurfaceMeasurements",
+  endpoint: "/Scanweb/SurfaceMeasurements",
+  inputSchema: surfaceMeasurementsInputSchema,
+  outputSchema: surfaceMeasurementSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List surface measurements from all weather stations.",
+});

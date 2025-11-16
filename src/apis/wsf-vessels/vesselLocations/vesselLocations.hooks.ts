@@ -1,26 +1,8 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { vesselLocationsGroup } from "./vesselLocations.endpoints";
-import * as fetchFunctions from "./vesselLocations.fetch";
-import type {
-  VesselLocationsByIdInput,
-  VesselLocationsInput,
-} from "./vesselLocations.input";
-import type { VesselLocation } from "./vesselLocations.output";
+  fetchVesselLocations,
+  fetchVesselLocationsByVesselId,
+} from "./vesselLocations.endpoints";
 
-const hooks = createHooks(wsfVesselsApi, vesselLocationsGroup, fetchFunctions);
-
-export const useVesselLocations: (
-  params?: FetchFunctionParams<VesselLocationsInput>,
-  options?: QueryHookOptions<VesselLocation[]>
-) => UseQueryResult<VesselLocation[], Error> = hooks.useVesselLocations;
-
-export const useVesselLocationsByVesselId: (
-  params?: FetchFunctionParams<VesselLocationsByIdInput>,
-  options?: QueryHookOptions<VesselLocation>
-) => UseQueryResult<VesselLocation, Error> = hooks.useVesselLocationsByVesselId;
+export const useVesselLocations = fetchVesselLocations.useQuery;
+export const useVesselLocationsByVesselId =
+  fetchVesselLocationsByVesselId.useQuery;

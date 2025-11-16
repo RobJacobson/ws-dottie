@@ -1,0 +1,5026 @@
+[
+  {
+    "TerminalID": 1,
+    "TerminalSubjectID": 111,
+    "RegionID": 1,
+    "TerminalName": "Anacortes",
+    "TerminalAbbrev": "ANA",
+    "SortSeq": 10,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Lopez Island -> Orcas Island",
+            "VesselID": 69,
+            "VesselName": "Samish",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": "#888888",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 30,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              13,
+              15
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T18:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Friday Harbor",
+            "VesselID": 38,
+            "VesselName": "Yakima",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": "#888888",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 77,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              10
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Shaw Island -> Orcas Island -> Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 57,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 73,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              18,
+              15,
+              13
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Friday Harbor",
+            "VesselID": 69,
+            "VesselName": "Samish",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 57,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 76,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              10
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Lopez Island",
+            "VesselID": 38,
+            "VesselName": "Yakima",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 91,
+            "ReservableSpaceHexColor": "#00FF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 110,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              13
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Orcas Island -> Shaw Island -> Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 28,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 44,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              15,
+              18
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Lopez Island -> Friday Harbor",
+            "VesselID": 38,
+            "VesselName": "Yakima",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 37,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 57,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              13,
+              10
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Lopez Island -> Friday Harbor",
+            "VesselID": 69,
+            "VesselName": "Samish",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 64,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 83,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              13,
+              10
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Shaw Island -> Orcas Island -> Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 43,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 59,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              18,
+              15
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Lopez Island -> Friday Harbor",
+            "VesselID": 38,
+            "VesselName": "Yakima",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 57,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 76,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              13,
+              10
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Shaw Island -> Orcas Island -> Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 90,
+            "ReservableSpaceHexColor": "#00FF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 106,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              18,
+              15
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 3,
+    "TerminalSubjectID": 103,
+    "RegionID": 4,
+    "TerminalName": "Bainbridge Island",
+    "TerminalAbbrev": "BBI",
+    "SortSeq": 40,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T17:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 100,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T18:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 4,
+    "TerminalSubjectID": 102,
+    "RegionID": 4,
+    "TerminalName": "Bremerton",
+    "TerminalAbbrev": "BRE",
+    "SortSeq": 30,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T17:50:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 88,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T07:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 7,
+            "TerminalName": "Seattle",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              7
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 5,
+    "TerminalSubjectID": 112,
+    "RegionID": 2,
+    "TerminalName": "Clinton",
+    "TerminalAbbrev": "CLI",
+    "SortSeq": 20,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 96,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T18:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T07:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 14,
+            "TerminalName": "Mukilteo",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              14
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 7,
+    "TerminalSubjectID": 101,
+    "RegionID": 4,
+    "TerminalName": "Seattle",
+    "TerminalAbbrev": "P52",
+    "SortSeq": 20,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 163,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T18:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 189,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:50:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:50:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:50:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 17,
+        "VesselName": "Kaleetan",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 17,
+            "VesselName": "Kaleetan",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 139,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 36,
+        "VesselName": "Walla Walla",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 4,
+            "TerminalName": "Bremerton",
+            "VesselID": 36,
+            "VesselName": "Walla Walla",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              4
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 32,
+        "VesselName": "Tacoma",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 32,
+            "VesselName": "Tacoma",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T07:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 37,
+        "VesselName": "Wenatchee",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 3,
+            "TerminalName": "Bainbridge Island",
+            "VesselID": 37,
+            "VesselName": "Wenatchee",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              3
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 8,
+    "TerminalSubjectID": 113,
+    "RegionID": 3,
+    "TerminalName": "Edmonds",
+    "TerminalAbbrev": "EDM",
+    "SortSeq": 10,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 172,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:50:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T07:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 12,
+            "TerminalName": "Kingston",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              12
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 10,
+    "TerminalSubjectID": 115,
+    "RegionID": 1,
+    "TerminalName": "Friday Harbor",
+    "TerminalAbbrev": "FRH",
+    "SortSeq": 50,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 10,
+            "TerminalName": "Friday Harbor -> Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": "#888888",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 49,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 10,
+            "TerminalName": "Friday Harbor -> Anacortes",
+            "VesselID": 38,
+            "VesselName": "Yakima",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 88,
+            "ReservableSpaceHexColor": "#00FF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 101,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 10,
+            "TerminalName": "Friday Harbor -> Lopez Island -> Anacortes",
+            "VesselID": 69,
+            "VesselName": "Samish",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 46,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 55,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              13,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 10,
+            "TerminalName": "Friday Harbor -> Lopez Island -> Anacortes",
+            "VesselID": 38,
+            "VesselName": "Yakima",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 62,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 72,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              13,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 10,
+            "TerminalName": "Friday Harbor -> Lopez Island -> Anacortes",
+            "VesselID": 69,
+            "VesselName": "Samish",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 59,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 66,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              13,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "MaxSpaceCount": 139,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 10,
+            "TerminalName": "Friday Harbor -> Anacortes",
+            "VesselID": 38,
+            "VesselName": "Yakima",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 117,
+            "ReservableSpaceHexColor": "#00FF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 130,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 139,
+            "ArrivalTerminalIDs": [
+              1
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": true,
+    "NoFareCollectedMsg": "<strong>Approximate Drive-Up Spaces Available on First-Come Basis</strong><br /><em>The estimated drive-up spaces is based on the number of vehicle reservations made for a sailing.  <FONT COLOR=\"red\">We are unable to calculate the real-time estimated drive-up spaces based on the number of vehicles at the terminal due to vehicles not purchasing a fare for their travel.</FONT></em>"
+  },
+  {
+    "TerminalID": 11,
+    "TerminalSubjectID": 116,
+    "RegionID": 2,
+    "TerminalName": "Coupeville ",
+    "TerminalAbbrev": "COU",
+    "SortSeq": 40,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": "#888888",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": -6,
+            "DriveUpSpaceHexColor": "#FF0000",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 1,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 16,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 0,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 15,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 1,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 17,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 3,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 18,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 20,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 35,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 20,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 35,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 11,
+            "TerminalName": "Coupeville  -> Port Townsend",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 42,
+            "ReservableSpaceHexColor": "#00FF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 57,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              17
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 12,
+    "TerminalSubjectID": 110,
+    "RegionID": 3,
+    "TerminalName": "Kingston",
+    "TerminalAbbrev": "KIN",
+    "SortSeq": 20,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 148,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:20:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 30,
+        "VesselName": "Spokane",
+        "MaxSpaceCount": 186,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 30,
+            "VesselName": "Spokane",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 186,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 186,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T07:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 25,
+        "VesselName": "Puyallup",
+        "MaxSpaceCount": 197,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 8,
+            "TerminalName": "Edmonds",
+            "VesselID": 25,
+            "VesselName": "Puyallup",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 197,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 197,
+            "ArrivalTerminalIDs": [
+              8
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 14,
+    "TerminalSubjectID": 109,
+    "RegionID": 2,
+    "TerminalName": "Mukilteo",
+    "TerminalAbbrev": "MUK",
+    "SortSeq": 10,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 101,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T18:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:10:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 68,
+        "VesselName": "Tokitae",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 68,
+            "VesselName": "Tokitae",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T07:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 75,
+        "VesselName": "Suquamish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 5,
+            "TerminalName": "Clinton",
+            "VesselID": 75,
+            "VesselName": "Suquamish",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 141,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              5
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 15,
+    "TerminalSubjectID": 119,
+    "RegionID": 1,
+    "TerminalName": "Orcas Island",
+    "TerminalAbbrev": "ORI",
+    "SortSeq": 40,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T19:50:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "MaxSpaceCount": 141,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 15,
+            "TerminalName": "Orcas Island -> Anacortes",
+            "VesselID": 69,
+            "VesselName": "Samish",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 34,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 42,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 141,
+            "ArrivalTerminalIDs": [
+              13,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Lopez -> Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 26,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 34,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              18,
+              15,
+              13
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes -> Orcas Island -> Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 65,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 75,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              15,
+              18
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 86,
+            "ReservableSpaceHexColor": "#00FF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 96,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              18,
+              15
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "MaxSpaceCount": 120,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 1,
+            "TerminalName": "Anacortes",
+            "VesselID": 2,
+            "VesselName": "Chelan",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 93,
+            "ReservableSpaceHexColor": "#00FF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 103,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 120,
+            "ArrivalTerminalIDs": [
+              18,
+              15
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": true,
+    "NoFareCollectedMsg": "<strong>Approximate Drive-Up Spaces Available on First-Come Basis</strong><br /><em>The estimated drive-up spaces is based on the number of vehicle reservations made for a sailing.  <FONT COLOR=\"red\">We are unable to calculate the real-time estimated drive-up spaces based on the number of vehicles at the terminal due to vehicles not purchasing a fare for their travel.</FONT></em>"
+  },
+  {
+    "TerminalID": 16,
+    "TerminalSubjectID": 108,
+    "RegionID": 5,
+    "TerminalName": "Point Defiance",
+    "TerminalAbbrev": "PTD",
+    "SortSeq": 60,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T18:05:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 49,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T18:55:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T19:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T21:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:40:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T00:35:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T03:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:25:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T05:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T06:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 65,
+        "VesselName": "Chetzemoka",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 21,
+            "TerminalName": "Tahlequah",
+            "VesselID": 65,
+            "VesselName": "Chetzemoka",
+            "DisplayReservableSpace": false,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": null,
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 62,
+            "DriveUpSpaceHexColor": "#00FF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              21
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  },
+  {
+    "TerminalID": 17,
+    "TerminalSubjectID": 107,
+    "RegionID": 2,
+    "TerminalName": "Port Townsend",
+    "TerminalAbbrev": "POT",
+    "SortSeq": 30,
+    "DepartingSpaces": [
+      {
+        "Departure": "2025-11-15T19:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 17,
+            "TerminalName": "Port Townsend -> Coupeville ",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": null,
+            "ReservableSpaceHexColor": "#888888",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 12,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              11
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T20:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 17,
+            "TerminalName": "Port Townsend -> Coupeville ",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 0,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 16,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              11
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T22:00:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 17,
+            "TerminalName": "Port Townsend -> Coupeville ",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 2,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 20,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              11
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-15T23:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 17,
+            "TerminalName": "Port Townsend -> Coupeville ",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 1,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 16,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              11
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T01:15:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 17,
+            "TerminalName": "Port Townsend -> Coupeville ",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 6,
+            "ReservableSpaceHexColor": "#FF0000",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 21,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              11
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T02:45:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 17,
+            "TerminalName": "Port Townsend -> Coupeville ",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 10,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 25,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              11
+            ]
+          }
+        ]
+      },
+      {
+        "Departure": "2025-11-16T04:30:00.000Z",
+        "IsCancelled": false,
+        "VesselID": 52,
+        "VesselName": "Kennewick",
+        "MaxSpaceCount": 62,
+        "SpaceForArrivalTerminals": [
+          {
+            "TerminalID": 17,
+            "TerminalName": "Port Townsend -> Coupeville ",
+            "VesselID": 52,
+            "VesselName": "Kennewick",
+            "DisplayReservableSpace": true,
+            "ReservableSpaceCount": 17,
+            "ReservableSpaceHexColor": "#FFFF00",
+            "DisplayDriveUpSpace": true,
+            "DriveUpSpaceCount": 32,
+            "DriveUpSpaceHexColor": "#FFFF00",
+            "MaxSpaceCount": 62,
+            "ArrivalTerminalIDs": [
+              11
+            ]
+          }
+        ]
+      }
+    ],
+    "IsNoFareCollected": null,
+    "NoFareCollectedMsg": null
+  }
+]

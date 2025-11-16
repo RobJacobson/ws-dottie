@@ -1,44 +1,48 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
-  type BridgeClearancesByRouteInput,
-  type BridgeClearancesInput,
   bridgeClearancesByRouteInputSchema,
   bridgeClearancesInputSchema,
 } from "./bridgeClearances.input";
-import {
-  type BridgeClearance,
-  bridgeClearanceSchema,
-} from "./bridgeClearances.output";
+import { bridgeClearanceSchema } from "./bridgeClearances.output";
 
-export const bridgeClearancesGroup = {
+export const bridgeClearancesGroup: EndpointGroup = {
   name: "bridge-clearances",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each BridgeDataGIS item represents vertical clearance measurements for Washington State bridges, including bridge identification numbers, GPS coordinates, route information, and clearance height data in both feet-inches and inches formats. These items provide essential height restriction information needed for commercial vehicle routing and oversize load permit applications.",
-    businessContext:
-      "Use to check bridge heights and plan commercial vehicle routes by providing vertical clearance measurements, bridge location data, and route information for Washington State bridges. Verify vehicle clearance requirements and identify height restrictions before planning routes with oversize loads.",
+    summary: "Vertical clearance measurements for Washington State bridges.",
+    description:
+      "Bridge height restrictions including location data, route associations, and clearance measurements in both feet-inches and inches formats.",
+    useCases: [
+      "Plan commercial vehicle routes with height restrictions.",
+      "Verify clearance requirements for oversize load permits.",
+      "Identify bridge height limitations for route planning.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchBridgeClearances: {
-      endpoint: "/getClearancesAsJson",
-      inputSchema: bridgeClearancesInputSchema,
-      outputSchema: z.array(bridgeClearanceSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
-    } satisfies EndpointDefinition<BridgeClearancesInput, BridgeClearance[]>,
-    fetchBridgeClearancesByRoute: {
-      endpoint: "/getClearancesAsJson?Route={Route}",
-      inputSchema: bridgeClearancesByRouteInputSchema,
-      outputSchema: z.array(bridgeClearanceSchema),
-      sampleParams: { Route: "005" },
-      endpointDescription:
-        "Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.",
-    } satisfies EndpointDefinition<
-      BridgeClearancesByRouteInput,
-      BridgeClearance[]
-    >,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchBridgeClearances = createEndpoint({
+  api: apis.wsdotBridgeClearances,
+  group: bridgeClearancesGroup,
+  functionName: "fetchBridgeClearances",
+  endpoint: "/getClearancesAsJson",
+  inputSchema: bridgeClearancesInputSchema,
+  outputSchema: bridgeClearanceSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List vertical clearance data for all Washington State bridges.",
+});
+
+export const fetchBridgeClearancesByRoute = createEndpoint({
+  api: apis.wsdotBridgeClearances,
+  group: bridgeClearancesGroup,
+  functionName: "fetchBridgeClearancesByRoute",
+  endpoint: "/getClearancesAsJson?Route={Route}",
+  inputSchema: bridgeClearancesByRouteInputSchema,
+  outputSchema: bridgeClearanceSchema.array(),
+  sampleParams: { Route: "005" },
+  endpointDescription:
+    "Get vertical clearance data for bridges on a specific state route.",
+});

@@ -1,40 +1,43 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
-import {
-  type FareTotalsByTripDateAndRouteInput,
-  fareTotalsByTripDateAndRouteInputSchema,
-} from "./fareTotals.input";
-import { type FareTotal, fareTotalSchema } from "./fareTotals.output";
+import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
+import { fareTotalSchema } from "./fareTotals.output";
 
-export const fareTotalsGroup = {
+export const fareTotalsGroup: EndpointGroup = {
   name: "fare-totals",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each FareTotal item represents calculated fare costs for Washington State Ferries journeys based on selected fare line items and passenger quantities. These totals combine individual fare components to provide complete pricing for specific routes and travel scenarios.",
-    businessContext:
-      "Use to calculate complete journey costs by providing fare totals based on selected line items, quantities, and trip parameters for accurate ticket pricing and payment processing.",
+    summary:
+      "Calculated fare totals for WSF journeys by selected line items and quantities.",
+    description:
+      "Fare totals combine individual fare line items with quantities to provide complete pricing breakdowns including departing, return, direction-independent, and grand totals. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Calculate complete journey costs for ticket pricing.",
+      "Display fare breakdowns by leg and total amount.",
+      "Process payment amounts for ferry trips.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchFareTotalsByTripDateAndRoute: {
-      endpoint:
-        "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
-      inputSchema: fareTotalsByTripDateAndRouteInputSchema,
-      outputSchema: z.array(fareTotalSchema),
-      sampleParams: {
-        TripDate: datesHelper.today(),
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-        RoundTrip: false,
-        FareLineItemID: "1,2",
-        Quantity: "3,1",
-      },
-      endpointDescription:
-        "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.",
-    } satisfies EndpointDefinition<
-      FareTotalsByTripDateAndRouteInput,
-      FareTotal[]
-    >,
+};
+
+export const fetchFareTotalsByTripDateAndRoute = createEndpoint({
+  api: apis.wsfFares,
+  group: fareTotalsGroup,
+  functionName: "fetchFareTotalsByTripDateAndRoute",
+  endpoint:
+    "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
+  inputSchema: fareTotalsByTripDateAndRouteInputSchema,
+  outputSchema: fareTotalSchema.array(),
+  sampleParams: {
+    TripDate: datesHelper.today(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
+    RoundTrip: false,
+    FareLineItemID: "1,2",
+    Quantity: "3,1",
   },
-} satisfies EndpointGroup;
+  endpointDescription:
+    "Calculate fare totals for a terminal combination with selected line items and quantities.",
+});

@@ -5,6 +5,7 @@
  */
 
 import type { z } from "zod";
+import type { ApiMetadata } from "@/apis/types";
 
 // ============================================================================
 // CACHE STRATEGY TYPES
@@ -14,7 +15,7 @@ import type { z } from "zod";
  * Cache strategies for different data update frequencies
  *
  * These strategies define how frequently data should be refreshed based on
- * the nature of the transportation data. Each strategy includes appropriate
+ * nature of transportation data. Each strategy includes appropriate
  * stale time, garbage collection time, and refetch intervals.
  */
 export type CacheStrategy =
@@ -31,14 +32,12 @@ export type CacheStrategy =
  * Runtime endpoint interface with computed properties
  *
  * This interface defines the structure for runtime endpoint objects that are
- * created from ApiDefinition and EndpointDefinition structures. It includes
- * all necessary information for validation, caching, and URL generation.
+ * created from endpoint configurations. It includes all necessary information
+ * for validation, caching, and URL generation.
  */
 export interface Endpoint<I, O> {
-  /** API group name (e.g., "wsdot-bridge-clearances") */
-  api: string;
-  /** Function name (e.g., "getBridgeClearances") */
-  function: string;
+  /** API configuration */
+  api: ApiMetadata;
   /** Complete HTTP endpoint URL template */
   endpoint: string;
   /** Zod schema for input validation (optional - excluded in lite builds) */
@@ -49,12 +48,14 @@ export interface Endpoint<I, O> {
   sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
   /** Cache strategy */
   cacheStrategy: CacheStrategy;
-  /** Function name (alias for function field) */
+  /** Function name */
   functionName: string;
   /** Complete URL template with domain */
   urlTemplate: string;
   /** Computed unique identifier in format "api:function" for backward compatibility */
   id: string;
+  /** One-sentence description of what this specific endpoint does */
+  endpointDescription?: string;
 }
 
 // ============================================================================

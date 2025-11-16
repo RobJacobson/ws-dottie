@@ -35,7 +35,7 @@ export const terminalsAndMatesInputSchema = z
       ),
   })
   .describe(
-    "Retrieves all valid departing and arriving terminal combinations for specified trip date, returning all terminal pairs with IDs and names. Use GetScheduleValidDateRange to determine valid trip dates. Use for comprehensive terminal combination lookup."
+    "Input parameters for retrieving all valid terminal pairs for a trip date."
   );
 
 export type TerminalsAndMatesInput = z.infer<
@@ -51,16 +51,12 @@ export const terminalsAndMatesByRouteInputSchema = z
     TripDate: z
       .string()
       .describe(
-        "Trip date for which to retrieve terminal combinations, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter terminal combinations by trip date and route."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange."
       ),
-    RouteID: z
-      .number()
-      .describe(
-        "Unique identifier for route, as an integer ID. E.g., '9' for Anacortes/San Juan Islands route. Use GetRoutes to retrieve valid routes. Used to filter terminal combinations by specific route."
-      ),
+    RouteID: z.number().describe("Numeric ID of the route."),
   })
   .describe(
-    "Retrieves valid departing and arriving terminal combinations for specified route and trip date, returning terminal pairs with IDs and names. Use GetRoutes to find valid routes and GetScheduleValidDateRange for valid trip dates. Use for route-specific terminal combination lookup."
+    "Input parameters for retrieving valid terminal pairs for a specific route and trip date."
   );
 
 export type TerminalsAndMatesByRouteInput = z.infer<

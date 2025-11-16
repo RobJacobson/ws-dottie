@@ -11,17 +11,15 @@ export const areaSchema = z
       .string()
       .nullable()
       .describe(
-        "Unique map area identifier code, as an area code. E.g., 'L2CE' for Central area, 'L2CL' for Central area variant, 'L2LO' for Western area, 'L2NE' for Northeast area, 'L2NN' for Northwest area, null when area code is unavailable. Used for filtering alerts by geographic map area."
+        "Map area identifier code for geographic filtering, or null when unavailable."
       ),
     MapAreaDescription: z
       .string()
       .nullable()
-      .describe(
-        "Human-readable description of map area, as an area name. E.g., 'Eastern' for Eastern Washington area, 'Central' for Central Washington area, 'Western' for Western Washington area, 'Northeast' for Northeast area, 'Northwest' for Northwest area, null when description is unavailable. Provides geographic identification for map area."
-      ),
+      .describe("Display name of the map area, or null when unavailable."),
   })
   .describe(
-    "Represents map area information including area identifier code and geographic description. E.g., area 'L2CE' (Central) or 'L2NN' (Northwest). Used for geographic alert filtering and map area identification. Provides reference data for area-based alert queries."
+    "Geographic map area with identifier code and display name for filtering highway alerts by region."
   );
 
 export type Area = z.infer<typeof areaSchema>;

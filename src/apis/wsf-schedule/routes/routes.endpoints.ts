@@ -1,41 +1,51 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
 import {
-  type RoutesByTripDateAndTerminalsInput,
-  type RoutesByTripDateInput,
   routesByTripDateAndTerminalsInputSchema,
   routesByTripDateInputSchema,
 } from "./routes.input";
-import { type Route, routeSchema } from "./routes.output";
+import { routeSchema } from "./routes.output";
 
-export const routesResource = {
+export const routesGroup: EndpointGroup = {
   name: "routes",
+  cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each Routes item represents a ferry path between terminals. Each route includes route identification, terminal connections, and route-specific scheduling information for travel planning.",
-    businessContext:
-      "Use to identify ferry routes by providing route paths and terminal connections for travel planning and schedule selection.",
+    summary: "Basic ferry route information between terminals.",
+    description:
+      "Route identification including route IDs, abbreviations, descriptions, region associations, and service disruptions.",
+    useCases: [
+      "Discover available routes for a trip date.",
+      "Identify routes by terminal combinations.",
+      "Check for active service disruptions on routes.",
+    ],
+    updateFrequency: "daily",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchRoutesByTripDate: {
-      endpoint: "/routes/{TripDate}",
-      inputSchema: routesByTripDateInputSchema,
-      outputSchema: z.array(routeSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription: "Returns multiple of Routes for specified date.",
-    } satisfies EndpointDefinition<RoutesByTripDateInput, Route[]>,
-    fetchRoutesByTripDateAndTerminals: {
-      endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: routesByTripDateAndTerminalsInputSchema,
-      outputSchema: z.array(routeSchema),
-      sampleParams: {
-        TripDate: datesHelper.tomorrow(),
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-      },
-      endpointDescription: "Returns multiple of Routes for terminal pair.",
-    } satisfies EndpointDefinition<RoutesByTripDateAndTerminalsInput, Route[]>,
+};
+
+export const fetchRoutesByTripDate = createEndpoint({
+  api: apis.wsfSchedule,
+  group: routesGroup,
+  functionName: "fetchRoutesByTripDate",
+  endpoint: "/routes/{TripDate}",
+  inputSchema: routesByTripDateInputSchema,
+  outputSchema: routeSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription: "List all routes available for specified trip date.",
+});
+
+export const fetchRoutesByTripDateAndTerminals = createEndpoint({
+  api: apis.wsfSchedule,
+  group: routesGroup,
+  functionName: "fetchRoutesByTripDateAndTerminals",
+  endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+  inputSchema: routesByTripDateAndTerminalsInputSchema,
+  outputSchema: routeSchema.array(),
+  sampleParams: {
+    TripDate: datesHelper.tomorrow(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
   },
-} satisfies EndpointGroup;
+  endpointDescription: "List routes matching terminal pair for specified date.",
+});

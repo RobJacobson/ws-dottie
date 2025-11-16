@@ -1,31 +1,34 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type BorderCrossingsInput,
-  borderCrossingsInputSchema,
-} from "./borderCrossingData.input";
-import {
-  type BorderCrossing,
-  borderCrossingSchema,
-} from "./borderCrossingData.output";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
+import { borderCrossingsInputSchema } from "./borderCrossingData.input";
+import { borderCrossingSchema } from "./borderCrossingData.output";
 
-export const borderCrossingDataResource = {
+export const borderCrossingDataGroup: EndpointGroup = {
   name: "border-crossing-data",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each BorderCrossingData item represents current border crossing wait time information for Washington State crossings into Canada, including crossing identification (name and type), location coordinates, timestamp data, and wait time measurements in minutes. These items provide real-time traffic flow data for I-5, SR-543, SR-539, and SR-9 crossings, supporting both general purpose and specialized lanes (Nexus, Trucks, FAST).",
-    businessContext:
-      "Use to plan border crossing routes and estimate wait times by providing real-time wait time data, crossing location information, and timestamp measurements for Washington State crossings into Canada. Compare wait times across different crossing types (general purpose, Nexus, truck lanes) and select optimal crossing points for travel planning.",
+    summary:
+      "Current wait times for Washington border crossings into Canada by crossing and lane type.",
+    description:
+      "Snapshot wait-time data for I-5, SR-543, SR-539, and SR-9 crossings, covering general, Nexus, and truck lanes.",
+    useCases: [
+      "Plan trips into Canada based on current border wait times.",
+      "Compare wait times across crossings and lane types.",
+      "Show live wait-time information in traveler or operations dashboards.",
+    ],
+    updateFrequency: "1m",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchBorderCrossings: {
-      endpoint: "/GetBorderCrossingsAsJson",
-      inputSchema: borderCrossingsInputSchema,
-      outputSchema: z.array(borderCrossingSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.",
-    } satisfies EndpointDefinition<BorderCrossingsInput, BorderCrossing[]>,
-  },
-} satisfies EndpointGroup;
+};
+
+export const fetchBorderCrossings = createEndpoint({
+  api: apis.wsdotBorderCrossings,
+  group: borderCrossingDataGroup,
+  functionName: "fetchBorderCrossings",
+  endpoint: "/GetBorderCrossingsAsJson",
+  inputSchema: borderCrossingsInputSchema,
+  outputSchema: borderCrossingSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "List current wait times for all Washington border crossings into Canada.",
+});

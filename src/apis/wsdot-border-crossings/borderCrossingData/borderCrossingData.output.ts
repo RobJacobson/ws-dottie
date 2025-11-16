@@ -2,34 +2,35 @@ import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
- * Schema for BorderCrossingData - represents border crossing wait time data
+ * Schema for border crossing wait time data.
  *
- * Information about Canadian border crossing wait times.
+ * Each record describes the latest wait time for a Washington border
+ * crossing into Canada.
  */
 export const borderCrossingSchema = z
   .object({
     BorderCrossingLocation: roadwayLocationSchema
       .nullable()
       .describe(
-        "Roadway location information for border crossing, as a roadway location object. E.g., I-5 General Purpose at latitude 49.004776, longitude -122.756964, null when location data is unavailable like SR539Nexus. Provides geographic and route information for crossing identification."
+        "Roadway location of the border crossing, including route, milepost, and coordinates, or null when location data is not provided for this lane."
       ),
     CrossingName: z
       .string()
       .nullable()
       .describe(
-        "Common name identifier for border crossing, as a crossing code. E.g., 'I5' for I-5 General Purpose, 'I5Nexus' for I-5 Nexus Lane, 'SR543TrucksFast' for SR-543 Trucks FAST Lane, 'SR9' for SR-9 General Purpose, null when crossing name is unavailable. Used for crossing identification and user display."
+        "Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable."
       ),
     Time: zDotnetDate().describe(
-      "Timestamp when border crossing wait time reading was taken, as a UTC datetime. E.g., '2025-11-02T19:10:00.000Z' for reading at 7:10 PM on November 2, 2025. Indicates data freshness and when wait time measurement occurred."
+      "UTC datetime when this border crossing wait time observation was recorded."
     ),
     WaitTime: z
       .int()
       .describe(
-        "Current border crossing wait time, as minutes. E.g., '15' for 15 minutes at I-5 General Purpose, '5' for 5 minutes at I-5 Nexus Lane, '10' for 10 minutes at SR-543 Trucks, '-1' when wait time is unavailable or not applicable. Negative values indicate wait time data is not available for that crossing."
+        "Current estimated wait time for this crossing in minutes; -1 when a wait time is not available."
       ),
   })
   .describe(
-    "Represents border crossing wait time data including crossing identification, location information, current wait times, and measurement timestamp. E.g., I-5 General Purpose crossing (I5) at location 49.004776, -122.756964 with 15 minute wait time measured at 7:10 PM. Used for border crossing planning, route selection, and wait time monitoring. Updates approximately every minute."
+    "Border crossing wait-time record for a Washington crossing into Canada, including location, crossing code, observation time, and wait time in minutes."
   );
 
 export type BorderCrossing = z.infer<typeof borderCrossingSchema>;

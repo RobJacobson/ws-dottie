@@ -1,55 +1,63 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
 import {
-  type TollTripRatesInput,
-  type TripRatesByDateInput,
-  type TripRatesByVersionInput,
   tollTripRatesInputSchema,
   tripRatesByDateInputSchema,
   tripRatesByVersionInputSchema,
 } from "./tollTripRates.input";
-import {
-  type TollTripsRates,
-  tollTripsRatesSchema,
-} from "./tollTripRates.output";
+import { tollTripsRatesSchema } from "./tollTripRates.output";
 
-export const tollTripRatesResource = {
+export const tollTripRatesGroup: EndpointGroup = {
   name: "toll-trip-rates",
+  cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each TollTripRates item represents comprehensive toll rate data for specific trips including pricing details, informational messages, and version tracking. Each container supports current data retrieval, historical date ranges, and version-specific queries.",
-    businessContext:
-      "Use to analyze toll pricing trends and retrieve historical rate data by providing detailed trip information, version tracking, and date range filtering for transportation planning.",
+    summary:
+      "Comprehensive toll rate data for all trips including pricing, messages, and version tracking.",
+    description:
+      "Container for toll trip rates supporting current data, historical date ranges, and version-specific queries. Includes pricing details, informational messages, and version tracking for transportation planning.",
+    useCases: [
+      "Retrieve current toll rates for all trips.",
+      "Analyze historical toll pricing trends.",
+      "Access version-specific rate data for change tracking.",
+    ],
+    updateFrequency: "5m",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchTollTripRates: {
-      endpoint: "/getTollTripRatesAsJson",
-      inputSchema: tollTripRatesInputSchema,
-      outputSchema: tollTripsRatesSchema,
-      sampleParams: {},
-      endpointDescription:
-        "Returns single TollTripRates item with current pricing and message data.",
-    } satisfies EndpointDefinition<TollTripRatesInput, TollTripsRates>,
-    fetchTripRatesByDate: {
-      endpoint: "/getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
-      inputSchema: tripRatesByDateInputSchema,
-      outputSchema: z.array(tollTripsRatesSchema),
-      sampleParams: {
-        FromDate: datesHelper.yesterday(),
-        ToDate: datesHelper.today(),
-      },
-      endpointDescription:
-        "Returns multiple TollTripRates items for specified date range.",
-    } satisfies EndpointDefinition<TripRatesByDateInput, TollTripsRates[]>,
-    fetchTripRatesByVersion: {
-      endpoint: "/getTripRatesByVersionAsJson?Version={Version}",
-      inputSchema: tripRatesByVersionInputSchema,
-      outputSchema: tollTripsRatesSchema,
-      sampleParams: { Version: 352417 },
-      endpointDescription:
-        "Returns single TollTripRates item for specific version.",
-    } satisfies EndpointDefinition<TripRatesByVersionInput, TollTripsRates>,
+};
+
+export const fetchTollTripRates = createEndpoint({
+  api: apis.wsdotTollRates,
+  group: tollTripRatesGroup,
+  functionName: "fetchTollTripRates",
+  endpoint: "/getTollTripRatesAsJson",
+  inputSchema: tollTripRatesInputSchema,
+  outputSchema: tollTripsRatesSchema,
+  sampleParams: {},
+  endpointDescription: "Get current toll rates for all trips.",
+});
+
+export const fetchTripRatesByDate = createEndpoint({
+  api: apis.wsdotTollRates,
+  group: tollTripRatesGroup,
+  functionName: "fetchTripRatesByDate",
+  endpoint: "/getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
+  inputSchema: tripRatesByDateInputSchema,
+  outputSchema: tollTripsRatesSchema.array(),
+  sampleParams: {
+    FromDate: datesHelper.yesterday(),
+    ToDate: datesHelper.today(),
   },
-} satisfies EndpointGroup;
+  endpointDescription: "Get historical toll rates for a specified date range.",
+});
+
+export const fetchTripRatesByVersion = createEndpoint({
+  api: apis.wsdotTollRates,
+  group: tollTripRatesGroup,
+  functionName: "fetchTripRatesByVersion",
+  endpoint: "/getTripRatesByVersionAsJson?Version={Version}",
+  inputSchema: tripRatesByVersionInputSchema,
+  outputSchema: tollTripsRatesSchema,
+  sampleParams: { Version: 352417 },
+  endpointDescription: "Get toll rates for a specific version number.",
+});
