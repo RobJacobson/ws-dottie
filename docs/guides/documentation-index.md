@@ -25,8 +25,8 @@ This index provides an overview of all WS-Dottie documentation, organized by cat
 - **[CLI Usage Guide](./cli-usage.md)** - Command-line interface and debugging
   - Tags: `cli`, `debugging`, `testing`
   - Experience: Beginner
-- **[Error Handling Guide](./error-handling.md)** - Troubleshooting common issues
-  - Tags: `troubleshooting`, `errors`, `debugging`
+- **[Error Handling Guide](./error-handling.md)** - Common error patterns and solutions
+  - Tags: `errors`, `debugging`
   - Experience: Intermediate
 - **[Validation Guide](./advanced/validation-guide.md)** - Zod validation system and best practices
   - Tags: `validation`, `performance`, `zod`, `typescript`
@@ -74,7 +74,7 @@ All documentation pages include tags to help you find relevant content:
 - `advanced` - Content for experienced users and complex use cases
 - `reference` - Content for quick lookup and reference
 - `tutorial` - Step-by-step guides and examples
-- `troubleshooting` - Content for resolving issues and problems
+- `errors` - Content for resolving issues and problems
 
 ## 📋 Finding Information
 
@@ -82,7 +82,7 @@ All documentation pages include tags to help you find relevant content:
 
 - **For New Users**: Start with [Getting Started Guide](./getting-started.md)
 - **For Common Questions**: Check [FAQ](./faq.md) (coming soon)
-- **For Issues**: Check [Troubleshooting Guide](./guides/error-handling.md) or [GitHub Issues](https://github.com/RobJacobson/ws-dottie/issues)
+- **For Issues**: Check [Error Handling Guide](./guides/error-handling.md) or [GitHub Issues](https://github.com/RobJacobson/ws-dottie/issues)
 - **For Examples**: See category-specific example directories
 
 ### Documentation Structure
@@ -99,7 +99,7 @@ docs/overview/
 ├── tanstack-query.md            # React integration
 ├── fetching-data.md            # Basic fetch patterns
 ├── cli-usage.md               # Command-line interface
-├── error-handling.md            # Troubleshooting guide
+├── error-handling.md            # Common error patterns and solutions
 ├── documentation-index.md       # This file (documentation index)
 ├── categories/
 │   ├── ferries.md              # Ferry-specific documentation
@@ -110,7 +110,7 @@ docs/overview/
     ├── tanstack-query.md         # React integration
     ├── fetching-data.md            # Basic fetch patterns
     ├── cli-usage.md               # Command-line interface
-    └── error-handling.md            # Troubleshooting guide
+    └── error-handling.md            # Common error patterns and solutions
 └── examples/
     ├── ferries.md              # Ferry application examples
     ├── traffic.md              # Traffic application examples

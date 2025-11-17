@@ -1,488 +1,290 @@
 # WS-Dottie Architecture
 
-This document provides an overview of WS-Dottie's architecture, design principles, and technical implementation details.
+This document provides a comprehensive overview of WS-Dottie's architecture, explaining how different components of the codebase work together to provide a unified interface for accessing Washington State transportation data.
 
 > **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](./getting-started.md) • [API Guide](./api-guide.md)
 
 ## 🏗️ System Overview
 
-WS-Dottie is a TypeScript library that provides unified access to Washington State transportation data from WSDOT and WSF APIs. It abstracts away the complexity of working with multiple government APIs while providing type safety, performance optimization, and environment-agnostic operation.
+WS-Dottie is a TypeScript library that abstracts the complexity of working with multiple Washington State transportation APIs (WSDOT and WSF). It provides type-safe data access through multiple interfaces: direct fetch functions, React hooks, and a CLI tool, while handling the challenges of CORS through JSONP when needed.
 
-### High-Level Architecture
+### Core Design Philosophy
 
-```
-┌─────────────────────────────────────────────────────┐
-│                    WS-Dottie Library                    │
-├─────────────────────────────────────────────────────┤
-│  API Modules    │  React Hooks  │  Utilities & Config  │
-│  (16 APIs)     │  (TanStack)    │  (Type Safety, etc.) │
-├─────────────────────────────────────────────────────┤
-│                    Data Access Layer                           │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   WSDOT    │  │     WSF     │  │  Validation  │  │
-│  │   APIs      │  │    APIs      │  │   & Types    │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                    Transport Layer                              │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Native    │  │    JSONP    │  │    CLI      │  │
-│  │   Fetch     │  │  (Browser)   │  │  Interface  │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
+The architecture follows a "schema-first" approach where Zod schemas define the contract between the library and external APIs. These schemas serve multiple purposes:
 
-### Component Interaction Flow
+1. **Runtime validation** - Ensuring API responses match expected structure
+2. **Type generation** - Creating TypeScript types automatically
+3. **Documentation generation** - Powering OpenAPI specifications and Redoc HTML files
+4. **Input validation** - Validating parameters before API calls
 
-```
-┌─────────────────────────────────────────────────────┐
-│                    User Application                        │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   React     │  │   Node.js   │  │   Browser    │  │
-│  │   Component  │  │   Server    │  │   Client     │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                    WS-Dottie Library                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │ React Hooks  │  │ Fetch Funcs │  │ Config Mgr   │  │
-│  │ (TanStack)   │  │ (Core)     │  │             │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                    WSDOT/WSF APIs                         │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │              HTTP Requests                    │  │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │  │   Native    │  │   JSONP    │  │   Response   │  │
-│  │  │   Fetch     │  │  (Browser)   │  │ Processing  │  │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
+## 🔄 Data Flow Architecture
 
-## 🔄 Data Flow
+### Request Processing Pipeline
 
-### Request Processing Flow
+The library processes requests through a layered architecture:
+
+1. **User Application Layer** - Where users interact with the library through React hooks, Node.js functions, or CLI commands
+2. **WS-Dottie Library Layer** - Contains TanStack Query hooks, core fetch functions, and transport abstraction
+3. **External API Layer** - Interfaces with WSDOT, WSF, and other data sources
+
+### Transport Layer Abstraction
+
+The library handles different environments through a transport abstraction layer:
+
+1. **Native Fetch** (Node.js/Modern browsers)
+   - Direct HTTP requests with full header support
+   - Proper error handling and response parsing
+   - Connection pooling and optimization
+
+2. **JSONP** (Legacy browser environments)
+   - CORS bypass for browsers without proper CORS support
+   - Dynamic script tag injection
+   - Callback handling and cleanup
+
+3. **CLI Interface**
+   - Command-line access to all API endpoints
+   - Output formatting options (JSON, table, etc.)
+   - Batch operations and scripting support
+
+## 🧩 Core Components
+
+### 1. API Definitions (`src/apis/`)
+
+The API definitions form the foundation of the library, organized by provider and endpoint:
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                 User Initiates API Call              │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   React     │  │   Node.js   │  │   Browser    │  │
-│  │   Hook/     │  │   Function  │  │   Request    │  │
-│  │   Function   │  │   Call      │  │   │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                 WS-Dottie Library                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │ Parameter   │  │ Transport  │  │ Validation  │  │
-│  │ Validation  │  │ Selection  │  │ Processing  │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                 WSDOT/WSF APIs                         │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │              HTTP Request                        │  │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │  │   Native    │  │   JSONP    │  │   Response   │  │
-│  │  │   Fetch     │  │  (Browser)   │  │ Processing  │  │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘  │
-│  └─────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                 Data Processing                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Zod       │  │   Date      │  │   Type       │  │
-│  │   Validation  │  │ Conversion  │  │ Inference   │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                 User Receives Typed Response              │
-└─────────────────────────────────────────────────────┘
+src/apis/
+├── wsdot-border-crossings/
+│   └── borderCrossingData/
+│       ├── borderCrossingData.input.ts     # Input schema
+│       ├── borderCrossingData.output.ts    # Output schema
+│       └── borderCrossingData.endpoints.ts # Endpoint definition
+├── wsf-vessels/
+│   └── vesselLocations/
+│       ├── vesselLocations.input.ts
+│       ├── vesselLocations.output.ts
+│       └── vesselLocations.endpoints.ts
+└── ... (other API directories)
 ```
 
-### Error Handling Flow
+Each API directory contains:
+- **Input schemas** - Zod schemas for request parameters
+- **Output schemas** - Zod schemas for response data
+- **Endpoint definitions** - Configuration for API endpoints
+
+### 2. Shared Infrastructure (`src/shared/`)
+
+The shared infrastructure provides common functionality across all APIs:
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                 API Request                           │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Network    │  │    API     │  │   Error      │  │
-│  │   Error      │  │   Error     │  │   Context    │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                 User Receives Error with Context          │
-└─────────────────────────────────────────────────────┘
+src/shared/
+├── factories/
+│   ├── createEndpoint.ts          # Endpoint factory function
+│   └── apiFunctionFactory.ts     # API function factory
+├── fetching/
+│   ├── index.ts                  # Main fetch implementation
+│   ├── nativeFetch.ts            # Native fetch implementation
+│   └── jsonpFetch.ts             # JSONP implementation
+├── tanstack/
+│   ├── hooks.ts                  # React hooks
+│   └── createHooks.ts            # Hook creation utilities
+├── schemas/                      # Shared schemas
+├── types/                        # Common type definitions
+└── utils/                        # Utility functions
 ```
 
-## 🚀 Endpoint Creation Architecture
+### 3. Endpoint Factory System
 
-### Factory Pattern Implementation
+The endpoint factory is the core of the library's architecture, creating consistent API functions:
 
-```
-┌─────────────────────────────────────────────────────┐
-│              Endpoint Definition File                  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Schema     │  │   Endpoint  │  │   Factory    │  │
-│  │   Files      │  │   Config    │  │   Function   │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│              createEndpoint Factory Function             │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Accepts:                              │  │
-│  │  - API Reference                        │  │
-│  │  - Input Schema                         │  │
-│  │  - Output Schema                        │  │
-│  │  - Endpoint Configuration                 │  │
-│  │                                         │  │
-│  │  Returns:                              │  │
-│  │  - Fetch Function                        │  │
-│  │  - React Hook                           │  │
-│  │  - Endpoint Descriptor                   │  │
-│  └─────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│              Generated API Files                    │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Fetch      │  │   Hooks     │  │   Types      │  │
-│  │   Functions  │  │   File       │  │   File       │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-└─────────────────────────────────────────────────────┘
+```typescript
+// Example endpoint definition
+export const fetchVesselLocations = createEndpoint<
+  VesselLocationsInput,
+  VesselLocation[]
+>({
+  api: apis.wsfVessels,
+  group: vesselLocationsGroup,
+  functionName: "fetchVesselLocations",
+  endpoint: "/vesselLocations",
+  inputSchema: vesselLocationsInputSchema,
+  outputSchema: vesselLocationSchema.array(),
+  endpointDescription: "List current locations of vessels"
+});
 ```
 
-### Real-World Example: Vessel Locations Endpoint
+This factory generates:
+- **Fetch functions** - Direct API calls with proper typing
+- **React hooks** - TanStack Query integration with caching
+- **Type definitions** - TypeScript types from Zod schemas
+- **Documentation** - OpenAPI specifications
 
-```
-┌─────────────────────────────────────────────────────┐
-│          vesselLocations.endpoints.ts               │
-├─────────────────────────────────────────────────────┤
-│  import { createEndpoint } from "@/shared/factories/createEndpoint";
-│  import { apis } from "@/apis/shared/apis";
-│  import { vesselLocationsInputSchema } from "./vesselLocations.input";
-│  import { vesselLocationSchema } from "./vesselLocations.schema";
-│                                           │
-│  export const fetchVesselLocations = createEndpoint<  │
-│    VesselLocationsInput,                        │
-│    VesselLocation[]                             │
-│  >({                                           │
-│    api: apis.wsfVessels,                      │
-│    group: vesselLocationsGroup,                   │
-│    functionName: "fetchVesselLocations",           │
-│    endpoint: "/vesselLocations",                  │
-│    inputSchema: vesselLocationsInputSchema,         │
-│    outputSchema: vesselLocationSchema.array(),       │
-│    endpointDescription: "List current locations..."    │
-│  });                                           │
-└─────────────────────────────────────────────────────┘
+### 4. React Hooks Integration
+
+The library provides TanStack Query hooks for React applications:
+
+```typescript
+// Generated hook usage
+const { data, error, isLoading } = useVesselLocations({
+  vesselId: 18
+});
 ```
 
-## 🚀 Caching Architecture
+Features include:
+- **Automatic caching** - Based on data freshness requirements
+- **Background refetching** - Keeping data up-to-date
+- **Error handling** - Retry logic and error boundaries
+- **Optimistic updates** - For better UX
 
-### Cache Strategy Implementation
+### 5. CLI Tools
+
+The CLI provides command-line access to all APIs:
+
+```bash
+# Example CLI usage
+ws-dottie vessels locations --vessel-id 18
+ws-dottie border-crossings --date 2024-01-15
+```
+
+Features include:
+- **All endpoints accessible** - Complete API coverage
+- **Output formatting** - JSON, table, CSV options
+- **Batch operations** - Process multiple requests
+- **Scripting support** - Integration with shell scripts
+
+## 📋 Schema and Documentation System
+
+### Zod Schema Architecture
+
+The schema system is the foundation of the library's type safety:
+
+```typescript
+// Example schema definition
+const vesselLocationSchema = z.object({
+  VesselID: z.number(),
+  VesselName: z.string(),
+  Latitude: z.number(),
+  Longitude: z.number(),
+  // ... other fields
+});
+
+// Type inference
+type VesselLocation = z.infer<typeof vesselLocationSchema>;
+```
+
+Benefits include:
+- **Single source of truth** - Schema defines the contract
+- **Runtime validation** - Ensures data integrity
+- **Type generation** - Automatic TypeScript types
+- **Documentation** - Self-documenting code
+
+### Documentation Generation Pipeline
+
+The library automatically generates documentation from schemas:
 
 ```
-┌─────────────────────────────────────────────────────┐
-│              TanStack Query Integration              │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   React     │  │   Query     │  │   Cache      │  │
-│  │   Hooks     │  │   Client    │  │   Strategies  │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│              Automatic Cache Configuration             │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  REALTIME: 5s refresh                    │  │
-│  │  - Vessel locations                        │  │
-│  │  - Traffic alerts                         │  │
-│  │                                         │  │
-│  │  FREQUENT: 5m refresh                   │  │
-│  │  - Terminal wait times                    │  │
-│  │  - Traffic flow                          │  │
-│  │                                         │  │
-│  │  MODERATE: 1h refresh                   │  │
-│  │  - Weather conditions                    │  │
-│  │  - Road status                          │  │
-│  │                                         │  │
-│  │  STATIC: 1d refresh                     │  │
-│  │  - Schedules                            │  │
-│  │  - Fares                               │  │
-│  │  - Terminal info                        │  │
-│  └─────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│              Cache Implementation Details              │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Key Generation:                           │  │
-│  │  ['vesselLocations', { vesselId: 18 }]      │  │
-│  │  ['vesselLocations']                        │  │
-│  │                                         │  │
-│  │  Stale Time:                             │  │
-│  │  - 5s for REALTIME                       │  │
-│  │  - 5m for FREQUENT                      │  │
-│  │  - 1h for MODERATE                      │  │
-│  │  - 1d for STATIC                         │  │
-│  │                                         │  │
-│  │  Background Refetch:                        │  │
-│  │  - Automatic on window focus                 │  │
-│  │  - Network reconnection                       │  │
-│  │  - Stale-while-revalidate                  │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
+Zod Schemas
+    ↓
+OpenAPI Specification
+    ↓
+Redoc HTML Documentation
 ```
+
+This process:
+1. **Extracts schema information** - From Zod definitions
+2. **Generates OpenAPI specs** - Standard API documentation
+3. **Creates HTML docs** - Using Redoc for beautiful documentation
+4. **Includes examples** - Real data samples for each endpoint
 
 ## 🌐 Environment Support
 
-### Browser vs. Server-Side Architecture
+### Browser vs. Server Architecture
 
+The library adapts to different environments automatically:
+
+```typescript
+// Environment detection and transport selection
+const transport = isBrowser() ? 
+  (supportsCORS() ? nativeFetch : jsonpFetch) : 
+  nativeFetch;
 ```
-┌─────────────────────────────────────────────────────┐
-│              WS-Dottie Environment Abstraction        │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Browser    │  │   Node.js   │  │   Shared     │  │
-│  │   (JSONP)    │  │   (Native)   │  │   Core       │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │   CORS       │  │   Full HTTP  │  │   Type       │  │
-│  │   Bypass     │  │   Features   │  │   Safety     │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │   Callback    │  │   Headers    │  │   Date       │  │
-│  │   Handling    │  │   Management  │  │   Conversion  │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│              Same API Surface for All Environments    │
-└─────────────────────────────────────────────────────┘
+
+Features include:
+- **Automatic detection** - No manual configuration needed
+- **Graceful degradation** - Fallbacks for older browsers
+- **Consistent API** - Same interface regardless of environment
+- **Performance optimization** - Best transport for each environment
+
+## 🚀 Performance Considerations
+
+### Bundle Size Optimization
+
+The library is designed for optimal bundle sizes:
+
+- **Tree-shaking** - Only used code is included
+- **API-specific imports** - Import only what you need
+- **Conditional validation** - Optional runtime validation
+- **Code splitting** - Separate chunks for different APIs
+
+### Caching Strategy
+
+The library implements intelligent caching:
+
+```typescript
+// Cache configuration based on data type
+const cacheConfig = {
+  realtime: { staleTime: 5 * 1000 },      // 5 seconds
+  frequent: { staleTime: 5 * 60 * 1000 },  // 5 minutes
+  moderate: { staleTime: 60 * 60 * 1000 }, // 1 hour
+  static: { staleTime: 24 * 60 * 60 * 1000 } // 1 day
+};
 ```
 
 ## 🔧 Configuration System
 
-### Configuration Priority Flow
+The library uses a hierarchical configuration system:
 
-```
-┌─────────────────────────────────────────────────────┐
-│              Configuration Resolution                │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Runtime    │  │ Environment │  │   Default     │  │
-│  │   Config     │  │ Variables   │  │   Values      │  │
-│  │   (Highest)   │  │   (Middle)    │  │   (Lowest)    │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│              Example Configuration Flow          │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │ 1. Application calls configManager.setApiKey()   │  │
-│  │ 2. WS-Dottie checks runtime config first      │  │
-│  │ 3. If set, uses runtime value            │  │
-│  │ 4. Falls back to environment variables       │  │
-│  │ 5. Finally uses default values              │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
+1. **Runtime configuration** - Programmatic configuration
+2. **Environment variables** - Deployment-specific settings
+3. **Default values** - Sensible out-of-the-box settings
 
-## 🛡️ Type Safety Architecture
+## 🛠️ Development Workflow
 
-### Schema-First Type Flow
+### Adding New Endpoints
 
-```
-┌─────────────────────────────────────────────────────┐
-│              Type Safety Implementation              │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Zod       │  │   TypeScript │  │   Generated   │  │
-│  │   Schemas    │  │   Compiler   │  │   Types      │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Single Source of Truth                    │  │
-│  │  - Schema definitions validate API responses    │  │
-│  │  - TypeScript types inferred from schemas       │  │
-│  │  - IDE autocomplete from generated types       │  │
-│  │  - Refactoring updates types automatically      │  │
-│  └─────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  Example: Vessel Location Type Generation       │
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  const VesselLocationSchema = z.object({      │  │
-│  │    VesselID: z.number(),                  │  │
-│  │    VesselName: z.string(),                │  │
-│  │    Latitude: z.number(),                  │  │
-│  │    Longitude: z.number(),                 │  │
-│  │    // ... other fields                    │  │
-│  │  });                                     │  │
-│  │                                           │  │
-│  │  type VesselLocation = z.infer<typeof      │  │
-│  │    VesselLocationSchema>;                  │  │
-│  │                                           │  │
-│  │  // Runtime validation                      │  │
-│  │  const validatedData = VesselLocationSchema.     │  │
-│  │    parse(apiResponse);                    │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
+The workflow for adding new endpoints:
 
-## 📊 Performance Considerations
+1. **Define schemas** - Create input/output Zod schemas
+2. **Create endpoint** - Use the factory function
+3. **Generate types** - Automatic from schemas
+4. **Add tests** - Unit and integration tests
+5. **Update docs** - Automatic from schemas
 
-### Bundle Size Optimization
+### Code Generation
 
-```
-┌─────────────────────────────────────────────────────┐
-│              Bundle Size Optimization              │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Tree       │  │   Validation  │  │   Bundle      │  │
-│  │   Shaking    │  │   Toggle     │  │   Size        │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  With Validation:                         │  │
-│  │  - Includes Zod schemas (~100KB)           │  │
-│  │  - Runtime validation overhead               │  │
-│  │  - Total bundle: ~200-300KB              │  │
-│  │                                           │  │
-│  │  Without Validation:                       │  │
-│  │  - Schemas tree-shaken out                  │  │
-│  │  - Minimal runtime overhead                  │  │
-│  │  - Total bundle: ~100-150KB              │  │
-│  └─────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  API-Specific Imports:                      │  │
-│  │  - Only import what you need                 │  │
-│  │  - Further reduces bundle size                │  │
-│  │  - Example: Single API ~50KB               │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
+The library uses code generation for:
 
-### Request Optimization
-
-```
-┌─────────────────────────────────────────────────────┐
-│              Request Optimization                │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Request    │  │   Response   │  │   Caching    │  │
-│  │   Dedupli-  │  │   Processing  │  │   Strategy    │  │
-│  │   cation     │  │             │  │             │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Identical requests share responses:          │  │
-│  │  - Reduces API calls                      │  │
-│  │  - Improves performance                     │  │
-│  │                                           │  │
-│  │  Connection pooling:                        │  │
-│  │  - Reuses HTTP connections                  │  │
-│  │  - Reduces latency                        │  │
-│  │                                           │  │
-│  │  Automatic compression:                     │  │
-│  │  - Reduces bandwidth usage                  │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
-
-## 🔍 Debugging Architecture
-
-### Logging System Flow
-
-```
-┌─────────────────────────────────────────────────────┐
-│              Debugging Infrastructure            │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   Log       │  │   Error      │  │   Context    │  │
-│  │   Levels     │  │   Handling   │  │   Enrichment │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  none:      │  │  Network     │  │  - Endpoint URL                      │  │
-│  │  - No logging    │  │  - Status     │  │  - Timestamp                        │  │
-│  │               │  │             │  │  - Request ID                      │  │
-│  │               │  │             │  │  - Response size                     │  │
-│  │               │  │             │  │  - Duration                         │  │
-│  │               │  │             │  │                                     │  │
-│  │ info:       │  │  - Automatic  │  │  - Basic request information            │  │
-│  │  - Basic info   │  │   retry       │  │                                     │  │
-│  │               │  │             │  │                                     │  │
-│  │ debug:      │  │  - Detailed   │  │  - Full request/response details        │  │
-│  │  - Full debug   │  │   context     │  │                                     │  │
-│  │               │  │             │  │                                     │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Error Context Structure:                  │  │
-│  │  interface ApiErrorContext {              │  │
-│  │    endpoint: string;                      │  │
-│  │    url: string;                          │  │
-│  │    timestamp: Date;                       │  │
-│  │    requestId?: string;                     │  │
-│  │    statusCode?: number;                    │  │
-│  │  }                                       │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
-
-## 🔄 Data Transformation
-
-### Date/Time Handling Architecture
-
-```
-┌─────────────────────────────────────────────────────┐
-│              .NET Date Conversion              │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   WSDOT     │  │   WS-Dottie   │  │   JavaScript  │  │
-│  │   Format     │  │   Detection   │  │   Date Object  │  │
-│  │  /Date(...)   │  │  &           │  │             │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Example Transformations:                  │  │
-│  │  "/Date(1703123456789)/"               │  │
-│  │  → new Date(1703123456789)              │  │
-│  │                                           │  │
-│  │  "12/25/2024 02:30:45 PM"           │  │
-│  │  → new Date("2024-12-25T14:30:45")    │  │
-│  └─────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Benefits:                              │  │
-│  │  - Consistent date handling across APIs        │  │
-│  │  - Automatic timezone adjustment             │  │
-│  │  - Transparent to user                    │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
+- **Type definitions** - From Zod schemas
+- **API functions** - From endpoint definitions
+- **Documentation** - From schemas and endpoints
+- **CLI commands** - From endpoint registry
 
 ## 🚀 Future Architecture Considerations
 
+### Planned Enhancements
+
+1. **WebSocket Support** - Real-time data streaming
+2. **Service Workers** - Offline functionality
+3. **Plugin System** - Extensible architecture
+4. **Geographic Distribution** - CDN and edge caching
+
 ### Scalability Roadmap
 
-```
-┌─────────────────────────────────────────────────────┐
-│              Future Enhancements                │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
-│  │   WebSocket  │  │   Service    │  │   Plugin      │  │
-│  │   Support     │  │   Workers    │  │   System      │  │
-│  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Benefits:                              │  │
-│  │  - Real-time data streaming                │  │
-│  │  - Offline functionality                   │  │
-│  │  - Geographic data distribution             │  │
-│  │  - Custom data sources                   │  │
-│  │  - Request/response middleware              │  │
-│  └─────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐  │
-│  │  Implementation Timeline:                  │  │
-│  │  - Phase 1: WebSocket support (Q2 2025)    │  │
-│  │  - Phase 2: Service workers (Q3 2025)       │  │
-│  │  - Phase 3: Plugin system (Q4 2025)          │  │
-│  └─────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-```
+The architecture is designed to scale with:
 
-This architecture ensures WS-Dottie remains performant, maintainable, and adaptable to future requirements while providing a consistent developer experience across all supported environments.
+- **New data sources** - Easy addition of new APIs
+- **Different environments** - Browser, Node.js, edge workers
+- **Various use cases** - From simple scripts to complex applications
+- **Performance requirements** - Optimized for different scenarios
+
+This architecture ensures WS-Dottie remains maintainable, performant, and adaptable to future requirements while providing a consistent developer experience across all supported environments.

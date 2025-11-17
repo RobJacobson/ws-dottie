@@ -45,7 +45,7 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Docs
   - **Documentation Guide**: Created comprehensive documentation for the new endpoint generation system
   - **API Reference Updates**: Updated all API documentation to reflect new factory-based approach
-  - **Troubleshooting Guide**: Added troubleshooting guide for documentation display issues
+  - **Error Handling Guide**: Added error handling guide for common issues and solutions
 
 - Build/Chore
   - **Package Structure**: Reorganized package exports to align with new API structure

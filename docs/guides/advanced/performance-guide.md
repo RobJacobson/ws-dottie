@@ -10,6 +10,20 @@ WS-Dottie is designed with performance in mind, offering multiple configuration 
 
 ## 📊 Bundle Size Optimization
 
+### Understanding the Bundle Structure
+
+WS-Dottie uses a chunk-based bundling approach where the main library is split into multiple chunks:
+
+- **Main entry point** (`index.js`): Small file that imports and re-exports from chunks
+- **API-specific bundles**: Each API has its own bundle with hooks, core functions, and schemas
+- **Shared chunks**: Common functionality shared across APIs (fetching, validation, etc.)
+- **Total library size**: ~8.4MB when all chunks are combined
+
+This approach enables:
+- **Tree shaking**: Import only what you need, unused chunks are not loaded
+- **Code splitting**: Smaller initial downloads, chunks loaded on demand
+- **Efficient caching**: Browsers can cache individual chunks separately
+
 ### Validation vs. Non-Validation
 
 **With Validation (validate: true):**
@@ -38,9 +52,10 @@ import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 ```
 
 **Bundle Size Comparison:**
-- Full library: ~300KB
-- Single API: ~50KB
-- Core functions only: ~30KB
+- Full library: ~8.4MB (all chunks combined)
+- Single API (hooks): ~2-5KB (gzipped)
+- Single API (core only): ~1-4KB (gzipped)
+- Single function: ~1KB (gzipped)
 
 ### Tree Shaking Best Practices
 
@@ -125,10 +140,28 @@ const { data: terminals } = useTerminals({
 
 | Import Method | Bundle Size | Gzip Size | Tree Shaking |
 |---------------|--------------|-------------|---------------|
-| Full library | 285KB | 78KB | No |
-| API-specific (hooks) | 52KB | 18KB | Yes |
-| API-specific (core) | 31KB | 11KB | Yes |
-| Single function | 8KB | 3KB | Yes |
+| Full library | 8.4MB (all chunks) | ~2.1MB | No |
+| API-specific (hooks) | 2-5KB | 1-2KB | Yes |
+| API-specific (core) | 1-4KB | 0.5-1KB | Yes |
+| Single function | ~1KB | ~0.3KB | Yes |
+
+#### Full Library Size Breakdown
+
+The full library size of 8.4MB consists of:
+
+- **JavaScript chunks**: 6.8MB
+  - Core functionality (fetching, validation, caching)
+  - API implementations for all 16 APIs
+  - React Query integration and hooks
+- **OpenAPI documentation**: 1.6MB
+  - JSON specifications for all 16 APIs
+  - Largest files: wsf-schedule (549KB), wsf-fares (514KB), wsf-terminals (222KB)
+  - These are included in the bundle but can be excluded with tree-shaking
+
+This demonstrates why API-specific imports are critical for performance:
+- Importing the full library loads all 16 APIs + documentation
+- API-specific imports load only the needed API (1-4KB)
+- Tree-shaking eliminates unused APIs and documentation from the bundle
 
 ## 🎯 Performance Tips
 
@@ -142,7 +175,7 @@ const { data: terminals } = useTerminals({
 ```javascript
 // Optimized React component
 import React, { memo } from 'react';
-import { useVesselLocations } from 'ws-dottie/wsf-vessels/core';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 
 const VesselList = memo(({ vesselIds }) => {
   const { data: vessels } = useVesselLocations({
@@ -169,7 +202,7 @@ const VesselList = memo(({ vesselIds }) => {
 
 ```javascript
 // Optimized server-side code
-import { fetchVesselLocations, fetchAlerts } from 'ws-dottie/wsf-vessels/core';
+import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
 import { fetchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
 
 // Parallel requests

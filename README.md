@@ -1,4 +1,4 @@
-# WS-Dottie 🚢 v1.2.0
+# WS-Dottie 🚢
 
 <div align="center">
   <img src="assets/dottie.png" alt="WS-Dottie Logo" width="400">
