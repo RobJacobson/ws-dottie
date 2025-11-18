@@ -241,7 +241,7 @@ import { vesselStatsByVesselIdMeta } from "@/apis/wsf-vessels/vesselStats/vessel
 import { vesselVerboseGroup } from "@/apis/wsf-vessels/vesselVerbose/shared/vesselVerbose.endpoints";
 import { vesselsVerboseMeta } from "@/apis/wsf-vessels/vesselVerbose/vesselsVerbose";
 import { vesselsVerboseByVesselIdMeta } from "@/apis/wsf-vessels/vesselVerbose/vesselsVerboseById";
-import { buildDescriptor } from "@/shared/factories/metaEndpointFactory";
+import { buildDescriptor } from "@/shared/factories";
 import type { Endpoint } from "./types";
 
 /**
