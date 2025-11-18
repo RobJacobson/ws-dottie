@@ -1,9 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { alertByIdMeta } from "../alertById";
-import { alertsMeta } from "../alerts";
-import { alertsByMapAreaMeta } from "../alertsByMapArea";
-import { alertsByRegionIdMeta } from "../alertsByRegionId";
-import { searchAlertsMeta } from "../searchAlerts";
 
 /**
  * Endpoint group metadata for highway alerts endpoints
@@ -26,17 +21,3 @@ export const highwayAlertsGroup: EndpointGroupMeta = {
     updateFrequency: "5m",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the highway alerts group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const highwayAlertsEndpoints = {
-  alerts: alertsMeta,
-  alertById: alertByIdMeta,
-  alertsByRegionId: alertsByRegionIdMeta,
-  alertsByMapArea: alertsByMapAreaMeta,
-  searchAlerts: searchAlertsMeta,
-} as const;

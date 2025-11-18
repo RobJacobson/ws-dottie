@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalVerboseMeta } from "../terminalVerbose";
-import { terminalVerboseByTerminalIdMeta } from "../terminalVerboseByTerminalId";
 
 /**
  * Endpoint group metadata for terminal verbose endpoints
@@ -20,14 +18,3 @@ export const terminalVerboseGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal verbose group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalVerboseEndpoints = {
-  terminalVerbose: terminalVerboseMeta,
-  terminalVerboseByTerminalId: terminalVerboseByTerminalIdMeta,
-} as const;

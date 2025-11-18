@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalSailingSpaceMeta } from "../terminalSailingSpace";
-import { terminalSailingSpaceByTerminalIdMeta } from "../terminalSailingSpaceByTerminalId";
 
 /**
  * Endpoint group metadata for terminal sailing space endpoints
@@ -19,14 +17,3 @@ export const terminalSailingSpaceGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal sailing space group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalSailingSpaceEndpoints = {
-  terminalSailingSpace: terminalSailingSpaceMeta,
-  terminalSailingSpaceByTerminalId: terminalSailingSpaceByTerminalIdMeta,
-} as const;

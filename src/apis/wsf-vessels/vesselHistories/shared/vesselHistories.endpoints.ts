@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { vesselHistoriesMeta } from "../vesselHistories";
-import { vesselHistoriesByVesselNameAndDateRangeMeta } from "../vesselHistoriesByVesselNameAndDateRange";
 
 /**
  * Endpoint group metadata for vessel histories endpoints
@@ -19,15 +17,3 @@ export const vesselHistoriesGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the vessel histories group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const vesselHistoriesEndpoints = {
-  vesselHistories: vesselHistoriesMeta,
-  vesselHistoriesByVesselNameAndDateRange:
-    vesselHistoriesByVesselNameAndDateRangeMeta,
-} as const;

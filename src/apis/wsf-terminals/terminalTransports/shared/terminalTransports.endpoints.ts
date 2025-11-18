@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalTransportsMeta } from "../terminalTransports";
-import { terminalTransportsByTerminalIdMeta } from "../terminalTransportsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal transports endpoints
@@ -19,14 +17,3 @@ export const terminalTransportsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal transports group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalTransportsEndpoints = {
-  terminalTransports: terminalTransportsMeta,
-  terminalTransportsByTerminalId: terminalTransportsByTerminalIdMeta,
-} as const;

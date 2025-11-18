@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalWaitTimesMeta } from "../terminalWaitTimes";
-import { terminalWaitTimesByTerminalIdMeta } from "../terminalWaitTimesByTerminalId";
 
 /**
  * Endpoint group metadata for terminal wait times endpoints
@@ -20,14 +18,3 @@ export const terminalWaitTimesGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal wait times group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalWaitTimesEndpoints = {
-  terminalWaitTimes: terminalWaitTimesMeta,
-  terminalWaitTimesByTerminalId: terminalWaitTimesByTerminalIdMeta,
-} as const;

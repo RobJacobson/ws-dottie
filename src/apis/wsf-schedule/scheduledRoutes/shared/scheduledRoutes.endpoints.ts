@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { scheduledRoutesMeta } from "../scheduledRoutes";
-import { scheduledRoutesByIdMeta } from "../scheduledRoutesById";
 
 /**
  * Endpoint group metadata for scheduled routes endpoints
@@ -19,14 +17,3 @@ export const scheduledRoutesGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the scheduled routes group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const scheduledRoutesEndpoints = {
-  scheduledRoutes: scheduledRoutesMeta,
-  scheduledRoutesById: scheduledRoutesByIdMeta,
-} as const;

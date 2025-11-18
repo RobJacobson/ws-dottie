@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalBulletinsMeta } from "../terminalBulletins";
-import { terminalBulletinsByTerminalIdMeta } from "../terminalBulletinsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal bulletins endpoints
@@ -19,15 +17,3 @@ export const terminalBulletinsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal bulletins group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalBulletinsEndpoints = {
-  terminalBulletins: terminalBulletinsMeta,
-  terminalBulletinsByTerminalId: terminalBulletinsByTerminalIdMeta,
-} as const;
-

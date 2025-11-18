@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { cacheFlushDateFaresMeta } from "../cacheFlushDateFares";
 
 /**
  * Endpoint group metadata for cache flush date fares endpoints
@@ -19,16 +18,6 @@ export const cacheFlushDateFaresGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the cache flush date fares group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const cacheFlushDateFaresEndpoints = {
-  cacheFlushDateFares: cacheFlushDateFaresMeta,
-} as const;
 
 // Re-export with API-specific names for backward compatibility
 import type {

@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { vesselLocationsMeta } from "../vesselLocations";
-import { vesselLocationsByVesselIdMeta } from "../vesselLocationsByVesselId";
 
 /**
  * Endpoint group metadata for vessel locations endpoints
@@ -20,15 +18,3 @@ export const vesselLocationsGroup: EndpointGroupMeta = {
     updateFrequency: "5s",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the vessel locations group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const vesselLocationsEndpoints = {
-  vesselLocations: vesselLocationsMeta,
-  vesselLocationsByVesselId: vesselLocationsByVesselIdMeta,
-} as const;
-

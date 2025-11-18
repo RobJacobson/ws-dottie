@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { trafficFlowByIdMeta } from "../trafficFlowById";
-import { trafficFlowsMeta } from "../trafficFlows";
 
 /**
  * Endpoint group metadata for flow data endpoints
@@ -21,14 +19,3 @@ export const flowDataGroup: EndpointGroupMeta = {
     updateFrequency: "90s",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the flow data group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const flowDataEndpoints = {
-  trafficFlowById: trafficFlowByIdMeta,
-  trafficFlows: trafficFlowsMeta,
-} as const;

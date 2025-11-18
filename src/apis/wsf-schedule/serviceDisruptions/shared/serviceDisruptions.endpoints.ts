@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { routesHavingServiceDisruptionsByTripDateMeta } from "../routesHavingServiceDisruptionsByTripDate";
 
 /**
  * Endpoint group metadata for service disruptions endpoints
@@ -18,14 +17,3 @@ export const serviceDisruptionsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the service disruptions group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const serviceDisruptionsEndpoints = {
-  routesHavingServiceDisruptionsByTripDate:
-    routesHavingServiceDisruptionsByTripDateMeta,
-} as const;

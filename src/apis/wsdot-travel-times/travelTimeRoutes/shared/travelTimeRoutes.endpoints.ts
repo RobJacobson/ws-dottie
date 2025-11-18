@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { travelTimeByIdMeta } from "../travelTimeById";
-import { travelTimesMeta } from "../travelTimes";
 
 /**
  * Endpoint group metadata for travel time routes endpoints
@@ -21,14 +19,3 @@ export const travelTimeRoutesGroup: EndpointGroupMeta = {
     updateFrequency: "5m",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the travel time routes group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const travelTimeRoutesEndpoints = {
-  travelTimeById: travelTimeByIdMeta,
-  travelTimes: travelTimesMeta,
-} as const;

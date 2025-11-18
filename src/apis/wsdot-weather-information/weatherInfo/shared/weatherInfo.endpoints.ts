@@ -1,8 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { currentWeatherForStationsMeta } from "../currentWeatherForStations";
-import { searchWeatherInformationMeta } from "../searchWeatherInformation";
-import { weatherInformationMeta } from "../weatherInformation";
-import { weatherInformationByStationIdMeta } from "../weatherInformationByStationId";
 
 /**
  * Endpoint group metadata for weather information endpoints
@@ -24,16 +20,3 @@ export const weatherInfoGroup: EndpointGroupMeta = {
     updateFrequency: "5m",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the weather information group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const weatherInfoEndpoints = {
-  weatherInformation: weatherInformationMeta,
-  weatherInformationByStationId: weatherInformationByStationIdMeta,
-  currentWeatherForStations: currentWeatherForStationsMeta,
-  searchWeatherInformation: searchWeatherInformationMeta,
-} as const;

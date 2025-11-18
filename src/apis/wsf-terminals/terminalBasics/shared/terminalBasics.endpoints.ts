@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalBasicsMeta } from "../terminalBasics";
-import { terminalBasicsByTerminalIdMeta } from "../terminalBasicsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal basics endpoints
@@ -20,14 +18,3 @@ export const terminalBasicsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal basics group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalBasicsEndpoints = {
-  terminalBasics: terminalBasicsMeta,
-  terminalBasicsByTerminalId: terminalBasicsByTerminalIdMeta,
-} as const;

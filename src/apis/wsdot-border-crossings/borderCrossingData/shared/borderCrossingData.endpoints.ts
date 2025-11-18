@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { borderCrossingsMeta } from "@/apis/wsdot-border-crossings/borderCrossingData/borderCrossings";
 
 /**
  * Endpoint group metadata for border crossing data endpoints
@@ -20,13 +19,3 @@ export const borderCrossingDataGroup: EndpointGroupMeta = {
     updateFrequency: "1m",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the border crossing data group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const borderCrossingDataEndpoints = {
-  borderCrossings: borderCrossingsMeta,
-} as const;

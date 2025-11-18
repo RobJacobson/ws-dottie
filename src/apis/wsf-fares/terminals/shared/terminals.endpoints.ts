@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalFaresMeta } from "../terminalFares";
-import { terminalMatesFaresMeta } from "../terminalMatesFares";
 
 /**
  * Endpoint group metadata for terminals endpoints
@@ -21,14 +19,3 @@ export const terminalsGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminals group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalsEndpoints = {
-  terminalFares: terminalFaresMeta,
-  terminalMatesFares: terminalMatesFaresMeta,
-} as const;

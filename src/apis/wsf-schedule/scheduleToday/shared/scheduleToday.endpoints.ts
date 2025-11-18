@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { scheduleTodayByRouteMeta } from "../scheduleTodayByRoute";
-import { scheduleTodayByTerminalsMeta } from "../scheduleTodayByTerminals";
 
 /**
  * Endpoint group metadata for schedule today endpoints
@@ -19,14 +17,3 @@ export const scheduleTodayGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the schedule today group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const scheduleTodayEndpoints = {
-  scheduleTodayByRoute: scheduleTodayByRouteMeta,
-  scheduleTodayByTerminals: scheduleTodayByTerminalsMeta,
-} as const;

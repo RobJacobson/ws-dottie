@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { vesselAccommodationsMeta } from "../vesselAccommodations";
-import { vesselAccommodationsByVesselIdMeta } from "../vesselAccommodationsByVesselId";
 
 /**
  * Endpoint group metadata for vessel accommodations endpoints
@@ -19,14 +17,3 @@ export const vesselAccommodationsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the vessel accommodations group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const vesselAccommodationsEndpoints = {
-  vesselAccommodations: vesselAccommodationsMeta,
-  vesselAccommodationsByVesselId: vesselAccommodationsByVesselIdMeta,
-} as const;

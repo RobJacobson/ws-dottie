@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { tollRatesMeta } from "../tollRates";
 
 /**
  * Endpoint group metadata for toll rates endpoints
@@ -20,13 +19,3 @@ export const tollRatesGroup: EndpointGroupMeta = {
     updateFrequency: "5m",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the toll rates group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const tollRatesEndpoints = {
-  tollRates: tollRatesMeta,
-} as const;

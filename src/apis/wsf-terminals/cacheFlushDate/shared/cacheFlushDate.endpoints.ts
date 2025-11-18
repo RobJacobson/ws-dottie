@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { cacheFlushDateTerminalsMeta } from "../cacheFlushDateTerminals";
 
 /**
  * Endpoint group metadata for cache flush date terminals endpoints
@@ -18,13 +17,3 @@ export const cacheFlushDateTerminalsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the cache flush date terminals group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const cacheFlushDateTerminalsEndpoints = {
-  cacheFlushDateTerminals: cacheFlushDateTerminalsMeta,
-} as const;

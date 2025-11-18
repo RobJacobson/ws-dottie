@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { bridgeClearancesMeta } from "../bridgeClearances";
-import { bridgeClearancesByRouteMeta } from "../bridgeClearancesByRoute";
 
 /**
  * Endpoint group metadata for bridge clearances endpoints
@@ -20,14 +18,3 @@ export const bridgeClearancesGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the bridge clearances group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const bridgeClearancesEndpoints = {
-  bridgeClearances: bridgeClearancesMeta,
-  bridgeClearancesByRoute: bridgeClearancesByRouteMeta,
-} as const;

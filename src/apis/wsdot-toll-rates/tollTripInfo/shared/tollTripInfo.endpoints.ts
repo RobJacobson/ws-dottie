@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { tollTripInfoMeta } from "../tollTripInfo";
 
 /**
  * Endpoint group metadata for toll trip info endpoints
@@ -20,13 +19,3 @@ export const tollTripInfoGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the toll trip info group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const tollTripInfoEndpoints = {
-  tollTripInfo: tollTripInfoMeta,
-} as const;

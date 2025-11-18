@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { vesselsVerboseMeta } from "../vesselsVerbose";
-import { vesselsVerboseByVesselIdMeta } from "../vesselsVerboseById";
 
 /**
  * Endpoint group metadata for vessel verbose endpoints
@@ -20,14 +18,3 @@ export const vesselVerboseGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the vessel verbose group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const vesselVerboseEndpoints = {
-  vesselsVerbose: vesselsVerboseMeta,
-  vesselsVerboseByVesselId: vesselsVerboseByVesselIdMeta,
-} as const;

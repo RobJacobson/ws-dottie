@@ -1,7 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { routeDetailsByTripDateMeta } from "../routeDetailsByTripDate";
-import { routeDetailsByTripDateAndRouteIdMeta } from "../routeDetailsByTripDateAndRouteId";
-import { routeDetailsByTripDateAndTerminalsMeta } from "../routeDetailsByTripDateAndTerminals";
 
 /**
  * Endpoint group metadata for route details endpoints
@@ -21,15 +18,3 @@ export const routeDetailsGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the route details group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const routeDetailsEndpoints = {
-  routeDetailsByTripDate: routeDetailsByTripDateMeta,
-  routeDetailsByTripDateAndRouteId: routeDetailsByTripDateAndRouteIdMeta,
-  routeDetailsByTripDateAndTerminals: routeDetailsByTripDateAndTerminalsMeta,
-} as const;

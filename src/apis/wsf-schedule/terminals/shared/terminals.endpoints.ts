@@ -1,7 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalsMeta } from "../terminals";
-import { terminalsAndMatesMeta } from "../terminalsAndMates";
-import { terminalsAndMatesByRouteMeta } from "../terminalsAndMatesByRoute";
 
 /**
  * Endpoint group metadata for schedule terminals endpoints
@@ -22,15 +19,3 @@ export const scheduleTerminalsGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the schedule terminals group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalsEndpoints = {
-  terminals: terminalsMeta,
-  terminalsAndMates: terminalsAndMatesMeta,
-  terminalsAndMatesByRoute: terminalsAndMatesByRouteMeta,
-} as const;

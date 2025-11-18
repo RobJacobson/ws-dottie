@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalComboFaresMeta } from "../terminalComboFares";
-import { terminalComboFaresVerboseMeta } from "../terminalComboFaresVerbose";
 
 /**
  * Endpoint group metadata for terminal combo endpoints
@@ -21,14 +19,3 @@ export const terminalComboGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal combo group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalComboEndpoints = {
-  terminalComboFares: terminalComboFaresMeta,
-  terminalComboFaresVerbose: terminalComboFaresVerboseMeta,
-} as const;

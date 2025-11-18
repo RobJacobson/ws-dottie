@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { scheduleAlertsMeta } from "../scheduleAlerts";
 
 /**
  * Endpoint group metadata for schedule alerts endpoints
@@ -18,13 +17,3 @@ export const scheduleAlertsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the schedule alerts group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const scheduleAlertsEndpoints = {
-  scheduleAlerts: scheduleAlertsMeta,
-} as const;

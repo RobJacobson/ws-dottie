@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta } from "../scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
-import { scheduleByTripDateAndRouteIdMeta } from "../scheduleByTripDateAndRouteId";
 
 /**
  * Endpoint group metadata for schedules endpoints
@@ -19,15 +17,3 @@ export const schedulesGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the schedules group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const schedulesEndpoints = {
-  scheduleByTripDateAndRouteId: scheduleByTripDateAndRouteIdMeta,
-  scheduleByTripDateAndDepartingTerminalIdAndTerminalIds:
-    scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta,
-} as const;

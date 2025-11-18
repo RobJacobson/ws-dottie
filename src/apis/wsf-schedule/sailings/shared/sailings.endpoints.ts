@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { allSailingsBySchedRouteIDMeta } from "../allSailingsBySchedRouteID";
-import { sailingsByRouteIDMeta } from "../sailingsByRouteID";
 
 /**
  * Endpoint group metadata for sailings endpoints
@@ -20,14 +18,3 @@ export const sailingsGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the sailings group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const sailingsEndpoints = {
-  allSailingsBySchedRouteID: allSailingsBySchedRouteIDMeta,
-  sailingsByRouteID: sailingsByRouteIDMeta,
-} as const;

@@ -1,6 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { terminalLocationsMeta } from "../terminalLocations";
-import { terminalLocationsByTerminalIdMeta } from "../terminalLocationsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal locations endpoints
@@ -19,14 +17,3 @@ export const terminalLocationsGroup: EndpointGroupMeta = {
     ],
   },
 };
-
-/**
- * Aggregated endpoint metadata for the terminal locations group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const terminalLocationsEndpoints = {
-  terminalLocations: terminalLocationsMeta,
-  terminalLocationsByTerminalId: terminalLocationsByTerminalIdMeta,
-} as const;

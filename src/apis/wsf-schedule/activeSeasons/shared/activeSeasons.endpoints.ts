@@ -1,5 +1,4 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { activeSeasonsMeta } from "../activeSeasons";
 
 /**
  * Endpoint group metadata for active seasons endpoints
@@ -19,13 +18,3 @@ export const activeSeasonsGroup: EndpointGroupMeta = {
     updateFrequency: "daily",
   },
 };
-
-/**
- * Aggregated endpoint metadata for the active seasons group
- *
- * This object provides a group-level view of all endpoints in this group,
- * useful for registry, documentation generation, and discovery.
- */
-export const activeSeasonsEndpoints = {
-  activeSeasons: activeSeasonsMeta,
-} as const;
