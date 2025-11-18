@@ -1157,7 +1157,7 @@ components:
 paths:
   /cacheflushdate:
     get:
-      summary: Get cache invalidation timestamp for static wsf-terminals data.
+      summary: Get cache flush timestamp for static terminals data.
       operationId: fetchCacheFlushDateTerminals
       tags:
         - cache-flush-date-terminals

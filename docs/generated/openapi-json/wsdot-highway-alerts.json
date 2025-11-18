@@ -697,7 +697,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2025-11-15\",\n    \"SearchTimeEnd\": \"2025-11-16\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2025-11-17\",\n    \"SearchTimeEnd\": \"2025-11-18\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
