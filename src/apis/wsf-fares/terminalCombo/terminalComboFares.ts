@@ -44,7 +44,7 @@ export const terminalComboFaresMeta = {
 export const fetchTerminalComboFares: (
   params?: FetchFunctionParams<TerminalComboInput>
 ) => Promise<TerminalComboFares> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   terminalComboGroup,
   terminalComboFaresMeta
 );
@@ -56,7 +56,7 @@ export const useTerminalComboFares: (
   params?: FetchFunctionParams<TerminalComboInput>,
   options?: QueryHookOptions<TerminalComboFares>
 ) => UseQueryResult<TerminalComboFares, Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   terminalComboGroup,
   terminalComboFaresMeta
 );

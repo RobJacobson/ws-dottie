@@ -39,7 +39,7 @@ export const scheduleTodayByTerminalsMeta = {
 export const fetchScheduleTodayByTerminals: (
   params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>
 ) => Promise<Schedule> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleTodayGroup,
   scheduleTodayByTerminalsMeta
 );
@@ -51,7 +51,7 @@ export const useScheduleTodayByTerminals: (
   params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>,
   options?: QueryHookOptions<Schedule>
 ) => UseQueryResult<Schedule, Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleTodayGroup,
   scheduleTodayByTerminalsMeta
 );

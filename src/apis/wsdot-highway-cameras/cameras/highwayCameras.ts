@@ -34,7 +34,7 @@ export const highwayCamerasMeta = {
 export const fetchHighwayCameras: (
   params?: FetchFunctionParams<HighwayCamerasInput>
 ) => Promise<Camera[]> = createFetchFunction(
-  wsdotHighwayCamerasApi.api,
+  wsdotHighwayCamerasApi,
   camerasGroup,
   highwayCamerasMeta
 );
@@ -46,7 +46,7 @@ export const useHighwayCameras: (
   params?: FetchFunctionParams<HighwayCamerasInput>,
   options?: QueryHookOptions<Camera[]>
 ) => UseQueryResult<Camera[], Error> = createHook(
-  wsdotHighwayCamerasApi.api,
+  wsdotHighwayCamerasApi,
   camerasGroup,
   highwayCamerasMeta
 );

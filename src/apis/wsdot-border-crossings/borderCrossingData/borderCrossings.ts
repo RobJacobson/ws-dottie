@@ -38,7 +38,7 @@ export const borderCrossingsMeta = {
 export const fetchBorderCrossings: (
   params?: FetchFunctionParams<BorderCrossingsInput>
 ) => Promise<BorderCrossing[]> = createFetchFunction(
-  wsdotBorderCrossingsApi.api,
+  wsdotBorderCrossingsApi,
   borderCrossingDataGroup,
   borderCrossingsMeta
 );
@@ -50,7 +50,7 @@ export const useBorderCrossings: (
   params?: FetchFunctionParams<BorderCrossingsInput>,
   options?: QueryHookOptions<BorderCrossing[]>
 ) => UseQueryResult<BorderCrossing[], Error> = createHook(
-  wsdotBorderCrossingsApi.api,
+  wsdotBorderCrossingsApi,
   borderCrossingDataGroup,
   borderCrossingsMeta
 );

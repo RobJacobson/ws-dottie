@@ -35,7 +35,7 @@ export const eventCategoriesMeta = {
 export const fetchEventCategories: (
   params?: FetchFunctionParams<EventCategoriesInput>
 ) => Promise<string[]> = createFetchFunction(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   eventCategoriesGroup,
   eventCategoriesMeta
 );
@@ -47,7 +47,7 @@ export const useEventCategories: (
   params?: FetchFunctionParams<EventCategoriesInput>,
   options?: QueryHookOptions<string[]>
 ) => UseQueryResult<string[], Error> = createHook(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   eventCategoriesGroup,
   eventCategoriesMeta
 );

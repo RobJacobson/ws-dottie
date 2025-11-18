@@ -35,7 +35,7 @@ export const scheduleValidDateRangeMeta = {
 export const fetchScheduleValidDateRange: (
   params?: FetchFunctionParams<ScheduleValidDateRangeInput>
 ) => Promise<ValidDateRange> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleValidDateRangeGroup,
   scheduleValidDateRangeMeta
 );
@@ -47,7 +47,7 @@ export const useScheduleValidDateRange: (
   params?: FetchFunctionParams<ScheduleValidDateRangeInput>,
   options?: QueryHookOptions<ValidDateRange>
 ) => UseQueryResult<ValidDateRange, Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleValidDateRangeGroup,
   scheduleValidDateRangeMeta
 );

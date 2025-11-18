@@ -37,7 +37,7 @@ export const terminalLocationsMeta = {
 export const fetchTerminalLocations: (
   params?: FetchFunctionParams<TerminalLocationsInput>
 ) => Promise<TerminalLocation[]> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalLocationsGroup,
   terminalLocationsMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalLocations: (
   params?: FetchFunctionParams<TerminalLocationsInput>,
   options?: QueryHookOptions<TerminalLocation[]>
 ) => UseQueryResult<TerminalLocation[], Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalLocationsGroup,
   terminalLocationsMeta
 );

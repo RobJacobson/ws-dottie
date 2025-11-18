@@ -37,7 +37,7 @@ export const surfaceMeasurementsMeta = {
 export const fetchSurfaceMeasurements: (
   params?: FetchFunctionParams<SurfaceMeasurementsInput>
 ) => Promise<SurfaceMeasurement[]> = createFetchFunction(
-  wsdotWeatherReadingsApi.api,
+  wsdotWeatherReadingsApi,
   surfaceMeasurementsGroup,
   surfaceMeasurementsMeta
 );
@@ -49,7 +49,7 @@ export const useSurfaceMeasurements: (
   params?: FetchFunctionParams<SurfaceMeasurementsInput>,
   options?: QueryHookOptions<SurfaceMeasurement[]>
 ) => UseQueryResult<SurfaceMeasurement[], Error> = createHook(
-  wsdotWeatherReadingsApi.api,
+  wsdotWeatherReadingsApi,
   surfaceMeasurementsGroup,
   surfaceMeasurementsMeta
 );

@@ -42,7 +42,7 @@ export const fareLineItemsByTripDateAndTerminalsMeta = {
 export const fetchFareLineItemsByTripDateAndTerminals: (
   params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>
 ) => Promise<LineItem[]> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareLineItemsGroup,
   fareLineItemsByTripDateAndTerminalsMeta
 );
@@ -54,7 +54,7 @@ export const useFareLineItemsByTripDateAndTerminals: (
   params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>,
   options?: QueryHookOptions<LineItem[]>
 ) => UseQueryResult<LineItem[], Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareLineItemsGroup,
   fareLineItemsByTripDateAndTerminalsMeta
 );

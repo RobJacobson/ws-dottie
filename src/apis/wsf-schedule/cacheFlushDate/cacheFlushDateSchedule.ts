@@ -20,7 +20,7 @@ import {
 export const fetchCacheFlushDateSchedule: (
   params?: FetchFunctionParams<CacheFlushDateInput>
 ) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   cacheFlushDateScheduleGroup,
   cacheFlushDateScheduleMeta
 );
@@ -32,7 +32,7 @@ export const useCacheFlushDateSchedule: (
   params?: FetchFunctionParams<CacheFlushDateInput>,
   options?: QueryHookOptions<CacheFlushDateOutput>
 ) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   cacheFlushDateScheduleGroup,
   cacheFlushDateScheduleMeta
 );

@@ -37,7 +37,7 @@ export const tollTripVersionMeta = {
 export const fetchTollTripVersion: (
   params?: FetchFunctionParams<TollTripVersionInput>
 ) => Promise<TollTripVersion> = createFetchFunction(
-  wsdotTollRatesApi.api,
+  wsdotTollRatesApi,
   tollTripVersionGroup,
   tollTripVersionMeta
 );
@@ -49,7 +49,7 @@ export const useTollTripVersion: (
   params?: FetchFunctionParams<TollTripVersionInput>,
   options?: QueryHookOptions<TollTripVersion>
 ) => UseQueryResult<TollTripVersion, Error> = createHook(
-  wsdotTollRatesApi.api,
+  wsdotTollRatesApi,
   tollTripVersionGroup,
   tollTripVersionMeta
 );

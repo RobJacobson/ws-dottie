@@ -39,7 +39,7 @@ export const routeDetailsByTripDateAndRouteIdMeta = {
 export const fetchRouteDetailsByTripDateAndRouteId: (
   params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>
 ) => Promise<RouteDetail> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   routeDetailsGroup,
   routeDetailsByTripDateAndRouteIdMeta
 );
@@ -51,7 +51,7 @@ export const useRouteDetailsByTripDateAndRouteId: (
   params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>,
   options?: QueryHookOptions<RouteDetail>
 ) => UseQueryResult<RouteDetail, Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   routeDetailsGroup,
   routeDetailsByTripDateAndRouteIdMeta
 );

@@ -37,7 +37,7 @@ export const timeAdjustmentsBySchedRouteMeta = {
 export const fetchTimeAdjustmentsBySchedRoute: (
   params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>
 ) => Promise<TimeAdjustment[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   timeAdjustmentsGroup,
   timeAdjustmentsBySchedRouteMeta
 );
@@ -49,7 +49,7 @@ export const useTimeAdjustmentsBySchedRoute: (
   params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>,
   options?: QueryHookOptions<TimeAdjustment[]>
 ) => UseQueryResult<TimeAdjustment[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   timeAdjustmentsGroup,
   timeAdjustmentsBySchedRouteMeta
 );

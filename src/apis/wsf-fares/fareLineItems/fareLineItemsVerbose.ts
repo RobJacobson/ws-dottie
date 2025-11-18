@@ -39,7 +39,7 @@ export const fareLineItemsVerboseMeta = {
 export const fetchFareLineItemsVerbose: (
   params?: FetchFunctionParams<FareLineItemsVerboseInput>
 ) => Promise<LineItemVerbose> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareLineItemsGroup,
   fareLineItemsVerboseMeta
 );
@@ -51,7 +51,7 @@ export const useFareLineItemsVerbose: (
   params?: FetchFunctionParams<FareLineItemsVerboseInput>,
   options?: QueryHookOptions<LineItemVerbose>
 ) => UseQueryResult<LineItemVerbose, Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareLineItemsGroup,
   fareLineItemsVerboseMeta
 );

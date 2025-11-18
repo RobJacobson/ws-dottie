@@ -35,7 +35,7 @@ export const mapAreasMeta = {
 export const fetchMapAreas: (
   params?: FetchFunctionParams<MapAreasInput>
 ) => Promise<Area[]> = createFetchFunction(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   alertAreasGroup,
   mapAreasMeta
 );
@@ -47,7 +47,7 @@ export const useMapAreas: (
   params?: FetchFunctionParams<MapAreasInput>,
   options?: QueryHookOptions<Area[]>
 ) => UseQueryResult<Area[], Error> = createHook(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   alertAreasGroup,
   mapAreasMeta
 );

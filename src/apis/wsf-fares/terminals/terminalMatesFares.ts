@@ -39,7 +39,7 @@ export const terminalMatesFaresMeta = {
 export const fetchTerminalMatesFares: (
   params?: FetchFunctionParams<TerminalMatesInput>
 ) => Promise<TerminalList> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   terminalsGroup,
   terminalMatesFaresMeta
 );
@@ -51,7 +51,7 @@ export const useTerminalMatesFares: (
   params?: FetchFunctionParams<TerminalMatesInput>,
   options?: QueryHookOptions<TerminalList>
 ) => UseQueryResult<TerminalList, Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   terminalsGroup,
   terminalMatesFaresMeta
 );

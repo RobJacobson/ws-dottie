@@ -37,7 +37,7 @@ export const terminalSailingSpaceMeta = {
 export const fetchTerminalSailingSpace: (
   params?: FetchFunctionParams<TerminalSailingSpaceInput>
 ) => Promise<TerminalSailingSpace[]> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalSailingSpaceGroup,
   terminalSailingSpaceMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalSailingSpace: (
   params?: FetchFunctionParams<TerminalSailingSpaceInput>,
   options?: QueryHookOptions<TerminalSailingSpace[]>
 ) => UseQueryResult<TerminalSailingSpace[], Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalSailingSpaceGroup,
   terminalSailingSpaceMeta
 );

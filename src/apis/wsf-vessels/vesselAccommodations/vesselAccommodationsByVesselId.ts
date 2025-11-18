@@ -35,7 +35,7 @@ export const vesselAccommodationsByVesselIdMeta = {
 export const fetchVesselAccommodationsByVesselId: (
   params?: FetchFunctionParams<VesselAccommodationsByIdInput>
 ) => Promise<VesselAccommodation> = createFetchFunction(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselAccommodationsGroup,
   vesselAccommodationsByVesselIdMeta
 );
@@ -47,7 +47,7 @@ export const useVesselAccommodationsByVesselId: (
   params?: FetchFunctionParams<VesselAccommodationsByIdInput>,
   options?: QueryHookOptions<VesselAccommodation>
 ) => UseQueryResult<VesselAccommodation, Error> = createHook(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselAccommodationsGroup,
   vesselAccommodationsByVesselIdMeta
 );

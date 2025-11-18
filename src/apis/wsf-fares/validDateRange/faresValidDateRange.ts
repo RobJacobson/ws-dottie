@@ -37,7 +37,7 @@ export const faresValidDateRangeMeta = {
 export const fetchFaresValidDateRange: (
   params?: FetchFunctionParams<FaresValidDateRangeInput>
 ) => Promise<ValidDateRange> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   validDateRangeGroup,
   faresValidDateRangeMeta
 );
@@ -49,7 +49,7 @@ export const useFaresValidDateRange: (
   params?: FetchFunctionParams<FaresValidDateRangeInput>,
   options?: QueryHookOptions<ValidDateRange>
 ) => UseQueryResult<ValidDateRange, Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   validDateRangeGroup,
   faresValidDateRangeMeta
 );

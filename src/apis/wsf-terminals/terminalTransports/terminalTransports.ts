@@ -37,7 +37,7 @@ export const terminalTransportsMeta = {
 export const fetchTerminalTransports: (
   params?: FetchFunctionParams<TerminalTransportsInput>
 ) => Promise<TerminalTransport[]> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalTransportsGroup,
   terminalTransportsMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalTransports: (
   params?: FetchFunctionParams<TerminalTransportsInput>,
   options?: QueryHookOptions<TerminalTransport[]>
 ) => UseQueryResult<TerminalTransport[], Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalTransportsGroup,
   terminalTransportsMeta
 );

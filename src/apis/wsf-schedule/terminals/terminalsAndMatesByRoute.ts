@@ -39,7 +39,7 @@ export const terminalsAndMatesByRouteMeta = {
 export const fetchTerminalsAndMatesByRoute: (
   params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>
 ) => Promise<TerminalMate[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleTerminalsGroup,
   terminalsAndMatesByRouteMeta
 );
@@ -51,7 +51,7 @@ export const useTerminalsAndMatesByRoute: (
   params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>,
   options?: QueryHookOptions<TerminalMate[]>
 ) => UseQueryResult<TerminalMate[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleTerminalsGroup,
   terminalsAndMatesByRouteMeta
 );

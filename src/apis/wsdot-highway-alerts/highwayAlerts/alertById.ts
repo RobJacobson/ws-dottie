@@ -34,7 +34,7 @@ export const alertByIdMeta = {
 export const fetchAlertById: (
   params?: FetchFunctionParams<AlertByIdInput>
 ) => Promise<Alert> = createFetchFunction(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   highwayAlertsGroup,
   alertByIdMeta
 );
@@ -46,7 +46,7 @@ export const useAlertById: (
   params?: FetchFunctionParams<AlertByIdInput>,
   options?: QueryHookOptions<Alert>
 ) => UseQueryResult<Alert, Error> = createHook(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   highwayAlertsGroup,
   alertByIdMeta
 );

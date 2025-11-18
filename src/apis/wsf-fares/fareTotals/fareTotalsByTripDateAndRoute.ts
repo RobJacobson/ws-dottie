@@ -47,7 +47,7 @@ export const fareTotalsByTripDateAndRouteMeta = {
 export const fetchFareTotalsByTripDateAndRoute: (
   params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>
 ) => Promise<FareTotal[]> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareTotalsGroup,
   fareTotalsByTripDateAndRouteMeta
 );
@@ -59,7 +59,7 @@ export const useFareTotalsByTripDateAndRoute: (
   params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>,
   options?: QueryHookOptions<FareTotal[]>
 ) => UseQueryResult<FareTotal[], Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareTotalsGroup,
   fareTotalsByTripDateAndRouteMeta
 );

@@ -20,7 +20,7 @@ import {
 export const fetchCacheFlushDateFares: (
   params?: FetchFunctionParams<CacheFlushDateInput>
 ) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   cacheFlushDateFaresGroup,
   cacheFlushDateFaresMeta
 );
@@ -32,7 +32,7 @@ export const useCacheFlushDateFares: (
   params?: FetchFunctionParams<CacheFlushDateInput>,
   options?: QueryHookOptions<CacheFlushDateOutput>
 ) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   cacheFlushDateFaresGroup,
   cacheFlushDateFaresMeta
 );

@@ -39,7 +39,7 @@ export const routesByTripDateAndTerminalsMeta = {
 export const fetchRoutesByTripDateAndTerminals: (
   params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>
 ) => Promise<Route[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   routesGroup,
   routesByTripDateAndTerminalsMeta
 );
@@ -51,7 +51,7 @@ export const useRoutesByTripDateAndTerminals: (
   params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>,
   options?: QueryHookOptions<Route[]>
 ) => UseQueryResult<Route[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   routesGroup,
   routesByTripDateAndTerminalsMeta
 );

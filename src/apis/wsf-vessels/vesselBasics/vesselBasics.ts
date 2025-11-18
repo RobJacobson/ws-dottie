@@ -34,7 +34,7 @@ export const vesselBasicsMeta = {
 export const fetchVesselBasics: (
   params?: FetchFunctionParams<VesselBasicsInput>
 ) => Promise<VesselBasic[]> = createFetchFunction(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselBasicsGroup,
   vesselBasicsMeta
 );
@@ -46,7 +46,7 @@ export const useVesselBasics: (
   params?: FetchFunctionParams<VesselBasicsInput>,
   options?: QueryHookOptions<VesselBasic[]>
 ) => UseQueryResult<VesselBasic[], Error> = createHook(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselBasicsGroup,
   vesselBasicsMeta
 );

@@ -35,7 +35,7 @@ export const trafficFlowByIdMeta = {
 export const fetchTrafficFlowById: (
   params?: FetchFunctionParams<TrafficFlowByIdInput>
 ) => Promise<FlowData> = createFetchFunction(
-  wsdotTrafficFlowApi.api,
+  wsdotTrafficFlowApi,
   flowDataGroup,
   trafficFlowByIdMeta
 );
@@ -47,7 +47,7 @@ export const useTrafficFlowById: (
   params?: FetchFunctionParams<TrafficFlowByIdInput>,
   options?: QueryHookOptions<FlowData>
 ) => UseQueryResult<FlowData, Error> = createHook(
-  wsdotTrafficFlowApi.api,
+  wsdotTrafficFlowApi,
   flowDataGroup,
   trafficFlowByIdMeta
 );

@@ -35,7 +35,7 @@ export const allSailingsBySchedRouteIDMeta = {
 export const fetchAllSailingsBySchedRouteID: (
   params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>
 ) => Promise<Sailing[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   sailingsGroup,
   allSailingsBySchedRouteIDMeta
 );
@@ -47,7 +47,7 @@ export const useAllSailingsBySchedRouteID: (
   params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>,
   options?: QueryHookOptions<Sailing[]>
 ) => UseQueryResult<Sailing[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   sailingsGroup,
   allSailingsBySchedRouteIDMeta
 );

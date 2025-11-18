@@ -38,7 +38,7 @@ export const commercialVehicleRestrictionsMeta = {
 export const fetchCommercialVehicleRestrictions: (
   params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>
 ) => Promise<CVRestriction[]> = createFetchFunction(
-  wsdotCommercialVehicleRestrictionsApi.api,
+  wsdotCommercialVehicleRestrictionsApi,
   cvRestrictionDataGroup,
   commercialVehicleRestrictionsMeta
 );
@@ -50,7 +50,7 @@ export const useCommercialVehicleRestrictions: (
   params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>,
   options?: QueryHookOptions<CVRestriction[]>
 ) => UseQueryResult<CVRestriction[], Error> = createHook(
-  wsdotCommercialVehicleRestrictionsApi.api,
+  wsdotCommercialVehicleRestrictionsApi,
   cvRestrictionDataGroup,
   commercialVehicleRestrictionsMeta
 );

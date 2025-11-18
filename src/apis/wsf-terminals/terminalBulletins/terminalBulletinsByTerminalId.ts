@@ -38,7 +38,7 @@ export const terminalBulletinsByTerminalIdMeta = {
 export const fetchTerminalBulletinsByTerminalId: (
   params?: FetchFunctionParams<TerminalBulletinsByIdInput>
 ) => Promise<TerminalBulletin> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalBulletinsGroup,
   terminalBulletinsByTerminalIdMeta
 );
@@ -50,7 +50,7 @@ export const useTerminalBulletinsByTerminalId: (
   params?: FetchFunctionParams<TerminalBulletinsByIdInput>,
   options?: QueryHookOptions<TerminalBulletin>
 ) => UseQueryResult<TerminalBulletin, Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalBulletinsGroup,
   terminalBulletinsByTerminalIdMeta
 );

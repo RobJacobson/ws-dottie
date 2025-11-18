@@ -42,7 +42,7 @@ export const routesHavingServiceDisruptionsByTripDateMeta = {
 export const fetchRoutesHavingServiceDisruptionsByTripDate: (
   params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>
 ) => Promise<ServiceDisruption[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   serviceDisruptionsGroup,
   routesHavingServiceDisruptionsByTripDateMeta
 );
@@ -54,7 +54,7 @@ export const useRoutesHavingServiceDisruptionsByTripDate: (
   params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>,
   options?: QueryHookOptions<ServiceDisruption[]>
 ) => UseQueryResult<ServiceDisruption[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   serviceDisruptionsGroup,
   routesHavingServiceDisruptionsByTripDateMeta
 );

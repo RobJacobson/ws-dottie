@@ -38,7 +38,7 @@ export const mountainPassConditionsMeta = {
 export const fetchMountainPassConditions: (
   params?: FetchFunctionParams<MountainPassConditionsInput>
 ) => Promise<PassCondition[]> = createFetchFunction(
-  wsdotMountainPassConditionsApi.api,
+  wsdotMountainPassConditionsApi,
   passConditionsGroup,
   mountainPassConditionsMeta
 );
@@ -50,7 +50,7 @@ export const useMountainPassConditions: (
   params?: FetchFunctionParams<MountainPassConditionsInput>,
   options?: QueryHookOptions<PassCondition[]>
 ) => UseQueryResult<PassCondition[], Error> = createHook(
-  wsdotMountainPassConditionsApi.api,
+  wsdotMountainPassConditionsApi,
   passConditionsGroup,
   mountainPassConditionsMeta
 );

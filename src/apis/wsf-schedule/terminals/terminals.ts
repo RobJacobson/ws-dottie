@@ -35,7 +35,7 @@ export const terminalsMeta = {
 export const fetchTerminals: (
   params?: FetchFunctionParams<TerminalsInput>
 ) => Promise<Terminal[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleTerminalsGroup,
   terminalsMeta
 );
@@ -47,7 +47,7 @@ export const useTerminals: (
   params?: FetchFunctionParams<TerminalsInput>,
   options?: QueryHookOptions<Terminal[]>
 ) => UseQueryResult<Terminal[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleTerminalsGroup,
   terminalsMeta
 );

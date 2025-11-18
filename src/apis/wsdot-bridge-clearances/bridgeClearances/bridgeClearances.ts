@@ -38,7 +38,7 @@ export const bridgeClearancesMeta = {
 export const fetchBridgeClearances: (
   params?: FetchFunctionParams<BridgeClearancesInput>
 ) => Promise<BridgeClearance[]> = createFetchFunction(
-  wsdotBridgeClearancesApi.api,
+  wsdotBridgeClearancesApi,
   bridgeClearancesGroup,
   bridgeClearancesMeta
 );
@@ -50,7 +50,7 @@ export const useBridgeClearances: (
   params?: FetchFunctionParams<BridgeClearancesInput>,
   options?: QueryHookOptions<BridgeClearance[]>
 ) => UseQueryResult<BridgeClearance[], Error> = createHook(
-  wsdotBridgeClearancesApi.api,
+  wsdotBridgeClearancesApi,
   bridgeClearancesGroup,
   bridgeClearancesMeta
 );

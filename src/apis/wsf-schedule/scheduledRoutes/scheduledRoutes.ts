@@ -38,7 +38,7 @@ export const scheduledRoutesMeta = {
 export const fetchScheduledRoutes: (
   params?: FetchFunctionParams<ScheduledRoutesInput>
 ) => Promise<SchedRoute[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduledRoutesGroup,
   scheduledRoutesMeta
 );
@@ -50,7 +50,7 @@ export const useScheduledRoutes: (
   params?: FetchFunctionParams<ScheduledRoutesInput>,
   options?: QueryHookOptions<SchedRoute[]>
 ) => UseQueryResult<SchedRoute[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduledRoutesGroup,
   scheduledRoutesMeta
 );

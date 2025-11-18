@@ -42,7 +42,7 @@ export const fareLineItemsBasicMeta = {
 export const fetchFareLineItemsBasic: (
   params?: FetchFunctionParams<FareLineItemsBasicInput>
 ) => Promise<LineItem[]> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareLineItemsGroup,
   fareLineItemsBasicMeta
 );
@@ -54,7 +54,7 @@ export const useFareLineItemsBasic: (
   params?: FetchFunctionParams<FareLineItemsBasicInput>,
   options?: QueryHookOptions<LineItem[]>
 ) => UseQueryResult<LineItem[], Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   fareLineItemsGroup,
   fareLineItemsBasicMeta
 );

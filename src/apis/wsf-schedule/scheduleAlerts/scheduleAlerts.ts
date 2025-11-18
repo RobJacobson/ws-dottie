@@ -37,7 +37,7 @@ export const scheduleAlertsMeta = {
 export const fetchScheduleAlerts: (
   params?: FetchFunctionParams<ScheduleAlertsInput>
 ) => Promise<AlertDetail[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleAlertsGroup,
   scheduleAlertsMeta
 );
@@ -49,7 +49,7 @@ export const useScheduleAlerts: (
   params?: FetchFunctionParams<ScheduleAlertsInput>,
   options?: QueryHookOptions<AlertDetail[]>
 ) => UseQueryResult<AlertDetail[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   scheduleAlertsGroup,
   scheduleAlertsMeta
 );

@@ -38,7 +38,7 @@ export const currentWeatherForStationsMeta = {
 export const fetchCurrentWeatherForStations: (
   params?: FetchFunctionParams<CurrentWeatherForStationsInput>
 ) => Promise<WeatherInfo[]> = createFetchFunction(
-  wsdotWeatherInformationApi.api,
+  wsdotWeatherInformationApi,
   weatherInfoGroup,
   currentWeatherForStationsMeta
 );
@@ -50,7 +50,7 @@ export const useCurrentWeatherForStations: (
   params?: FetchFunctionParams<CurrentWeatherForStationsInput>,
   options?: QueryHookOptions<WeatherInfo[]>
 ) => UseQueryResult<WeatherInfo[], Error> = createHook(
-  wsdotWeatherInformationApi.api,
+  wsdotWeatherInformationApi,
   weatherInfoGroup,
   currentWeatherForStationsMeta
 );

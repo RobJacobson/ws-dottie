@@ -37,7 +37,7 @@ export const terminalBasicsMeta = {
 export const fetchTerminalBasics: (
   params?: FetchFunctionParams<TerminalBasicsInput>
 ) => Promise<TerminalBasic[]> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalBasicsGroup,
   terminalBasicsMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalBasics: (
   params?: FetchFunctionParams<TerminalBasicsInput>,
   options?: QueryHookOptions<TerminalBasic[]>
 ) => UseQueryResult<TerminalBasic[], Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalBasicsGroup,
   terminalBasicsMeta
 );

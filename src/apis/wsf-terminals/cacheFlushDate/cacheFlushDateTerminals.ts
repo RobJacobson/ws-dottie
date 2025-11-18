@@ -18,7 +18,7 @@ import type { CacheFlushDateOutput } from "./shared/cacheFlushDate.output";
 export const fetchCacheFlushDateTerminals: (
   params?: FetchFunctionParams<CacheFlushDateInput>
 ) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   cacheFlushDateTerminalsGroup,
   cacheFlushDateTerminalsMeta
 );
@@ -30,7 +30,7 @@ export const useCacheFlushDateTerminals: (
   params?: FetchFunctionParams<CacheFlushDateInput>,
   options?: QueryHookOptions<CacheFlushDateOutput>
 ) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   cacheFlushDateTerminalsGroup,
   cacheFlushDateTerminalsMeta
 );

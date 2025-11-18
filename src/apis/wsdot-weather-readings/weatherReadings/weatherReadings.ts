@@ -38,7 +38,7 @@ export const weatherReadingsMeta = {
 export const fetchWeatherReadings: (
   params?: FetchFunctionParams<WeatherReadingsInput>
 ) => Promise<WeatherReading[]> = createFetchFunction(
-  wsdotWeatherReadingsApi.api,
+  wsdotWeatherReadingsApi,
   weatherReadingsGroup,
   weatherReadingsMeta
 );
@@ -50,7 +50,7 @@ export const useWeatherReadings: (
   params?: FetchFunctionParams<WeatherReadingsInput>,
   options?: QueryHookOptions<WeatherReading[]>
 ) => UseQueryResult<WeatherReading[], Error> = createHook(
-  wsdotWeatherReadingsApi.api,
+  wsdotWeatherReadingsApi,
   weatherReadingsGroup,
   weatherReadingsMeta
 );

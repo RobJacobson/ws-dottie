@@ -43,7 +43,7 @@ export const searchAlertsMeta = {
 export const searchAlerts: (
   params?: FetchFunctionParams<SearchAlertsInput>
 ) => Promise<Alert[]> = createFetchFunction(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   highwayAlertsGroup,
   searchAlertsMeta
 );
@@ -55,7 +55,7 @@ export const useSearchAlerts: (
   params?: FetchFunctionParams<SearchAlertsInput>,
   options?: QueryHookOptions<Alert[]>
 ) => UseQueryResult<Alert[], Error> = createHook(
-  wsdotHighwayAlertsApi.api,
+  wsdotHighwayAlertsApi,
   highwayAlertsGroup,
   searchAlertsMeta
 );

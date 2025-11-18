@@ -38,7 +38,7 @@ export const subSurfaceMeasurementsMeta = {
 export const fetchSubSurfaceMeasurements: (
   params?: FetchFunctionParams<SubSurfaceMeasurementsInput>
 ) => Promise<SubsurfaceMeasurement[]> = createFetchFunction(
-  wsdotWeatherReadingsApi.api,
+  wsdotWeatherReadingsApi,
   subSurfaceMeasurementsGroup,
   subSurfaceMeasurementsMeta
 );
@@ -50,7 +50,7 @@ export const useSubSurfaceMeasurements: (
   params?: FetchFunctionParams<SubSurfaceMeasurementsInput>,
   options?: QueryHookOptions<SubsurfaceMeasurement[]>
 ) => UseQueryResult<SubsurfaceMeasurement[], Error> = createHook(
-  wsdotWeatherReadingsApi.api,
+  wsdotWeatherReadingsApi,
   subSurfaceMeasurementsGroup,
   subSurfaceMeasurementsMeta
 );

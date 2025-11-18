@@ -35,7 +35,7 @@ export const vesselLocationsMeta = {
 export const fetchVesselLocations: (
   params?: FetchFunctionParams<VesselLocationsInput>
 ) => Promise<VesselLocation[]> = createFetchFunction(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselLocationsGroup,
   vesselLocationsMeta
 );
@@ -47,7 +47,7 @@ export const useVesselLocations: (
   params?: FetchFunctionParams<VesselLocationsInput>,
   options?: QueryHookOptions<VesselLocation[]>
 ) => UseQueryResult<VesselLocation[], Error> = createHook(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselLocationsGroup,
   vesselLocationsMeta
 );

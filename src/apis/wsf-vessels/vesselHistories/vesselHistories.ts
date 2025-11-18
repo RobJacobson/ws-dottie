@@ -34,7 +34,7 @@ export const vesselHistoriesMeta = {
 export const fetchVesselHistories: (
   params?: FetchFunctionParams<VesselHistoriesInput>
 ) => Promise<VesselHistory[]> = createFetchFunction(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselHistoriesGroup,
   vesselHistoriesMeta
 );
@@ -46,7 +46,7 @@ export const useVesselHistories: (
   params?: FetchFunctionParams<VesselHistoriesInput>,
   options?: QueryHookOptions<VesselHistory[]>
 ) => UseQueryResult<VesselHistory[], Error> = createHook(
-  wsfVesselsApi.api,
+  wsfVesselsApi,
   vesselHistoriesGroup,
   vesselHistoriesMeta
 );

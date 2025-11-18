@@ -38,7 +38,7 @@ export const terminalVerboseByTerminalIdMeta = {
 export const fetchTerminalVerboseByTerminalId: (
   params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>
 ) => Promise<TerminalVerbose> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalVerboseGroup,
   terminalVerboseByTerminalIdMeta
 );
@@ -50,7 +50,7 @@ export const useTerminalVerboseByTerminalId: (
   params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>,
   options?: QueryHookOptions<TerminalVerbose>
 ) => UseQueryResult<TerminalVerbose, Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalVerboseGroup,
   terminalVerboseByTerminalIdMeta
 );

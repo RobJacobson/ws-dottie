@@ -37,7 +37,7 @@ export const travelTimesMeta = {
 export const fetchTravelTimes: (
   params?: FetchFunctionParams<TravelTimesInput>
 ) => Promise<TravelTimeRoute[]> = createFetchFunction(
-  wsdotTravelTimesApi.api,
+  wsdotTravelTimesApi,
   travelTimeRoutesGroup,
   travelTimesMeta
 );
@@ -49,7 +49,7 @@ export const useTravelTimes: (
   params?: FetchFunctionParams<TravelTimesInput>,
   options?: QueryHookOptions<TravelTimeRoute[]>
 ) => UseQueryResult<TravelTimeRoute[], Error> = createHook(
-  wsdotTravelTimesApi.api,
+  wsdotTravelTimesApi,
   travelTimeRoutesGroup,
   travelTimesMeta
 );

@@ -37,7 +37,7 @@ export const terminalWaitTimesMeta = {
 export const fetchTerminalWaitTimes: (
   params?: FetchFunctionParams<TerminalWaitTimesInput>
 ) => Promise<TerminalWaitTime[]> = createFetchFunction(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalWaitTimesGroup,
   terminalWaitTimesMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalWaitTimes: (
   params?: FetchFunctionParams<TerminalWaitTimesInput>,
   options?: QueryHookOptions<TerminalWaitTime[]>
 ) => UseQueryResult<TerminalWaitTime[], Error> = createHook(
-  wsfTerminalsApi.api,
+  wsfTerminalsApi,
   terminalWaitTimesGroup,
   terminalWaitTimesMeta
 );

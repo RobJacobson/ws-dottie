@@ -35,7 +35,7 @@ export const tollRatesMeta = {
 export const fetchTollRates: (
   params?: FetchFunctionParams<TollRatesInput>
 ) => Promise<TollRate[]> = createFetchFunction(
-  wsdotTollRatesApi.api,
+  wsdotTollRatesApi,
   tollRatesGroup,
   tollRatesMeta
 );
@@ -47,7 +47,7 @@ export const useTollRates: (
   params?: FetchFunctionParams<TollRatesInput>,
   options?: QueryHookOptions<TollRate[]>
 ) => UseQueryResult<TollRate[], Error> = createHook(
-  wsdotTollRatesApi.api,
+  wsdotTollRatesApi,
   tollRatesGroup,
   tollRatesMeta
 );

@@ -38,7 +38,7 @@ export const activeSeasonsMeta = {
 export const fetchActiveSeasons: (
   params?: FetchFunctionParams<ActiveSeasonsInput>
 ) => Promise<ActiveSeason[]> = createFetchFunction(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   activeSeasonsGroup,
   activeSeasonsMeta
 );
@@ -50,7 +50,7 @@ export const useActiveSeasons: (
   params?: FetchFunctionParams<ActiveSeasonsInput>,
   options?: QueryHookOptions<ActiveSeason[]>
 ) => UseQueryResult<ActiveSeason[], Error> = createHook(
-  wsfScheduleApi.api,
+  wsfScheduleApi,
   activeSeasonsGroup,
   activeSeasonsMeta
 );

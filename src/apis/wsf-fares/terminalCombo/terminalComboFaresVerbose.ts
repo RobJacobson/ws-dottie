@@ -42,7 +42,7 @@ export const terminalComboFaresVerboseMeta = {
 export const fetchTerminalComboFaresVerbose: (
   params?: FetchFunctionParams<TerminalComboFaresVerboseInput>
 ) => Promise<TerminalComboFaresVerbose[]> = createFetchFunction(
-  wsfFaresApi.api,
+  wsfFaresApi,
   terminalComboGroup,
   terminalComboFaresVerboseMeta
 );
@@ -54,7 +54,7 @@ export const useTerminalComboFaresVerbose: (
   params?: FetchFunctionParams<TerminalComboFaresVerboseInput>,
   options?: QueryHookOptions<TerminalComboFaresVerbose[]>
 ) => UseQueryResult<TerminalComboFaresVerbose[], Error> = createHook(
-  wsfFaresApi.api,
+  wsfFaresApi,
   terminalComboGroup,
   terminalComboFaresVerboseMeta
 );
