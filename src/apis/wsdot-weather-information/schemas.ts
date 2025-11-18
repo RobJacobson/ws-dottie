@@ -5,5 +5,5 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./weatherInfo/weatherInfo.input";
-export * from "./weatherInfo/weatherInfo.output";
+export * from "./weatherInfo/shared/weatherInfo.input";
+export * from "./weatherInfo/shared/weatherInfo.output";

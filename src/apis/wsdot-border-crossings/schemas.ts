@@ -5,5 +5,5 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./borderCrossingData/borderCrossingData.input";
-export * from "./borderCrossingData/borderCrossingData.output";
+export * from "./borderCrossingData/shared/borderCrossingData.input";
+export * from "./borderCrossingData/shared/borderCrossingData.output";

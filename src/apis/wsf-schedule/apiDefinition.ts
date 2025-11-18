@@ -1,19 +1,19 @@
 import type { ApiDefinition } from "@/apis/shared/apis";
 import { apis } from "@/apis/shared/apis";
-import { activeSeasonsGroup } from "./activeSeasons/activeSeasons.endpoints";
-import { cacheFlushDateScheduleGroup } from "./cacheFlushDate/cacheFlushDate.endpoints";
-import { routeDetailsGroup } from "./routeDetails/routeDetails.endpoints";
-import { routesGroup } from "./routes/routes.endpoints";
-import { sailingsGroup } from "./sailings/sailings.endpoints";
-import { scheduleAlertsGroup } from "./scheduleAlerts/scheduleAlerts.endpoints";
-import { scheduledRoutesGroup } from "./scheduledRoutes/scheduledRoutes.endpoints";
-import { schedulesGroup } from "./schedules/schedules.endpoints";
-import { scheduleTodayGroup } from "./scheduleToday/scheduleToday.endpoints";
-import { serviceDisruptionsGroup } from "./serviceDisruptions/serviceDisruptions.endpoints";
-import { scheduleTerminalMatesGroup } from "./terminalMates/terminalMates.endpoints";
-import { scheduleTerminalsGroup } from "./terminals/terminals.endpoints";
-import { timeAdjustmentsGroup } from "./timeAdjustments/timeAdjustments.endpoints";
-import { scheduleValidDateRangeGroup } from "./validDateRange/validDateRange.endpoints";
+import { activeSeasonsGroup } from "./activeSeasons/shared/activeSeasons.endpoints";
+import { cacheFlushDateScheduleGroup } from "./cacheFlushDate/shared/cacheFlushDate.endpoints";
+import { routeDetailsGroup } from "./routeDetails/shared/routeDetails.endpoints";
+import { routesGroup } from "./routes/shared/routes.endpoints";
+import { sailingsGroup } from "./sailings/shared/sailings.endpoints";
+import { scheduleAlertsGroup } from "./scheduleAlerts/shared/scheduleAlerts.endpoints";
+import { scheduledRoutesGroup } from "./scheduledRoutes/shared/scheduledRoutes.endpoints";
+import { schedulesGroup } from "./schedules/shared/schedules.endpoints";
+import { scheduleTodayGroup } from "./scheduleToday/shared/scheduleToday.endpoints";
+import { serviceDisruptionsGroup } from "./serviceDisruptions/shared/serviceDisruptions.endpoints";
+import { scheduleTerminalMatesGroup } from "./terminalMates/shared/terminalMates.endpoints";
+import { scheduleTerminalsGroup } from "./terminals/shared/terminals.endpoints";
+import { timeAdjustmentsGroup } from "./timeAdjustments/shared/timeAdjustments.endpoints";
+import { scheduleValidDateRangeGroup } from "./validDateRange/shared/validDateRange.endpoints";
 
 export const wsfScheduleApi = {
   api: apis.wsfSchedule,

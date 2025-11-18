@@ -5,6 +5,8 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from "./cameras/cameras.fetch";
-export * from "./cameras/cameras.input";
-export * from "./cameras/cameras.output";
+export * from "./cameras/highwayCameraByCameraId";
+export * from "./cameras/highwayCameras";
+export * from "./cameras/searchHighwayCamerasByRouteAndMilepost";
+export * from "./cameras/shared/cameras.input";
+export * from "./cameras/shared/cameras.output";

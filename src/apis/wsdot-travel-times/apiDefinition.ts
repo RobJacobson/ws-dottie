@@ -1,6 +1,6 @@
 import type { ApiDefinition } from "@/apis/shared/apis";
 import { apis } from "@/apis/shared/apis";
-import { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes.endpoints";
+import { travelTimeRoutesGroup } from "./travelTimeRoutes/shared/travelTimeRoutes.endpoints";
 
 export const wsdotTravelTimesApi = {
   api: apis.wsdotTravelTimes,

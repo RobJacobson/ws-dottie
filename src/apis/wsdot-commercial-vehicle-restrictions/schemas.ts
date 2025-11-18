@@ -5,7 +5,7 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./cvRestrictionData/cvRestrictionData.input";
-export * from "./cvRestrictionData/cvRestrictionData.output";
-export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.input";
-export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.output";
+export * from "./cvRestrictionData/shared/cvRestrictionData.input";
+export * from "./cvRestrictionData/shared/cvRestrictionData.output";
+export * from "./cvRestrictionDataWithId/shared/cvRestrictionDataWithId.input";
+export * from "./cvRestrictionDataWithId/shared/cvRestrictionDataWithId.output";

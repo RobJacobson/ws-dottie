@@ -5,5 +5,5 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./bridgeClearances/bridgeClearances.input";
-export * from "./bridgeClearances/bridgeClearances.output";
+export * from "./bridgeClearances/shared/bridgeClearances.input";
+export * from "./bridgeClearances/shared/bridgeClearances.output";

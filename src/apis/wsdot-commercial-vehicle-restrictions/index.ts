@@ -6,7 +6,6 @@
 
 // Re-export everything from core (fetch functions and types)
 export * from "./core";
-
 // Export hooks
-export * from "./cvRestrictionData/cvRestrictionData.hooks";
-export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.hooks";
+export { useCommercialVehicleRestrictions } from "./cvRestrictionData/commercialVehicleRestrictions";
+export { useCommercialVehicleRestrictionsWithId } from "./cvRestrictionDataWithId/commercialVehicleRestrictionsWithId";

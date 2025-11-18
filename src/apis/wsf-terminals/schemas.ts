@@ -5,18 +5,19 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./cacheFlushDate/cacheFlushDate.endpoints";
-export * from "./terminalBasics/terminalBasics.input";
-export * from "./terminalBasics/terminalBasics.output";
-export * from "./terminalBulletins/terminalBulletins.input";
-export * from "./terminalBulletins/terminalBulletins.output";
-export * from "./terminalLocations/terminalLocations.input";
-export * from "./terminalLocations/terminalLocations.output";
-export * from "./terminalSailingSpace/terminalSailingSpace.input";
-export * from "./terminalSailingSpace/terminalSailingSpace.output";
-export * from "./terminalTransports/terminalTransports.input";
-export * from "./terminalTransports/terminalTransports.output";
-export * from "./terminalVerbose/terminalVerbose.input";
-export * from "./terminalVerbose/terminalVerbose.output";
-export * from "./terminalWaitTimes/terminalWaitTimes.input";
-export * from "./terminalWaitTimes/terminalWaitTimes.output";
+export * from "./cacheFlushDate/shared/cacheFlushDate.input";
+export * from "./cacheFlushDate/shared/cacheFlushDate.output";
+export * from "./terminalBasics/shared/terminalBasics.input";
+export * from "./terminalBasics/shared/terminalBasics.output";
+export * from "./terminalBulletins/shared/terminalBulletins.input";
+export * from "./terminalBulletins/shared/terminalBulletins.output";
+export * from "./terminalLocations/shared/terminalLocations.input";
+export * from "./terminalLocations/shared/terminalLocations.output";
+export * from "./terminalSailingSpace/shared/terminalSailingSpace.input";
+export * from "./terminalSailingSpace/shared/terminalSailingSpace.output";
+export * from "./terminalTransports/shared/terminalTransports.input";
+export * from "./terminalTransports/shared/terminalTransports.output";
+export * from "./terminalVerbose/shared/terminalVerbose.input";
+export * from "./terminalVerbose/shared/terminalVerbose.output";
+export * from "./terminalWaitTimes/shared/terminalWaitTimes.input";
+export * from "./terminalWaitTimes/shared/terminalWaitTimes.output";

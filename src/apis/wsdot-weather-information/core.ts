@@ -5,6 +5,9 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from "./weatherInfo/weatherInfo.fetch";
-export * from "./weatherInfo/weatherInfo.input";
-export * from "./weatherInfo/weatherInfo.output";
+export { fetchCurrentWeatherForStations } from "./weatherInfo/currentWeatherForStations";
+export { searchWeatherInformation } from "./weatherInfo/searchWeatherInformation";
+export * from "./weatherInfo/shared/weatherInfo.input";
+export * from "./weatherInfo/shared/weatherInfo.output";
+export { fetchWeatherInformation } from "./weatherInfo/weatherInformation";
+export { fetchWeatherInformationByStationId } from "./weatherInfo/weatherInformationByStationId";

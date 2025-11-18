@@ -4,7 +4,7 @@
  * This module provides exports for all hooks, fetch functions, and types in the wsdot-border-crossings API.
  */
 
-// Export hooks
-export * from "./borderCrossingData/borderCrossingData.hooks";
-// Re-export everything from core (fetch functions and types)
+// Export hooks and fetch functions from endpoint files
+export * from "./borderCrossingData/borderCrossings";
+// Re-export everything from core (types)
 export * from "./core";

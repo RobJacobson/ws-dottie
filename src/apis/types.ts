@@ -18,9 +18,9 @@ import type { CacheStrategy } from "@/shared/types";
  */
 export interface ApiDefinition {
   /** The API metadata containing name and baseUrl */
-  api: ApiMetadata;
+  api: ApiMeta;
   /** Array of endpoint group definitions */
-  endpointGroups: EndpointGroup[];
+  endpointGroups: EndpointGroupMeta[];
 }
 
 /**
@@ -29,7 +29,7 @@ export interface ApiDefinition {
  * This type is used to pass API information to endpoint definitions
  * without creating circular dependencies.
  */
-export interface ApiMetadata {
+export interface ApiMeta {
   /** The internal API name (e.g., "wsf-vessels") */
   name: string;
   /** The base URL for API (e.g., "https://www.wsdot.wa.gov/ferries/api/vessels/rest") */
@@ -42,7 +42,7 @@ export interface ApiMetadata {
  * This interface defines the structure for endpoint group files in the new
  * resource-based architecture, organizing endpoints by business data domains.
  */
-export interface EndpointGroup {
+export interface EndpointGroupMeta {
   /** The endpoint group name (e.g., "vessel-basics") */
   name: string;
   /** Documentation for the resource */
@@ -50,6 +50,15 @@ export interface EndpointGroup {
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
 }
+
+export type EndpointMeta<I, O> = {
+  functionName: string;
+  endpoint: string;
+  inputSchema: z.ZodSchema<I>;
+  outputSchema: z.ZodSchema<O>;
+  sampleParams: Partial<I> | (() => Promise<Partial<I>>);
+  endpointDescription: string;
+};
 
 /**
  * Documentation structure for API resources
@@ -115,3 +124,18 @@ export interface EndpointDefinition<I, O> {
   /** One-sentence description of what this specific endpoint does (resource format) */
   endpointDescription?: string;
 }
+
+// ============================================================================
+// RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+/**
+ * Re-export commonly used factory types for convenience.
+ *
+ * This allows endpoint files to import all types from one central location
+ * (@/apis/types) instead of importing from multiple modules.
+ */
+export type {
+  FetchFunctionParams,
+  QueryHookOptions,
+} from "@/shared/factories/types";

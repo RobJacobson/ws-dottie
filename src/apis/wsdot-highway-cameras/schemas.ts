@@ -5,5 +5,5 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./cameras/cameras.input";
-export * from "./cameras/cameras.output";
+export * from "./cameras/shared/cameras.input";
+export * from "./cameras/shared/cameras.output";

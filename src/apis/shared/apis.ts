@@ -1,8 +1,8 @@
-import type { ApiMetadata, ApiDefinition } from "@/apis/types";
+import type { ApiDefinition, ApiMeta } from "@/apis/types";
 
 export type { ApiDefinition };
 
-export const apis: Record<string, ApiMetadata> = {
+export const apis: Record<string, ApiMeta> = {
   wsfSchedule: {
     name: "wsf-schedule",
     baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",

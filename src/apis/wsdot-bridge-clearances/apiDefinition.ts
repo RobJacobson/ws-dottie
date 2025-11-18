@@ -1,6 +1,6 @@
 import type { ApiDefinition } from "@/apis/shared/apis";
 import { apis } from "@/apis/shared/apis";
-import { bridgeClearancesGroup } from "./bridgeClearances/bridgeClearances.endpoints";
+import { bridgeClearancesGroup } from "./bridgeClearances/shared/bridgeClearances.endpoints";
 
 export const wsdotBridgeClearancesApi = {
   api: apis.wsdotBridgeClearances,

@@ -1,0 +1,55 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { apis } from "@/apis/shared/apis";
+import type {
+  EndpointMeta,
+  FetchFunctionParams,
+  QueryHookOptions,
+} from "@/apis/types";
+import {
+  createFetchFunction,
+  createHook,
+} from "@/shared/factories/metaEndpointFactory";
+import { terminalBasicsGroup } from "./shared/terminalBasics.endpoints";
+import {
+  type TerminalBasicsInput,
+  terminalBasicsInputSchema,
+} from "./shared/terminalBasics.input";
+import {
+  type TerminalBasic,
+  terminalBasicSchema,
+} from "./shared/terminalBasics.output";
+
+/**
+ * Metadata for the fetchTerminalBasics endpoint
+ */
+export const terminalBasicsMeta = {
+  functionName: "fetchTerminalBasics",
+  endpoint: "/terminalBasics",
+  inputSchema: terminalBasicsInputSchema,
+  outputSchema: terminalBasicSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List basic information for all terminals.",
+} satisfies EndpointMeta<TerminalBasicsInput, TerminalBasic[]>;
+
+/**
+ * Fetch function for retrieving basic information for all terminals
+ */
+export const fetchTerminalBasics: (
+  params?: FetchFunctionParams<TerminalBasicsInput>
+) => Promise<TerminalBasic[]> = createFetchFunction(
+  apis.wsfTerminals,
+  terminalBasicsGroup,
+  terminalBasicsMeta
+);
+
+/**
+ * React Query hook for retrieving basic information for all terminals
+ */
+export const useTerminalBasics: (
+  params?: FetchFunctionParams<TerminalBasicsInput>,
+  options?: QueryHookOptions<TerminalBasic[]>
+) => UseQueryResult<TerminalBasic[], Error> = createHook(
+  apis.wsfTerminals,
+  terminalBasicsGroup,
+  terminalBasicsMeta
+);
