@@ -1,5 +1,6 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vitest/config";
+import AlphabeticalSequencer from "./shared/alphabetical-sequencer";
 
 export default defineConfig({
   test: {
@@ -22,6 +23,7 @@ export default defineConfig({
       concurrent: false,
       shuffle: false,
       hooks: "list",
+      sequencer: AlphabeticalSequencer, // Run tests in alphabetical order by filename
     },
     include: ["tests/e2e/**/*.test.{ts,js}"],
   },
