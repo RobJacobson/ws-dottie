@@ -275,7 +275,7 @@ Weather APIs provide access to weather information, road conditions, and mountai
 | API | Description | Key Features |
 |------|-------------|---------------|
 | **WSDOT Weather Information** | Current weather conditions at monitoring stations | Temperature, precipitation, road conditions |
-| **WSDOT Weather Extended** | Detailed weather with surface/subsurface measurements | Advanced weather data, scientific measurements |
+| **WSDOT Weather Readings** | Detailed weather with surface/subsurface measurements | Advanced weather data, scientific measurements |
 | **WSDOT Weather Stations** | Weather station locations and metadata | Station locations, equipment information, coverage map |
 | **WSDOT Mountain Pass Conditions** | Pass status, restrictions, and road conditions | Pass conditions, travel restrictions, closure information |
 

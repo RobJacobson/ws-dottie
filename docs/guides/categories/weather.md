@@ -11,7 +11,7 @@ WS-Dottie provides access to three weather APIs that cover all aspects of Washin
 | API | Description | Key Features | Update Frequency |
 |------|-------------|---------------|------------------|
 | **WSDOT Weather Information** | Current weather conditions at monitoring stations | Temperature, precipitation, road conditions | Frequent (15m) |
-| **WSDOT Weather Extended** | Detailed weather with surface/subsurface measurements | Advanced weather data, scientific measurements | Frequent (15m) |
+| **WSDOT Weather Readings** | Detailed weather with surface/subsurface measurements | Advanced weather data, scientific measurements | Frequent (15m) |
 | **WSDOT Weather Stations** | Weather station locations and metadata | Station locations, equipment information, coverage map | Static (weekly) |
 
 ## 🌡️ WSDOT Weather Information API
@@ -214,10 +214,10 @@ function getWeatherIcon(condition) {
 }
 ```
 
-## 🌡️ WSDOT Weather Extended API
+## 🌡️ WSDOT Weather Readings API
 
 ### API Overview
-The WSDOT Weather Extended API provides detailed weather measurements including surface and subsurface data from monitoring stations throughout Washington State.
+The WSDOT Weather Readings API provides detailed weather measurements including surface and subsurface data from monitoring stations throughout Washington State.
 
 ### Endpoint Groups
 
@@ -531,7 +531,7 @@ function ComprehensiveWeatherDashboard() {
 
 ### Caching Strategies
 - **Weather Information**: `HOURLY_UPDATES` (15-minute refresh)
-- **Weather Extended**: `HOURLY_UPDATES` (15-minute refresh)
+- **Weather Readings**: `HOURLY_UPDATES` (15-minute refresh)
 - **Weather Stations**: `STATIC` (daily refresh)
 
 ### Optimization Tips
@@ -542,7 +542,7 @@ function ComprehensiveWeatherDashboard() {
 
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
 - **[WSDOT Weather Information HTML](../../../redoc/wsdot-weather-information.html)** - Interactive weather documentation
-- **[WSDOT Weather Extended HTML](../../../redoc/wsdot-weather-information-extended.html)** - Interactive extended weather documentation
+- **[WSDOT Weather Readings HTML](../../../api-reference/wsdot-weather-readings.html)** - Interactive weather readings documentation
 - **[WSDOT Weather Stations HTML](../../../redoc/wsdot-weather-stations.html)** - Interactive station documentation
 
 ## 📚 Next Steps
