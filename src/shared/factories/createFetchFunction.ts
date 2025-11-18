@@ -20,6 +20,7 @@ export function buildDescriptor<I, O>(
 ): Endpoint<I, O> {
   return {
     api,
+    group,
     endpoint: meta.endpoint,
     functionName: meta.functionName,
     inputSchema: meta.inputSchema,

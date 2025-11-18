@@ -4,6 +4,5 @@
 
 export {
   useCacheFlushDate,
-  useCacheInvalidation,
   useInvalidateOnFlushChange,
 } from "./cacheFlushDate";

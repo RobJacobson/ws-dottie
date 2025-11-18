@@ -12,12 +12,9 @@ export type {
 } from "@/shared/types";
 // Main fetch function
 export { fetchDottie } from "./fetchDottie";
-// URL building utilities
-export { buildCompleteUrl } from "./internal/buildUrl";
 // Error handling
 export {
   type ApiError,
-  createApiError,
   type ErrorContext,
   isApiError,
 } from "./internal/handleError";

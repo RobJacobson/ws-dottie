@@ -67,7 +67,7 @@ src/apis/
 │   └── vesselVerbose/                       # Metadata-driven pattern
 │       ├── shared/
 │       │   ├── vesselVerbose.input.ts       # Input schema
-│       │   ├── vesselVerbose.output.ts       # Output schema
+│       │   ├── vesselVerbose.output.ts      # Output schema
 │       │   └── vesselVerbose.endpoints.ts   # Group metadata only
 │       ├── vesselsVerbose.ts                # Endpoint: metadata + fetch + hook
 │       └── vesselsVerboseById.ts            # Endpoint: metadata + fetch + hook
@@ -92,12 +92,12 @@ src/shared/
 │   ├── types.ts                  # Factory type definitions
 │   └── index.ts                  # Factory exports
 ├── cache/
-│   ├── cacheFlushDate.ts         # Cache flush date hooks
+│   ├── cacheFlushDate.ts         # Cache flush date hooks with internal fetch functions
 │   └── index.ts                  # Cache exports
 ├── fetching/
 │   ├── index.ts                  # Main fetch implementation
 │   ├── nativeFetch.ts            # Native fetch implementation
-│   └── jsonpFetch.ts            # JSONP implementation
+│   └── jsonpFetch.ts             # JSONP implementation
 ├── tanstack/
 │   ├── hooks.ts                  # React hooks
 │   └── createHooks.ts            # Hook creation utilities
@@ -195,6 +195,25 @@ The factory system uses cache strategies defined in `strategies.ts` to optimize 
 - **STATIC** - 1 day stale time, 1 day refetch interval (schedules, fares, terminal info)
 
 For WSF APIs with STATIC cache strategy, the `createHook` function automatically integrates with cache flush date endpoints to invalidate cache when underlying data changes, rather than using fixed refetch intervals.
+
+#### Cache Flush Date Implementation
+
+The cache flush date system uses internal fetch functions to break circular dependencies:
+
+- **Internal fetch functions** - Created directly in `cacheFlushDate.ts` using `createFetchFunction`
+  - These are separate from the public-facing fetch functions exported from API modules
+  - Use the same endpoint metadata and schemas for consistency
+  - Break the circular dependency because `createFetchFunction` has no dependencies on cache or React hooks
+
+- **Public-facing functions** - Exported from API modules (e.g., `fetchCacheFlushDateFares`)
+  - Created using `createHook` which depends on the cache module
+  - Used by consumers of the library
+  - Provide the same functionality with React Query integration
+
+This dual-function approach ensures:
+1. **No circular dependencies** - Internal functions use `createFetchFunction` (no cache dependency)
+2. **Consistent behavior** - Both use the same metadata and schemas
+3. **Clear separation** - Internal functions for cache management, public functions for consumers
 
 This factory system eliminates circular dependencies by keeping fetch functions separate from React hooks, and provides a clean, maintainable way to generate consistent API functions across the entire codebase.
 
@@ -338,6 +357,26 @@ The workflow for adding new endpoints:
 3. **Generate types** - Automatic from schemas
 4. **Add tests** - Unit and integration tests
 5. **Update docs** - Automatic from schemas
+
+### E2E Testing Structure
+
+E2E tests are organized per endpoint (one test file per endpoint), providing maximum granularity and easy filtering:
+
+```
+tests/e2e/api/
+├── wsdot-border-crossings--fetch-border-crossings.test.ts
+├── wsdot-bridge-clearances--fetch-bridge-clearances.test.ts
+├── wsdot-bridge-clearances--fetch-bridge-clearances-by-route.test.ts
+├── wsf-vessels--fetch-vessel-basics.test.ts
+└── ... (one test file per endpoint, 97 total)
+```
+
+Each test file uses the `createEndpointSuite` helper to automatically generate standard tests for the endpoint. This structure:
+
+- **Provides maximum granularity** - One test file per endpoint for precise testing
+- **Improves test maintainability** - Easy to locate and update tests for specific endpoints
+- **Enables targeted testing** - Run tests for specific endpoints or groups of endpoints using glob patterns
+- **Maintains consistency** - All tests use the same factory function and test templates
 
 ### Code Generation
 
