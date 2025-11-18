@@ -104,7 +104,7 @@ function collectRows() {
           : path.basename(endpointFile).replace(".endpoints.ts", "");
 
         const endpointRegex =
-          /(\w+)\s*:\s*{\s*([\s\S]*?)\s*}\s*satisfies\s*EndpointDefinition<([^,>]+),\s*([^>]+)>/g;
+          /(\w+)\s*:\s*{\s*([\s\S]*?)\s*}\s*satisfies\s*EndpointMeta<([^,>]+),\s*([^>]+)>/g;
 
         let match = endpointRegex.exec(endpointsBlock);
 
