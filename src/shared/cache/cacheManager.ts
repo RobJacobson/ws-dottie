@@ -8,102 +8,103 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { fetchDottie } from "@/shared/fetching";
-import type { FetchDottieParams } from "@/shared/fetching/types";
-import type { Endpoint } from "@/shared/types";
+import { apis } from "@/apis/shared/apis";
+import type {
+  CacheFlushDateInput,
+  CacheFlushDateOutput,
+} from "@/apis/shared/cacheFlushDate";
+import {
+  cacheFlushDateFaresGroup,
+  cacheFlushDateFaresMeta,
+} from "@/apis/wsf-fares/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateScheduleGroup,
+  cacheFlushDateScheduleMeta,
+} from "@/apis/wsf-schedule/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateTerminalsGroup,
+  cacheFlushDateTerminalsMeta,
+} from "@/apis/wsf-terminals/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateVesselsGroup,
+  cacheFlushDateVesselsMeta,
+} from "@/apis/wsf-vessels/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import { createFetchFunction } from "@/shared/factories/metaEndpointFactory";
 
-// Cache flush endpoint configurations using existing API definitions
-const CACHE_FLUSH_ENDPOINTS = {
-  "wsf-vessels": {
-    apiName: "wsf-vessels",
-    endpoint: "/cacheflushdate",
-    functionName: "fetchCacheFlushDateVessels",
-    id: "wsf-vessels:cacheFlushDate",
-  },
+const CACHE_FLUSH_CONFIGS = {
   "wsf-fares": {
-    apiName: "wsf-fares",
-    endpoint: "/cacheflushdate",
-    functionName: "fetchCacheFlushDateFares",
-    id: "wsf-fares:cacheFlushDate",
+    api: apis.wsfFares,
+    group: cacheFlushDateFaresGroup,
+    meta: cacheFlushDateFaresMeta,
   },
   "wsf-schedule": {
-    apiName: "wsf-schedule",
-    endpoint: "/cacheflushdate",
-    functionName: "fetchCacheFlushDateSchedule",
-    id: "wsf-schedule:cacheFlushDate",
+    api: apis.wsfSchedule,
+    group: cacheFlushDateScheduleGroup,
+    meta: cacheFlushDateScheduleMeta,
   },
   "wsf-terminals": {
-    apiName: "wsf-terminals",
-    endpoint: "/cacheflushdate",
-    functionName: "fetchCacheFlushDateTerminals",
-    id: "wsf-terminals:cacheFlushDate",
+    api: apis.wsfTerminals,
+    group: cacheFlushDateTerminalsGroup,
+    meta: cacheFlushDateTerminalsMeta,
+  },
+  "wsf-vessels": {
+    api: apis.wsfVessels,
+    group: cacheFlushDateVesselsGroup,
+    meta: cacheFlushDateVesselsMeta,
   },
 } as const;
 
-type CacheFlushEndpointConfig =
-  (typeof CACHE_FLUSH_ENDPOINTS)[keyof typeof CACHE_FLUSH_ENDPOINTS];
+type CacheFlushApiName = keyof typeof CACHE_FLUSH_CONFIGS;
 
-/**
- * Creates a mock endpoint object for cache flush date endpoints
- * This avoids importing from the endpoints registry
- */
-const createCacheFlushEndpoint = (
-  config: CacheFlushEndpointConfig
-): Endpoint<unknown, unknown> => {
-  // Import API definitions dynamically to avoid circular dependencies
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { apis } = require("@/apis/shared/apis");
-  const api = apis[config.apiName as keyof typeof apis];
-
-  return {
-    api,
-    endpoint: config.endpoint,
-    functionName: config.functionName,
-    id: config.id,
-    urlTemplate: `${api.baseUrl}${config.endpoint}`,
-    cacheStrategy: "STATIC" as const,
-  };
+const getCacheFlushConfig = (
+  apiName: string
+): (typeof CACHE_FLUSH_CONFIGS)[CacheFlushApiName] | undefined => {
+  return CACHE_FLUSH_CONFIGS[apiName as CacheFlushApiName];
 };
 
-/**
- * Determines if an endpoint should use cache flush date invalidation
- */
-export const shouldUseCacheFlushDate = (
-  apiName: string,
-  cacheStrategy: string
-): boolean => {
-  const isWsfApi = Object.keys(CACHE_FLUSH_ENDPOINTS).includes(apiName);
-  return isWsfApi && cacheStrategy === "STATIC";
+const normalizeFlushDate = (
+  value: CacheFlushDateOutput | undefined
+): string => {
+  if (!value) {
+    return "";
+  }
+
+  return value instanceof Date ? value.toISOString() : String(value);
 };
 
 /**
  * Hook to poll cache flush date endpoint
  */
-export const useCacheFlushDateQuery = (
+export const useCacheFlushDate = (
   apiName: string
 ): UseQueryResult<string, Error> => {
-  const endpointConfig =
-    CACHE_FLUSH_ENDPOINTS[apiName as keyof typeof CACHE_FLUSH_ENDPOINTS];
+  const config = getCacheFlushConfig(apiName);
+  const fetchCacheFlushDate =
+    config &&
+    createFetchFunction<CacheFlushDateInput, CacheFlushDateOutput>(
+      config.api,
+      config.group,
+      config.meta
+    );
+
+  const descriptorId = config
+    ? `${config.api.name}:${config.meta.functionName}`
+    : "no-cache-flush";
 
   return useQuery({
-    queryKey: endpointConfig ? [endpointConfig.id] : ["no-cache-flush"],
-    queryFn: endpointConfig
+    queryKey: [descriptorId],
+    queryFn: fetchCacheFlushDate
       ? async () => {
-          const endpoint = createCacheFlushEndpoint(endpointConfig);
-          const params: FetchDottieParams<unknown, unknown> = {
-            endpoint,
+          const result = await fetchCacheFlushDate({
             fetchMode: "native",
             validate: false,
             logMode: "none",
-          };
-          const result = await fetchDottie(params);
-          // Convert result to string for consistency
-          return result instanceof Date ? result.toISOString() : String(result);
+          });
+          return normalizeFlushDate(result);
         }
       : () => Promise.resolve(""),
-    enabled: !!endpointConfig,
-    refetchInterval: endpointConfig ? 5 * 60 * 1000 : undefined, // 5 minutes
-    staleTime: endpointConfig ? 5 * 60 * 1000 : undefined,
+    refetchInterval: config ? 5 * 60 * 1000 : undefined,
+    staleTime: config ? 5 * 60 * 1000 : undefined,
     refetchOnWindowFocus: false,
   });
 };
@@ -111,23 +112,30 @@ export const useCacheFlushDateQuery = (
 /**
  * Hook to handle cache invalidation when flush date changes
  */
-export const useCacheInvalidation = (
+export const useInvalidateOnFlushChange = (
   endpointId: string,
-  flushDateQuery: UseQueryResult<string, Error>
+  flushDateQuery?: UseQueryResult<string, Error>
 ): void => {
   const queryClient = useQueryClient();
   const previousFlushDateRef = React.useRef<string | null>(null);
 
   useEffect(() => {
-    if (flushDateQuery.data) {
-      const currentFlushDate = flushDateQuery.data;
-      if (
-        previousFlushDateRef.current !== null &&
-        previousFlushDateRef.current !== currentFlushDate
-      ) {
-        queryClient.invalidateQueries({ queryKey: [endpointId] });
-      }
-      previousFlushDateRef.current = currentFlushDate;
+    if (!flushDateQuery?.data) {
+      return;
     }
-  }, [flushDateQuery.data, queryClient, endpointId]);
+
+    const currentFlushDate = flushDateQuery.data;
+    if (
+      previousFlushDateRef.current !== null &&
+      previousFlushDateRef.current !== currentFlushDate
+    ) {
+      queryClient.invalidateQueries({ queryKey: [endpointId] });
+    }
+    previousFlushDateRef.current = currentFlushDate;
+  }, [flushDateQuery?.data, queryClient, endpointId]);
 };
+
+/**
+ * @deprecated Use useInvalidateOnFlushChange instead.
+ */
+export const useCacheInvalidation = useInvalidateOnFlushChange;

@@ -120,11 +120,13 @@ import { wsdotWeatherStationsApi } from "@/apis/wsdot-weather-stations/apiDefini
 import { weatherStationsGroup } from "@/apis/wsdot-weather-stations/weatherStations/shared/weatherStations.endpoints";
 import { weatherStationsMeta } from "@/apis/wsdot-weather-stations/weatherStations/weatherStations";
 import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
-import { cacheFlushDateFaresMeta } from "@/apis/wsf-fares/cacheFlushDate/cacheFlushDateFares";
 // ============================================================================
 // WSF Fares API
 // ============================================================================
-import { cacheFlushDateFaresGroup } from "@/apis/wsf-fares/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateFaresGroup,
+  cacheFlushDateFaresMeta,
+} from "@/apis/wsf-fares/cacheFlushDate/shared/cacheFlushDate.endpoints";
 import { fareLineItemsBasicMeta } from "@/apis/wsf-fares/fareLineItems/fareLineItemsBasic";
 import { fareLineItemsByTripDateAndTerminalsMeta } from "@/apis/wsf-fares/fareLineItems/fareLineItemsByTripDateAndTerminals";
 import { fareLineItemsVerboseMeta } from "@/apis/wsf-fares/fareLineItems/fareLineItemsVerbose";
@@ -145,8 +147,10 @@ import { activeSeasonsMeta } from "@/apis/wsf-schedule/activeSeasons/activeSeaso
 // ============================================================================
 import { activeSeasonsGroup } from "@/apis/wsf-schedule/activeSeasons/shared/activeSeasons.endpoints";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import { cacheFlushDateScheduleMeta } from "@/apis/wsf-schedule/cacheFlushDate/cacheFlushDateSchedule";
-import { cacheFlushDateScheduleGroup } from "@/apis/wsf-schedule/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateScheduleGroup,
+  cacheFlushDateScheduleMeta,
+} from "@/apis/wsf-schedule/cacheFlushDate/shared/cacheFlushDate.endpoints";
 import { routeDetailsByTripDateMeta } from "@/apis/wsf-schedule/routeDetails/routeDetailsByTripDate";
 import { routeDetailsByTripDateAndRouteIdMeta } from "@/apis/wsf-schedule/routeDetails/routeDetailsByTripDateAndRouteId";
 import { routeDetailsByTripDateAndTerminalsMeta } from "@/apis/wsf-schedule/routeDetails/routeDetailsByTripDateAndTerminals";
@@ -183,11 +187,13 @@ import { timeAdjustmentsBySchedRouteMeta } from "@/apis/wsf-schedule/timeAdjustm
 import { scheduleValidDateRangeMeta } from "@/apis/wsf-schedule/validDateRange/scheduleValidDateRange";
 import { scheduleValidDateRangeGroup } from "@/apis/wsf-schedule/validDateRange/shared/validDateRange.endpoints";
 import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
-import { cacheFlushDateTerminalsMeta } from "@/apis/wsf-terminals/cacheFlushDate/cacheFlushDateTerminals";
 // ============================================================================
 // WSF Terminals API
 // ============================================================================
-import { cacheFlushDateTerminalsGroup } from "@/apis/wsf-terminals/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateTerminalsGroup,
+  cacheFlushDateTerminalsMeta,
+} from "@/apis/wsf-terminals/cacheFlushDate/shared/cacheFlushDate.endpoints";
 import { terminalBasicsGroup } from "@/apis/wsf-terminals/terminalBasics/shared/terminalBasics.endpoints";
 import { terminalBasicsMeta } from "@/apis/wsf-terminals/terminalBasics/terminalBasics";
 import { terminalBasicsByTerminalIdMeta } from "@/apis/wsf-terminals/terminalBasics/terminalBasicsByTerminalId";
@@ -210,11 +216,13 @@ import { terminalWaitTimesGroup } from "@/apis/wsf-terminals/terminalWaitTimes/s
 import { terminalWaitTimesMeta } from "@/apis/wsf-terminals/terminalWaitTimes/terminalWaitTimes";
 import { terminalWaitTimesByTerminalIdMeta } from "@/apis/wsf-terminals/terminalWaitTimes/terminalWaitTimesByTerminalId";
 import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
-import { cacheFlushDateVesselsMeta } from "@/apis/wsf-vessels/cacheFlushDate/cacheFlushDateVessels";
 // ============================================================================
 // WSF Vessels API
 // ============================================================================
-import { cacheFlushDateVesselsGroup } from "@/apis/wsf-vessels/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateVesselsGroup,
+  cacheFlushDateVesselsMeta,
+} from "@/apis/wsf-vessels/cacheFlushDate/shared/cacheFlushDate.endpoints";
 import { vesselAccommodationsGroup } from "@/apis/wsf-vessels/vesselAccommodations/shared/vesselAccommodations.endpoints";
 import { vesselAccommodationsMeta } from "@/apis/wsf-vessels/vesselAccommodations/vesselAccommodations";
 import { vesselAccommodationsByVesselIdMeta } from "@/apis/wsf-vessels/vesselAccommodations/vesselAccommodationsByVesselId";

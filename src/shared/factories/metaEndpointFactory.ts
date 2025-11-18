@@ -183,7 +183,7 @@ export function createHook<I, O>(
     });
   };
 
-  // Wrap with createHookFunction to preserve existing cache strategy and
-  // cache flush date invalidation behavior
+  // Wrap with createHookFunction - cache flush date invalidation is determined
+  // automatically based on API name and cache strategy
   return createHookFunction<I, O>(config, fetchFn);
 }

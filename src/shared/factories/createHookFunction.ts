@@ -10,8 +10,8 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import type { EndpointGroupMeta } from "@/apis/types";
 import {
-  useCacheFlushDateQuery,
-  useCacheInvalidation,
+  useCacheFlushDate,
+  useInvalidateOnFlushChange,
 } from "@/shared/cache/cacheManager";
 import { cacheStrategies } from "@/shared/factories/types";
 import type {
@@ -19,6 +19,63 @@ import type {
   FetchFunctionParams,
   QueryHookOptions,
 } from "./types";
+
+/**
+ * Creates a typed hook function for an endpoint.
+ *
+ * This is a higher-order function that returns a React Query hook configured
+ * for a specific endpoint. The hook selection (cache flush vs regular) is
+ * determined automatically based on the endpoint configuration (API name and
+ * cache strategy).
+ *
+ * @template TInput - The input parameters type for endpoint
+ * @template TOutput - The output response type for endpoint
+ * @param config - The endpoint configuration object
+ * @param fetchFunction - The fetch function to wrap with React Query
+ * @returns A React Query hook function for endpoint
+ */
+export const createHookFunction = <TInput, TOutput>(
+  config: EndpointConfig<TInput, TOutput>,
+  fetchFunction: (params?: FetchFunctionParams<TInput>) => Promise<TOutput>
+): ((
+  params?: FetchFunctionParams<TInput>,
+  options?: QueryHookOptions<TOutput>
+) => UseQueryResult<TOutput, Error>) => {
+  // Determine if cache flush should be used based on API and cache strategy
+  // This is the single source of truth for cache flush date invalidation
+  const useCacheFlush = shouldUseCacheFlushDate(config);
+
+  if (useCacheFlush) {
+    return (
+      params?: FetchFunctionParams<TInput>,
+      options?: QueryHookOptions<TOutput>
+    ): UseQueryResult<TOutput, Error> => {
+      const flushDateQuery = useCacheFlushDate(config.api.name);
+      useInvalidateOnFlushChange(config.id, flushDateQuery);
+
+      return useQuery({
+        queryKey: [config.id, params?.params ?? null],
+        queryFn: () => fetchFunction(params),
+        ...cacheStrategies.STATIC,
+        refetchOnWindowFocus: false,
+        ...options,
+      });
+    };
+  }
+
+  return (
+    params?: FetchFunctionParams<TInput>,
+    options?: QueryHookOptions<TOutput>
+  ): UseQueryResult<TOutput, Error> => {
+    return useQuery({
+      queryKey: [config.id, params?.params ?? null],
+      queryFn: () => fetchFunction(params),
+      ...cacheStrategies[config.cacheStrategy as keyof typeof cacheStrategies],
+      refetchOnWindowFocus: false,
+      ...options,
+    });
+  };
+};
 
 /**
  * Determines if an endpoint should use cache flush date invalidation.
@@ -52,59 +109,4 @@ export const shouldUseCacheFlushDate = (config: {
   }
 
   return isWsfApi && config.group.cacheStrategy === "STATIC";
-};
-
-/**
- * Creates a typed hook function for an endpoint.
- *
- * This is a higher-order function that returns a React Query hook configured
- * for a specific endpoint. The hook selection (cache flush vs regular) is
- * determined internally based on the endpoint configuration.
- *
- * @template TInput - The input parameters type for endpoint
- * @template TOutput - The output response type for endpoint
- * @param config - The endpoint configuration object
- * @param fetchFunction - The fetch function to wrap with React Query
- * @returns A React Query hook function for endpoint
- */
-export const createHookFunction = <TInput, TOutput>(
-  config: EndpointConfig<TInput, TOutput>,
-  fetchFunction: (params?: FetchFunctionParams<TInput>) => Promise<TOutput>
-): ((
-  params?: FetchFunctionParams<TInput>,
-  options?: QueryHookOptions<TOutput>
-) => UseQueryResult<TOutput, Error>) => {
-  // Determine if cache flush should be used based on API and cache strategy
-  const useCacheFlush = shouldUseCacheFlushDate(config);
-
-  if (useCacheFlush) {
-    return (
-      params?: FetchFunctionParams<TInput>,
-      options?: QueryHookOptions<TOutput>
-    ): UseQueryResult<TOutput, Error> => {
-      const flushDateQuery = useCacheFlushDateQuery(config.api.name);
-      useCacheInvalidation(config.id, flushDateQuery);
-
-      return useQuery({
-        queryKey: [config.id, params?.params ?? null],
-        queryFn: () => fetchFunction(params),
-        ...cacheStrategies.STATIC,
-        refetchOnWindowFocus: false,
-        ...options,
-      });
-    };
-  }
-
-  return (
-    params?: FetchFunctionParams<TInput>,
-    options?: QueryHookOptions<TOutput>
-  ): UseQueryResult<TOutput, Error> => {
-    return useQuery({
-      queryKey: [config.id, params?.params ?? null],
-      queryFn: () => fetchFunction(params),
-      ...cacheStrategies[config.cacheStrategy as keyof typeof cacheStrategies],
-      refetchOnWindowFocus: false,
-      ...options,
-    });
-  };
 };
