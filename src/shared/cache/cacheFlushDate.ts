@@ -5,21 +5,34 @@
  * queries when flush dates change. This is specifically for WSF APIs that
  * use cache flush dates to indicate when static data has been updated.
  *
- * Does not create fetch functions - accepts them as dependencies to avoid
- * circular dependencies.
+ * Uses internal fetch functions created with createFetchFunction to break
+ * circular dependencies. These are separate from the public-facing fetch
+ * functions exported from API modules.
  */
 
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
+import { apis } from "@/apis/shared/apis";
 import type { CacheFlushDateOutput } from "@/apis/shared/cacheFlushDate";
-
-// Cache flush date fetch functions are imported from their respective API modules
-// This breaks the circular dependency
-import { fetchCacheFlushDateFares } from "@/apis/wsf-fares/cacheFlushDate/cacheFlushDateFares";
-import { fetchCacheFlushDateSchedule } from "@/apis/wsf-schedule/cacheFlushDate/cacheFlushDateSchedule";
-import { fetchCacheFlushDateTerminals } from "@/apis/wsf-terminals/cacheFlushDate/cacheFlushDateTerminals";
-import { fetchCacheFlushDateVessels } from "@/apis/wsf-vessels/cacheFlushDate/cacheFlushDateVessels";
+import {
+  cacheFlushDateFaresGroup,
+  cacheFlushDateFaresMeta,
+} from "@/apis/wsf-fares/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateScheduleGroup,
+  cacheFlushDateScheduleMeta,
+} from "@/apis/wsf-schedule/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateTerminalsGroup,
+  cacheFlushDateTerminalsMeta,
+} from "@/apis/wsf-terminals/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import {
+  cacheFlushDateVesselsGroup,
+  cacheFlushDateVesselsMeta,
+} from "@/apis/wsf-vessels/cacheFlushDate/shared/cacheFlushDate.endpoints";
+import { createFetchFunction } from "@/shared/factories/createFetchFunction";
+import type { FetchFunctionParams } from "@/shared/factories/types";
 
 type CacheFlushApiName =
   | "wsf-fares"
@@ -29,40 +42,80 @@ type CacheFlushApiName =
 
 type CacheFlushFetchFn = () => Promise<string>;
 
-const CACHE_FLUSH_FUNCTIONS: Record<CacheFlushApiName, CacheFlushFetchFn> = {
+// Internal fetch functions created using createFetchFunction
+// These are separate from the public-facing functions exported from API modules
+// This breaks the circular dependency because createFetchFunction has no
+// dependencies on cache or React hooks
+const internalFetchCacheFlushDateFares = createFetchFunction(
+  apis.wsfFares,
+  cacheFlushDateFaresGroup,
+  cacheFlushDateFaresMeta
+);
+
+const internalFetchCacheFlushDateSchedule = createFetchFunction(
+  apis.wsfSchedule,
+  cacheFlushDateScheduleGroup,
+  cacheFlushDateScheduleMeta
+);
+
+const internalFetchCacheFlushDateTerminals = createFetchFunction(
+  apis.wsfTerminals,
+  cacheFlushDateTerminalsGroup,
+  cacheFlushDateTerminalsMeta
+);
+
+const internalFetchCacheFlushDateVessels = createFetchFunction(
+  apis.wsfVessels,
+  cacheFlushDateVesselsGroup,
+  cacheFlushDateVesselsMeta
+);
+
+// Strategy pattern: map API names to fetch functions
+const CACHE_FLUSH_STRATEGIES: Record<CacheFlushApiName, CacheFlushFetchFn> = {
   "wsf-fares": async () => {
-    const result = await fetchCacheFlushDateFares({
+    const result = await internalFetchCacheFlushDateFares({
       fetchMode: "native",
       validate: false,
       logMode: "none",
-    });
+    } as FetchFunctionParams<Record<string, never>>);
     return normalizeFlushDate(result);
   },
   "wsf-schedule": async () => {
-    const result = await fetchCacheFlushDateSchedule({
+    const result = await internalFetchCacheFlushDateSchedule({
       fetchMode: "native",
       validate: false,
       logMode: "none",
-    });
+    } as FetchFunctionParams<Record<string, never>>);
     return normalizeFlushDate(result);
   },
   "wsf-terminals": async () => {
-    const result = await fetchCacheFlushDateTerminals({
+    const result = await internalFetchCacheFlushDateTerminals({
       fetchMode: "native",
       validate: false,
       logMode: "none",
-    });
+    } as FetchFunctionParams<Record<string, never>>);
     return normalizeFlushDate(result);
   },
   "wsf-vessels": async () => {
-    const result = await fetchCacheFlushDateVessels({
+    const result = await internalFetchCacheFlushDateVessels({
       fetchMode: "native",
       validate: false,
       logMode: "none",
-    });
+    } as FetchFunctionParams<Record<string, never>>);
     return normalizeFlushDate(result);
   },
 } as const;
+
+// Getter that retrieves the fetch function from the strategy map
+const getCachedFetchFunction = (
+  apiName: CacheFlushApiName
+): CacheFlushFetchFn => {
+  const strategy = CACHE_FLUSH_STRATEGIES[apiName];
+  if (!strategy) {
+    throw new Error(`No cache flush strategy found for API: ${apiName}`);
+  }
+  return strategy;
+};
 
 const CACHE_FLUSH_ENDPOINT_IDS: Record<CacheFlushApiName, string> = {
   "wsf-fares": "wsf-fares:fetchCacheFlushDateFares",
@@ -84,14 +137,22 @@ const normalizeFlushDate = (value: CacheFlushDateOutput): string => {
 export const useCacheFlushDate = (
   apiName: string
 ): UseQueryResult<string, Error> => {
-  const isCacheFlushApi = apiName in CACHE_FLUSH_FUNCTIONS;
-  const fetchFn = CACHE_FLUSH_FUNCTIONS[apiName as CacheFlushApiName];
+  const isCacheFlushApi: boolean =
+    apiName === "wsf-fares" ||
+    apiName === "wsf-schedule" ||
+    apiName === "wsf-terminals" ||
+    apiName === "wsf-vessels";
+
+  const fetchFn = isCacheFlushApi
+    ? getCachedFetchFunction(apiName as CacheFlushApiName)
+    : undefined;
+
   const endpointId =
     CACHE_FLUSH_ENDPOINT_IDS[apiName as CacheFlushApiName] || "no-cache-flush";
 
   return useQuery({
     queryKey: [endpointId],
-    queryFn: isCacheFlushApi ? fetchFn : () => Promise.resolve(""),
+    queryFn: fetchFn ?? (() => Promise.resolve("")),
     refetchInterval: isCacheFlushApi ? 5 * 60 * 1000 : undefined,
     staleTime: isCacheFlushApi ? 5 * 60 * 1000 : undefined,
     refetchOnWindowFocus: false,
@@ -123,8 +184,3 @@ export const useInvalidateOnFlushChange = (
     previousFlushDateRef.current = currentFlushDate;
   }, [flushDateQuery?.data, queryClient, endpointId]);
 };
-
-/**
- * @deprecated Use useInvalidateOnFlushChange instead.
- */
-export const useCacheInvalidation = useInvalidateOnFlushChange;
