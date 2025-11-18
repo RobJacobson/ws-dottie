@@ -8,7 +8,7 @@ import type { Endpoint } from "@/shared/types";
 export const createErrorHandlingTest = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  it(`It should handle invalid parameters appropriately for ${endpoint.api}.${endpoint.functionName}`, async () => {
+  it(`It should handle invalid parameters appropriately for ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     // Test with invalid parameters
     const paramsWithInvalid = {
       ...(endpoint.sampleParams || {}),

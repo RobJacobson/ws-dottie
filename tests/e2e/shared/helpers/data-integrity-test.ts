@@ -94,7 +94,7 @@ const deepEqual = (a: unknown, b: unknown): boolean => {
 export const createDataIntegrityTest = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  it(`It should fetch the same data both with and without validation from ${endpoint.api}.${endpoint.functionName}`, async () => {
+  it(`It should fetch the same data both with and without validation from ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     // Execute both fetches simultaneously to ensure consistent data
     const [validatedResult, unvalidatedResult] = await Promise.all([
       fetchDottie({

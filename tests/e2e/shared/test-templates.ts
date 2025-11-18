@@ -13,16 +13,16 @@ import {
  * Format: "apiName.functionName"
  */
 const SKIP_DATA_INTEGRITY_TESTS = new Set([
-  "wsdot-toll-rates.getTollTripInfo", // Server returns HTTP 400 due to DBNull in ModifiedDate column
-  "wsdot-weather-readings.getSurfaceMeasurements", // Optional fields cause differences between validated/unvalidated results
-  "wsdot-weather-readings.getSubSurfaceMeasurements", // Optional fields cause differences between validated/unvalidated results
+  "wsdot-toll-rates.fetchTollTripInfo", // Server returns HTTP 400 due to DBNull in ModifiedDate column
+  "wsdot-weather-readings.fetchSurfaceMeasurements", // Optional fields cause differences between validated/unvalidated results
+  "wsdot-weather-readings.fetchSubSurfaceMeasurements", // Optional fields cause differences between validated/unvalidated results
 ]);
 
 /**
  * Endpoints that should skip all tests due to known server-side issues
  *
  * Whitelisted endpoints and reasons:
- * - wsdot-toll-rates.getTollTripInfo:
+ * - wsdot-toll-rates.fetchTollTripInfo:
  *   Server returns HTTP 400 Bad Request with error: "The value for column 'ModifiedDate'
  *   in table 'sp_GetTollTripDetails' is DBNull." This is a server-side bug where some
   * records have null values for the ModifiedDate column, causing the API to fail completely.
@@ -31,7 +31,7 @@ const SKIP_DATA_INTEGRITY_TESTS = new Set([
   Format: "apiName.functionName"
   */
 export const SKIP_ALL_TESTS = new Set([
-  "wsdot-toll-rates.getTollTripInfo", // Server returns HTTP 400 due to DBNull in ModifiedDate column
+  "wsdot-toll-rates.fetchTollTripInfo", // Server returns HTTP 400 due to DBNull in ModifiedDate column
 ]);
 
 /**
@@ -40,7 +40,7 @@ export const SKIP_ALL_TESTS = new Set([
 export const createStandardEndpointTests = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  const endpointIdentifier = `${endpoint.functionName}`;
+  const endpointIdentifier = `${endpoint.api.name}.${endpoint.functionName}`;
 
   // Skip all tests for known problematic endpoints
   if (SKIP_ALL_TESTS.has(endpointIdentifier)) {

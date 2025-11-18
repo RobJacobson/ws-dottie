@@ -8,7 +8,7 @@ import type { Endpoint } from "@/shared/types";
 export const createDefaultParametersTest = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  it(`It should fetch with default parameters from ${endpoint.api}.${endpoint.functionName}`, async () => {
+  it(`It should fetch with default parameters from ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     const result = await fetchDottie({
       endpoint,
       params: endpoint.sampleParams || {},
