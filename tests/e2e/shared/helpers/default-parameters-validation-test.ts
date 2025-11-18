@@ -8,7 +8,7 @@ import type { Endpoint } from "@/shared/types";
 export const createDefaultParametersValidationTest = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  it(`It should validate that default parameters meet the Zod input schema for ${endpoint.api}.${endpoint.functionName}`, () => {
+  it(`It should validate that default parameters meet the Zod input schema for ${endpoint.functionName}`, () => {
     if (!endpoint.sampleParams) {
       // If there are no sample parameters, the test passes by default
       return;
@@ -32,7 +32,7 @@ export const createDefaultParametersValidationTest = (
         const zodError = error as z.ZodError;
         const prettyError = zodError.format();
         throw new Error(
-          `Default parameters do not meet Zod input schema for ${endpoint.api}.${endpoint.functionName}:\n${JSON.stringify(prettyError, null, 2)}`
+          `Default parameters do not meet Zod input schema for ${endpoint.functionName}:\n${JSON.stringify(prettyError, null, 2)}`
         );
       } else {
         throw error;

@@ -5,6 +5,10 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
+export type {
+  CacheFlushDateInput as CacheFlushDateScheduleInput,
+  CacheFlushDateOutput as CacheFlushDateSchedules,
+} from "@/apis/shared/cacheFlushDate";
 export {
   type TerminalMatesInput,
   type TerminalsInput,
@@ -21,27 +25,26 @@ export {
   type ValidDateRange,
   validDateRangeSchema,
 } from "../shared/validDateRange.output";
-export * from "./activeSeasons/activeSeasons.input";
-export * from "./activeSeasons/activeSeasons.output";
-export * from "./cacheFlushDate/cacheFlushDate.endpoints";
-export * from "./routeDetails/routeDetails.input";
-export * from "./routeDetails/routeDetails.output";
-export * from "./routes/routes.input";
-export * from "./routes/routes.output";
-export * from "./sailings/sailings.input";
-export * from "./sailings/sailings.output";
-export * from "./scheduleAlerts/scheduleAlerts.input";
-export * from "./scheduleAlerts/scheduleAlerts.output";
-export * from "./scheduledRoutes/scheduledRoutes.input";
-export * from "./scheduledRoutes/scheduledRoutes.output";
-export * from "./schedules/schedules.input";
-export * from "./schedules/schedules.output";
-export * from "./scheduleToday/scheduleToday.input";
-export * from "./scheduleToday/scheduleToday.output";
-export * from "./serviceDisruptions/serviceDisruptions.input";
-export * from "./serviceDisruptions/serviceDisruptions.output";
-export * from "./terminals/terminals.input";
-export * from "./terminals/terminals.output";
-export * from "./timeAdjustments/timeAdjustments.input";
-export * from "./timeAdjustments/timeAdjustments.output";
-export * from "./validDateRange/validDateRange.input";
+export * from "./activeSeasons/shared/activeSeasons.input";
+export * from "./activeSeasons/shared/activeSeasons.output";
+export * from "./routeDetails/shared/routeDetails.input";
+export * from "./routeDetails/shared/routeDetails.output";
+export * from "./routes/shared/routes.input";
+export * from "./routes/shared/routes.output";
+export * from "./sailings/shared/sailings.input";
+export * from "./sailings/shared/sailings.output";
+export * from "./scheduleAlerts/shared/scheduleAlerts.input";
+export * from "./scheduleAlerts/shared/scheduleAlerts.output";
+export * from "./scheduledRoutes/shared/scheduledRoutes.input";
+export * from "./scheduledRoutes/shared/scheduledRoutes.output";
+export * from "./schedules/shared/schedules.input";
+export * from "./schedules/shared/schedules.output";
+export * from "./scheduleToday/shared/scheduleToday.input";
+export * from "./scheduleToday/shared/scheduleToday.output";
+export * from "./serviceDisruptions/shared/serviceDisruptions.input";
+export * from "./serviceDisruptions/shared/serviceDisruptions.output";
+export * from "./terminals/shared/terminals.input";
+export * from "./terminals/shared/terminals.output";
+export * from "./timeAdjustments/shared/timeAdjustments.input";
+export * from "./timeAdjustments/shared/timeAdjustments.output";
+export * from "./validDateRange/shared/validDateRange.input";

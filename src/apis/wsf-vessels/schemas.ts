@@ -17,28 +17,29 @@
  */
 
 // Cache Flush Date schemas
-export * from "./cacheFlushDate/cacheFlushDate.endpoints";
+export * from "./cacheFlushDate/shared/cacheFlushDate.input";
+export * from "./cacheFlushDate/shared/cacheFlushDate.output";
 
 // Vessel Accommodations schemas
-export * from "./vesselAccommodations/vesselAccommodations.input";
-export * from "./vesselAccommodations/vesselAccommodations.output";
+export * from "./vesselAccommodations/shared/vesselAccommodations.input";
+export * from "./vesselAccommodations/shared/vesselAccommodations.output";
 
 // Vessel Basics schemas
-export * from "./vesselBasics/vesselBasics.input";
-export * from "./vesselBasics/vesselBasics.output";
+export * from "./vesselBasics/shared/vesselBasics.input";
+export * from "./vesselBasics/shared/vesselBasics.output";
 
 // Vessel Histories schemas
-export * from "./vesselHistories/vesselHistories.input";
-export * from "./vesselHistories/vesselHistories.output";
+export * from "./vesselHistories/shared/vesselHistories.input";
+export * from "./vesselHistories/shared/vesselHistories.output";
 
 // Vessel Locations schemas
-export * from "./vesselLocations/vesselLocations.input";
-export * from "./vesselLocations/vesselLocations.output";
+export * from "./vesselLocations/shared/vesselLocations.input";
+export * from "./vesselLocations/shared/vesselLocations.output";
 
 // Vessel Stats schemas
-export * from "./vesselStats/vesselStats.input";
-export * from "./vesselStats/vesselStats.output";
+export * from "./vesselStats/shared/vesselStats.input";
+export * from "./vesselStats/shared/vesselStats.output";
 
 // Vessel Verbose schemas
-export * from "./vesselVerbose/vesselVerbose.input";
-export * from "./vesselVerbose/vesselVerbose.output";
+export * from "./vesselVerbose/shared/vesselVerbose.input";
+export * from "./vesselVerbose/shared/vesselVerbose.output";

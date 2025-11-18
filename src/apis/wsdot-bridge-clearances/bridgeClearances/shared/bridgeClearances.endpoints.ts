@@ -1,0 +1,20 @@
+import type { EndpointGroupMeta } from "@/apis/types";
+
+/**
+ * Endpoint group metadata for bridge clearances endpoints
+ */
+export const bridgeClearancesGroup: EndpointGroupMeta = {
+  name: "bridge-clearances",
+  cacheStrategy: "STATIC",
+  documentation: {
+    summary: "Vertical clearance measurements for Washington State bridges.",
+    description:
+      "Bridge height restrictions including location data, route associations, and clearance measurements in both feet-inches and inches formats.",
+    useCases: [
+      "Plan commercial vehicle routes with height restrictions.",
+      "Verify clearance requirements for oversize load permits.",
+      "Identify bridge height limitations for route planning.",
+    ],
+    updateFrequency: "daily",
+  },
+};

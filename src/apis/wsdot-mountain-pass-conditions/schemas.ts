@@ -5,5 +5,5 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./passConditions/passConditions.input";
-export * from "./passConditions/passConditions.output";
+export * from "./passConditions/shared/passConditions.input";
+export * from "./passConditions/shared/passConditions.output";

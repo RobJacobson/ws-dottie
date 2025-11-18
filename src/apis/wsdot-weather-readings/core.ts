@@ -5,12 +5,12 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from "./subSurfaceMeasurements/subSurfaceMeasurements.fetch";
-export * from "./subSurfaceMeasurements/subSurfaceMeasurements.input";
-export * from "./subSurfaceMeasurements/subSurfaceMeasurements.output";
-export * from "./surfaceMeasurements/surfaceMeasurements.fetch";
-export * from "./surfaceMeasurements/surfaceMeasurements.input";
-export * from "./surfaceMeasurements/surfaceMeasurements.output";
-export * from "./weatherReadings/weatherReadings.fetch";
-export * from "./weatherReadings/weatherReadings.input";
-export * from "./weatherReadings/weatherReadings.output";
+export * from "./subSurfaceMeasurements/shared/subSurfaceMeasurements.input";
+export * from "./subSurfaceMeasurements/shared/subSurfaceMeasurements.output";
+export { fetchSubSurfaceMeasurements } from "./subSurfaceMeasurements/subSurfaceMeasurements";
+export * from "./surfaceMeasurements/shared/surfaceMeasurements.input";
+export * from "./surfaceMeasurements/shared/surfaceMeasurements.output";
+export { fetchSurfaceMeasurements } from "./surfaceMeasurements/surfaceMeasurements";
+export * from "./weatherReadings/shared/weatherReadings.input";
+export * from "./weatherReadings/shared/weatherReadings.output";
+export { fetchWeatherReadings } from "./weatherReadings/weatherReadings";

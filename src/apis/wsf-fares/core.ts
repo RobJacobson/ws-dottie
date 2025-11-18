@@ -25,16 +25,20 @@ export {
   type ValidDateRange,
   validDateRangeSchema,
 } from "../shared/validDateRange.output";
-export { fetchCacheFlushDateFares } from "./cacheFlushDate/cacheFlushDate.fetch";
-export * from "./fareLineItems/fareLineItems.fetch";
-export * from "./fareLineItems/fareLineItems.input";
-export * from "./fareLineItems/fareLineItems.output";
-export * from "./fareTotals/fareTotals.fetch";
-export * from "./fareTotals/fareTotals.input";
-export * from "./fareTotals/fareTotals.output";
-export * from "./terminalCombo/terminalCombo.fetch";
-export * from "./terminalCombo/terminalCombo.input";
-export * from "./terminalCombo/terminalCombo.output";
-export * from "./terminals/terminals.fetch";
-export * from "./validDateRange/validDateRange.fetch";
-export * from "./validDateRange/validDateRange.input";
+export { fetchCacheFlushDateFares } from "./cacheFlushDate/cacheFlushDateFares";
+export { fetchFareLineItemsBasic } from "./fareLineItems/fareLineItemsBasic";
+export { fetchFareLineItemsByTripDateAndTerminals } from "./fareLineItems/fareLineItemsByTripDateAndTerminals";
+export { fetchFareLineItemsVerbose } from "./fareLineItems/fareLineItemsVerbose";
+export * from "./fareLineItems/shared/fareLineItems.input";
+export * from "./fareLineItems/shared/fareLineItems.output";
+export { fetchFareTotalsByTripDateAndRoute } from "./fareTotals/fareTotalsByTripDateAndRoute";
+export * from "./fareTotals/shared/fareTotals.input";
+export * from "./fareTotals/shared/fareTotals.output";
+export * from "./terminalCombo/shared/terminalCombo.input";
+export * from "./terminalCombo/shared/terminalCombo.output";
+export { fetchTerminalComboFares } from "./terminalCombo/terminalComboFares";
+export { fetchTerminalComboFaresVerbose } from "./terminalCombo/terminalComboFaresVerbose";
+export { fetchTerminalFares } from "./terminals/terminalFares";
+export { fetchTerminalMatesFares } from "./terminals/terminalMatesFares";
+export { fetchFaresValidDateRange } from "./validDateRange/faresValidDateRange";
+export * from "./validDateRange/shared/validDateRange.input";

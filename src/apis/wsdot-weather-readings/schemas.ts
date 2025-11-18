@@ -5,9 +5,9 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./subSurfaceMeasurements/subSurfaceMeasurements.input";
-export * from "./subSurfaceMeasurements/subSurfaceMeasurements.output";
-export * from "./surfaceMeasurements/surfaceMeasurements.input";
-export * from "./surfaceMeasurements/surfaceMeasurements.output";
-export * from "./weatherReadings/weatherReadings.input";
-export * from "./weatherReadings/weatherReadings.output";
+export * from "./subSurfaceMeasurements/shared/subSurfaceMeasurements.input";
+export * from "./subSurfaceMeasurements/shared/subSurfaceMeasurements.output";
+export * from "./surfaceMeasurements/shared/surfaceMeasurements.input";
+export * from "./surfaceMeasurements/shared/surfaceMeasurements.output";
+export * from "./weatherReadings/shared/weatherReadings.input";
+export * from "./weatherReadings/shared/weatherReadings.output";

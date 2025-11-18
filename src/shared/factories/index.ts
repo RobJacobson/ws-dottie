@@ -1,25 +1,20 @@
 /**
  * @fileoverview Factory Functions for WS-Dottie
  *
- * This module provides factory functions for creating typed endpoints, fetch functions,
- * and React Query hooks. These factories are used throughout WS-Dottie library
- * to generate strongly-typed API functions with minimal boilerplate.
+ * This module provides factory functions for creating typed fetch functions
+ * and React Query hooks using a metadata-driven approach.
  */
 
-// Unified endpoint factory (replaces defineEndpoint and createFetchFunction)
-export { createEndpoint } from "./createEndpoint";
-// Hook factory
-export {
-  createHookFunction,
-  shouldUseCacheFlushDate,
-} from "./createHookFunction";
-// Export all consolidated types
+// Export fetch function factory
+export { buildDescriptor } from "./buildDescriptor";
+export { createFetchFunction } from "./createFetchFunction";
+
+// Export hook factory
+export { createHook } from "./createHook";
+// Export cache strategies
+export { cacheStrategies } from "./strategies";
+// Export types
 export type {
-  DefineEndpointConfig,
-  EndpointConfig,
-  EndpointResult,
   FetchFunctionParams,
   QueryHookOptions,
 } from "./types";
-// Export cache strategies
-export { cacheStrategies } from "./types";

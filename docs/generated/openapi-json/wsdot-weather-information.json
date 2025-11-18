@@ -400,7 +400,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2025-11-15T00:00:00.000Z\",\n    \"SearchEndTime\": \"2025-11-16T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2025-11-17T00:00:00.000Z\",\n    \"SearchEndTime\": \"2025-11-18T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [

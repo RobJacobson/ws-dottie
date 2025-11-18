@@ -1019,7 +1019,7 @@ components:
 paths:
   /cacheflushdate:
     get:
-      summary: Get cache invalidation timestamp for static vessel data.
+      summary: Get cache flush timestamp for static wsf-vessels data.
       operationId: fetchCacheFlushDateVessels
       tags:
         - cache-flush-date-vessels

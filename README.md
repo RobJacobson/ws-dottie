@@ -1120,7 +1120,7 @@ npm run docs:html                   # Generate HTML documentation only
 npm run docs:samples:fetch           # Fetch fresh sample data for documentation
 ```
 
-**E2E Testing**: Tests all API endpoints with real data validation and error handling. Tests are organized by API module and include both happy path and error scenarios.
+**E2E Testing**: Tests all API endpoints with real data validation and error handling. Tests are organized per endpoint (one test file per endpoint, 97 files total), providing granular testing and easy filtering. Each test file uses the `createEndpointSuite` helper to automatically generate standard tests for the endpoint.
 
 **TanStack Query Testing**: Comprehensive testing of React hooks with caching strategies, error states, and loading states.
 

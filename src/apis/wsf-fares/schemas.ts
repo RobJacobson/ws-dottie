@@ -21,11 +21,11 @@ export {
   type ValidDateRange,
   validDateRangeSchema,
 } from "../shared/validDateRange.output";
-export * from "./cacheFlushDate/cacheFlushDate.endpoints";
-export * from "./fareLineItems/fareLineItems.input";
-export * from "./fareLineItems/fareLineItems.output";
-export * from "./fareTotals/fareTotals.input";
-export * from "./fareTotals/fareTotals.output";
-export * from "./terminalCombo/terminalCombo.input";
-export * from "./terminalCombo/terminalCombo.output";
-export * from "./validDateRange/validDateRange.input";
+export * from "./cacheFlushDate/shared/cacheFlushDate.endpoints";
+export * from "./fareLineItems/shared/fareLineItems.input";
+export * from "./fareLineItems/shared/fareLineItems.output";
+export * from "./fareTotals/shared/fareTotals.input";
+export * from "./fareTotals/shared/fareTotals.output";
+export * from "./terminalCombo/shared/terminalCombo.input";
+export * from "./terminalCombo/shared/terminalCombo.output";
+export * from "./validDateRange/shared/validDateRange.input";

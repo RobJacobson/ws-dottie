@@ -1,6 +1,6 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
-  "projectTitle": "WS‑DOTTIE",
+  "projectTitle": "ws-dottie",
   "description": "Type‑safe client for fetching Washington State transportation data (WSDOT + WSF).",
   "folders": ["docs"],
   "includeFiles": ["README.md"],

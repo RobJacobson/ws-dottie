@@ -5,8 +5,8 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./alertAreas/alertAreas.input";
-export * from "./alertAreas/alertAreas.output";
-export * from "./eventCategories/eventCategories.input";
-export * from "./highwayAlerts/highwayAlerts.input";
-export * from "./highwayAlerts/highwayAlerts.output";
+export * from "./alertAreas/shared/alertAreas.input";
+export * from "./alertAreas/shared/alertAreas.output";
+export * from "./eventCategories/shared/eventCategories.input";
+export * from "./highwayAlerts/shared/highwayAlerts.input";
+export * from "./highwayAlerts/shared/highwayAlerts.output";

@@ -5,5 +5,5 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./flowData/flowData.input";
-export * from "./flowData/flowData.output";
+export * from "./flowData/shared/flowData.input";
+export * from "./flowData/shared/flowData.output";

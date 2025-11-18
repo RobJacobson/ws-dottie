@@ -78,19 +78,6 @@ export const setBaseUrl = (domain: string): void => {
 };
 
 /**
- * Sets logging level for WS-Dottie
- *
- * This function allows runtime modification of the logging level,
- * useful for different environments or debugging needs.
- *
- * @param level - The new logging level string to set
- */
-export const setLogLevel = (level: string): void => {
-  // Implementation would go here
-  console.log(`Setting log level to: ${level}`);
-};
-
-/**
  * Configuration manager object
  *
  * This object provides a convenient interface for accessing and
@@ -101,5 +88,4 @@ export const configManager = {
   getDomain,
   setApiKey,
   setBaseUrl,
-  setLogLevel,
 };

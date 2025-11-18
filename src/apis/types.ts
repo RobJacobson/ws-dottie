@@ -18,9 +18,9 @@ import type { CacheStrategy } from "@/shared/types";
  */
 export interface ApiDefinition {
   /** The API metadata containing name and baseUrl */
-  api: ApiMetadata;
+  api: ApiMeta;
   /** Array of endpoint group definitions */
-  endpointGroups: EndpointGroup[];
+  endpointGroups: EndpointGroupMeta[];
 }
 
 /**
@@ -29,7 +29,7 @@ export interface ApiDefinition {
  * This type is used to pass API information to endpoint definitions
  * without creating circular dependencies.
  */
-export interface ApiMetadata {
+export interface ApiMeta {
   /** The internal API name (e.g., "wsf-vessels") */
   name: string;
   /** The base URL for API (e.g., "https://www.wsdot.wa.gov/ferries/api/vessels/rest") */
@@ -42,7 +42,7 @@ export interface ApiMetadata {
  * This interface defines the structure for endpoint group files in the new
  * resource-based architecture, organizing endpoints by business data domains.
  */
-export interface EndpointGroup {
+export interface EndpointGroupMeta {
   /** The endpoint group name (e.g., "vessel-basics") */
   name: string;
   /** Documentation for the resource */
@@ -50,6 +50,32 @@ export interface EndpointGroup {
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
 }
+
+/**
+ * Endpoint metadata structure for individual endpoints
+ *
+ * This type defines the structure for endpoint-specific metadata used in the
+ * resource-based architecture. Each endpoint file exports a metadata object
+ * that satisfies this type, which is then used by factory functions to
+ * create fetch functions and React hooks.
+ *
+ * @template I - Input type for the endpoint parameters
+ * @template O - Output type for the endpoint response
+ */
+export type EndpointMeta<I, O> = {
+  /** The function name for the fetch function (e.g., "fetchVesselBasics") */
+  functionName: string;
+  /** HTTP endpoint URL template (truncated, e.g., "/vesselBasics/{VesselID}") */
+  endpoint: string;
+  /** Zod schema for input validation */
+  inputSchema: z.ZodSchema<I>;
+  /** Zod schema for output validation */
+  outputSchema: z.ZodSchema<O>;
+  /** Optional sample parameters for testing - can be static or async function */
+  sampleParams: Partial<I> | (() => Promise<Partial<I>>);
+  /** One-sentence description of what this specific endpoint does */
+  endpointDescription: string;
+};
 
 /**
  * Documentation structure for API resources
@@ -93,25 +119,17 @@ export interface ResourceDocumentation {
   businessContext?: string;
 }
 
+// ============================================================================
+// RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 /**
- * Endpoint definition structure for individual endpoints
+ * Re-export commonly used factory types for convenience.
  *
- * This interface defines the structure for individual endpoints in both
- * API definition and resource definition formats.
+ * This allows endpoint files to import all types from one central location
+ * (@/apis/types) instead of importing from multiple modules.
  */
-export interface EndpointDefinition<I, O> {
-  /** HTTP endpoint URL template (truncated, e.g., "/vesselBasics/{VesselID}") */
-  endpoint: string;
-  /** Zod schema for input validation (optional - excluded in lite builds) */
-  inputSchema?: z.ZodSchema<I>;
-  /** Zod schema for output validation (optional - excluded in lite builds) */
-  outputSchema?: z.ZodSchema<O>;
-  /** Optional sample parameters for testing - must match the input schema exactly */
-  sampleParams?: I | (() => Promise<I>);
-  /** Cache strategy (only present in legacy API definition format) */
-  cacheStrategy?: CacheStrategy;
-  /** Description for MCP tool discovery (legacy API definition format) */
-  description?: string;
-  /** One-sentence description of what this specific endpoint does (resource format) */
-  endpointDescription?: string;
-}
+export type {
+  FetchFunctionParams,
+  QueryHookOptions,
+} from "@/shared/factories/types";

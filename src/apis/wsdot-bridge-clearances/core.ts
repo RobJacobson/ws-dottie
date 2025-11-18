@@ -5,6 +5,7 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from "./bridgeClearances/bridgeClearances.fetch";
-export * from "./bridgeClearances/bridgeClearances.input";
-export * from "./bridgeClearances/bridgeClearances.output";
+export * from "./bridgeClearances/bridgeClearances";
+export * from "./bridgeClearances/bridgeClearancesByRoute";
+export * from "./bridgeClearances/shared/bridgeClearances.input";
+export * from "./bridgeClearances/shared/bridgeClearances.output";

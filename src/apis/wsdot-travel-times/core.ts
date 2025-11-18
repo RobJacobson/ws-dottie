@@ -5,6 +5,8 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from "./travelTimeRoutes/travelTimeRoutes.fetch";
-export * from "./travelTimeRoutes/travelTimeRoutes.input";
-export * from "./travelTimeRoutes/travelTimeRoutes.output";
+export * from "./travelTimeRoutes/shared/travelTimeRoutes.input";
+export * from "./travelTimeRoutes/shared/travelTimeRoutes.output";
+// Travel Time Routes
+export { fetchTravelTimeById } from "./travelTimeRoutes/travelTimeById";
+export { fetchTravelTimes } from "./travelTimeRoutes/travelTimes";

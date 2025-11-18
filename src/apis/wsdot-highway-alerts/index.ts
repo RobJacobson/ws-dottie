@@ -5,8 +5,12 @@
  */
 
 // Export hooks
-export * from "./alertAreas/alertAreas.hooks";
+export { useMapAreas } from "./alertAreas/mapAreas";
 // Re-export everything from core (fetch functions and types)
 export * from "./core";
-export * from "./eventCategories/eventCategories.hooks";
-export * from "./highwayAlerts/highwayAlerts.hooks";
+export { useEventCategories } from "./eventCategories/eventCategories";
+export { useAlertById } from "./highwayAlerts/alertById";
+export { useAlerts } from "./highwayAlerts/alerts";
+export { useAlertsByMapArea } from "./highwayAlerts/alertsByMapArea";
+export { useAlertsByRegionId } from "./highwayAlerts/alertsByRegionId";
+export { useSearchAlerts } from "./highwayAlerts/searchAlerts";

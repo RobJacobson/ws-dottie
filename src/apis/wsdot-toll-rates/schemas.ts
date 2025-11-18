@@ -5,11 +5,11 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./tollRates/tollRates.input";
-export * from "./tollRates/tollRates.output";
-export * from "./tollTripInfo/tollTripInfo.input";
-export * from "./tollTripInfo/tollTripInfo.output";
-export * from "./tollTripRates/tollTripRates.input";
-export * from "./tollTripRates/tollTripRates.output";
-export * from "./tollTripVersion/tollTripVersion.input";
-export * from "./tollTripVersion/tollTripVersion.output";
+export * from "./tollRates/shared/tollRates.input";
+export * from "./tollRates/shared/tollRates.output";
+export * from "./tollTripInfo/shared/tollTripInfo.input";
+export * from "./tollTripInfo/shared/tollTripInfo.output";
+export * from "./tollTripRates/shared/tollTripRates.input";
+export * from "./tollTripRates/shared/tollTripRates.output";
+export * from "./tollTripVersion/shared/tollTripVersion.input";
+export * from "./tollTripVersion/shared/tollTripVersion.output";

@@ -56,7 +56,7 @@ const hasMeaningfulData = (data: unknown): boolean => {
 export const createRealDataWithValidationTest = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  it(`It should fetch real data with validation from ${endpoint.api}.${endpoint.functionName}`, async () => {
+  it(`It should fetch real data with validation from ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     const result = await fetchDottie({
       endpoint,
       params: endpoint.sampleParams || {},
@@ -84,7 +84,7 @@ export const createRealDataWithValidationTest = (
 export const createRealDataWithoutValidationTest = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  it(`It should fetch real data without validation from ${endpoint.api}.${endpoint.functionName}`, async () => {
+  it(`It should fetch real data without validation from ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     const result = await fetchDottie({
       endpoint,
       params: endpoint.sampleParams || {},

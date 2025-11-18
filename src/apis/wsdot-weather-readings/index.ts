@@ -8,6 +8,6 @@
 export * from "./core";
 
 // Export hooks
-export * from "./subSurfaceMeasurements/subSurfaceMeasurements.hooks";
-export * from "./surfaceMeasurements/surfaceMeasurements.hooks";
-export * from "./weatherReadings/weatherReadings.hooks";
+export { useSubSurfaceMeasurements } from "./subSurfaceMeasurements/subSurfaceMeasurements";
+export { useSurfaceMeasurements } from "./surfaceMeasurements/surfaceMeasurements";
+export { useWeatherReadings } from "./weatherReadings/weatherReadings";

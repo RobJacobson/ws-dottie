@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchTrafficFlowsOutput": {
+      "FetchTrafficFlowByIdOutput": {
         "type": "object",
         "properties": {
           "FlowDataID": {
@@ -187,59 +187,6 @@
     }
   },
   "paths": {
-    "/getTrafficFlowsAsJson": {
-      "get": {
-        "summary": "List current traffic flow conditions for all stations statewide.",
-        "operationId": "fetchTrafficFlows",
-        "tags": [
-          "flow-data"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchTrafficFlows } from 'ws-dottie/wsdot-traffic-flow/core';\n\nconst data = await fetchTrafficFlows({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchTrafficFlowsOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 1462 total)",
-                    "value": [
-                      {
-                        "FlowDataID": 2482,
-                        "FlowReadingValue": 1,
-                        "FlowStationLocation": {
-                          "Description": "Homeacres Rd",
-                          "Direction": "EB",
-                          "Latitude": 47.978415632,
-                          "Longitude": -122.174701738,
-                          "MilePost": 0.68,
-                          "RoadName": "002"
-                        },
-                        "Region": "Northwest",
-                        "StationName": "002es00068",
-                        "Time": "2025-11-15T17:43:22.000Z"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/getTrafficFlowAsJson?FlowDataID={FlowDataID}": {
       "get": {
         "summary": "Get current traffic flow condition for a specific station by ID.",
@@ -264,7 +211,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchTrafficFlowsOutput"
+                  "$ref": "#/components/schemas/FetchTrafficFlowByIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -285,6 +232,59 @@
                       "StationName": "002es00068",
                       "Time": "2025-11-15T17:43:22.000Z"
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getTrafficFlowsAsJson": {
+      "get": {
+        "summary": "List current traffic flow conditions for all stations statewide.",
+        "operationId": "fetchTrafficFlows",
+        "tags": [
+          "flow-data"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchTrafficFlows } from 'ws-dottie/wsdot-traffic-flow/core';\n\nconst data = await fetchTrafficFlows({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchTrafficFlowByIdOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 1462 total)",
+                    "value": [
+                      {
+                        "FlowDataID": 2482,
+                        "FlowReadingValue": 1,
+                        "FlowStationLocation": {
+                          "Description": "Homeacres Rd",
+                          "Direction": "EB",
+                          "Latitude": 47.978415632,
+                          "Longitude": -122.174701738,
+                          "MilePost": 0.68,
+                          "RoadName": "002"
+                        },
+                        "Region": "Northwest",
+                        "StationName": "002es00068",
+                        "Time": "2025-11-15T17:43:22.000Z"
+                      }
+                    ]
                   }
                 }
               }

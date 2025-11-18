@@ -5,6 +5,7 @@
  */
 
 // Export hooks
-export * from "./bridgeClearances/bridgeClearances.hooks";
+export { useBridgeClearances } from "./bridgeClearances/bridgeClearances";
+export { useBridgeClearancesByRoute } from "./bridgeClearances/bridgeClearancesByRoute";
 // Re-export everything from core (fetch functions and types)
 export * from "./core";

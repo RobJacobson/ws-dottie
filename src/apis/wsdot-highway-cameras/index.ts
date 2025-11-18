@@ -4,7 +4,9 @@
  * This module provides exports for all hooks, fetch functions, and types in the wsdot-highway-cameras API.
  */
 
+export { useHighwayCameraByCameraId } from "./cameras/highwayCameraByCameraId";
 // Export hooks
-export * from "./cameras/cameras.hooks";
+export { useHighwayCameras } from "./cameras/highwayCameras";
+export { useSearchHighwayCamerasByRouteAndMilepost } from "./cameras/searchHighwayCamerasByRouteAndMilepost";
 // Re-export everything from core (fetch functions and types)
 export * from "./core";

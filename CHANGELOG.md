@@ -7,6 +7,27 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.4.0] - 2025-11-18
+
+- Features
+  - **OpenAPI JSON Exports**: Added OpenAPI 3.0 JSON exports for all 16 APIs, enabling consumption by external tools like ws-dottie-mcp
+  - **Package Exports for OpenAPI**: Added npm package exports for OpenAPI specifications under the `./openapi/` subpath
+  - **OpenAPI Format Support**: OpenAPI specifications now generated as both JSON and YAML formats
+
+- Improvements
+  - **API Code Simplification**: Streamlined internal API architecture with simplified factory functions and metadata-driven endpoint definitions for improved maintainability
+  - **Enhanced Testing**: Comprehensive test suite refactoring with improved coverage and reliability across all 97 endpoints
+  - **Cache Management**: Enhanced cache flush date handling for better data freshness
+
+- Docs
+  - **Documentation Rebuild**: Rebuilt all HTML documentation files with updated content
+  - **Guide Updates**: Updated architecture and TanStack Query integration guides
+  - **Documentation Cleanup**: Removed obsolete migration guide (352 lines) and updated performance optimization guide
+
+- Build/Chore
+  - **Build Integration**: Updated build process to automatically copy OpenAPI JSON files to distribution
+  - **Test Organization**: Improved test organization with clear naming convention (`api-name--function-name.test.ts`) in `tests/e2e/api/` directory
+
 ## [1.3.1] - 2025-11-16
 
 - Features

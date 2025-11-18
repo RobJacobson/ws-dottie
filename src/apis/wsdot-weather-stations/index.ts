@@ -8,4 +8,4 @@
 export * from "./core";
 
 // Export hooks
-export * from "./weatherStations/weatherStations.hooks";
+export { useWeatherStations } from "./weatherStations/weatherStations";

@@ -4,14 +4,21 @@
  * This module provides exports for all hooks, fetch functions, and types in the wsf-terminals API.
  */
 
-// Export hooks
-export * from "./cacheFlushDate/cacheFlushDate.hooks";
+// Export hooks from individual endpoint files
+export { useCacheFlushDateTerminals } from "./cacheFlushDate/cacheFlushDateTerminals";
 // Re-export everything from core (fetch functions and types)
 export * from "./core";
-export * from "./terminalBasics/terminalBasics.hooks";
-export * from "./terminalBulletins/terminalBulletins.hooks";
-export * from "./terminalLocations/terminalLocations.hooks";
-export * from "./terminalSailingSpace/terminalSailingSpace.hooks";
-export * from "./terminalTransports/terminalTransports.hooks";
-export * from "./terminalVerbose/terminalVerbose.hooks";
-export * from "./terminalWaitTimes/terminalWaitTimes.hooks";
+export { useTerminalBasics } from "./terminalBasics/terminalBasics";
+export { useTerminalBasicsByTerminalId } from "./terminalBasics/terminalBasicsByTerminalId";
+export { useTerminalBulletins } from "./terminalBulletins/terminalBulletins";
+export { useTerminalBulletinsByTerminalId } from "./terminalBulletins/terminalBulletinsByTerminalId";
+export { useTerminalLocations } from "./terminalLocations/terminalLocations";
+export { useTerminalLocationsByTerminalId } from "./terminalLocations/terminalLocationsByTerminalId";
+export { useTerminalSailingSpace } from "./terminalSailingSpace/terminalSailingSpace";
+export { useTerminalSailingSpaceByTerminalId } from "./terminalSailingSpace/terminalSailingSpaceByTerminalId";
+export { useTerminalTransports } from "./terminalTransports/terminalTransports";
+export { useTerminalTransportsByTerminalId } from "./terminalTransports/terminalTransportsByTerminalId";
+export { useTerminalVerbose } from "./terminalVerbose/terminalVerbose";
+export { useTerminalVerboseByTerminalId } from "./terminalVerbose/terminalVerboseByTerminalId";
+export { useTerminalWaitTimes } from "./terminalWaitTimes/terminalWaitTimes";
+export { useTerminalWaitTimesByTerminalId } from "./terminalWaitTimes/terminalWaitTimesByTerminalId";

@@ -5,5 +5,5 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./travelTimeRoutes/travelTimeRoutes.input";
-export * from "./travelTimeRoutes/travelTimeRoutes.output";
+export * from "./travelTimeRoutes/shared/travelTimeRoutes.input";
+export * from "./travelTimeRoutes/shared/travelTimeRoutes.output";
