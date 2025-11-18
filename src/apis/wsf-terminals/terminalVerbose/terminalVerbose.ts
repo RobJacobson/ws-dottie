@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfTerminalsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -37,7 +37,7 @@ export const terminalVerboseMeta = {
 export const fetchTerminalVerbose: (
   params?: FetchFunctionParams<TerminalVerboseInput>
 ) => Promise<TerminalVerbose[]> = createFetchFunction(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalVerboseGroup,
   terminalVerboseMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalVerbose: (
   params?: FetchFunctionParams<TerminalVerboseInput>,
   options?: QueryHookOptions<TerminalVerbose[]>
 ) => UseQueryResult<TerminalVerbose[], Error> = createHook(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalVerboseGroup,
   terminalVerboseMeta
 );

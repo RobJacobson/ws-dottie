@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfScheduleApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -35,7 +35,7 @@ export const allSailingsBySchedRouteIDMeta = {
 export const fetchAllSailingsBySchedRouteID: (
   params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>
 ) => Promise<Sailing[]> = createFetchFunction(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   sailingsGroup,
   allSailingsBySchedRouteIDMeta
 );
@@ -47,7 +47,7 @@ export const useAllSailingsBySchedRouteID: (
   params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>,
   options?: QueryHookOptions<Sailing[]>
 ) => UseQueryResult<Sailing[], Error> = createHook(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   sailingsGroup,
   allSailingsBySchedRouteIDMeta
 );

@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotTollRatesApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -37,7 +37,7 @@ export const tollTripRatesMeta = {
 export const fetchTollTripRates: (
   params?: FetchFunctionParams<TollTripRatesInput>
 ) => Promise<TollTripsRates> = createFetchFunction(
-  apis.wsdotTollRates,
+  wsdotTollRatesApi.api,
   tollTripRatesGroup,
   tollTripRatesMeta
 );
@@ -49,7 +49,7 @@ export const useTollTripRates: (
   params?: FetchFunctionParams<TollTripRatesInput>,
   options?: QueryHookOptions<TollTripsRates>
 ) => UseQueryResult<TollTripsRates, Error> = createHook(
-  apis.wsdotTollRates,
+  wsdotTollRatesApi.api,
   tollTripRatesGroup,
   tollTripRatesMeta
 );

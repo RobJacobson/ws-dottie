@@ -1,14 +1,11 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
 import type {
   EndpointMeta,
   FetchFunctionParams,
   QueryHookOptions,
 } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import { createFetchFunction, createHook } from "@/shared/factories";
+import { wsfVesselsApi } from "../api";
 import { vesselBasicsGroup } from "./shared/vesselBasics.endpoints";
 import {
   type VesselBasicsInput,
@@ -37,7 +34,7 @@ export const vesselBasicsMeta = {
 export const fetchVesselBasics: (
   params?: FetchFunctionParams<VesselBasicsInput>
 ) => Promise<VesselBasic[]> = createFetchFunction(
-  apis.wsfVessels,
+  wsfVesselsApi.api,
   vesselBasicsGroup,
   vesselBasicsMeta
 );
@@ -49,7 +46,7 @@ export const useVesselBasics: (
   params?: FetchFunctionParams<VesselBasicsInput>,
   options?: QueryHookOptions<VesselBasic[]>
 ) => UseQueryResult<VesselBasic[], Error> = createHook(
-  apis.wsfVessels,
+  wsfVesselsApi.api,
   vesselBasicsGroup,
   vesselBasicsMeta
 );

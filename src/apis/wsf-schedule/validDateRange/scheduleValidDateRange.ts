@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfScheduleApi } from "../api";
 import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import type {
@@ -35,7 +35,7 @@ export const scheduleValidDateRangeMeta = {
 export const fetchScheduleValidDateRange: (
   params?: FetchFunctionParams<ScheduleValidDateRangeInput>
 ) => Promise<ValidDateRange> = createFetchFunction(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleValidDateRangeGroup,
   scheduleValidDateRangeMeta
 );
@@ -47,7 +47,7 @@ export const useScheduleValidDateRange: (
   params?: FetchFunctionParams<ScheduleValidDateRangeInput>,
   options?: QueryHookOptions<ValidDateRange>
 ) => UseQueryResult<ValidDateRange, Error> = createHook(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleValidDateRangeGroup,
   scheduleValidDateRangeMeta
 );

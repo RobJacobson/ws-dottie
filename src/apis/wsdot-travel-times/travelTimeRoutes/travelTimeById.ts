@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotTravelTimesApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -37,7 +37,7 @@ export const travelTimeByIdMeta = {
 export const fetchTravelTimeById: (
   params?: FetchFunctionParams<TravelTimeByIdInput>
 ) => Promise<TravelTimeRoute> = createFetchFunction(
-  apis.wsdotTravelTimes,
+  wsdotTravelTimesApi.api,
   travelTimeRoutesGroup,
   travelTimeByIdMeta
 );
@@ -49,7 +49,7 @@ export const useTravelTimeById: (
   params?: FetchFunctionParams<TravelTimeByIdInput>,
   options?: QueryHookOptions<TravelTimeRoute>
 ) => UseQueryResult<TravelTimeRoute, Error> = createHook(
-  apis.wsdotTravelTimes,
+  wsdotTravelTimesApi.api,
   travelTimeRoutesGroup,
   travelTimeByIdMeta
 );

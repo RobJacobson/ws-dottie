@@ -1,10 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
 import type { FetchFunctionParams, QueryHookOptions } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import { createFetchFunction, createHook } from "@/shared/factories";
+import { wsfVesselsApi } from "../api";
 import {
   cacheFlushDateVesselsGroup,
   cacheFlushDateVesselsMeta,
@@ -18,7 +15,7 @@ import type { CacheFlushDateOutput } from "./shared/cacheFlushDate.output";
 export const fetchCacheFlushDateVessels: (
   params?: FetchFunctionParams<CacheFlushDateInput>
 ) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  apis.wsfVessels,
+  wsfVesselsApi.api,
   cacheFlushDateVesselsGroup,
   cacheFlushDateVesselsMeta
 );
@@ -30,7 +27,7 @@ export const useCacheFlushDateVessels: (
   params?: FetchFunctionParams<CacheFlushDateInput>,
   options?: QueryHookOptions<CacheFlushDateOutput>
 ) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  apis.wsfVessels,
+  wsfVesselsApi.api,
   cacheFlushDateVesselsGroup,
   cacheFlushDateVesselsMeta
 );

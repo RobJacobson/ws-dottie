@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotTrafficFlowApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -35,7 +35,7 @@ export const trafficFlowsMeta = {
 export const fetchTrafficFlows: (
   params?: FetchFunctionParams<TrafficFlowsInput>
 ) => Promise<FlowData[]> = createFetchFunction(
-  apis.wsdotTrafficFlow,
+  wsdotTrafficFlowApi.api,
   flowDataGroup,
   trafficFlowsMeta
 );
@@ -47,7 +47,7 @@ export const useTrafficFlows: (
   params?: FetchFunctionParams<TrafficFlowsInput>,
   options?: QueryHookOptions<FlowData[]>
 ) => UseQueryResult<FlowData[], Error> = createHook(
-  apis.wsdotTrafficFlow,
+  wsdotTrafficFlowApi.api,
   flowDataGroup,
   trafficFlowsMeta
 );

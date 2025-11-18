@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfTerminalsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const terminalLocationsByTerminalIdMeta = {
 export const fetchTerminalLocationsByTerminalId: (
   params?: FetchFunctionParams<TerminalLocationsByIdInput>
 ) => Promise<TerminalLocation> = createFetchFunction(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalLocationsGroup,
   terminalLocationsByTerminalIdMeta
 );
@@ -50,7 +50,7 @@ export const useTerminalLocationsByTerminalId: (
   params?: FetchFunctionParams<TerminalLocationsByIdInput>,
   options?: QueryHookOptions<TerminalLocation>
 ) => UseQueryResult<TerminalLocation, Error> = createHook(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalLocationsGroup,
   terminalLocationsByTerminalIdMeta
 );

@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotMountainPassConditionsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const mountainPassConditionByIdMeta = {
 export const fetchMountainPassConditionById: (
   params?: FetchFunctionParams<MountainPassConditionByIdInput>
 ) => Promise<PassCondition> = createFetchFunction(
-  apis.wsdotMountainPassConditions,
+  wsdotMountainPassConditionsApi.api,
   passConditionsGroup,
   mountainPassConditionByIdMeta
 );
@@ -50,7 +50,7 @@ export const useMountainPassConditionById: (
   params?: FetchFunctionParams<MountainPassConditionByIdInput>,
   options?: QueryHookOptions<PassCondition>
 ) => UseQueryResult<PassCondition, Error> = createHook(
-  apis.wsdotMountainPassConditions,
+  wsdotMountainPassConditionsApi.api,
   passConditionsGroup,
   mountainPassConditionByIdMeta
 );

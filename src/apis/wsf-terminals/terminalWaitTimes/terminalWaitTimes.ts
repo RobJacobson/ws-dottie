@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfTerminalsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -37,7 +37,7 @@ export const terminalWaitTimesMeta = {
 export const fetchTerminalWaitTimes: (
   params?: FetchFunctionParams<TerminalWaitTimesInput>
 ) => Promise<TerminalWaitTime[]> = createFetchFunction(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalWaitTimesGroup,
   terminalWaitTimesMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalWaitTimes: (
   params?: FetchFunctionParams<TerminalWaitTimesInput>,
   options?: QueryHookOptions<TerminalWaitTime[]>
 ) => UseQueryResult<TerminalWaitTime[], Error> = createHook(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalWaitTimesGroup,
   terminalWaitTimesMeta
 );

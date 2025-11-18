@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfTerminalsApi } from "../api";
 import type { FetchFunctionParams, QueryHookOptions } from "@/apis/types";
 import {
   createFetchFunction,
@@ -18,7 +18,7 @@ import type { CacheFlushDateOutput } from "./shared/cacheFlushDate.output";
 export const fetchCacheFlushDateTerminals: (
   params?: FetchFunctionParams<CacheFlushDateInput>
 ) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   cacheFlushDateTerminalsGroup,
   cacheFlushDateTerminalsMeta
 );
@@ -30,7 +30,7 @@ export const useCacheFlushDateTerminals: (
   params?: FetchFunctionParams<CacheFlushDateInput>,
   options?: QueryHookOptions<CacheFlushDateOutput>
 ) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   cacheFlushDateTerminalsGroup,
   cacheFlushDateTerminalsMeta
 );

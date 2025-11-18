@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfFaresApi } from "../api";
 import type {
   CacheFlushDateInput,
   CacheFlushDateOutput,
@@ -20,7 +20,7 @@ import {
 export const fetchCacheFlushDateFares: (
   params?: FetchFunctionParams<CacheFlushDateInput>
 ) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  apis.wsfFares,
+  wsfFaresApi.api,
   cacheFlushDateFaresGroup,
   cacheFlushDateFaresMeta
 );
@@ -32,7 +32,7 @@ export const useCacheFlushDateFares: (
   params?: FetchFunctionParams<CacheFlushDateInput>,
   options?: QueryHookOptions<CacheFlushDateOutput>
 ) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  apis.wsfFares,
+  wsfFaresApi.api,
   cacheFlushDateFaresGroup,
   cacheFlushDateFaresMeta
 );

@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotBorderCrossingsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const borderCrossingsMeta = {
 export const fetchBorderCrossings: (
   params?: FetchFunctionParams<BorderCrossingsInput>
 ) => Promise<BorderCrossing[]> = createFetchFunction(
-  apis.wsdotBorderCrossings,
+  wsdotBorderCrossingsApi.api,
   borderCrossingDataGroup,
   borderCrossingsMeta
 );
@@ -50,7 +50,7 @@ export const useBorderCrossings: (
   params?: FetchFunctionParams<BorderCrossingsInput>,
   options?: QueryHookOptions<BorderCrossing[]>
 ) => UseQueryResult<BorderCrossing[], Error> = createHook(
-  apis.wsdotBorderCrossings,
+  wsdotBorderCrossingsApi.api,
   borderCrossingDataGroup,
   borderCrossingsMeta
 );

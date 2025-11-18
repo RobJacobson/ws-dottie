@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotHighwayAlertsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -34,7 +34,7 @@ export const alertByIdMeta = {
 export const fetchAlertById: (
   params?: FetchFunctionParams<AlertByIdInput>
 ) => Promise<Alert> = createFetchFunction(
-  apis.wsdotHighwayAlerts,
+  wsdotHighwayAlertsApi.api,
   highwayAlertsGroup,
   alertByIdMeta
 );
@@ -46,7 +46,7 @@ export const useAlertById: (
   params?: FetchFunctionParams<AlertByIdInput>,
   options?: QueryHookOptions<Alert>
 ) => UseQueryResult<Alert, Error> = createHook(
-  apis.wsdotHighwayAlerts,
+  wsdotHighwayAlertsApi.api,
   highwayAlertsGroup,
   alertByIdMeta
 );

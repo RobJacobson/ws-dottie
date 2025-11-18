@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotHighwayCamerasApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const searchHighwayCamerasByRouteAndMilepostMeta = {
 export const searchHighwayCamerasByRouteAndMilepost: (
   params?: FetchFunctionParams<HighwayCamerasByRouteAndMilepostInput>
 ) => Promise<Camera[]> = createFetchFunction(
-  apis.wsdotHighwayCameras,
+  wsdotHighwayCamerasApi.api,
   camerasGroup,
   searchHighwayCamerasByRouteAndMilepostMeta
 );
@@ -50,7 +50,7 @@ export const useSearchHighwayCamerasByRouteAndMilepost: (
   params?: FetchFunctionParams<HighwayCamerasByRouteAndMilepostInput>,
   options?: QueryHookOptions<Camera[]>
 ) => UseQueryResult<Camera[], Error> = createHook(
-  apis.wsdotHighwayCameras,
+  wsdotHighwayCamerasApi.api,
   camerasGroup,
   searchHighwayCamerasByRouteAndMilepostMeta
 );

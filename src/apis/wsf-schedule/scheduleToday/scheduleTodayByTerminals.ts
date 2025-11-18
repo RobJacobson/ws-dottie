@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfScheduleApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -39,7 +39,7 @@ export const scheduleTodayByTerminalsMeta = {
 export const fetchScheduleTodayByTerminals: (
   params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>
 ) => Promise<Schedule> = createFetchFunction(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleTodayGroup,
   scheduleTodayByTerminalsMeta
 );
@@ -51,7 +51,7 @@ export const useScheduleTodayByTerminals: (
   params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>,
   options?: QueryHookOptions<Schedule>
 ) => UseQueryResult<Schedule, Error> = createHook(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleTodayGroup,
   scheduleTodayByTerminalsMeta
 );

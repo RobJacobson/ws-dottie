@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfScheduleApi } from "../api";
 import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
 import { terminalMatesInputSchema } from "@/apis/shared/terminals.input";
 import type { TerminalList } from "@/apis/shared/terminals.output";
@@ -35,7 +35,7 @@ export const terminalMatesScheduleMeta = {
 export const fetchTerminalMatesSchedule: (
   params?: FetchFunctionParams<TerminalMatesInput>
 ) => Promise<TerminalList> = createFetchFunction(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleTerminalMatesGroup,
   terminalMatesScheduleMeta
 );
@@ -47,7 +47,7 @@ export const useTerminalMatesSchedule: (
   params?: FetchFunctionParams<TerminalMatesInput>,
   options?: QueryHookOptions<TerminalList>
 ) => UseQueryResult<TerminalList, Error> = createHook(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleTerminalMatesGroup,
   terminalMatesScheduleMeta
 );

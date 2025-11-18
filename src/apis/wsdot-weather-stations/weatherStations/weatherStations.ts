@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotWeatherStationsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const weatherStationsMeta = {
 export const fetchWeatherStations: (
   params?: FetchFunctionParams<WeatherStationsInput>
 ) => Promise<WeatherStation[]> = createFetchFunction(
-  apis.wsdotWeatherStations,
+  wsdotWeatherStationsApi.api,
   weatherStationsGroup,
   weatherStationsMeta
 );
@@ -50,7 +50,7 @@ export const useWeatherStations: (
   params?: FetchFunctionParams<WeatherStationsInput>,
   options?: QueryHookOptions<WeatherStation[]>
 ) => UseQueryResult<WeatherStation[], Error> = createHook(
-  apis.wsdotWeatherStations,
+  wsdotWeatherStationsApi.api,
   weatherStationsGroup,
   weatherStationsMeta
 );

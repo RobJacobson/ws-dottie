@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfScheduleApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const activeSeasonsMeta = {
 export const fetchActiveSeasons: (
   params?: FetchFunctionParams<ActiveSeasonsInput>
 ) => Promise<ActiveSeason[]> = createFetchFunction(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   activeSeasonsGroup,
   activeSeasonsMeta
 );
@@ -50,7 +50,7 @@ export const useActiveSeasons: (
   params?: FetchFunctionParams<ActiveSeasonsInput>,
   options?: QueryHookOptions<ActiveSeason[]>
 ) => UseQueryResult<ActiveSeason[], Error> = createHook(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   activeSeasonsGroup,
   activeSeasonsMeta
 );

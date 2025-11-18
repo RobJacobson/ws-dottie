@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfFaresApi } from "../api";
 import {
   type TerminalsInput,
   terminalsInputSchema,
@@ -38,7 +38,7 @@ export const terminalFaresMeta = {
 export const fetchTerminalFares: (
   params?: FetchFunctionParams<TerminalsInput>
 ) => Promise<TerminalList> = createFetchFunction(
-  apis.wsfFares,
+  wsfFaresApi.api,
   terminalsGroup,
   terminalFaresMeta
 );
@@ -50,7 +50,7 @@ export const useTerminalFares: (
   params?: FetchFunctionParams<TerminalsInput>,
   options?: QueryHookOptions<TerminalList>
 ) => UseQueryResult<TerminalList, Error> = createHook(
-  apis.wsfFares,
+  wsfFaresApi.api,
   terminalsGroup,
   terminalFaresMeta
 );

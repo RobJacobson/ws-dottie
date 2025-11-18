@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotBridgeClearancesApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const bridgeClearancesByRouteMeta = {
 export const fetchBridgeClearancesByRoute: (
   params?: FetchFunctionParams<BridgeClearancesByRouteInput>
 ) => Promise<BridgeClearance[]> = createFetchFunction(
-  apis.wsdotBridgeClearances,
+  wsdotBridgeClearancesApi.api,
   bridgeClearancesGroup,
   bridgeClearancesByRouteMeta
 );
@@ -50,7 +50,7 @@ export const useBridgeClearancesByRoute: (
   params?: FetchFunctionParams<BridgeClearancesByRouteInput>,
   options?: QueryHookOptions<BridgeClearance[]>
 ) => UseQueryResult<BridgeClearance[], Error> = createHook(
-  apis.wsdotBridgeClearances,
+  wsdotBridgeClearancesApi.api,
   bridgeClearancesGroup,
   bridgeClearancesByRouteMeta
 );

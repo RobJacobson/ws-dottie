@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfFaresApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -39,7 +39,7 @@ export const fareLineItemsVerboseMeta = {
 export const fetchFareLineItemsVerbose: (
   params?: FetchFunctionParams<FareLineItemsVerboseInput>
 ) => Promise<LineItemVerbose> = createFetchFunction(
-  apis.wsfFares,
+  wsfFaresApi.api,
   fareLineItemsGroup,
   fareLineItemsVerboseMeta
 );
@@ -51,7 +51,7 @@ export const useFareLineItemsVerbose: (
   params?: FetchFunctionParams<FareLineItemsVerboseInput>,
   options?: QueryHookOptions<LineItemVerbose>
 ) => UseQueryResult<LineItemVerbose, Error> = createHook(
-  apis.wsfFares,
+  wsfFaresApi.api,
   fareLineItemsGroup,
   fareLineItemsVerboseMeta
 );

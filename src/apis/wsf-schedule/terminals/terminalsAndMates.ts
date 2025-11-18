@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfScheduleApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -38,7 +38,7 @@ export const terminalsAndMatesMeta = {
 export const fetchTerminalsAndMates: (
   params?: FetchFunctionParams<TerminalsAndMatesInput>
 ) => Promise<TerminalMate[]> = createFetchFunction(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleTerminalsGroup,
   terminalsAndMatesMeta
 );
@@ -50,7 +50,7 @@ export const useTerminalsAndMates: (
   params?: FetchFunctionParams<TerminalsAndMatesInput>,
   options?: QueryHookOptions<TerminalMate[]>
 ) => UseQueryResult<TerminalMate[], Error> = createHook(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleTerminalsGroup,
   terminalsAndMatesMeta
 );

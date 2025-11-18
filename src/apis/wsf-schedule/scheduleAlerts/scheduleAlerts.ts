@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfScheduleApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -37,7 +37,7 @@ export const scheduleAlertsMeta = {
 export const fetchScheduleAlerts: (
   params?: FetchFunctionParams<ScheduleAlertsInput>
 ) => Promise<AlertDetail[]> = createFetchFunction(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleAlertsGroup,
   scheduleAlertsMeta
 );
@@ -49,7 +49,7 @@ export const useScheduleAlerts: (
   params?: FetchFunctionParams<ScheduleAlertsInput>,
   options?: QueryHookOptions<AlertDetail[]>
 ) => UseQueryResult<AlertDetail[], Error> = createHook(
-  apis.wsfSchedule,
+  wsfScheduleApi.api,
   scheduleAlertsGroup,
   scheduleAlertsMeta
 );

@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsdotCommercialVehicleRestrictionsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -41,7 +41,7 @@ export const commercialVehicleRestrictionsWithIdMeta = {
 export const fetchCommercialVehicleRestrictionsWithId: (
   params?: FetchFunctionParams<CommercialVehicleRestrictionsWithIdInput>
 ) => Promise<CVRestrictionWithId[]> = createFetchFunction(
-  apis.wsdotCommercialVehicleRestrictions,
+  wsdotCommercialVehicleRestrictionsApi.api,
   cvRestrictionDataWithIdGroup,
   commercialVehicleRestrictionsWithIdMeta
 );
@@ -53,7 +53,7 @@ export const useCommercialVehicleRestrictionsWithId: (
   params?: FetchFunctionParams<CommercialVehicleRestrictionsWithIdInput>,
   options?: QueryHookOptions<CVRestrictionWithId[]>
 ) => UseQueryResult<CVRestrictionWithId[], Error> = createHook(
-  apis.wsdotCommercialVehicleRestrictions,
+  wsdotCommercialVehicleRestrictionsApi.api,
   cvRestrictionDataWithIdGroup,
   commercialVehicleRestrictionsWithIdMeta
 );

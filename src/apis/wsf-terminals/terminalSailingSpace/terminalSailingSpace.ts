@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfTerminalsApi } from "../api";
 import type {
   EndpointMeta,
   FetchFunctionParams,
@@ -37,7 +37,7 @@ export const terminalSailingSpaceMeta = {
 export const fetchTerminalSailingSpace: (
   params?: FetchFunctionParams<TerminalSailingSpaceInput>
 ) => Promise<TerminalSailingSpace[]> = createFetchFunction(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalSailingSpaceGroup,
   terminalSailingSpaceMeta
 );
@@ -49,7 +49,7 @@ export const useTerminalSailingSpace: (
   params?: FetchFunctionParams<TerminalSailingSpaceInput>,
   options?: QueryHookOptions<TerminalSailingSpace[]>
 ) => UseQueryResult<TerminalSailingSpace[], Error> = createHook(
-  apis.wsfTerminals,
+  wsfTerminalsApi.api,
   terminalSailingSpaceGroup,
   terminalSailingSpaceMeta
 );

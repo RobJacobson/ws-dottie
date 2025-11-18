@@ -1,5 +1,5 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { apis } from "@/apis/shared/apis";
+import { wsfFaresApi } from "../api";
 import {
   type ValidDateRange,
   validDateRangeSchema,
@@ -37,7 +37,7 @@ export const faresValidDateRangeMeta = {
 export const fetchFaresValidDateRange: (
   params?: FetchFunctionParams<FaresValidDateRangeInput>
 ) => Promise<ValidDateRange> = createFetchFunction(
-  apis.wsfFares,
+  wsfFaresApi.api,
   validDateRangeGroup,
   faresValidDateRangeMeta
 );
@@ -49,7 +49,7 @@ export const useFaresValidDateRange: (
   params?: FetchFunctionParams<FaresValidDateRangeInput>,
   options?: QueryHookOptions<ValidDateRange>
 ) => UseQueryResult<ValidDateRange, Error> = createHook(
-  apis.wsfFares,
+  wsfFaresApi.api,
   validDateRangeGroup,
   faresValidDateRangeMeta
 );
