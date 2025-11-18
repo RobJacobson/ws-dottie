@@ -40,7 +40,7 @@ export const SKIP_ALL_TESTS = new Set([
 export const createStandardEndpointTests = (
   endpoint: Endpoint<unknown, unknown>
 ) => {
-  const endpointIdentifier = `${endpoint.api}.${endpoint.functionName}`;
+  const endpointIdentifier = `${endpoint.functionName}`;
 
   // Skip all tests for known problematic endpoints
   if (SKIP_ALL_TESTS.has(endpointIdentifier)) {
