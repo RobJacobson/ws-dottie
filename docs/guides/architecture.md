@@ -36,7 +36,7 @@ The library handles different environments through a transport abstraction layer
    - Proper error handling and response parsing
    - Connection pooling and optimization
 
-2. **JSONP** (Legacy browser environments)
+2. **JSONP** (Browser environments)
    - CORS bypass for browsers without proper CORS support
    - Dynamic script tag injection
    - Callback handling and cleanup
@@ -60,10 +60,17 @@ src/apis/
 │       ├── borderCrossingData.output.ts    # Output schema
 │       └── borderCrossingData.endpoints.ts # Endpoint definition
 ├── wsf-vessels/
-│   └── vesselLocations/
-│       ├── vesselLocations.input.ts
-│       ├── vesselLocations.output.ts
-│       └── vesselLocations.endpoints.ts
+│   ├── vesselLocations/
+│   │   ├── vesselLocations.input.ts
+│   │   ├── vesselLocations.output.ts
+│   │   └── vesselLocations.endpoints.ts     # Endpoint definition
+│   └── vesselVerbose/                       # Metadata-driven pattern
+│       ├── shared/
+│       │   ├── vesselVerbose.input.ts       # Input schema
+│       │   ├── vesselVerbose.output.ts       # Output schema
+│       │   └── vesselVerbose.endpoints.ts   # Group metadata only
+│       ├── vesselsVerbose.ts                # Endpoint: metadata + fetch + hook
+│       └── vesselsVerboseById.ts            # Endpoint: metadata + fetch + hook
 └── ... (other API directories)
 ```
 
@@ -79,12 +86,18 @@ The shared infrastructure provides common functionality across all APIs:
 ```
 src/shared/
 ├── factories/
-│   ├── createEndpoint.ts          # Endpoint factory function
-│   └── apiFunctionFactory.ts     # API function factory
+│   ├── createFetchFunction.ts    # Pure fetch function factory (no React)
+│   ├── createHook.ts             # React Query hook factory
+│   ├── strategies.ts             # Cache strategy configurations
+│   ├── types.ts                  # Factory type definitions
+│   └── index.ts                  # Factory exports
+├── cache/
+│   ├── cacheFlushDate.ts         # Cache flush date hooks
+│   └── index.ts                  # Cache exports
 ├── fetching/
 │   ├── index.ts                  # Main fetch implementation
 │   ├── nativeFetch.ts            # Native fetch implementation
-│   └── jsonpFetch.ts             # JSONP implementation
+│   └── jsonpFetch.ts            # JSONP implementation
 ├── tanstack/
 │   ├── hooks.ts                  # React hooks
 │   └── createHooks.ts            # Hook creation utilities
@@ -95,29 +108,95 @@ src/shared/
 
 ### 3. Endpoint Factory System
 
-The endpoint factory is the core of the library's architecture, creating consistent API functions:
+The endpoint factory system provides a metadata-driven approach to creating consistent API functions. The architecture uses three separate metadata objects (API metadata, endpoint group metadata, and endpoint-specific metadata) to generate strongly-typed fetch functions and React Query hooks.
+
+#### Factory Functions
+
+The factory system consists of two main factory functions:
+
+1. **`createFetchFunction`** - Creates pure fetch functions with no React dependencies
+   - Suitable for server-side code, Node.js scripts, and non-React environments
+   - Returns a strongly-typed async function that accepts `FetchFunctionParams<TInput>`
+   - Uses `buildDescriptor` internally to construct the complete endpoint descriptor
+
+2. **`createHook`** - Creates React Query hooks with intelligent caching
+   - Integrates with TanStack Query for automatic caching and state management
+   - Automatically applies cache strategies based on endpoint group configuration
+   - Handles cache flush date invalidation for WSF APIs with STATIC cache strategy
+
+#### Example Usage
 
 ```typescript
-// Example endpoint definition
-export const fetchVesselLocations = createEndpoint<
-  VesselLocationsInput,
-  VesselLocation[]
->({
-  api: apis.wsfVessels,
-  group: vesselLocationsGroup,
-  functionName: "fetchVesselLocations",
-  endpoint: "/vesselLocations",
-  inputSchema: vesselLocationsInputSchema,
-  outputSchema: vesselLocationSchema.array(),
-  endpointDescription: "List current locations of vessels"
-});
+// Example endpoint definition (metadata-driven pattern)
+const vesselsVerboseMeta = {
+  functionName: "fetchVesselsVerbose",
+  endpoint: "/vesselVerbose",
+  inputSchema: vesselVerboseInputSchema,
+  outputSchema: vesselVerboseSchema.array(),
+  sampleParams: {},
+  endpointDescription: "List complete vessel information for all vessels.",
+} satisfies EndpointMeta<VesselVerboseInput, VesselVerbose[]>;
+
+// Create pure fetch function (no React dependencies)
+export const fetchVesselsVerbose = createFetchFunction(
+  apis.wsfVessels,
+  vesselVerboseGroup,
+  vesselsVerboseMeta
+);
+
+// Create React Query hook (with caching and state management)
+export const useVesselsVerbose = createHook(
+  apis.wsfVessels,
+  vesselVerboseGroup,
+  vesselsVerboseMeta
+);
 ```
 
-This factory generates:
-- **Fetch functions** - Direct API calls with proper typing
-- **React hooks** - TanStack Query integration with caching
-- **Type definitions** - TypeScript types from Zod schemas
-- **Documentation** - OpenAPI specifications
+#### Separation of Concerns
+
+The factory system separates concerns cleanly:
+
+- **`createFetchFunction`** - Pure, environment-agnostic fetch functions
+  - No React dependencies
+  - Can be used in Node.js, edge workers, or any JavaScript environment
+  - Minimal bundle size when only fetch functions are imported
+
+- **`createHook`** - React Query integration layer
+  - Built on top of `createFetchFunction`
+  - Adds caching, state management, and automatic refetching
+  - Handles cache invalidation for static data sources
+
+#### Build Descriptor Function
+
+The `buildDescriptor` function combines three metadata objects into a complete endpoint descriptor:
+
+```typescript
+function buildDescriptor<I, O>(
+  api: ApiMeta,           // API-level metadata (base URL, name, etc.)
+  group: EndpointGroupMeta, // Group-level metadata (cache strategy, etc.)
+  meta: EndpointMeta<I, O>  // Endpoint-specific metadata
+): Endpoint<I, O>
+```
+
+This descriptor includes:
+- Complete URL template (`${api.baseUrl}${meta.endpoint}`)
+- Unique endpoint ID (`${api.name}:${meta.functionName}`)
+- Input/output schemas for validation
+- Cache strategy from the group configuration
+- Sample parameters for documentation
+
+#### Cache Strategies
+
+The factory system uses cache strategies defined in `strategies.ts` to optimize data fetching:
+
+- **REALTIME** - 5 second stale time, 5 second refetch interval (vessel locations, traffic alerts)
+- **FREQUENT** - 5 minute stale time, 5 minute refetch interval (terminal wait times, traffic flow)
+- **MODERATE** - 1 hour stale time, 1 hour refetch interval (weather conditions, road status)
+- **STATIC** - 1 day stale time, 1 day refetch interval (schedules, fares, terminal info)
+
+For WSF APIs with STATIC cache strategy, the `createHook` function automatically integrates with cache flush date endpoints to invalidate cache when underlying data changes, rather than using fixed refetch intervals.
+
+This factory system eliminates circular dependencies by keeping fetch functions separate from React hooks, and provides a clean, maintainable way to generate consistent API functions across the entire codebase.
 
 ### 4. React Hooks Integration
 
