@@ -1,4 +1,10 @@
-import type { EndpointGroupMeta } from "@/apis/types";
+import {
+  type CacheFlushDateInput,
+  type CacheFlushDateOutput,
+  cacheFlushDateInputSchema,
+  cacheFlushDateOutputSchema,
+} from "@/apis/shared/cacheFlushDate";
+import type { EndpointGroupMeta, EndpointMeta } from "@/apis/types";
 
 /**
  * Endpoint group metadata for cache flush date endpoints
@@ -18,3 +24,16 @@ export const cacheFlushDateScheduleGroup: EndpointGroupMeta = {
     updateFrequency: "on-change",
   },
 };
+
+export const cacheFlushDateScheduleMeta = {
+  functionName: "fetchCacheFlushDateSchedule",
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+  sampleParams: {},
+  endpointDescription: "Get cache flush timestamp for static schedule data.",
+} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
+
+export const cacheFlushDateScheduleEndpoints = {
+  cacheFlushDate: cacheFlushDateScheduleMeta,
+} as const;

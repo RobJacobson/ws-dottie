@@ -1,4 +1,12 @@
-import type { EndpointGroupMeta } from "@/apis/types";
+import type { EndpointGroupMeta, EndpointMeta } from "@/apis/types";
+import {
+  type CacheFlushDateInput,
+  cacheFlushDateInputSchema,
+} from "./cacheFlushDate.input";
+import {
+  type CacheFlushDateOutput,
+  cacheFlushDateOutputSchema,
+} from "./cacheFlushDate.output";
 
 /**
  * Endpoint group metadata for cache flush date endpoints
@@ -17,3 +25,16 @@ export const cacheFlushDateVesselsGroup: EndpointGroupMeta = {
     ],
   },
 };
+
+export const cacheFlushDateVesselsMeta = {
+  functionName: "fetchCacheFlushDateVessels",
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+  sampleParams: {},
+  endpointDescription: "Get cache flush timestamp for static wsf-vessels data.",
+} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
+
+export const cacheFlushDateVesselsEndpoints = {
+  cacheFlushDate: cacheFlushDateVesselsMeta,
+} as const;

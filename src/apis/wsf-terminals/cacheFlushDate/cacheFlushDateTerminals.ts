@@ -1,36 +1,16 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { apis } from "@/apis/shared/apis";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { FetchFunctionParams, QueryHookOptions } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
 } from "@/shared/factories/metaEndpointFactory";
-import { cacheFlushDateTerminalsGroup } from "./shared/cacheFlushDate.endpoints";
 import {
-  type CacheFlushDateInput,
-  cacheFlushDateInputSchema,
-} from "./shared/cacheFlushDate.input";
-import {
-  type CacheFlushDateOutput,
-  cacheFlushDateOutputSchema,
-} from "./shared/cacheFlushDate.output";
-
-/**
- * Metadata for the fetchCacheFlushDateTerminals endpoint
- */
-export const cacheFlushDateTerminalsMeta = {
-  functionName: "fetchCacheFlushDateTerminals",
-  endpoint: "/cacheflushdate",
-  inputSchema: cacheFlushDateInputSchema,
-  outputSchema: cacheFlushDateOutputSchema,
-  sampleParams: {},
-  endpointDescription:
-    "Get cache invalidation timestamp for static wsf-terminals data.",
-} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
+  cacheFlushDateTerminalsGroup,
+  cacheFlushDateTerminalsMeta,
+} from "./shared/cacheFlushDate.endpoints";
+import type { CacheFlushDateInput } from "./shared/cacheFlushDate.input";
+import type { CacheFlushDateOutput } from "./shared/cacheFlushDate.output";
 
 /**
  * Fetch function for retrieving cache invalidation timestamp for static wsf-terminals data

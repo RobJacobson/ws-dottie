@@ -1,33 +1,18 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { apis } from "@/apis/shared/apis";
-import {
-  type CacheFlushDateInput,
-  type CacheFlushDateOutput,
-  cacheFlushDateInputSchema,
-  cacheFlushDateOutputSchema,
-} from "@/apis/shared/cacheFlushDate";
 import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+  CacheFlushDateInput,
+  CacheFlushDateOutput,
+} from "@/apis/shared/cacheFlushDate";
+import type { FetchFunctionParams, QueryHookOptions } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
 } from "@/shared/factories/metaEndpointFactory";
-import { cacheFlushDateFaresGroup } from "./shared/cacheFlushDate.endpoints";
-
-/**
- * Metadata for the fetchCacheFlushDateFares endpoint
- */
-export const cacheFlushDateFaresMeta = {
-  functionName: "fetchCacheFlushDateFares",
-  endpoint: "/cacheflushdate",
-  inputSchema: cacheFlushDateInputSchema,
-  outputSchema: cacheFlushDateOutputSchema,
-  sampleParams: {},
-  endpointDescription: "Get cache flush timestamp for static fares data.",
-} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
+import {
+  cacheFlushDateFaresGroup,
+  cacheFlushDateFaresMeta,
+} from "./shared/cacheFlushDate.endpoints";
 
 /**
  * Fetch function for retrieving cache flush timestamp for static fares data

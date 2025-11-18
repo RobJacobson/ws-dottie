@@ -51,12 +51,29 @@ export interface EndpointGroupMeta {
   cacheStrategy: CacheStrategy;
 }
 
+/**
+ * Endpoint metadata structure for individual endpoints
+ *
+ * This type defines the structure for endpoint-specific metadata used in the
+ * resource-based architecture. Each endpoint file exports a metadata object
+ * that satisfies this type, which is then used by factory functions to
+ * create fetch functions and React hooks.
+ *
+ * @template I - Input type for the endpoint parameters
+ * @template O - Output type for the endpoint response
+ */
 export type EndpointMeta<I, O> = {
+  /** The function name for the fetch function (e.g., "fetchVesselBasics") */
   functionName: string;
+  /** HTTP endpoint URL template (truncated, e.g., "/vesselBasics/{VesselID}") */
   endpoint: string;
+  /** Zod schema for input validation */
   inputSchema: z.ZodSchema<I>;
+  /** Zod schema for output validation */
   outputSchema: z.ZodSchema<O>;
+  /** Optional sample parameters for testing - can be static or async function */
   sampleParams: Partial<I> | (() => Promise<Partial<I>>);
+  /** One-sentence description of what this specific endpoint does */
   endpointDescription: string;
 };
 
@@ -100,29 +117,6 @@ export interface ResourceDocumentation {
    * description and useCases.
    */
   businessContext?: string;
-}
-
-/**
- * Endpoint definition structure for individual endpoints
- *
- * This interface defines the structure for individual endpoints in both
- * API definition and resource definition formats.
- */
-export interface EndpointDefinition<I, O> {
-  /** HTTP endpoint URL template (truncated, e.g., "/vesselBasics/{VesselID}") */
-  endpoint: string;
-  /** Zod schema for input validation (optional - excluded in lite builds) */
-  inputSchema?: z.ZodSchema<I>;
-  /** Zod schema for output validation (optional - excluded in lite builds) */
-  outputSchema?: z.ZodSchema<O>;
-  /** Optional sample parameters for testing - must match the input schema exactly */
-  sampleParams?: I | (() => Promise<I>);
-  /** Cache strategy (only present in legacy API definition format) */
-  cacheStrategy?: CacheStrategy;
-  /** Description for MCP tool discovery (legacy API definition format) */
-  description?: string;
-  /** One-sentence description of what this specific endpoint does (resource format) */
-  endpointDescription?: string;
 }
 
 // ============================================================================

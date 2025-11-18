@@ -1,4 +1,10 @@
-import type { EndpointGroupMeta } from "@/apis/types";
+import {
+  type CacheFlushDateInput,
+  type CacheFlushDateOutput,
+  cacheFlushDateInputSchema,
+  cacheFlushDateOutputSchema,
+} from "@/apis/shared/cacheFlushDate";
+import type { EndpointGroupMeta, EndpointMeta } from "@/apis/types";
 
 /**
  * Endpoint group metadata for cache flush date fares endpoints
@@ -19,11 +25,15 @@ export const cacheFlushDateFaresGroup: EndpointGroupMeta = {
   },
 };
 
-// Re-export with API-specific names for backward compatibility
-import type {
-  CacheFlushDateInput,
-  CacheFlushDateOutput,
-} from "@/apis/shared/cacheFlushDate";
+export const cacheFlushDateFaresMeta = {
+  functionName: "fetchCacheFlushDateFares",
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+  sampleParams: {},
+  endpointDescription: "Get cache flush timestamp for static fares data.",
+} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
 
-export type CacheFlushDateFaresInput = CacheFlushDateInput;
-export type CacheFlushDateFares = CacheFlushDateOutput;
+export const cacheFlushDateFaresEndpoints = {
+  cacheFlushDate: cacheFlushDateFaresMeta,
+} as const;
