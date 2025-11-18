@@ -1,10 +1,116 @@
 {
   "name": "ws-dottie",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Your friendly TypeScript companion for Washington State transportation APIs - WSDOT and WSF data with smart caching and React Query integration",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+
+  "scripts": {
+    "build": "npm run docs:openapi:json && tsup",
+    "dev": "tsup --watch",
+    "test": "node scripts/testRunner.js",
+    "test:direct": "vitest --config tests/vitest.config.ts --run",
+    "test:openapi": "node scripts/test-openapi-exports.js",
+    "tests": "node scripts/run-api-tests.js",
+    "test:e2e": "vitest --config tests/e2e/vitest.config.ts --run tests/e2e/ --reporter=verbose",
+    "lint": "biome lint src/",
+    "format": "biome check --write src/",
+    "type-check": "tsc --noEmit",
+    "type-check:test": "tsc --noEmit --project tsconfig.test.json",
+    "prepublishOnly": "npm run build",
+    "fetch-dottie": "node dist/cli/fetch-dottie.mjs",
+    "cli:help": "node dist/cli/fetch-dottie.mjs --help",
+    "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20",
+    "docs:generate": "npm run docs:openapi:json && npm run docs:openapi:yaml && npm run docs:html",
+    "docs:openapi": "npx tsx scripts/generate-docs/generate-openapi.ts",
+    "docs:openapi:json": "npx tsx scripts/generate-docs/generate-openapi.ts --json",
+    "docs:openapi:yaml": "npx tsx scripts/generate-docs/generate-openapi.ts --yaml",
+    "docs:html": "npx tsx scripts/generate-docs/generate-docs.ts",
+    "docs:samples:fetch": "npx tsx scripts/generate-docs/fetch-sample-data.ts",
+    "build:openapi": "npm run docs:openapi:json && npm run copy:openapi",
+    "copy:openapi": "node -e \"const { copyFileSync, existsSync, mkdirSync, readdirSync } = require('fs'); const { join } = require('path'); const sourceDir = join(__dirname, 'docs', 'generated', 'openapi-json'); const targetDir = join(__dirname, 'dist', 'openapi'); if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true }); if (existsSync(sourceDir)) { const files = readdirSync(sourceDir).filter(f => f.endsWith('.json')); let count = 0; files.forEach(file => { copyFileSync(join(sourceDir, file), join(targetDir, file)); count++; }); console.log(`Copied \\${count} OpenAPI JSON files to dist/openapi/`); } else { console.warn('OpenAPI JSON source directory not found. Run npm run docs:openapi:json first.'); }\""
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": ">=5.0.0",
+    "react": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.1.0",
+    "@biomejs/biome": "^2.2.4",
+    "@happy-dom/global-registrator": "^18.0.1",
+    "@redocly/cli": "^2.10.0",
+    "@tanstack/react-query": "^5.0.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitest/ui": "^3.2.4",
+    "commander": "^14.0.0",
+    "fast-deep-equal": "^3.1.3",
+    "js-yaml": "^4.1.0",
+    "jsonrepair": "^3.13.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "glob": "^11.0.3",
+    "json5": "^2.2.3",
+    "picocolors": "^1.1.1",
+    "zod": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "wsdot",
+    "washington",
+    "washington-state",
+    "washington-state-ferry",
+    "washington-state-department-of-transportation",
+    "transportation",
+    "api",
+    "api-client",
+    "data-fetching",
+    "traffic",
+    "weather",
+    "ferries",
+    "highway-cameras",
+    "travel-times",
+    "typescript",
+    "type-safe",
+    "react",
+    "react-query",
+    "tanstack-query",
+    "zod",
+    "schema-validation",
+    "caching",
+    "state-management",
+    "nodejs",
+    "browser",
+    "esm",
+    "cjs",
+    "jsonp",
+    "cors",
+    "real-time",
+    "traffic-data",
+    "ferry-data",
+    "openapi",
+    "developer-tools"
+  ],
+  "author": "Rob Jacobson <rljacobson@outlook.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobJacobson/ws-dottie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RobJacobson/ws-dottie/issues"
+  },
+  "homepage": "https://github.com/RobJacobson/ws-dottie#readme",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -24,6 +130,32 @@
       "node": "./dist/cli/index.mjs",
       "default": "./dist/cli/index.mjs"
     },
+    "./openapi": {
+      "types": "./dist/openapi/index.d.ts",
+      "import": "./dist/openapi/index.mjs",
+      "require": "./dist/openapi/index.js"
+    },
+    "./openapi/*": {
+      "types": "./dist/openapi/*.d.ts",
+      "import": "./dist/openapi/*.mjs",
+      "require": "./dist/openapi/*.js"
+    },
+    "./openapi/wsf-vessels.json": "./dist/openapi/wsf-vessels.json",
+    "./openapi/wsf-terminals.json": "./dist/openapi/wsf-terminals.json",
+    "./openapi/wsf-schedule.json": "./dist/openapi/wsf-schedule.json",
+    "./openapi/wsf-fares.json": "./dist/openapi/wsf-fares.json",
+    "./openapi/wsdot-border-crossings.json": "./dist/openapi/wsdot-border-crossings.json",
+    "./openapi/wsdot-bridge-clearances.json": "./dist/openapi/wsdot-bridge-clearances.json",
+    "./openapi/wsdot-commercial-vehicle-restrictions.json": "./dist/openapi/wsdot-commercial-vehicle-restrictions.json",
+    "./openapi/wsdot-highway-alerts.json": "./dist/openapi/wsdot-highway-alerts.json",
+    "./openapi/wsdot-highway-cameras.json": "./dist/openapi/wsdot-highway-cameras.json",
+    "./openapi/wsdot-mountain-pass-conditions.json": "./dist/openapi/wsdot-mountain-pass-conditions.json",
+    "./openapi/wsdot-toll-rates.json": "./dist/openapi/wsdot-toll-rates.json",
+    "./openapi/wsdot-traffic-flow.json": "./dist/openapi/wsdot-traffic-flow.json",
+    "./openapi/wsdot-travel-times.json": "./dist/openapi/wsdot-travel-times.json",
+    "./openapi/wsdot-weather-information.json": "./dist/openapi/wsdot-weather-information.json",
+    "./openapi/wsdot-weather-readings.json": "./dist/openapi/wsdot-weather-readings.json",
+    "./openapi/wsdot-weather-stations.json": "./dist/openapi/wsdot-weather-stations.json",
     "./wsf-vessels": {
       "types": "./dist/apis/wsf-vessels/index.d.ts",
       "import": "./dist/apis/wsf-vessels/index.mjs",
@@ -410,6 +542,54 @@
       ],
       "wsf-terminals/schemas": [
         "dist/apis/wsf-terminals/schemas.d.ts"
+      ],
+      "openapi/wsf-vessels.json": [
+        "dist/openapi/wsf-vessels.json"
+      ],
+      "openapi/wsf-terminals.json": [
+        "dist/openapi/wsf-terminals.json"
+      ],
+      "openapi/wsf-schedule.json": [
+        "dist/openapi/wsf-schedule.json"
+      ],
+      "openapi/wsf-fares.json": [
+        "dist/openapi/wsf-fares.json"
+      ],
+      "openapi/wsdot-border-crossings.json": [
+        "dist/openapi/wsdot-border-crossings.json"
+      ],
+      "openapi/wsdot-bridge-clearances.json": [
+        "dist/openapi/wsdot-bridge-clearances.json"
+      ],
+      "openapi/wsdot-commercial-vehicle-restrictions.json": [
+        "dist/openapi/wsdot-commercial-vehicle-restrictions.json"
+      ],
+      "openapi/wsdot-highway-alerts.json": [
+        "dist/openapi/wsdot-highway-alerts.json"
+      ],
+      "openapi/wsdot-highway-cameras.json": [
+        "dist/openapi/wsdot-highway-cameras.json"
+      ],
+      "openapi/wsdot-mountain-pass-conditions.json": [
+        "dist/openapi/wsdot-mountain-pass-conditions.json"
+      ],
+      "openapi/wsdot-toll-rates.json": [
+        "dist/openapi/wsdot-toll-rates.json"
+      ],
+      "openapi/wsdot-traffic-flow.json": [
+        "dist/openapi/wsdot-traffic-flow.json"
+      ],
+      "openapi/wsdot-travel-times.json": [
+        "dist/openapi/wsdot-travel-times.json"
+      ],
+      "openapi/wsdot-weather-information.json": [
+        "dist/openapi/wsdot-weather-information.json"
+      ],
+      "openapi/wsdot-weather-readings.json": [
+        "dist/openapi/wsdot-weather-readings.json"
+      ],
+      "openapi/wsdot-weather-stations.json": [
+        "dist/openapi/wsdot-weather-stations.json"
       ]
     }
   },
@@ -420,100 +600,5 @@
   ],
   "bin": {
     "fetch-dottie": "./dist/cli/fetch-dottie.mjs"
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "node scripts/testRunner.js",
-    "test:direct": "vitest --config tests/vitest.config.ts --run",
-    "tests": "node scripts/run-api-tests.js",
-    "test:e2e": "vitest --config tests/e2e/vitest.config.ts --run tests/e2e/ --reporter=verbose",
-    "lint": "biome lint src/",
-    "format": "biome check --write src/",
-    "type-check": "tsc --noEmit",
-    "type-check:test": "tsc --noEmit --project tsconfig.test.json",
-    "prepublishOnly": "npm run build",
-    "fetch-dottie": "node dist/cli/fetch-dottie.mjs",
-    "cli:help": "node dist/cli/fetch-dottie.mjs --help",
-    "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20",
-    "docs:generate": "npm run docs:openapi && npm run docs:html",
-    "docs:openapi": "npx tsx scripts/generate-docs/generate-openapi.ts",
-    "docs:html": "npx tsx scripts/generate-docs/generate-docs.ts",
-    "docs:samples:fetch": "npx tsx scripts/generate-docs/fetch-sample-data.ts"
-  },
-  "peerDependencies": {
-    "@tanstack/react-query": ">=5.0.0",
-    "react": ">=18.0.0"
-  },
-  "devDependencies": {
-    "@asteasolutions/zod-to-openapi": "^8.1.0",
-    "@biomejs/biome": "^2.2.4",
-    "@happy-dom/global-registrator": "^18.0.1",
-    "@playwright/test": "^1.56.1",
-    "@redocly/cli": "^2.10.0",
-    "@tanstack/react-query": "^5.0.0",
-    "@testing-library/react": "^16.3.0",
-    "@types/jsdom": "^21.1.7",
-    "@types/node": "^24.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "@vitest/ui": "^3.2.4",
-    "commander": "^14.0.0",
-    "dotenv": "^17.2.0",
-    "fast-deep-equal": "^3.1.3",
-    "js-yaml": "^4.1.0",
-    "jsdom": "^26.1.0",
-    "jsonrepair": "^3.13.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
-  },
-  "dependencies": {
-    "glob": "^11.0.3",
-    "json5": "^2.2.3",
-    "picocolors": "^1.1.1",
-    "turndown": "^7.2.1",
-    "turndown-plugin-gfm": "^1.0.2",
-    "zod": "^4.0.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "keywords": [
-    "wsdot",
-    "washington",
-    "washington-state",
-    "washington-state-ferry",
-    "washington-state-ferry-api",
-    "washington-state-department-of-transportation",
-    "washington-state-department-of-transportation-api",
-    "transportation",
-    "api",
-    "traffic",
-    "weather",
-    "ferries",
-    "highway-cameras",
-    "travel-times",
-    "typescript",
-    "react",
-    "react-query",
-    "tanstack-query",
-    "jsonp",
-    "cors",
-    "real-time",
-    "traffic-data",
-    "ferry-data"
-  ],
-  "author": "Rob Jacobson <rljacobson@outlook.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RobJacobson/ws-dottie.git"
-  },
-  "bugs": {
-    "url": "https://github.com/RobJacobson/ws-dottie/issues"
-  },
-  "homepage": "https://github.com/RobJacobson/ws-dottie#readme"
+  }
 }

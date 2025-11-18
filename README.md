@@ -1,4 +1,4 @@
-# WS-Dottie 🚢 v1.2.0
+# WS-Dottie 🚢
 
 <div align="center">
   <img src="assets/dottie.png" alt="WS-Dottie Logo" width="400">
@@ -400,6 +400,70 @@ fetch-dottie fetchVesselBasicsByVesselId '{"VesselID": 74}' --no-validation --pr
 
 # Browser-compatible JSONP testing with parameters
 fetch-dottie fetchBridgeClearancesByRoute '{"Route": "005"}' --jsonp
+```
+
+## 📚 OpenAPI JSON Exports
+
+WS-Dottie exports OpenAPI 3.0 specifications for all APIs as JSON files, making them easily consumable by other tools and services like `ws-dottie-mcp`. These exports provide a complete machine-readable description of all endpoints, schemas, and documentation.
+
+### Importing OpenAPI Specifications
+
+You can import OpenAPI specifications directly from the ws-dottie package:
+
+```javascript
+// Import a specific API specification
+import wsfVesselsSpec from 'ws-dottie/openapi/wsf-vessels.json' assert { type: 'json' };
+
+// Use the specification in your application
+console.log(`API Title: ${wsfVesselsSpec.info.title}`);
+console.log(`Available endpoints: ${Object.keys(wsfVesselsSpec.paths).length}`);
+```
+
+### Available API Specifications
+
+All 16 APIs have OpenAPI specifications available:
+
+**Washington State Ferries (WSF) APIs:**
+- `wsf-vessels.json` - Vessel locations, stats, and information
+- `wsf-terminals.json` - Terminal locations and information
+- `wsf-schedule.json` - Sailing schedules and routes
+- `wsf-fares.json` - Fare information and pricing
+
+**Washington State Department of Transportation (WSDOT) APIs:**
+- `wsdot-border-crossings.json` - Border crossing wait times
+- `wsdot-bridge-clearances.json` - Bridge clearance information
+- `wsdot-commercial-vehicle-restrictions.json` - Commercial vehicle restrictions
+- `wsdot-highway-alerts.json` - Highway alerts and incidents
+- `wsdot-highway-cameras.json` - Highway camera images
+- `wsdot-mountain-pass-conditions.json` - Mountain pass conditions
+- `wsdot-toll-rates.json` - Toll rate information
+- `wsdot-traffic-flow.json` - Traffic flow data
+- `wsdot-travel-times.json` - Travel time estimates
+- `wsdot-weather-information.json` - Weather information
+- `wsdot-weather-readings.json` - Weather sensor readings
+- `wsdot-weather-stations.json` - Weather station locations
+
+### Using with External Tools
+
+The OpenAPI JSON exports are particularly useful when integrating with:
+
+- **API documentation tools** - Generate documentation sites
+- **Code generation tools** - Create client libraries
+- **Testing frameworks** - Automated API testing
+- **API gateways** - Proxy and route APIs
+- **MCP servers** - Expose APIs through Model Context Protocol
+
+### Example with ws-dottie-mcp
+
+```javascript
+// In ws-dottie-mcp configuration
+import wsfVesselsSpec from 'ws-dottie/openapi/wsf-vessels.json' assert { type: 'json' };
+
+// Use the specification to configure MCP server
+const mcpServer = new MCPServer({
+  name: 'wsf-vessels',
+  openapiSpec: wsfVesselsSpec
+});
 ```
 
 ## 🖥️ Command Line Interface

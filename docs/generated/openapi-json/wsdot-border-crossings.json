@@ -1,0 +1,194 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Wsdot Border Crossings API",
+    "version": "1.0.0",
+    "description": "Wsdot Border Crossings API - Washington State Department of Transportation APIs"
+  },
+  "servers": [
+    {
+      "url": "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "RoadwayLocation": {
+        "type": "object",
+        "properties": {
+          "Description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Human-readable description of the roadway location, such as interchange names or cross streets."
+          },
+          "Direction": {
+            "type": "string",
+            "nullable": true,
+            "description": "Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."
+          },
+          "Latitude": {
+            "type": "number",
+            "description": "Latitude of the roadway location in decimal degrees."
+          },
+          "Longitude": {
+            "type": "number",
+            "description": "Longitude of the roadway location in decimal degrees."
+          },
+          "MilePost": {
+            "type": "number",
+            "description": "Milepost marker along the highway corridor, with 0 indicating route terminus."
+          },
+          "RoadName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Highway or route designation code, such as '005' for I-5 or '090' for I-90."
+          }
+        },
+        "required": [
+          "Description",
+          "Direction",
+          "Latitude",
+          "Longitude",
+          "MilePost",
+          "RoadName"
+        ],
+        "description": "Roadway location information including route, milepost, coordinates, and direction."
+      },
+      "FetchBorderCrossingsOutput": {
+        "type": "object",
+        "properties": {
+          "BorderCrossingLocation": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "Description": {
+                "type": "string",
+                "nullable": true,
+                "description": "Human-readable description of the roadway location, such as interchange names or cross streets."
+              },
+              "Direction": {
+                "type": "string",
+                "nullable": true,
+                "description": "Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."
+              },
+              "Latitude": {
+                "type": "number",
+                "description": "Latitude of the roadway location in decimal degrees."
+              },
+              "Longitude": {
+                "type": "number",
+                "description": "Longitude of the roadway location in decimal degrees."
+              },
+              "MilePost": {
+                "type": "number",
+                "description": "Milepost marker along the highway corridor, with 0 indicating route terminus."
+              },
+              "RoadName": {
+                "type": "string",
+                "nullable": true,
+                "description": "Highway or route designation code, such as '005' for I-5 or '090' for I-90."
+              }
+            },
+            "required": [
+              "Description",
+              "Direction",
+              "Latitude",
+              "Longitude",
+              "MilePost",
+              "RoadName"
+            ],
+            "description": "Roadway location of the border crossing, including route, milepost, and coordinates, or null when location data is not provided for this lane."
+          },
+          "CrossingName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable."
+          },
+          "Time": {
+            "type": "string",
+            "description": "UTC datetime when this border crossing wait time observation was recorded."
+          },
+          "WaitTime": {
+            "type": "integer",
+            "description": "Current estimated wait time for this crossing in minutes; -1 when a wait time is not available."
+          }
+        },
+        "required": [
+          "BorderCrossingLocation",
+          "CrossingName",
+          "Time",
+          "WaitTime"
+        ],
+        "description": "Border crossing wait-time record for a Washington crossing into Canada, including location, crossing code, observation time, and wait time in minutes."
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/GetBorderCrossingsAsJson": {
+      "get": {
+        "summary": "List current wait times for all Washington border crossings into Canada.",
+        "operationId": "fetchBorderCrossings",
+        "tags": [
+          "border-crossing-data"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';\n\nconst data = await fetchBorderCrossings({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchBorderCrossingsOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 11 total)",
+                    "value": [
+                      {
+                        "BorderCrossingLocation": {
+                          "Description": "I-5 General Purpose",
+                          "Direction": null,
+                          "Latitude": 49.004776,
+                          "Longitude": -122.756964,
+                          "MilePost": 0,
+                          "RoadName": "005"
+                        },
+                        "CrossingName": "I5",
+                        "Time": "2025-11-15T17:40:00.000Z",
+                        "WaitTime": 5
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "border-crossing-data",
+      "description": "Current wait times for Washington border crossings into Canada by crossing and lane type.",
+      "x-description": "Snapshot wait-time data for I-5, SR-543, SR-539, and SR-9 crossings, covering general, Nexus, and truck lanes.",
+      "x-cacheStrategy": "FREQUENT",
+      "x-useCases": [
+        "Plan trips into Canada based on current border wait times.",
+        "Compare wait times across crossings and lane types.",
+        "Show live wait-time information in traveler or operations dashboards."
+      ],
+      "x-updateFrequency": "1m"
+    }
+  ]
+}

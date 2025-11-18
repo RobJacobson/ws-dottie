@@ -5,6 +5,7 @@
  *
  * This script converts Zod schemas to OpenAPI format and generates
  * complete OpenAPI specifications for all APIs in the ws-dottie project.
+ * Supports both JSON and YAML output formats based on command line arguments.
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -25,6 +26,38 @@ import { z } from "../../src/shared/zod.ts";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, "../..");
+
+/**
+ * Configuration for different output formats
+ * Defines format-specific settings for generating OpenAPI specifications
+ */
+interface OutputFormat {
+  name: string;
+  extension: string;
+  outputDir: string;
+  serializer: (spec: unknown) => string;
+}
+
+/**
+ * JSON output format configuration
+ */
+const JSON_FORMAT: OutputFormat = {
+  name: "JSON",
+  extension: "json",
+  outputDir: "docs/generated/openapi-json",
+  serializer: (spec) => JSON.stringify(spec, null, 2),
+};
+
+/**
+ * YAML output format configuration
+ */
+const YAML_FORMAT: OutputFormat = {
+  name: "YAML",
+  extension: "yaml",
+  outputDir: "docs/generated/openapi-yaml",
+  serializer: (spec) =>
+    yaml.dump(spec, { indent: 2, lineWidth: -1, noRefs: false }),
+};
 
 /**
  * Schema registry to track registered schemas per OpenAPI registry
@@ -108,7 +141,7 @@ const findEndpointGroup = (
     .replace(/^fetch/, "");
 
   for (const group of api.endpointGroups) {
-    // Check if the function name matches common patterns for this group
+    // Check if function name matches common patterns for this group
     // For example, "fetchVesselLocations" might belong to "vessel-locations" group
     const groupNameLower = group.name.toLowerCase().replace(/-/g, "");
 
@@ -211,7 +244,7 @@ console.log(data);`;
  * Separate input schema fields into path and query parameters
  *
  * Analyzes the endpoint path and input schema to determine which parameters
- * belong in the URL path vs query string, returning them as separate objects.
+ * belong in the URL path vs. query string, returning them as separate objects.
  *
  * @param inputSchema - The Zod object schema containing input parameters
  * @param endpointPath - The endpoint path template (e.g., "/api/{id}/items")
@@ -611,9 +644,10 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
       name: group.name,
       description,
       // Add extended description as a custom field
-      ...(documentation.description && documentation.description !== documentation.summary && {
-        "x-description": documentation.description,
-      }),
+      ...(documentation.description &&
+        documentation.description !== documentation.summary && {
+          "x-description": documentation.description,
+        }),
       // Add cache strategy information
       ...(group.cacheStrategy && {
         "x-cacheStrategy": group.cacheStrategy,
@@ -640,28 +674,26 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
 };
 
 /**
- * Generate OpenAPI spec for a single API and save to YAML file
+ * Generate OpenAPI spec for a single API and save to file using format configuration
  *
- * Generates the OpenAPI specification, writes it to a YAML file in the
- * generated directory, and logs statistics about paths, tags, and schemas.
+ * Generates OpenAPI specification, writes it to a file in the
+ * specified output directory, and logs statistics about paths, tags, and schemas.
  *
  * @param api - The API definition to generate and save
+ * @param format - The output format configuration
  */
-const generateAndSaveOpenApiSpec = async (
-  api: ApiDefinition
+const generateAndSaveOpenApiSpecForFormat = async (
+  api: ApiDefinition,
+  format: OutputFormat
 ): Promise<void> => {
   process.stderr.write(`Generating spec for ${api.api.name}...\r`);
   const spec = await generateOpenApiSpec(api);
-  const outputDir = join(projectRoot, "docs", "generated", "openapi");
+  const outputDir = join(projectRoot, format.outputDir);
   mkdirSync(outputDir, { recursive: true });
 
-  const outputPath = join(outputDir, `${api.api.name}.yaml`);
-  process.stderr.write(`  Writing ${api.api.name}.yaml...\r`);
-  writeFileSync(
-    outputPath,
-    yaml.dump(spec, { indent: 2, lineWidth: -1, noRefs: false }),
-    "utf-8"
-  );
+  const outputPath = join(outputDir, `${api.api.name}.${format.extension}`);
+  process.stderr.write(`  Writing ${api.api.name}.${format.extension}...\r`);
+  writeFileSync(outputPath, format.serializer(spec), "utf-8");
 
   const pathsCount = Object.keys(
     (spec as { paths?: Record<string, unknown> }).paths || {}
@@ -679,14 +711,18 @@ const generateAndSaveOpenApiSpec = async (
 };
 
 /**
- * Main execution function
+ * Generate OpenAPI specifications for all APIs using a specific format
  *
  * Processes all API definitions, generates OpenAPI specifications,
  * saves them to files, and reports success/failure statistics.
+ *
+ * @param format - The output format configuration
  */
-const main = async (): Promise<void> => {
+const generateAllSpecsForFormat = async (
+  format: OutputFormat
+): Promise<void> => {
   console.log(
-    `Generating OpenAPI specifications for ${ALL_APIS.length} APIs...\n`
+    `Generating OpenAPI specifications (${format.name}) for ${ALL_APIS.length} APIs...\n`
   );
 
   const results = await Promise.all(
@@ -695,7 +731,7 @@ const main = async (): Promise<void> => {
         process.stderr.write(
           `[${index + 1}/${ALL_APIS.length}] Processing ${api.api.name}...\n`
         );
-        await generateAndSaveOpenApiSpec(api);
+        await generateAndSaveOpenApiSpecForFormat(api, format);
         const spec = await generateOpenApiSpec(api);
         return {
           totals: {
@@ -737,6 +773,13 @@ const main = async (): Promise<void> => {
     }
   );
 
+  console.log(
+    `\n✓ Generated ${ALL_APIS.length - errors.length} OpenAPI ${format.name} specification(s)`
+  );
+  console.log(`  - ${totals.paths} total paths`);
+  console.log(`  - ${totals.tags} total tags`);
+  console.log(`  - ${totals.schemas} total schemas`);
+
   if (errors.length > 0) {
     console.error(`\n✗ Failed to generate ${errors.length} specification(s):`);
     errors.forEach(({ api }) => {
@@ -745,4 +788,33 @@ const main = async (): Promise<void> => {
   }
 };
 
-main();
+// Show help if requested
+if (process.argv.includes("--help") || process.argv.includes("-h")) {
+  console.log(`
+Generate OpenAPI specifications in JSON or YAML format
+
+Usage:
+  npx tsx scripts/generate-docs/generate-openapi.ts [options]
+
+Options:
+  --json    Generate JSON format (default)
+  --yaml    Generate YAML format
+  --help, -h  Show this help message
+
+Examples:
+  npx tsx scripts/generate-docs/generate-openapi.ts          # Generate JSON (default)
+  npx tsx scripts/generate-docs/generate-openapi.ts --json    # Generate JSON explicitly
+  npx tsx scripts/generate-docs/generate-openapi.ts --yaml    # Generate YAML
+`);
+  process.exit(0);
+}
+
+// Get format from command line arguments (default to JSON)
+const formatArg = process.argv.find(
+  (arg) => arg === "--yaml" || arg === "--json"
+);
+const format = formatArg === "--yaml" ? YAML_FORMAT : JSON_FORMAT;
+
+console.log(`Generating OpenAPI specifications in ${format.name} format...`);
+
+generateAllSpecsForFormat(format);
