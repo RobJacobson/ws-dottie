@@ -4,7 +4,7 @@ import type { FetchFunctionParams, QueryHookOptions } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import {
   cacheFlushDateVesselsGroup,
   cacheFlushDateVesselsMeta,

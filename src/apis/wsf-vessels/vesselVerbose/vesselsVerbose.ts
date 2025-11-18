@@ -8,7 +8,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { vesselVerboseGroup } from "./shared/vesselVerbose.endpoints";
 import {
   type VesselVerboseInput,

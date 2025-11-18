@@ -8,7 +8,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { sailingsGroup } from "./shared/sailings.endpoints";
 import {
   type AllSailingsBySchedRouteIDInput,

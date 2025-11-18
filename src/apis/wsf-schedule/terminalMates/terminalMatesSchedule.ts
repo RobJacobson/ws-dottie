@@ -12,7 +12,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { scheduleTerminalMatesGroup } from "./shared/terminalMates.endpoints";
 

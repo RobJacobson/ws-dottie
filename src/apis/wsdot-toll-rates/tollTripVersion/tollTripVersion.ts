@@ -8,7 +8,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { tollTripVersionGroup } from "./shared/tollTripVersion.endpoints";
 import {
   type TollTripVersionInput,

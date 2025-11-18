@@ -12,7 +12,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { validDateRangeGroup } from "./shared/validDateRange.endpoints";
 import {
   type FaresValidDateRangeInput,

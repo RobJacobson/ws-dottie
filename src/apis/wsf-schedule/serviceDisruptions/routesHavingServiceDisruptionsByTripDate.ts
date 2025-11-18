@@ -8,7 +8,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { serviceDisruptionsGroup } from "./shared/serviceDisruptions.endpoints";
 import {

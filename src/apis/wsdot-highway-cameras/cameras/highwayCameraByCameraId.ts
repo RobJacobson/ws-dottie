@@ -8,7 +8,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { camerasGroup } from "./shared/cameras.endpoints";
 import {
   type HighwayCameraByCameraIdInput,

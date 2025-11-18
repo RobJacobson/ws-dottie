@@ -8,7 +8,7 @@ import type {
 import {
   createFetchFunction,
   createHook,
-} from "@/shared/factories/metaEndpointFactory";
+} from "@/shared/factories";
 import { z } from "@/shared/zod";
 import { eventCategoriesGroup } from "./shared/eventCategories.endpoints";
 import {
