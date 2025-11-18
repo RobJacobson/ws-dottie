@@ -6,7 +6,8 @@
  */
 
 // Export fetch function factory
-export { buildDescriptor, createFetchFunction } from "./createFetchFunction";
+export { buildDescriptor } from "./buildDescriptor";
+export { createFetchFunction } from "./createFetchFunction";
 
 // Export hook factory
 export { createHook } from "./createHook";

@@ -7,9 +7,14 @@
 
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { ApiMeta, EndpointGroupMeta, EndpointMeta } from "@/apis/types";
+import type {
+  ApiDefinition,
+  EndpointGroupMeta,
+  EndpointMeta,
+} from "@/apis/types";
 import { useCacheFlushDate, useInvalidateOnFlushChange } from "@/shared/cache";
-import { buildDescriptor, createFetchFunction } from "./createFetchFunction";
+import { buildDescriptor } from "./buildDescriptor";
+import { createFetchFunction } from "./createFetchFunction";
 import { cacheStrategies } from "./strategies";
 import type { FetchFunctionParams, QueryHookOptions } from "./types";
 
@@ -17,15 +22,10 @@ import type { FetchFunctionParams, QueryHookOptions } from "./types";
  * Determines if an endpoint should use cache flush date invalidation.
  */
 function shouldUseCacheFlushDate(
-  apiName: string,
+  apiDefinition: ApiDefinition,
   group: EndpointGroupMeta
 ): boolean {
-  const isWsfApi = [
-    "wsf-fares",
-    "wsf-schedule",
-    "wsf-terminals",
-    "wsf-vessels",
-  ].includes(apiName);
+  const isWsfApi = apiDefinition.api.name.startsWith("wsf-");
 
   if (
     group.name === "cache-flush-date" ||
@@ -41,23 +41,26 @@ function shouldUseCacheFlushDate(
  * Creates a strongly-typed React Query hook from three metadata objects.
  */
 export function createHook<I, O>(
-  api: ApiMeta,
+  apiDefinition: ApiDefinition,
   group: EndpointGroupMeta,
-  meta: EndpointMeta<I, O>
+  endpoint: EndpointMeta<I, O>
 ): (
   params?: FetchFunctionParams<I>,
   options?: QueryHookOptions<O>
 ) => UseQueryResult<O, Error> {
-  const descriptor = buildDescriptor(api, group, meta);
-  const fetchFn = createFetchFunction(api, group, meta);
-  const useCacheFlush = shouldUseCacheFlushDate(api.name, group);
+  const descriptor = buildDescriptor(apiDefinition, group, endpoint);
+  const fetchFn = createFetchFunction(apiDefinition, group, endpoint);
+  const useCacheFlush = shouldUseCacheFlushDate(apiDefinition, group);
 
   if (useCacheFlush) {
     return (
       params?: FetchFunctionParams<I>,
       options?: QueryHookOptions<O>
     ): UseQueryResult<O, Error> => {
-      const flushDateQuery = useCacheFlushDate(api.name);
+      const flushDateQuery = useCacheFlushDate(
+        apiDefinition.api.name,
+        params?.fetchMode
+      );
       useInvalidateOnFlushChange(descriptor.id, flushDateQuery);
 
       return useQuery({

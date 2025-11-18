@@ -32,7 +32,6 @@ import {
   cacheFlushDateVesselsMeta,
 } from "@/apis/wsf-vessels/cacheFlushDate/shared/cacheFlushDate.endpoints";
 import { createFetchFunction } from "@/shared/factories/createFetchFunction";
-import type { FetchFunctionParams } from "@/shared/factories/types";
 
 type CacheFlushApiName =
   | "wsf-fares"
@@ -47,74 +46,87 @@ type CacheFlushFetchFn = () => Promise<string>;
 // This breaks the circular dependency because createFetchFunction has no
 // dependencies on cache or React hooks
 const internalFetchCacheFlushDateFares = createFetchFunction(
-  apis.wsfFares,
+  apis["wsf-fares"],
   cacheFlushDateFaresGroup,
   cacheFlushDateFaresMeta
 );
 
 const internalFetchCacheFlushDateSchedule = createFetchFunction(
-  apis.wsfSchedule,
+  apis["wsf-schedule"],
   cacheFlushDateScheduleGroup,
   cacheFlushDateScheduleMeta
 );
 
 const internalFetchCacheFlushDateTerminals = createFetchFunction(
-  apis.wsfTerminals,
+  apis["wsf-terminals"],
   cacheFlushDateTerminalsGroup,
   cacheFlushDateTerminalsMeta
 );
 
 const internalFetchCacheFlushDateVessels = createFetchFunction(
-  apis.wsfVessels,
+  apis["wsf-vessels"],
   cacheFlushDateVesselsGroup,
   cacheFlushDateVesselsMeta
 );
 
 // Strategy pattern: map API names to fetch functions
-const CACHE_FLUSH_STRATEGIES: Record<CacheFlushApiName, CacheFlushFetchFn> = {
-  "wsf-fares": async () => {
-    const result = await internalFetchCacheFlushDateFares({
-      fetchMode: "native",
-      validate: false,
-      logMode: "none",
-    } as FetchFunctionParams<Record<string, never>>);
-    return normalizeFlushDate(result);
-  },
-  "wsf-schedule": async () => {
-    const result = await internalFetchCacheFlushDateSchedule({
-      fetchMode: "native",
-      validate: false,
-      logMode: "none",
-    } as FetchFunctionParams<Record<string, never>>);
-    return normalizeFlushDate(result);
-  },
-  "wsf-terminals": async () => {
-    const result = await internalFetchCacheFlushDateTerminals({
-      fetchMode: "native",
-      validate: false,
-      logMode: "none",
-    } as FetchFunctionParams<Record<string, never>>);
-    return normalizeFlushDate(result);
-  },
-  "wsf-vessels": async () => {
-    const result = await internalFetchCacheFlushDateVessels({
-      fetchMode: "native",
-      validate: false,
-      logMode: "none",
-    } as FetchFunctionParams<Record<string, never>>);
-    return normalizeFlushDate(result);
-  },
+// Now accepts fetchMode parameter to match the underlying hook configuration
+const CACHE_FLUSH_STRATEGIES: Record<
+  CacheFlushApiName,
+  (fetchMode?: "native" | "jsonp") => CacheFlushFetchFn
+> = {
+  "wsf-fares":
+    (fetchMode = "native") =>
+    async () => {
+      const result = await internalFetchCacheFlushDateFares({
+        fetchMode,
+        validate: false,
+        logMode: "none",
+      });
+      return normalizeFlushDate(result);
+    },
+  "wsf-schedule":
+    (fetchMode = "native") =>
+    async () => {
+      const result = await internalFetchCacheFlushDateSchedule({
+        fetchMode,
+        validate: false,
+        logMode: "none",
+      });
+      return normalizeFlushDate(result);
+    },
+  "wsf-terminals":
+    (fetchMode = "native") =>
+    async () => {
+      const result = await internalFetchCacheFlushDateTerminals({
+        fetchMode,
+        validate: false,
+        logMode: "none",
+      });
+      return normalizeFlushDate(result);
+    },
+  "wsf-vessels":
+    (fetchMode = "native") =>
+    async () => {
+      const result = await internalFetchCacheFlushDateVessels({
+        fetchMode,
+        validate: false,
+        logMode: "none",
+      });
+      return normalizeFlushDate(result);
+    },
 } as const;
 
 // Getter that retrieves the fetch function from the strategy map
 const getCachedFetchFunction = (
-  apiName: CacheFlushApiName
+  apiName: CacheFlushApiName,
+  fetchMode?: "native" | "jsonp"
 ): CacheFlushFetchFn => {
   const strategy = CACHE_FLUSH_STRATEGIES[apiName];
   if (!strategy) {
     throw new Error(`No cache flush strategy found for API: ${apiName}`);
   }
-  return strategy;
+  return strategy(fetchMode);
 };
 
 const CACHE_FLUSH_ENDPOINT_IDS: Record<CacheFlushApiName, string> = {
@@ -133,9 +145,15 @@ const normalizeFlushDate = (value: CacheFlushDateOutput): string => {
 
 /**
  * Hook to poll cache flush date endpoint
+ *
+ * @param apiName - The name of the API (e.g., "wsf-vessels")
+ * @param fetchMode - Optional fetch mode to use ("native" or "jsonp").
+ *                    Defaults to "native". Should match the fetchMode used
+ *                    by the underlying hook to ensure consistent behavior.
  */
 export const useCacheFlushDate = (
-  apiName: string
+  apiName: string,
+  fetchMode?: "native" | "jsonp"
 ): UseQueryResult<string, Error> => {
   const isCacheFlushApi: boolean =
     apiName === "wsf-fares" ||
@@ -144,14 +162,14 @@ export const useCacheFlushDate = (
     apiName === "wsf-vessels";
 
   const fetchFn = isCacheFlushApi
-    ? getCachedFetchFunction(apiName as CacheFlushApiName)
+    ? getCachedFetchFunction(apiName as CacheFlushApiName, fetchMode)
     : undefined;
 
   const endpointId =
     CACHE_FLUSH_ENDPOINT_IDS[apiName as CacheFlushApiName] || "no-cache-flush";
 
   return useQuery({
-    queryKey: [endpointId],
+    queryKey: [endpointId, fetchMode], // Include fetchMode in query key
     queryFn: fetchFn ?? (() => Promise.resolve("")),
     refetchInterval: isCacheFlushApi ? 5 * 60 * 1000 : undefined,
     staleTime: isCacheFlushApi ? 5 * 60 * 1000 : undefined,
