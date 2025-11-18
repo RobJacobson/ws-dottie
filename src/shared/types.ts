@@ -5,7 +5,7 @@
  */
 
 import type { z } from "zod";
-import type { ApiMetadata } from "@/apis/types";
+import type { ApiMeta } from "@/apis/types";
 
 // ============================================================================
 // CACHE STRATEGY TYPES
@@ -37,7 +37,7 @@ export type CacheStrategy =
  */
 export interface Endpoint<I, O> {
   /** API configuration */
-  api: ApiMetadata;
+  api: ApiMeta;
   /** Complete HTTP endpoint URL template */
   endpoint: string;
   /** Zod schema for input validation (optional - excluded in lite builds) */

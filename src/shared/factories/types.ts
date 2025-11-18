@@ -6,26 +6,29 @@
  * maintain consistency across the factory system.
  */
 
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import type { z } from "zod";
-import type { ApiMetadata, EndpointGroup } from "@/apis/types";
-import type { CacheStrategy, Endpoint } from "@/shared/types";
+import type { ApiMeta, EndpointGroupMeta } from "@/apis/types";
+import type { CacheStrategy } from "@/shared/types";
 
 // Re-export ApiMetadata for convenience
-export { ApiMetadata } from "@/apis/types";
+export { ApiMeta as ApiMetadata } from "@/apis/types";
 
 // ============================================================================
 // CONFIGURATION TYPES
 // ============================================================================
 
 /**
- * Configuration for defining an endpoint
+ * Complete endpoint configuration with computed properties
+ *
+ * This type is used internally by factory functions to create endpoints
+ * with all necessary properties for validation, caching, and URL generation.
  */
-export type DefineEndpointConfig<I, O> = {
+export type EndpointConfig<I, O> = {
   /** The API definition */
-  api: ApiMetadata;
+  api: ApiMeta;
   /** The endpoint group this endpoint belongs to */
-  group: EndpointGroup;
+  group: EndpointGroupMeta;
   /** The function name for this endpoint */
   functionName: string;
   /** The endpoint path (truncated, e.g., "/vesselLocations") */
@@ -38,20 +41,12 @@ export type DefineEndpointConfig<I, O> = {
   sampleParams?: I | (() => Promise<I>);
   /** One-sentence description of what this specific endpoint does */
   endpointDescription?: string;
-};
-
-/**
- * Complete endpoint configuration with computed properties
- */
-export type EndpointConfig<I, O> = DefineEndpointConfig<I, O> & {
   /** Complete URL template with domain */
   urlTemplate: string;
   /** Computed unique identifier in format "api:function" */
   id: string;
   /** Cache strategy for the endpoint */
   cacheStrategy: CacheStrategy;
-  /** One-sentence description of what this specific endpoint does */
-  endpointDescription?: string;
 };
 
 // ============================================================================
@@ -79,25 +74,6 @@ export type QueryHookOptions<TData> = Omit<
   UseQueryOptions<TData>,
   "queryKey" | "queryFn"
 >;
-
-// ============================================================================
-// RESULT TYPES
-// ============================================================================
-
-/**
- * Result of defining an endpoint
- */
-export type EndpointResult<I, O> = {
-  /** The endpoint descriptor for documentation */
-  descriptor: Endpoint<I, O>;
-  /** Fetch function for this endpoint */
-  fetch: (params?: FetchFunctionParams<I>) => Promise<O>;
-  /** React Query hook for this endpoint */
-  useQuery: (
-    params?: FetchFunctionParams<I>,
-    options?: QueryHookOptions<O>
-  ) => UseQueryResult<O, Error>;
-};
 
 // ============================================================================
 // CACHE STRATEGY CONFIGURATIONS

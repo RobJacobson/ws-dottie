@@ -8,7 +8,7 @@
 
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { EndpointGroup } from "@/apis/types";
+import type { EndpointGroupMeta } from "@/apis/types";
 import {
   useCacheFlushDateQuery,
   useCacheInvalidation,
@@ -35,7 +35,7 @@ import type {
  */
 export const shouldUseCacheFlushDate = (config: {
   api: { name: string };
-  group: EndpointGroup;
+  group: EndpointGroupMeta;
 }): boolean => {
   const isWsfApi = [
     "wsf-fares",
