@@ -35,7 +35,7 @@ const runtimeConfig = {
  * This function returns the currently configured API access token,
  * which is used for authenticating requests to WSDOT/WSF APIs.
  *
- * @returns The current API key string
+ * @returns The current API key string (may be empty if not configured)
  */
 export const getApiKey = (): string => {
   return runtimeConfig.apiKey;
@@ -47,7 +47,7 @@ export const getApiKey = (): string => {
  * This function returns the currently configured base URL for
  * WSDOT/WSF API requests.
  *
- * @returns The current base URL string
+ * @returns The current base URL string (defaults to "https://www.wsdot.wa.gov" if not configured)
  */
 export const getDomain = (): string => {
   return runtimeConfig.domain;
@@ -60,6 +60,7 @@ export const getDomain = (): string => {
  * useful for different environments or when tokens need to be updated.
  *
  * @param apiKey - The new API key string to set
+ * @returns void
  */
 export const setApiKey = (apiKey: string): void => {
   runtimeConfig.apiKey = apiKey;
@@ -72,6 +73,7 @@ export const setApiKey = (apiKey: string): void => {
  * useful for different environments or API endpoints.
  *
  * @param domain - The new domain string to set
+ * @returns void
  */
 export const setBaseUrl = (domain: string): void => {
   runtimeConfig.domain = domain;

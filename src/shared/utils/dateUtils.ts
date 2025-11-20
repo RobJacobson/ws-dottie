@@ -19,7 +19,7 @@
  * - Handles timezone separators (+ or - after timestamp)
  * - Validates the resulting timestamp number
  *
- * @param dateString - The WSDOT date string to convert
+ * @param dateString - The WSDOT date string to convert (format: "/Date(timestamp)/")
  * @returns JavaScript Date object or null if parsing fails
  * @example
  * ```typescript
@@ -78,12 +78,12 @@ export const jsDateToYyyyMmDd = (date: Date): string => {
  * Converts .NET datetime strings to JavaScript Date objects in response data
  *
  * This function recursively traverses an object/array structure and converts
- * any .NET datetime strings (format: "/Date(1234567890123)/") to JavaScript
- * Date objects, leaving other values unchanged. It uses JSON.parse with a
- * reviver function to process the data during parsing.
+ * any .NET datetime strings (format: "/Date(1234567890123)/") or ISO-8601
+ * date strings to JavaScript Date objects, leaving other values unchanged.
+ * It uses JSON.parse with a reviver function to process the data during parsing.
  *
- * @param data - The data structure to process
- * @returns The data with .NET dates converted to JS Date objects
+ * @param data - The data structure to process (can be any JSON-serializable type)
+ * @returns The data with .NET dates and ISO-8601 dates converted to JS Date objects
  * @example
  * ```typescript
  * const data = { date: "/Date(1757451301100-0700)/", name: "test" };
@@ -119,7 +119,7 @@ export const convertDotNetDates = (data: unknown): unknown => {
  * with optional time and timezone information.
  *
  * @param value - The string to check
- * @returns True if the string matches ISO-8601 date format
+ * @returns True if the string matches ISO-8601 date format, false otherwise
  */
 const isIso8601DateString = (value: string): boolean => {
   const isoRegex =

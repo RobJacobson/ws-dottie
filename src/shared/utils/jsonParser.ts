@@ -19,7 +19,7 @@ import { jsonrepair } from "jsonrepair";
  * 3. Try jsonrepair + JSON.parse (handles malformed JSON with unescaped quotes)
  *
  * @param input - The JSON string to parse
- * @returns The parsed JavaScript value or object
+ * @returns The parsed JavaScript value or object (type: unknown)
  * @throws The original JSON.parse error if all parsing attempts fail
  */
 export const parseJsonWithFallback = (input: string): unknown => {
