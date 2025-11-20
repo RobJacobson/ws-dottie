@@ -26,7 +26,7 @@ type JSONPWindow = Window & Record<string, JSONPCallback | undefined>;
  *
  * @param url - The URL to fetch data from
  * @returns Promise resolving to the response data as a string
- * @throws Error if the response is not ok (status >= 400)
+ * @throws Error with HTTP status code if the response is not ok (status >= 400)
  */
 export const handleFetchNative: FetchHandler = async (
   url: string
@@ -45,11 +45,12 @@ export const handleFetchNative: FetchHandler = async (
  *
  * Handles CORS restrictions by using JSONP callbacks instead of direct
  * HTTP requests. Creates a script tag with a callback parameter and
- * handles the response through a global callback function.
+ * handles the response through a global callback function. Automatically
+ * cleans up script tags and callbacks after completion or timeout.
  *
  * @param url - The URL to fetch data from
  * @returns Promise resolving to the response data as a JSON string
- * @throws Error if the JSONP request fails or times out
+ * @throws Error if the JSONP request fails, times out (30 seconds), or DOM is unavailable
  */
 export const handleFetchJsonp: FetchHandler = async (
   url: string

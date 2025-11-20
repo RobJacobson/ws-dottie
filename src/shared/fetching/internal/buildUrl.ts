@@ -81,9 +81,10 @@ export const buildCompleteUrl = <TInput = never>(
 };
 
 /**
- * Split URL template into base path and query string parts
+ * Splits URL template into base path and query string parts
+ *
  * @param urlTemplate - Complete URL template
- * @returns Object with path and query parts
+ * @returns Object with path and query string parts
  */
 const splitUrlIntoParts = (
   urlTemplate: string
@@ -93,10 +94,11 @@ const splitUrlIntoParts = (
 };
 
 /**
- * Replace template parameters in the path portion of URL
+ * Replaces template parameters in the path portion of URL
+ *
  * @param pathTemplate - Path template with {param} placeholders
- * @param params - Parameters to substitute
- * @returns Path with parameters replaced
+ * @param params - Parameters to substitute into the path
+ * @returns Path string with all template parameters replaced
  */
 const replacePathTemplates = (
   pathTemplate: string,
@@ -111,10 +113,14 @@ const replacePathTemplates = (
 };
 
 /**
- * Build query string from parameters
- * @param existingQuery - Existing query string from template
- * @param params - Parameters to add as query params
- * @returns Complete query string
+ * Builds query string from parameters
+ *
+ * Handles template parameter replacement in existing query strings and adds
+ * new parameters. Removes unfilled optional template parameters.
+ *
+ * @param existingQuery - Existing query string from template (may contain placeholders)
+ * @param params - Parameters to add as query parameters
+ * @returns Complete query string with all parameters encoded
  */
 const buildQueryString = (
   existingQuery: string,
@@ -176,8 +182,12 @@ const buildQueryString = (
 };
 
 /**
- * Inject appropriate API key based on service type
- * @param url - URL object to modify
+ * Injects appropriate API key based on service type
+ *
+ * Uses "AccessCode" parameter for WSDOT services and "apiaccesscode" for WSF services.
+ *
+ * @param url - URL object to modify (mutated in place)
+ * @returns void
  */
 const injectApiKey = (url: URL): void => {
   const serviceType = getServiceType(url.toString());
@@ -196,9 +206,12 @@ const getServiceType = (url: string): "wsdot" | "wsf" | "unknown" =>
   url.toLowerCase().includes("/traffic/") ? "wsdot" : "wsf";
 
 /**
- * Format parameter value for API (handles dates, encoding, etc.)
- * @param value - Value to format
- * @returns Formatted parameter value
+ * Formats parameter value for API requests
+ *
+ * Handles Date objects by converting to ISO strings, otherwise converts to string.
+ *
+ * @param value - Value to format (can be any type)
+ * @returns Formatted parameter value as string
  */
 const formatParamValue = (value: unknown): string =>
   value instanceof Date ? value.toISOString() : String(value);

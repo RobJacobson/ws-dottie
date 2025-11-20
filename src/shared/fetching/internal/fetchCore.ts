@@ -6,7 +6,7 @@
  * between the four main fetch functions.
  */
 
-import type { Endpoint, FetchStrategy, LoggingMode } from "@/shared/types";
+import type { FetchEndpoint, FetchStrategy, LoggingMode } from "@/shared/types";
 import { parseJsonWithFallback } from "@/shared/utils/jsonParser";
 import { logApiCall, logApiResults } from "@/shared/utils/logger";
 import { buildCompleteUrl } from "./buildUrl";
@@ -16,20 +16,20 @@ import { handleFetchJsonp, handleFetchNative } from "./handleFetch";
 /**
  * Core fetch routine that handles URL building, transport selection, and logging
  *
- * This function provides the shared orchestration logic used by all four
- * fetch functions. It handles URL building, request execution, response
- * parsing, and logging.
+ * This function provides the shared orchestration logic used by all fetch
+ * functions. It handles URL building, request execution, response parsing,
+ * and logging.
  *
  * @template TInput - The input parameters type
  * @template TOutput - The output response type
  * @param endpoint - The API endpoint to call
- * @param params - Optional input parameters
- * @param logMode - Logging verbosity level
- * @param strategy - Fetch strategy to use
- * @returns Promise resolving to the response data
+ * @param params - Optional input parameters for the endpoint
+ * @param logMode - Logging verbosity level (default: "none")
+ * @param strategy - Fetch strategy to use (default: "native")
+ * @returns Promise resolving to the parsed response data as unknown
  */
 export const fetchCore = async <TInput = never, TOutput = unknown>(
-  endpoint: Endpoint<TInput, TOutput>,
+  endpoint: FetchEndpoint<TInput, TOutput>,
   params?: TInput,
   logMode: LoggingMode = "none",
   strategy: FetchStrategy = "native"

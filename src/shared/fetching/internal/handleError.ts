@@ -91,8 +91,11 @@ export const isApiError = (error: unknown): error is ApiError => {
 /**
  * Extracts message and status code from various error types
  *
+ * Handles Zod validation errors, Error objects with HTTP status codes,
+ * and unknown error types.
+ *
  * @param error - The error to analyze
- * @returns Object containing the message and optional status code
+ * @returns Object containing the error message and optional HTTP status code
  */
 const extractErrorInfo = (
   error: unknown
