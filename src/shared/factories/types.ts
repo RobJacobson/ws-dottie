@@ -6,7 +6,7 @@
  * maintain consistency across the factory system.
  */
 
-import type { UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 
 // ============================================================================
 // PARAMETER TYPES
@@ -33,6 +33,27 @@ export type QueryHookOptions<TData> = Omit<
   UseQueryOptions<TData>,
   "queryKey" | "queryFn"
 >;
+
+/**
+ * Type representing the fetch function created by createFetchFunction factory.
+ *
+ * This type simplifies the signature in endpoint files by encapsulating
+ * the full fetch function type: (params?) => Promise<O>.
+ */
+export type FetchFactory<I, O> = (
+  params?: FetchFunctionParams<I>
+) => Promise<O>;
+
+/**
+ * Type representing the hook function created by createHook factory.
+ *
+ * This type simplifies the signature in endpoint files by encapsulating
+ * the full hook function type: (params?, options?) => UseQueryResult.
+ */
+export type HookFactory<I, O> = (
+  params?: FetchFunctionParams<I>,
+  options?: QueryHookOptions<O>
+) => UseQueryResult<O, Error>;
 
 // Re-export cache strategies from strategies module
 export { cacheStrategies } from "./strategies";

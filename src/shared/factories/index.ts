@@ -6,7 +6,6 @@
  */
 
 // Export fetch function factory
-export { buildDescriptor } from "./buildDescriptor";
 export { createFetchFunction } from "./createFetchFunction";
 
 // Export hook factory
@@ -15,6 +14,8 @@ export { createHook } from "./createHook";
 export { cacheStrategies } from "./strategies";
 // Export types
 export type {
+  FetchFactory,
   FetchFunctionParams,
+  HookFactory,
   QueryHookOptions,
 } from "./types";
