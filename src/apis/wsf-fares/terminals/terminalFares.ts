@@ -1,5 +1,3 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
 import {
   type TerminalsInput,
   terminalsInputSchema,
@@ -8,16 +6,15 @@ import {
   type TerminalList,
   terminalListSchema,
 } from "@/apis/shared/terminals.output";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfFaresApiMeta } from "../apiMeta";
 import { terminalsGroup } from "./shared/terminals.endpoints";
 
 /**
@@ -35,22 +32,19 @@ export const terminalFaresMeta = {
 /**
  * Fetch function for retrieving valid departing terminals for a trip date
  */
-export const fetchTerminalFares: (
-  params?: FetchFunctionParams<TerminalsInput>
-) => Promise<TerminalList> = createFetchFunction(
-  wsfFaresApi,
-  terminalsGroup,
-  terminalFaresMeta
-);
+export const fetchTerminalFares: FetchFactory<TerminalsInput, TerminalList> =
+  createFetchFunction({
+    api: wsfFaresApiMeta,
+    endpoint: terminalFaresMeta,
+  });
 
 /**
  * React Query hook for retrieving valid departing terminals for a trip date
  */
-export const useTerminalFares: (
-  params?: FetchFunctionParams<TerminalsInput>,
-  options?: QueryHookOptions<TerminalList>
-) => UseQueryResult<TerminalList, Error> = createHook(
-  wsfFaresApi,
-  terminalsGroup,
-  terminalFaresMeta
-);
+export const useTerminalFares: HookFactory<TerminalsInput, TerminalList> =
+  createHook({
+    apiName: wsfFaresApiMeta.name,
+    endpointName: terminalFaresMeta.functionName,
+    fetchFn: fetchTerminalFares,
+    cacheStrategy: terminalsGroup.cacheStrategy,
+  });

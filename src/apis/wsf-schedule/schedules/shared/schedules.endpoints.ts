@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta } from "../scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
+import { scheduleByTripDateAndRouteIdMeta } from "../scheduleByTripDateAndRouteId";
 
 /**
  * Endpoint group metadata for schedules endpoints
@@ -16,4 +18,8 @@ export const schedulesGroup: EndpointGroupMeta = {
       "View vessel assignments and loading rules for sailings.",
     ],
   },
+  endpoints: [
+    scheduleByTripDateAndRouteIdMeta,
+    scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta,
+  ],
 };

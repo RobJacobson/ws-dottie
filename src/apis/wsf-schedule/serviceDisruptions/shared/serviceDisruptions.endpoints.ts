@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { routesHavingServiceDisruptionsByTripDateMeta } from "../routesHavingServiceDisruptionsByTripDate";
 
 /**
  * Endpoint group metadata for service disruptions endpoints
@@ -16,4 +17,5 @@ export const serviceDisruptionsGroup: EndpointGroupMeta = {
       "Display disruption information to passengers.",
     ],
   },
+  endpoints: [routesHavingServiceDisruptionsByTripDateMeta],
 };

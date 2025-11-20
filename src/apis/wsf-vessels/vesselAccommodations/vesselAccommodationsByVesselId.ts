@@ -1,11 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
+import type { EndpointMeta } from "@/apis/types";
+import {
+  createFetchFunction,
+  createHook,
+  type FetchFactory,
+  type HookFactory,
+} from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import { vesselAccommodationsGroup } from "./shared/vesselAccommodations.endpoints";
 import {
   type VesselAccommodationsByIdInput,
@@ -32,22 +32,23 @@ export const vesselAccommodationsByVesselIdMeta = {
 /**
  * Fetch function for retrieving amenities and accessibility features for a specific vessel
  */
-export const fetchVesselAccommodationsByVesselId: (
-  params?: FetchFunctionParams<VesselAccommodationsByIdInput>
-) => Promise<VesselAccommodation> = createFetchFunction(
-  wsfVesselsApi,
-  vesselAccommodationsGroup,
-  vesselAccommodationsByVesselIdMeta
-);
+export const fetchVesselAccommodationsByVesselId: FetchFactory<
+  VesselAccommodationsByIdInput,
+  VesselAccommodation
+> = createFetchFunction({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselAccommodationsByVesselIdMeta,
+});
 
 /**
  * React Query hook for retrieving amenities and accessibility features for a specific vessel
  */
-export const useVesselAccommodationsByVesselId: (
-  params?: FetchFunctionParams<VesselAccommodationsByIdInput>,
-  options?: QueryHookOptions<VesselAccommodation>
-) => UseQueryResult<VesselAccommodation, Error> = createHook(
-  wsfVesselsApi,
-  vesselAccommodationsGroup,
-  vesselAccommodationsByVesselIdMeta
-);
+export const useVesselAccommodationsByVesselId: HookFactory<
+  VesselAccommodationsByIdInput,
+  VesselAccommodation
+> = createHook({
+  apiName: wsfVesselsApiMeta.name,
+  endpointName: vesselAccommodationsByVesselIdMeta.functionName,
+  fetchFn: fetchVesselAccommodationsByVesselId,
+  cacheStrategy: vesselAccommodationsGroup.cacheStrategy,
+});

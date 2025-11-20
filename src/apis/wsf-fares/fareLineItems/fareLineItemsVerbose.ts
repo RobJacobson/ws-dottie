@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfFaresApiMeta } from "../apiMeta";
 import { fareLineItemsGroup } from "./shared/fareLineItems.endpoints";
 import {
   type FareLineItemsVerboseInput,
@@ -36,22 +33,23 @@ export const fareLineItemsVerboseMeta = {
 /**
  * Fetch function for retrieving all fare line items for all terminal combinations on a trip date
  */
-export const fetchFareLineItemsVerbose: (
-  params?: FetchFunctionParams<FareLineItemsVerboseInput>
-) => Promise<LineItemVerbose> = createFetchFunction(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsVerboseMeta
-);
+export const fetchFareLineItemsVerbose: FetchFactory<
+  FareLineItemsVerboseInput,
+  LineItemVerbose
+> = createFetchFunction({
+  api: wsfFaresApiMeta,
+  endpoint: fareLineItemsVerboseMeta,
+});
 
 /**
  * React Query hook for retrieving all fare line items for all terminal combinations on a trip date
  */
-export const useFareLineItemsVerbose: (
-  params?: FetchFunctionParams<FareLineItemsVerboseInput>,
-  options?: QueryHookOptions<LineItemVerbose>
-) => UseQueryResult<LineItemVerbose, Error> = createHook(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsVerboseMeta
-);
+export const useFareLineItemsVerbose: HookFactory<
+  FareLineItemsVerboseInput,
+  LineItemVerbose
+> = createHook({
+  apiName: wsfFaresApiMeta.name,
+  endpointName: fareLineItemsVerboseMeta.functionName,
+  fetchFn: fetchFareLineItemsVerbose,
+  cacheStrategy: fareLineItemsGroup.cacheStrategy,
+});

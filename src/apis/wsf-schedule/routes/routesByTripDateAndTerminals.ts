@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { routesGroup } from "./shared/routes.endpoints";
 import {
   type RoutesByTripDateAndTerminalsInput,
@@ -36,22 +33,23 @@ export const routesByTripDateAndTerminalsMeta = {
 /**
  * Fetch function for retrieving routes matching terminal pair for specified date
  */
-export const fetchRoutesByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>
-) => Promise<Route[]> = createFetchFunction(
-  wsfScheduleApi,
-  routesGroup,
-  routesByTripDateAndTerminalsMeta
-);
+export const fetchRoutesByTripDateAndTerminals: FetchFactory<
+  RoutesByTripDateAndTerminalsInput,
+  Route[]
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: routesByTripDateAndTerminalsMeta,
+});
 
 /**
  * React Query hook for retrieving routes matching terminal pair for specified date
  */
-export const useRoutesByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<Route[]>
-) => UseQueryResult<Route[], Error> = createHook(
-  wsfScheduleApi,
-  routesGroup,
-  routesByTripDateAndTerminalsMeta
-);
+export const useRoutesByTripDateAndTerminals: HookFactory<
+  RoutesByTripDateAndTerminalsInput,
+  Route[]
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: routesByTripDateAndTerminalsMeta.functionName,
+  fetchFn: fetchRoutesByTripDateAndTerminals,
+  cacheStrategy: routesGroup.cacheStrategy,
+});

@@ -1,11 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
+import type { EndpointMeta } from "@/apis/types";
+import {
+  createFetchFunction,
+  createHook,
+  type FetchFactory,
+  type HookFactory,
+} from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import { vesselVerboseGroup } from "./shared/vesselVerbose.endpoints";
 import {
   type VesselVerboseByIdInput,
@@ -32,22 +32,23 @@ export const vesselsVerboseByVesselIdMeta = {
 /**
  * Fetch function for retrieving complete vessel information for a specific vessel by ID
  */
-export const fetchVesselsVerboseByVesselId: (
-  params?: FetchFunctionParams<VesselVerboseByIdInput>
-) => Promise<VesselVerbose> = createFetchFunction(
-  wsfVesselsApi,
-  vesselVerboseGroup,
-  vesselsVerboseByVesselIdMeta
-);
+export const fetchVesselsVerboseByVesselId: FetchFactory<
+  VesselVerboseByIdInput,
+  VesselVerbose
+> = createFetchFunction({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselsVerboseByVesselIdMeta,
+});
 
 /**
  * React Query hook for retrieving complete vessel information for a specific vessel by ID
  */
-export const useVesselsVerboseByVesselId: (
-  params?: FetchFunctionParams<VesselVerboseByIdInput>,
-  options?: QueryHookOptions<VesselVerbose>
-) => UseQueryResult<VesselVerbose, Error> = createHook(
-  wsfVesselsApi,
-  vesselVerboseGroup,
-  vesselsVerboseByVesselIdMeta
-);
+export const useVesselsVerboseByVesselId: HookFactory<
+  VesselVerboseByIdInput,
+  VesselVerbose
+> = createHook({
+  apiName: wsfVesselsApiMeta.name,
+  endpointName: vesselsVerboseByVesselIdMeta.functionName,
+  fetchFn: fetchVesselsVerboseByVesselId,
+  cacheStrategy: vesselVerboseGroup.cacheStrategy,
+});

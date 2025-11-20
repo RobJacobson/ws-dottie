@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { fareTotalsByTripDateAndRouteMeta } from "../fareTotalsByTripDateAndRoute";
 
 /**
  * Endpoint group metadata for fare totals endpoints
@@ -18,4 +19,5 @@ export const fareTotalsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [fareTotalsByTripDateAndRouteMeta],
 };

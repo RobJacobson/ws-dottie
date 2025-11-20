@@ -4,8 +4,8 @@
  * This module provides exports for all hooks, fetch functions, and types in the wsdot-travel-times API.
  */
 
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
 // Export hooks
 export { useTravelTimeById } from "./travelTimeRoutes/travelTimeById";
 export { useTravelTimes } from "./travelTimeRoutes/travelTimes";
-// Re-export everything from core (fetch functions and types)
-export * from "./core";

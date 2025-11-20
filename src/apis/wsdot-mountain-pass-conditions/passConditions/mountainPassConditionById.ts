@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotMountainPassConditionsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotMountainPassConditionsApiMeta } from "../apiMeta";
 import { passConditionsGroup } from "./shared/passConditions.endpoints";
 import {
   type MountainPassConditionByIdInput,
@@ -35,22 +32,23 @@ export const mountainPassConditionByIdMeta = {
 /**
  * Fetch function for retrieving current conditions for a specific mountain pass by ID
  */
-export const fetchMountainPassConditionById: (
-  params?: FetchFunctionParams<MountainPassConditionByIdInput>
-) => Promise<PassCondition> = createFetchFunction(
-  wsdotMountainPassConditionsApi,
-  passConditionsGroup,
-  mountainPassConditionByIdMeta
-);
+export const fetchMountainPassConditionById: FetchFactory<
+  MountainPassConditionByIdInput,
+  PassCondition
+> = createFetchFunction({
+  api: wsdotMountainPassConditionsApiMeta,
+  endpoint: mountainPassConditionByIdMeta,
+});
 
 /**
  * React Query hook for retrieving current conditions for a specific mountain pass by ID
  */
-export const useMountainPassConditionById: (
-  params?: FetchFunctionParams<MountainPassConditionByIdInput>,
-  options?: QueryHookOptions<PassCondition>
-) => UseQueryResult<PassCondition, Error> = createHook(
-  wsdotMountainPassConditionsApi,
-  passConditionsGroup,
-  mountainPassConditionByIdMeta
-);
+export const useMountainPassConditionById: HookFactory<
+  MountainPassConditionByIdInput,
+  PassCondition
+> = createHook({
+  apiName: wsdotMountainPassConditionsApiMeta.name,
+  endpointName: mountainPassConditionByIdMeta.functionName,
+  fetchFn: fetchMountainPassConditionById,
+  cacheStrategy: passConditionsGroup.cacheStrategy,
+});

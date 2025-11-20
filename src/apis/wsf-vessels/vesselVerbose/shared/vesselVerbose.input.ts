@@ -3,7 +3,9 @@ import { z } from "@/shared/zod";
 export const vesselVerboseInputSchema = z
   .object({})
   .strict()
-  .describe("Input parameters for retrieving complete vessel information for all vessels.");
+  .describe(
+    "Input parameters for retrieving complete vessel information for all vessels."
+  );
 
 export type VesselVerboseInput = z.infer<typeof vesselVerboseInputSchema>;
 
@@ -12,12 +14,11 @@ export type VesselVerboseInput = z.infer<typeof vesselVerboseInputSchema>;
  */
 export const vesselVerboseByIdInputSchema = z
   .object({
-    VesselID: z
-      .number()
-      .int()
-      .describe("Numeric ID of the vessel."),
+    VesselID: z.number().int().describe("Numeric ID of the vessel."),
   })
-  .describe("Input parameters for retrieving complete vessel information for a specific vessel.");
+  .describe(
+    "Input parameters for retrieving complete vessel information for a specific vessel."
+  );
 
 export type VesselVerboseByIdInput = z.infer<
   typeof vesselVerboseByIdInputSchema

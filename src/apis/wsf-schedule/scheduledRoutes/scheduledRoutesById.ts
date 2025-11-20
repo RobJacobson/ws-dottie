@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { scheduledRoutesGroup } from "./shared/scheduledRoutes.endpoints";
 import {
   type ScheduledRoutesByIdInput,
@@ -34,22 +31,23 @@ export const scheduledRoutesByIdMeta = {
 /**
  * Fetch function for retrieving scheduled routes for a specific schedule season
  */
-export const fetchScheduledRoutesById: (
-  params?: FetchFunctionParams<ScheduledRoutesByIdInput>
-) => Promise<SchedRoute[]> = createFetchFunction(
-  wsfScheduleApi,
-  scheduledRoutesGroup,
-  scheduledRoutesByIdMeta
-);
+export const fetchScheduledRoutesById: FetchFactory<
+  ScheduledRoutesByIdInput,
+  SchedRoute[]
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduledRoutesByIdMeta,
+});
 
 /**
  * React Query hook for retrieving scheduled routes for a specific schedule season
  */
-export const useScheduledRoutesById: (
-  params?: FetchFunctionParams<ScheduledRoutesByIdInput>,
-  options?: QueryHookOptions<SchedRoute[]>
-) => UseQueryResult<SchedRoute[], Error> = createHook(
-  wsfScheduleApi,
-  scheduledRoutesGroup,
-  scheduledRoutesByIdMeta
-);
+export const useScheduledRoutesById: HookFactory<
+  ScheduledRoutesByIdInput,
+  SchedRoute[]
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: scheduledRoutesByIdMeta.functionName,
+  fetchFn: fetchScheduledRoutesById,
+  cacheStrategy: scheduledRoutesGroup.cacheStrategy,
+});

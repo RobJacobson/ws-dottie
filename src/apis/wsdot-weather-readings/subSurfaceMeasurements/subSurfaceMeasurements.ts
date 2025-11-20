@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherReadingsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotWeatherReadingsApiMeta } from "../apiMeta";
 import { subSurfaceMeasurementsGroup } from "./shared/subSurfaceMeasurements.endpoints";
 import {
   type SubSurfaceMeasurementsInput,
@@ -35,22 +32,23 @@ export const subSurfaceMeasurementsMeta = {
 /**
  * Fetch function for retrieving subsurface measurements from all weather stations statewide
  */
-export const fetchSubSurfaceMeasurements: (
-  params?: FetchFunctionParams<SubSurfaceMeasurementsInput>
-) => Promise<SubsurfaceMeasurement[]> = createFetchFunction(
-  wsdotWeatherReadingsApi,
-  subSurfaceMeasurementsGroup,
-  subSurfaceMeasurementsMeta
-);
+export const fetchSubSurfaceMeasurements: FetchFactory<
+  SubSurfaceMeasurementsInput,
+  SubsurfaceMeasurement[]
+> = createFetchFunction({
+  api: wsdotWeatherReadingsApiMeta,
+  endpoint: subSurfaceMeasurementsMeta,
+});
 
 /**
  * React Query hook for retrieving subsurface measurements from all weather stations statewide
  */
-export const useSubSurfaceMeasurements: (
-  params?: FetchFunctionParams<SubSurfaceMeasurementsInput>,
-  options?: QueryHookOptions<SubsurfaceMeasurement[]>
-) => UseQueryResult<SubsurfaceMeasurement[], Error> = createHook(
-  wsdotWeatherReadingsApi,
-  subSurfaceMeasurementsGroup,
-  subSurfaceMeasurementsMeta
-);
+export const useSubSurfaceMeasurements: HookFactory<
+  SubSurfaceMeasurementsInput,
+  SubsurfaceMeasurement[]
+> = createHook({
+  apiName: wsdotWeatherReadingsApiMeta.name,
+  endpointName: subSurfaceMeasurementsMeta.functionName,
+  fetchFn: fetchSubSurfaceMeasurements,
+  cacheStrategy: subSurfaceMeasurementsGroup.cacheStrategy,
+});

@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherInformationApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotWeatherInformationApiMeta } from "../apiMeta";
 import { weatherInfoGroup } from "./shared/weatherInfo.endpoints";
 import {
   type WeatherInformationByStationIdInput,
@@ -36,22 +33,23 @@ export const weatherInformationByStationIdMeta = {
 /**
  * Fetch function for retrieving current weather information for a specific station by ID
  */
-export const fetchWeatherInformationByStationId: (
-  params?: FetchFunctionParams<WeatherInformationByStationIdInput>
-) => Promise<WeatherInfo> = createFetchFunction(
-  wsdotWeatherInformationApi,
-  weatherInfoGroup,
-  weatherInformationByStationIdMeta
-);
+export const fetchWeatherInformationByStationId: FetchFactory<
+  WeatherInformationByStationIdInput,
+  WeatherInfo
+> = createFetchFunction({
+  api: wsdotWeatherInformationApiMeta,
+  endpoint: weatherInformationByStationIdMeta,
+});
 
 /**
  * React Query hook for retrieving current weather information for a specific station by ID
  */
-export const useWeatherInformationByStationId: (
-  params?: FetchFunctionParams<WeatherInformationByStationIdInput>,
-  options?: QueryHookOptions<WeatherInfo>
-) => UseQueryResult<WeatherInfo, Error> = createHook(
-  wsdotWeatherInformationApi,
-  weatherInfoGroup,
-  weatherInformationByStationIdMeta
-);
+export const useWeatherInformationByStationId: HookFactory<
+  WeatherInformationByStationIdInput,
+  WeatherInfo
+> = createHook({
+  apiName: wsdotWeatherInformationApiMeta.name,
+  endpointName: weatherInformationByStationIdMeta.functionName,
+  fetchFn: fetchWeatherInformationByStationId,
+  cacheStrategy: weatherInfoGroup.cacheStrategy,
+});

@@ -1,11 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
+import type { EndpointMeta } from "@/apis/types";
+import {
+  createFetchFunction,
+  createHook,
+  type FetchFactory,
+  type HookFactory,
+} from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import { vesselHistoriesGroup } from "./shared/vesselHistories.endpoints";
 import {
   type VesselHistoriesInput,
@@ -31,22 +31,23 @@ export const vesselHistoriesMeta = {
 /**
  * Fetch function for retrieving historical sailing records for all vessels
  */
-export const fetchVesselHistories: (
-  params?: FetchFunctionParams<VesselHistoriesInput>
-) => Promise<VesselHistory[]> = createFetchFunction(
-  wsfVesselsApi,
-  vesselHistoriesGroup,
-  vesselHistoriesMeta
-);
+export const fetchVesselHistories: FetchFactory<
+  VesselHistoriesInput,
+  VesselHistory[]
+> = createFetchFunction({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselHistoriesMeta,
+});
 
 /**
  * React Query hook for retrieving historical sailing records for all vessels
  */
-export const useVesselHistories: (
-  params?: FetchFunctionParams<VesselHistoriesInput>,
-  options?: QueryHookOptions<VesselHistory[]>
-) => UseQueryResult<VesselHistory[], Error> = createHook(
-  wsfVesselsApi,
-  vesselHistoriesGroup,
-  vesselHistoriesMeta
-);
+export const useVesselHistories: HookFactory<
+  VesselHistoriesInput,
+  VesselHistory[]
+> = createHook({
+  apiName: wsfVesselsApiMeta.name,
+  endpointName: vesselHistoriesMeta.functionName,
+  fetchFn: fetchVesselHistories,
+  cacheStrategy: vesselHistoriesGroup.cacheStrategy,
+});

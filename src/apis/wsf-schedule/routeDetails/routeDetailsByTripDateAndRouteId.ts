@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { routeDetailsGroup } from "./shared/routeDetails.endpoints";
 import {
   type RouteDetailsByTripDateAndRouteIdInput,
@@ -36,22 +33,23 @@ export const routeDetailsByTripDateAndRouteIdMeta = {
 /**
  * Fetch function for retrieving detailed route information for specific route on date
  */
-export const fetchRouteDetailsByTripDateAndRouteId: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>
-) => Promise<RouteDetail> = createFetchFunction(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndRouteIdMeta
-);
+export const fetchRouteDetailsByTripDateAndRouteId: FetchFactory<
+  RouteDetailsByTripDateAndRouteIdInput,
+  RouteDetail
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: routeDetailsByTripDateAndRouteIdMeta,
+});
 
 /**
  * React Query hook for retrieving detailed route information for specific route on date
  */
-export const useRouteDetailsByTripDateAndRouteId: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>,
-  options?: QueryHookOptions<RouteDetail>
-) => UseQueryResult<RouteDetail, Error> = createHook(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndRouteIdMeta
-);
+export const useRouteDetailsByTripDateAndRouteId: HookFactory<
+  RouteDetailsByTripDateAndRouteIdInput,
+  RouteDetail
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: routeDetailsByTripDateAndRouteIdMeta.functionName,
+  fetchFn: fetchRouteDetailsByTripDateAndRouteId,
+  cacheStrategy: routeDetailsGroup.cacheStrategy,
+});

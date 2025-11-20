@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalSailingSpaceMeta } from "../terminalSailingSpace";
+import { terminalSailingSpaceByTerminalIdMeta } from "../terminalSailingSpaceByTerminalId";
 
 /**
  * Endpoint group metadata for terminal sailing space endpoints
@@ -16,4 +18,5 @@ export const terminalSailingSpaceGroup: EndpointGroupMeta = {
       "Monitor vessel assignments and departure cancellations.",
     ],
   },
+  endpoints: [terminalSailingSpaceMeta, terminalSailingSpaceByTerminalIdMeta],
 };

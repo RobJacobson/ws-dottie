@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotTollRatesApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotTollRatesApiMeta } from "../apiMeta";
 import { tollTripRatesGroup } from "./shared/tollTripRates.endpoints";
 import {
   type TripRatesByVersionInput,
@@ -34,22 +31,23 @@ export const tripRatesByVersionMeta = {
 /**
  * Fetch function for retrieving toll rates for a specific version number
  */
-export const fetchTripRatesByVersion: (
-  params?: FetchFunctionParams<TripRatesByVersionInput>
-) => Promise<TollTripsRates> = createFetchFunction(
-  wsdotTollRatesApi,
-  tollTripRatesGroup,
-  tripRatesByVersionMeta
-);
+export const fetchTripRatesByVersion: FetchFactory<
+  TripRatesByVersionInput,
+  TollTripsRates
+> = createFetchFunction({
+  api: wsdotTollRatesApiMeta,
+  endpoint: tripRatesByVersionMeta,
+});
 
 /**
  * React Query hook for retrieving toll rates for a specific version number
  */
-export const useTripRatesByVersion: (
-  params?: FetchFunctionParams<TripRatesByVersionInput>,
-  options?: QueryHookOptions<TollTripsRates>
-) => UseQueryResult<TollTripsRates, Error> = createHook(
-  wsdotTollRatesApi,
-  tollTripRatesGroup,
-  tripRatesByVersionMeta
-);
+export const useTripRatesByVersion: HookFactory<
+  TripRatesByVersionInput,
+  TollTripsRates
+> = createHook({
+  apiName: wsdotTollRatesApiMeta.name,
+  endpointName: tripRatesByVersionMeta.functionName,
+  fetchFn: fetchTripRatesByVersion,
+  cacheStrategy: tollTripRatesGroup.cacheStrategy,
+});

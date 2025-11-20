@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { scheduleTerminalsGroup } from "./shared/terminals.endpoints";
 import {
   type TerminalsInput,
@@ -32,22 +29,20 @@ export const terminalsMeta = {
 /**
  * Fetch function for retrieving valid departing terminals for a trip date
  */
-export const fetchTerminals: (
-  params?: FetchFunctionParams<TerminalsInput>
-) => Promise<Terminal[]> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleTerminalsGroup,
-  terminalsMeta
-);
+export const fetchTerminals: FetchFactory<TerminalsInput, Terminal[]> =
+  createFetchFunction({
+    api: wsfScheduleApiMeta,
+    endpoint: terminalsMeta,
+  });
 
 /**
  * React Query hook for retrieving valid departing terminals for a trip date
  */
-export const useTerminals: (
-  params?: FetchFunctionParams<TerminalsInput>,
-  options?: QueryHookOptions<Terminal[]>
-) => UseQueryResult<Terminal[], Error> = createHook(
-  wsfScheduleApi,
-  scheduleTerminalsGroup,
-  terminalsMeta
+export const useTerminals: HookFactory<TerminalsInput, Terminal[]> = createHook(
+  {
+    apiName: wsfScheduleApiMeta.name,
+    endpointName: terminalsMeta.functionName,
+    fetchFn: fetchTerminals,
+    cacheStrategy: scheduleTerminalsGroup.cacheStrategy,
+  }
 );

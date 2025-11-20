@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalBasicsMeta } from "../terminalBasics";
+import { terminalBasicsByTerminalIdMeta } from "../terminalBasicsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal basics endpoints
@@ -17,4 +19,5 @@ export const terminalBasicsGroup: EndpointGroupMeta = {
       "Filter terminals by region or amenities.",
     ],
   },
+  endpoints: [terminalBasicsMeta, terminalBasicsByTerminalIdMeta],
 };

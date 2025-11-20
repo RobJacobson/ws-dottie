@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { vesselAccommodationsMeta } from "../vesselAccommodations";
+import { vesselAccommodationsByVesselIdMeta } from "../vesselAccommodationsByVesselId";
 
 /**
  * Endpoint group metadata for vessel accommodations endpoints
@@ -16,4 +18,5 @@ export const vesselAccommodationsGroup: EndpointGroupMeta = {
       "Compare vessel features for trip planning.",
     ],
   },
+  endpoints: [vesselAccommodationsMeta, vesselAccommodationsByVesselIdMeta],
 };

@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotHighwayAlertsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { z } from "@/shared/zod";
+import { wsdotHighwayAlertsApiMeta } from "../apiMeta";
 import { eventCategoriesGroup } from "./shared/eventCategories.endpoints";
 import {
   type EventCategoriesInput,
@@ -32,22 +29,21 @@ export const eventCategoriesMeta = {
 /**
  * Fetch function for retrieving all available event category names for filtering alerts
  */
-export const fetchEventCategories: (
-  params?: FetchFunctionParams<EventCategoriesInput>
-) => Promise<string[]> = createFetchFunction(
-  wsdotHighwayAlertsApi,
-  eventCategoriesGroup,
-  eventCategoriesMeta
-);
+export const fetchEventCategories: FetchFactory<
+  EventCategoriesInput,
+  string[]
+> = createFetchFunction({
+  api: wsdotHighwayAlertsApiMeta,
+  endpoint: eventCategoriesMeta,
+});
 
 /**
  * React Query hook for retrieving all available event category names for filtering alerts
  */
-export const useEventCategories: (
-  params?: FetchFunctionParams<EventCategoriesInput>,
-  options?: QueryHookOptions<string[]>
-) => UseQueryResult<string[], Error> = createHook(
-  wsdotHighwayAlertsApi,
-  eventCategoriesGroup,
-  eventCategoriesMeta
-);
+export const useEventCategories: HookFactory<EventCategoriesInput, string[]> =
+  createHook({
+    apiName: wsdotHighwayAlertsApiMeta.name,
+    endpointName: eventCategoriesMeta.functionName,
+    fetchFn: fetchEventCategories,
+    cacheStrategy: eventCategoriesGroup.cacheStrategy,
+  });

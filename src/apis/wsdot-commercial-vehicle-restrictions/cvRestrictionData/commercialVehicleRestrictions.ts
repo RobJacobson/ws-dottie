@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotCommercialVehicleRestrictionsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotCommercialVehicleRestrictionsApiMeta } from "../apiMeta";
 import { cvRestrictionDataGroup } from "./shared/cvRestrictionData.endpoints";
 import {
   type CommercialVehicleRestrictionsInput,
@@ -35,22 +32,23 @@ export const commercialVehicleRestrictionsMeta = {
 /**
  * Fetch function for retrieving commercial vehicle restrictions for all Washington State highways
  */
-export const fetchCommercialVehicleRestrictions: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>
-) => Promise<CVRestriction[]> = createFetchFunction(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataGroup,
-  commercialVehicleRestrictionsMeta
-);
+export const fetchCommercialVehicleRestrictions: FetchFactory<
+  CommercialVehicleRestrictionsInput,
+  CVRestriction[]
+> = createFetchFunction({
+  api: wsdotCommercialVehicleRestrictionsApiMeta,
+  endpoint: commercialVehicleRestrictionsMeta,
+});
 
 /**
  * React Query hook for retrieving commercial vehicle restrictions for all Washington State highways
  */
-export const useCommercialVehicleRestrictions: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>,
-  options?: QueryHookOptions<CVRestriction[]>
-) => UseQueryResult<CVRestriction[], Error> = createHook(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataGroup,
-  commercialVehicleRestrictionsMeta
-);
+export const useCommercialVehicleRestrictions: HookFactory<
+  CommercialVehicleRestrictionsInput,
+  CVRestriction[]
+> = createHook({
+  apiName: wsdotCommercialVehicleRestrictionsApiMeta.name,
+  endpointName: commercialVehicleRestrictionsMeta.functionName,
+  fetchFn: fetchCommercialVehicleRestrictions,
+  cacheStrategy: cvRestrictionDataGroup.cacheStrategy,
+});

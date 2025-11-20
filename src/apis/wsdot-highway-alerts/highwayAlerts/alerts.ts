@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotHighwayAlertsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotHighwayAlertsApiMeta } from "../apiMeta";
 import { highwayAlertsGroup } from "./shared/highwayAlerts.endpoints";
 import {
   type AlertsInput,
@@ -31,22 +28,18 @@ export const alertsMeta = {
 /**
  * Fetch function for retrieving all current highway alerts statewide
  */
-export const fetchAlerts: (
-  params?: FetchFunctionParams<AlertsInput>
-) => Promise<Alert[]> = createFetchFunction(
-  wsdotHighwayAlertsApi,
-  highwayAlertsGroup,
-  alertsMeta
-);
+export const fetchAlerts: FetchFactory<AlertsInput, Alert[]> =
+  createFetchFunction({
+    api: wsdotHighwayAlertsApiMeta,
+    endpoint: alertsMeta,
+  });
 
 /**
  * React Query hook for retrieving all current highway alerts statewide
  */
-export const useAlerts: (
-  params?: FetchFunctionParams<AlertsInput>,
-  options?: QueryHookOptions<Alert[]>
-) => UseQueryResult<Alert[], Error> = createHook(
-  wsdotHighwayAlertsApi,
-  highwayAlertsGroup,
-  alertsMeta
-);
+export const useAlerts: HookFactory<AlertsInput, Alert[]> = createHook({
+  apiName: wsdotHighwayAlertsApiMeta.name,
+  endpointName: alertsMeta.functionName,
+  fetchFn: fetchAlerts,
+  cacheStrategy: highwayAlertsGroup.cacheStrategy,
+});

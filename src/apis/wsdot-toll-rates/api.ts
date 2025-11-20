@@ -1,14 +1,12 @@
 import type { ApiDefinition } from "@/apis/types";
+import { wsdotTollRatesApiMeta } from "./apiMeta";
 import { tollRatesGroup } from "./tollRates/shared/tollRates.endpoints";
 import { tollTripInfoGroup } from "./tollTripInfo/shared/tollTripInfo.endpoints";
 import { tollTripRatesGroup } from "./tollTripRates/shared/tollTripRates.endpoints";
 import { tollTripVersionGroup } from "./tollTripVersion/shared/tollTripVersion.endpoints";
 
 export const wsdotTollRatesApi: ApiDefinition = {
-  api: {
-    name: "wsdot-toll-rates",
-    baseUrl: "https://www.wsdot.wa.gov/traffic/api/tollrates/tollratesrest.svc",
-  },
+  api: wsdotTollRatesApiMeta,
   endpointGroups: [
     tollRatesGroup,
     tollTripInfoGroup,

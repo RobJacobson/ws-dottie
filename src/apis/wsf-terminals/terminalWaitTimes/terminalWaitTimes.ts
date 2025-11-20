@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import { terminalWaitTimesGroup } from "./shared/terminalWaitTimes.endpoints";
 import {
   type TerminalWaitTimesInput,
@@ -34,23 +31,23 @@ export const terminalWaitTimesMeta = {
 /**
  * Fetch function for retrieving wait time information for all terminals
  */
-export const fetchTerminalWaitTimes: (
-  params?: FetchFunctionParams<TerminalWaitTimesInput>
-) => Promise<TerminalWaitTime[]> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalWaitTimesGroup,
-  terminalWaitTimesMeta
-);
+export const fetchTerminalWaitTimes: FetchFactory<
+  TerminalWaitTimesInput,
+  TerminalWaitTime[]
+> = createFetchFunction({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalWaitTimesMeta,
+});
 
 /**
  * React Query hook for retrieving wait time information for all terminals
  */
-export const useTerminalWaitTimes: (
-  params?: FetchFunctionParams<TerminalWaitTimesInput>,
-  options?: QueryHookOptions<TerminalWaitTime[]>
-) => UseQueryResult<TerminalWaitTime[], Error> = createHook(
-  wsfTerminalsApi,
-  terminalWaitTimesGroup,
-  terminalWaitTimesMeta
-);
-
+export const useTerminalWaitTimes: HookFactory<
+  TerminalWaitTimesInput,
+  TerminalWaitTime[]
+> = createHook({
+  apiName: wsfTerminalsApiMeta.name,
+  endpointName: terminalWaitTimesMeta.functionName,
+  fetchFn: fetchTerminalWaitTimes,
+  cacheStrategy: terminalWaitTimesGroup.cacheStrategy,
+});

@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotTrafficFlowApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotTrafficFlowApiMeta } from "../apiMeta";
 import { flowDataGroup } from "./shared/flowData.endpoints";
 import {
   type TrafficFlowByIdInput,
@@ -32,22 +29,21 @@ export const trafficFlowByIdMeta = {
 /**
  * Fetch function for retrieving current traffic flow condition for a specific station by ID
  */
-export const fetchTrafficFlowById: (
-  params?: FetchFunctionParams<TrafficFlowByIdInput>
-) => Promise<FlowData> = createFetchFunction(
-  wsdotTrafficFlowApi,
-  flowDataGroup,
-  trafficFlowByIdMeta
-);
+export const fetchTrafficFlowById: FetchFactory<
+  TrafficFlowByIdInput,
+  FlowData
+> = createFetchFunction({
+  api: wsdotTrafficFlowApiMeta,
+  endpoint: trafficFlowByIdMeta,
+});
 
 /**
  * React Query hook for retrieving current traffic flow condition for a specific station by ID
  */
-export const useTrafficFlowById: (
-  params?: FetchFunctionParams<TrafficFlowByIdInput>,
-  options?: QueryHookOptions<FlowData>
-) => UseQueryResult<FlowData, Error> = createHook(
-  wsdotTrafficFlowApi,
-  flowDataGroup,
-  trafficFlowByIdMeta
-);
+export const useTrafficFlowById: HookFactory<TrafficFlowByIdInput, FlowData> =
+  createHook({
+    apiName: wsdotTrafficFlowApiMeta.name,
+    endpointName: trafficFlowByIdMeta.functionName,
+    fetchFn: fetchTrafficFlowById,
+    cacheStrategy: flowDataGroup.cacheStrategy,
+  });

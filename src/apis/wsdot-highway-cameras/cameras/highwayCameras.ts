@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotHighwayCamerasApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotHighwayCamerasApiMeta } from "../apiMeta";
 import { camerasGroup } from "./shared/cameras.endpoints";
 import {
   type HighwayCamerasInput,
@@ -31,22 +28,19 @@ export const highwayCamerasMeta = {
 /**
  * Fetch function for retrieving all highway cameras statewide
  */
-export const fetchHighwayCameras: (
-  params?: FetchFunctionParams<HighwayCamerasInput>
-) => Promise<Camera[]> = createFetchFunction(
-  wsdotHighwayCamerasApi,
-  camerasGroup,
-  highwayCamerasMeta
-);
+export const fetchHighwayCameras: FetchFactory<HighwayCamerasInput, Camera[]> =
+  createFetchFunction({
+    api: wsdotHighwayCamerasApiMeta,
+    endpoint: highwayCamerasMeta,
+  });
 
 /**
  * React Query hook for retrieving all highway cameras statewide
  */
-export const useHighwayCameras: (
-  params?: FetchFunctionParams<HighwayCamerasInput>,
-  options?: QueryHookOptions<Camera[]>
-) => UseQueryResult<Camera[], Error> = createHook(
-  wsdotHighwayCamerasApi,
-  camerasGroup,
-  highwayCamerasMeta
-);
+export const useHighwayCameras: HookFactory<HighwayCamerasInput, Camera[]> =
+  createHook({
+    apiName: wsdotHighwayCamerasApiMeta.name,
+    endpointName: highwayCamerasMeta.functionName,
+    fetchFn: fetchHighwayCameras,
+    cacheStrategy: camerasGroup.cacheStrategy,
+  });

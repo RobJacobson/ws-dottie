@@ -1,4 +1,5 @@
 import type { ApiDefinition } from "@/apis/types";
+import { wsfTerminalsApiMeta } from "./apiMeta";
 import { cacheFlushDateTerminalsGroup } from "./cacheFlushDate/shared/cacheFlushDate.endpoints";
 import { terminalBasicsGroup } from "./terminalBasics/shared/terminalBasics.endpoints";
 import { terminalBulletinsGroup } from "./terminalBulletins/shared/terminalBulletins.endpoints";
@@ -9,10 +10,7 @@ import { terminalVerboseGroup } from "./terminalVerbose/shared/terminalVerbose.e
 import { terminalWaitTimesGroup } from "./terminalWaitTimes/shared/terminalWaitTimes.endpoints";
 
 export const wsfTerminalsApi: ApiDefinition = {
-  api: {
-    name: "wsf-terminals",
-    baseUrl: "https://www.wsdot.wa.gov/ferries/api/terminals/rest",
-  },
+  api: wsfTerminalsApiMeta,
   endpointGroups: [
     cacheFlushDateTerminalsGroup,
     terminalBasicsGroup,

@@ -1,18 +1,15 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
 import {
   type ValidDateRange,
   validDateRangeSchema,
 } from "@/apis/shared/validDateRange.output";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfFaresApiMeta } from "../apiMeta";
 import { validDateRangeGroup } from "./shared/validDateRange.endpoints";
 import {
   type FaresValidDateRangeInput,
@@ -34,22 +31,23 @@ export const faresValidDateRangeMeta = {
 /**
  * Fetch function for retrieving the validity date range for published fares data
  */
-export const fetchFaresValidDateRange: (
-  params?: FetchFunctionParams<FaresValidDateRangeInput>
-) => Promise<ValidDateRange> = createFetchFunction(
-  wsfFaresApi,
-  validDateRangeGroup,
-  faresValidDateRangeMeta
-);
+export const fetchFaresValidDateRange: FetchFactory<
+  FaresValidDateRangeInput,
+  ValidDateRange
+> = createFetchFunction({
+  api: wsfFaresApiMeta,
+  endpoint: faresValidDateRangeMeta,
+});
 
 /**
  * React Query hook for retrieving the validity date range for published fares data
  */
-export const useFaresValidDateRange: (
-  params?: FetchFunctionParams<FaresValidDateRangeInput>,
-  options?: QueryHookOptions<ValidDateRange>
-) => UseQueryResult<ValidDateRange, Error> = createHook(
-  wsfFaresApi,
-  validDateRangeGroup,
-  faresValidDateRangeMeta
-);
+export const useFaresValidDateRange: HookFactory<
+  FaresValidDateRangeInput,
+  ValidDateRange
+> = createHook({
+  apiName: wsfFaresApiMeta.name,
+  endpointName: faresValidDateRangeMeta.functionName,
+  fetchFn: fetchFaresValidDateRange,
+  cacheStrategy: validDateRangeGroup.cacheStrategy,
+});

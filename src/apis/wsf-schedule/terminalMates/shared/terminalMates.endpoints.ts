@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalMatesScheduleMeta } from "../terminalMatesSchedule";
 
 /**
  * Endpoint group metadata for schedule terminal mates endpoints
@@ -18,4 +19,5 @@ export const scheduleTerminalMatesGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [terminalMatesScheduleMeta],
 };

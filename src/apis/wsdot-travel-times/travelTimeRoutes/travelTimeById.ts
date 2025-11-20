@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotTravelTimesApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotTravelTimesApiMeta } from "../apiMeta";
 import { travelTimeRoutesGroup } from "./shared/travelTimeRoutes.endpoints";
 import {
   type TravelTimeByIdInput,
@@ -34,22 +31,23 @@ export const travelTimeByIdMeta = {
 /**
  * Fetch function for retrieving travel time data for a specific route by ID
  */
-export const fetchTravelTimeById: (
-  params?: FetchFunctionParams<TravelTimeByIdInput>
-) => Promise<TravelTimeRoute> = createFetchFunction(
-  wsdotTravelTimesApi,
-  travelTimeRoutesGroup,
-  travelTimeByIdMeta
-);
+export const fetchTravelTimeById: FetchFactory<
+  TravelTimeByIdInput,
+  TravelTimeRoute
+> = createFetchFunction({
+  api: wsdotTravelTimesApiMeta,
+  endpoint: travelTimeByIdMeta,
+});
 
 /**
  * React Query hook for retrieving travel time data for a specific route by ID
  */
-export const useTravelTimeById: (
-  params?: FetchFunctionParams<TravelTimeByIdInput>,
-  options?: QueryHookOptions<TravelTimeRoute>
-) => UseQueryResult<TravelTimeRoute, Error> = createHook(
-  wsdotTravelTimesApi,
-  travelTimeRoutesGroup,
-  travelTimeByIdMeta
-);
+export const useTravelTimeById: HookFactory<
+  TravelTimeByIdInput,
+  TravelTimeRoute
+> = createHook({
+  apiName: wsdotTravelTimesApiMeta.name,
+  endpointName: travelTimeByIdMeta.functionName,
+  fetchFn: fetchTravelTimeById,
+  cacheStrategy: travelTimeRoutesGroup.cacheStrategy,
+});

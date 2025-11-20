@@ -1,4 +1,7 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { fareLineItemsBasicMeta } from "../fareLineItemsBasic";
+import { fareLineItemsByTripDateAndTerminalsMeta } from "../fareLineItemsByTripDateAndTerminals";
+import { fareLineItemsVerboseMeta } from "../fareLineItemsVerbose";
 
 /**
  * Endpoint group metadata for fare line items endpoints
@@ -18,4 +21,9 @@ export const fareLineItemsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [
+    fareLineItemsBasicMeta,
+    fareLineItemsVerboseMeta,
+    fareLineItemsByTripDateAndTerminalsMeta,
+  ],
 };

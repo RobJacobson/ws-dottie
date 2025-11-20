@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalBulletinsMeta } from "../terminalBulletins";
+import { terminalBulletinsByTerminalIdMeta } from "../terminalBulletinsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal bulletins endpoints
@@ -16,4 +18,5 @@ export const terminalBulletinsGroup: EndpointGroupMeta = {
       "Monitor terminal-specific and system-wide notifications.",
     ],
   },
+  endpoints: [terminalBulletinsMeta, terminalBulletinsByTerminalIdMeta],
 };

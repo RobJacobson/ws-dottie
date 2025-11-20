@@ -1,14 +1,14 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
 import type {
   CacheFlushDateInput,
   CacheFlushDateOutput,
 } from "@/apis/shared/cacheFlushDate";
-import type { FetchFunctionParams, QueryHookOptions } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   cacheFlushDateScheduleGroup,
   cacheFlushDateScheduleMeta,
@@ -17,25 +17,26 @@ import {
 /**
  * Fetch function for retrieving timestamp of when static wsf-schedule data was last updated
  */
-export const fetchCacheFlushDateSchedule: (
-  params?: FetchFunctionParams<CacheFlushDateInput>
-) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  wsfScheduleApi,
-  cacheFlushDateScheduleGroup,
-  cacheFlushDateScheduleMeta
-);
+export const fetchCacheFlushDateSchedule: FetchFactory<
+  CacheFlushDateInput,
+  CacheFlushDateOutput
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: cacheFlushDateScheduleMeta,
+});
 
 /**
  * React Query hook for retrieving timestamp of when static wsf-schedule data was last updated
  */
-export const useCacheFlushDateSchedule: (
-  params?: FetchFunctionParams<CacheFlushDateInput>,
-  options?: QueryHookOptions<CacheFlushDateOutput>
-) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  wsfScheduleApi,
-  cacheFlushDateScheduleGroup,
-  cacheFlushDateScheduleMeta
-);
+export const useCacheFlushDateSchedule: HookFactory<
+  CacheFlushDateInput,
+  CacheFlushDateOutput
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: cacheFlushDateScheduleMeta.functionName,
+  fetchFn: fetchCacheFlushDateSchedule,
+  cacheStrategy: cacheFlushDateScheduleGroup.cacheStrategy,
+});
 
 // Re-export with API-specific names for backward compatibility
 export type CacheFlushDateScheduleInput = CacheFlushDateInput;

@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { weatherStationsMeta } from "../weatherStations";
 
 /**
  * Endpoint group metadata for weather stations endpoints
@@ -18,4 +19,5 @@ export const weatherStationsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [weatherStationsMeta],
 };

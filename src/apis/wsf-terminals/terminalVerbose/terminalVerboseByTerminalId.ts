@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import { terminalVerboseGroup } from "./shared/terminalVerbose.endpoints";
 import {
   type TerminalVerboseByTerminalIdInput,
@@ -35,22 +32,23 @@ export const terminalVerboseByTerminalIdMeta = {
 /**
  * Fetch function for retrieving comprehensive information for a specific terminal by ID
  */
-export const fetchTerminalVerboseByTerminalId: (
-  params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>
-) => Promise<TerminalVerbose> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalVerboseGroup,
-  terminalVerboseByTerminalIdMeta
-);
+export const fetchTerminalVerboseByTerminalId: FetchFactory<
+  TerminalVerboseByTerminalIdInput,
+  TerminalVerbose
+> = createFetchFunction({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalVerboseByTerminalIdMeta,
+});
 
 /**
  * React Query hook for retrieving comprehensive information for a specific terminal by ID
  */
-export const useTerminalVerboseByTerminalId: (
-  params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>,
-  options?: QueryHookOptions<TerminalVerbose>
-) => UseQueryResult<TerminalVerbose, Error> = createHook(
-  wsfTerminalsApi,
-  terminalVerboseGroup,
-  terminalVerboseByTerminalIdMeta
-);
+export const useTerminalVerboseByTerminalId: HookFactory<
+  TerminalVerboseByTerminalIdInput,
+  TerminalVerbose
+> = createHook({
+  apiName: wsfTerminalsApiMeta.name,
+  endpointName: terminalVerboseByTerminalIdMeta.functionName,
+  fetchFn: fetchTerminalVerboseByTerminalId,
+  cacheStrategy: terminalVerboseGroup.cacheStrategy,
+});

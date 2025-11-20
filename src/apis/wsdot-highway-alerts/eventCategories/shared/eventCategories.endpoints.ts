@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { eventCategoriesMeta } from "../eventCategories";
 
 /**
  * Endpoint group metadata for event categories endpoints
@@ -17,4 +18,5 @@ export const eventCategoriesGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "5m",
   },
+  endpoints: [eventCategoriesMeta],
 };

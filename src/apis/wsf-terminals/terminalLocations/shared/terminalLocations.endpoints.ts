@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalLocationsMeta } from "../terminalLocations";
+import { terminalLocationsByTerminalIdMeta } from "../terminalLocationsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal locations endpoints
@@ -16,4 +18,5 @@ export const terminalLocationsGroup: EndpointGroupMeta = {
       "Integrate with GIS mapping applications.",
     ],
   },
+  endpoints: [terminalLocationsMeta, terminalLocationsByTerminalIdMeta],
 };

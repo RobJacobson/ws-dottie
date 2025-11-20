@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { faresValidDateRangeMeta } from "../faresValidDateRange";
 
 /**
  * Endpoint group metadata for valid date range endpoints
@@ -17,4 +18,5 @@ export const validDateRangeGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [faresValidDateRangeMeta],
 };

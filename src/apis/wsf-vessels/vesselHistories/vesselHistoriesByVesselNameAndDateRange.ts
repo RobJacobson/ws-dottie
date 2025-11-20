@@ -1,11 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
+import type { EndpointMeta } from "@/apis/types";
+import {
+  createFetchFunction,
+  createHook,
+  type FetchFactory,
+  type HookFactory,
+} from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import { vesselHistoriesGroup } from "./shared/vesselHistories.endpoints";
 import {
   type VesselHistoriesByVesselNameAndDateRangeInput,
@@ -39,22 +39,23 @@ export const vesselHistoriesByVesselNameAndDateRangeMeta = {
 /**
  * Fetch function for retrieving historical sailing records for a vessel within a date range
  */
-export const fetchVesselHistoriesByVesselNameAndDateRange: (
-  params?: FetchFunctionParams<VesselHistoriesByVesselNameAndDateRangeInput>
-) => Promise<VesselHistory[]> = createFetchFunction(
-  wsfVesselsApi,
-  vesselHistoriesGroup,
-  vesselHistoriesByVesselNameAndDateRangeMeta
-);
+export const fetchVesselHistoriesByVesselNameAndDateRange: FetchFactory<
+  VesselHistoriesByVesselNameAndDateRangeInput,
+  VesselHistory[]
+> = createFetchFunction({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselHistoriesByVesselNameAndDateRangeMeta,
+});
 
 /**
  * React Query hook for retrieving historical sailing records for a vessel within a date range
  */
-export const useVesselHistoriesByVesselNameAndDateRange: (
-  params?: FetchFunctionParams<VesselHistoriesByVesselNameAndDateRangeInput>,
-  options?: QueryHookOptions<VesselHistory[]>
-) => UseQueryResult<VesselHistory[], Error> = createHook(
-  wsfVesselsApi,
-  vesselHistoriesGroup,
-  vesselHistoriesByVesselNameAndDateRangeMeta
-);
+export const useVesselHistoriesByVesselNameAndDateRange: HookFactory<
+  VesselHistoriesByVesselNameAndDateRangeInput,
+  VesselHistory[]
+> = createHook({
+  apiName: wsfVesselsApiMeta.name,
+  endpointName: vesselHistoriesByVesselNameAndDateRangeMeta.functionName,
+  fetchFn: fetchVesselHistoriesByVesselNameAndDateRange,
+  cacheStrategy: vesselHistoriesGroup.cacheStrategy,
+});

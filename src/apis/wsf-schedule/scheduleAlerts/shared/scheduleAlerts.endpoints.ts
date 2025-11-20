@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { scheduleAlertsMeta } from "../scheduleAlerts";
 
 /**
  * Endpoint group metadata for schedule alerts endpoints
@@ -16,4 +17,5 @@ export const scheduleAlertsGroup: EndpointGroupMeta = {
       "Show route-specific and system-wide announcements.",
     ],
   },
+  endpoints: [scheduleAlertsMeta],
 };

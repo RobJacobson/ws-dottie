@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotCommercialVehicleRestrictionsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotCommercialVehicleRestrictionsApiMeta } from "../apiMeta";
 import { cvRestrictionDataWithIdGroup } from "./shared/cvRestrictionDataWithId.endpoints";
 import {
   type CommercialVehicleRestrictionsWithIdInput,
@@ -38,22 +35,23 @@ export const commercialVehicleRestrictionsWithIdMeta = {
 /**
  * Fetch function for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
  */
-export const fetchCommercialVehicleRestrictionsWithId: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsWithIdInput>
-) => Promise<CVRestrictionWithId[]> = createFetchFunction(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataWithIdGroup,
-  commercialVehicleRestrictionsWithIdMeta
-);
+export const fetchCommercialVehicleRestrictionsWithId: FetchFactory<
+  CommercialVehicleRestrictionsWithIdInput,
+  CVRestrictionWithId[]
+> = createFetchFunction({
+  api: wsdotCommercialVehicleRestrictionsApiMeta,
+  endpoint: commercialVehicleRestrictionsWithIdMeta,
+});
 
 /**
  * React Query hook for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
  */
-export const useCommercialVehicleRestrictionsWithId: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsWithIdInput>,
-  options?: QueryHookOptions<CVRestrictionWithId[]>
-) => UseQueryResult<CVRestrictionWithId[], Error> = createHook(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataWithIdGroup,
-  commercialVehicleRestrictionsWithIdMeta
-);
+export const useCommercialVehicleRestrictionsWithId: HookFactory<
+  CommercialVehicleRestrictionsWithIdInput,
+  CVRestrictionWithId[]
+> = createHook({
+  apiName: wsdotCommercialVehicleRestrictionsApiMeta.name,
+  endpointName: commercialVehicleRestrictionsWithIdMeta.functionName,
+  fetchFn: fetchCommercialVehicleRestrictionsWithId,
+  cacheStrategy: cvRestrictionDataWithIdGroup.cacheStrategy,
+});

@@ -1,16 +1,13 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
 import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { scheduleValidDateRangeGroup } from "./shared/validDateRange.endpoints";
 import {
   type ScheduleValidDateRangeInput,
@@ -32,22 +29,23 @@ export const scheduleValidDateRangeMeta = {
 /**
  * Fetch function for retrieving the valid date range for schedule data
  */
-export const fetchScheduleValidDateRange: (
-  params?: FetchFunctionParams<ScheduleValidDateRangeInput>
-) => Promise<ValidDateRange> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleValidDateRangeGroup,
-  scheduleValidDateRangeMeta
-);
+export const fetchScheduleValidDateRange: FetchFactory<
+  ScheduleValidDateRangeInput,
+  ValidDateRange
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduleValidDateRangeMeta,
+});
 
 /**
  * React Query hook for retrieving the valid date range for schedule data
  */
-export const useScheduleValidDateRange: (
-  params?: FetchFunctionParams<ScheduleValidDateRangeInput>,
-  options?: QueryHookOptions<ValidDateRange>
-) => UseQueryResult<ValidDateRange, Error> = createHook(
-  wsfScheduleApi,
-  scheduleValidDateRangeGroup,
-  scheduleValidDateRangeMeta
-);
+export const useScheduleValidDateRange: HookFactory<
+  ScheduleValidDateRangeInput,
+  ValidDateRange
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: scheduleValidDateRangeMeta.functionName,
+  fetchFn: fetchScheduleValidDateRange,
+  cacheStrategy: scheduleValidDateRangeGroup.cacheStrategy,
+});

@@ -9,6 +9,18 @@ import {
 } from "./cacheFlushDate.output";
 
 /**
+ * Metadata for the cache flush date terminals endpoint
+ */
+export const cacheFlushDateTerminalsMeta = {
+  functionName: "fetchCacheFlushDateTerminals",
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+  sampleParams: {},
+  endpointDescription: "Get cache flush timestamp for static terminals data.",
+} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
+
+/**
  * Endpoint group metadata for cache flush date terminals endpoints
  */
 export const cacheFlushDateTerminalsGroup: EndpointGroupMeta = {
@@ -24,17 +36,5 @@ export const cacheFlushDateTerminalsGroup: EndpointGroupMeta = {
       "Coordinate cache invalidation across multiple terminal endpoints.",
     ],
   },
+  endpoints: [cacheFlushDateTerminalsMeta],
 };
-
-export const cacheFlushDateTerminalsMeta = {
-  functionName: "fetchCacheFlushDateTerminals",
-  endpoint: "/cacheflushdate",
-  inputSchema: cacheFlushDateInputSchema,
-  outputSchema: cacheFlushDateOutputSchema,
-  sampleParams: {},
-  endpointDescription: "Get cache flush timestamp for static terminals data.",
-} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
-
-export const cacheFlushDateTerminalsEndpoints = {
-  cacheFlushDate: cacheFlushDateTerminalsMeta,
-} as const;

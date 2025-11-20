@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { schedulesGroup } from "./shared/schedules.endpoints";
 import {
   type ScheduleByTripDateAndRouteIdInput,
@@ -33,22 +30,23 @@ export const scheduleByTripDateAndRouteIdMeta = {
 /**
  * Fetch function for retrieving sailing schedule for a specific route and trip date
  */
-export const fetchScheduleByTripDateAndRouteId: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndRouteIdInput>
-) => Promise<Schedule> = createFetchFunction(
-  wsfScheduleApi,
-  schedulesGroup,
-  scheduleByTripDateAndRouteIdMeta
-);
+export const fetchScheduleByTripDateAndRouteId: FetchFactory<
+  ScheduleByTripDateAndRouteIdInput,
+  Schedule
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduleByTripDateAndRouteIdMeta,
+});
 
 /**
  * React Query hook for retrieving sailing schedule for a specific route and trip date
  */
-export const useScheduleByTripDateAndRouteId: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndRouteIdInput>,
-  options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error> = createHook(
-  wsfScheduleApi,
-  schedulesGroup,
-  scheduleByTripDateAndRouteIdMeta
-);
+export const useScheduleByTripDateAndRouteId: HookFactory<
+  ScheduleByTripDateAndRouteIdInput,
+  Schedule
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: scheduleByTripDateAndRouteIdMeta.functionName,
+  fetchFn: fetchScheduleByTripDateAndRouteId,
+  cacheStrategy: schedulesGroup.cacheStrategy,
+});

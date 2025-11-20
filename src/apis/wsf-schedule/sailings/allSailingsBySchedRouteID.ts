@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { sailingsGroup } from "./shared/sailings.endpoints";
 import {
   type AllSailingsBySchedRouteIDInput,
@@ -32,22 +29,23 @@ export const allSailingsBySchedRouteIDMeta = {
 /**
  * Fetch function for retrieving all sailings for scheduled route including inactive sailings
  */
-export const fetchAllSailingsBySchedRouteID: (
-  params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>
-) => Promise<Sailing[]> = createFetchFunction(
-  wsfScheduleApi,
-  sailingsGroup,
-  allSailingsBySchedRouteIDMeta
-);
+export const fetchAllSailingsBySchedRouteID: FetchFactory<
+  AllSailingsBySchedRouteIDInput,
+  Sailing[]
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: allSailingsBySchedRouteIDMeta,
+});
 
 /**
  * React Query hook for retrieving all sailings for scheduled route including inactive sailings
  */
-export const useAllSailingsBySchedRouteID: (
-  params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>,
-  options?: QueryHookOptions<Sailing[]>
-) => UseQueryResult<Sailing[], Error> = createHook(
-  wsfScheduleApi,
-  sailingsGroup,
-  allSailingsBySchedRouteIDMeta
-);
+export const useAllSailingsBySchedRouteID: HookFactory<
+  AllSailingsBySchedRouteIDInput,
+  Sailing[]
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: allSailingsBySchedRouteIDMeta.functionName,
+  fetchFn: fetchAllSailingsBySchedRouteID,
+  cacheStrategy: sailingsGroup.cacheStrategy,
+});

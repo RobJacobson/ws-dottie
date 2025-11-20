@@ -15,9 +15,9 @@ export * from "./tollTripInfo/shared/tollTripInfo.output";
 export { fetchTollTripInfo } from "./tollTripInfo/tollTripInfo";
 export * from "./tollTripRates/shared/tollTripRates.input";
 export * from "./tollTripRates/shared/tollTripRates.output";
+export { fetchTollTripRates } from "./tollTripRates/tollTripRates";
 // Toll Trip Rates
 export { fetchTripRatesByDate } from "./tollTripRates/tripRatesByDate";
-export { fetchTollTripRates } from "./tollTripRates/tollTripRates";
 export { fetchTripRatesByVersion } from "./tollTripRates/tripRatesByVersion";
 export * from "./tollTripVersion/shared/tollTripVersion.input";
 export * from "./tollTripVersion/shared/tollTripVersion.output";

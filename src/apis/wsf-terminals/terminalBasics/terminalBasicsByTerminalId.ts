@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import { terminalBasicsGroup } from "./shared/terminalBasics.endpoints";
 import {
   type TerminalBasicsByIdInput,
@@ -34,22 +31,23 @@ export const terminalBasicsByTerminalIdMeta = {
 /**
  * Fetch function for retrieving basic information for a specific terminal by ID
  */
-export const fetchTerminalBasicsByTerminalId: (
-  params?: FetchFunctionParams<TerminalBasicsByIdInput>
-) => Promise<TerminalBasic> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalBasicsGroup,
-  terminalBasicsByTerminalIdMeta
-);
+export const fetchTerminalBasicsByTerminalId: FetchFactory<
+  TerminalBasicsByIdInput,
+  TerminalBasic
+> = createFetchFunction({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalBasicsByTerminalIdMeta,
+});
 
 /**
  * React Query hook for retrieving basic information for a specific terminal by ID
  */
-export const useTerminalBasicsByTerminalId: (
-  params?: FetchFunctionParams<TerminalBasicsByIdInput>,
-  options?: QueryHookOptions<TerminalBasic>
-) => UseQueryResult<TerminalBasic, Error> = createHook(
-  wsfTerminalsApi,
-  terminalBasicsGroup,
-  terminalBasicsByTerminalIdMeta
-);
+export const useTerminalBasicsByTerminalId: HookFactory<
+  TerminalBasicsByIdInput,
+  TerminalBasic
+> = createHook({
+  apiName: wsfTerminalsApiMeta.name,
+  endpointName: terminalBasicsByTerminalIdMeta.functionName,
+  fetchFn: fetchTerminalBasicsByTerminalId,
+  cacheStrategy: terminalBasicsGroup.cacheStrategy,
+});

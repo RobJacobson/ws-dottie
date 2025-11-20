@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { borderCrossingsMeta } from "../borderCrossings";
 
 /**
  * Endpoint group metadata for border crossing data endpoints
@@ -18,4 +19,5 @@ export const borderCrossingDataGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "1m",
   },
+  endpoints: [borderCrossingsMeta],
 };

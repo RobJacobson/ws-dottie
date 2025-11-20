@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { scheduleTerminalsGroup } from "./shared/terminals.endpoints";
 import {
   type TerminalsAndMatesByRouteInput,
@@ -36,22 +33,23 @@ export const terminalsAndMatesByRouteMeta = {
 /**
  * Fetch function for retrieving valid terminal pairs for a specific route and trip date
  */
-export const fetchTerminalsAndMatesByRoute: (
-  params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>
-) => Promise<TerminalMate[]> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleTerminalsGroup,
-  terminalsAndMatesByRouteMeta
-);
+export const fetchTerminalsAndMatesByRoute: FetchFactory<
+  TerminalsAndMatesByRouteInput,
+  TerminalMate[]
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: terminalsAndMatesByRouteMeta,
+});
 
 /**
  * React Query hook for retrieving valid terminal pairs for a specific route and trip date
  */
-export const useTerminalsAndMatesByRoute: (
-  params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>,
-  options?: QueryHookOptions<TerminalMate[]>
-) => UseQueryResult<TerminalMate[], Error> = createHook(
-  wsfScheduleApi,
-  scheduleTerminalsGroup,
-  terminalsAndMatesByRouteMeta
-);
+export const useTerminalsAndMatesByRoute: HookFactory<
+  TerminalsAndMatesByRouteInput,
+  TerminalMate[]
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: terminalsAndMatesByRouteMeta.functionName,
+  fetchFn: fetchTerminalsAndMatesByRoute,
+  cacheStrategy: scheduleTerminalsGroup.cacheStrategy,
+});

@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotHighwayAlertsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsdotHighwayAlertsApiMeta } from "../apiMeta";
 import { alertAreasGroup } from "./shared/alertAreas.endpoints";
 import {
   type MapAreasInput,
@@ -32,22 +29,18 @@ export const mapAreasMeta = {
 /**
  * Fetch function for retrieving all available geographic map areas for filtering alerts
  */
-export const fetchMapAreas: (
-  params?: FetchFunctionParams<MapAreasInput>
-) => Promise<Area[]> = createFetchFunction(
-  wsdotHighwayAlertsApi,
-  alertAreasGroup,
-  mapAreasMeta
-);
+export const fetchMapAreas: FetchFactory<MapAreasInput, Area[]> =
+  createFetchFunction({
+    api: wsdotHighwayAlertsApiMeta,
+    endpoint: mapAreasMeta,
+  });
 
 /**
  * React Query hook for retrieving all available geographic map areas for filtering alerts
  */
-export const useMapAreas: (
-  params?: FetchFunctionParams<MapAreasInput>,
-  options?: QueryHookOptions<Area[]>
-) => UseQueryResult<Area[], Error> = createHook(
-  wsdotHighwayAlertsApi,
-  alertAreasGroup,
-  mapAreasMeta
-);
+export const useMapAreas: HookFactory<MapAreasInput, Area[]> = createHook({
+  apiName: wsdotHighwayAlertsApiMeta.name,
+  endpointName: mapAreasMeta.functionName,
+  fetchFn: fetchMapAreas,
+  cacheStrategy: alertAreasGroup.cacheStrategy,
+});

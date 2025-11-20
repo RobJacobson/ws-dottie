@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { vesselsVerboseMeta } from "../vesselsVerbose";
+import { vesselsVerboseByVesselIdMeta } from "../vesselsVerboseById";
 
 /**
  * Endpoint group metadata for vessel verbose endpoints
@@ -17,4 +19,5 @@ export const vesselVerboseGroup: EndpointGroupMeta = {
       "Support comprehensive vessel comparison and selection.",
     ],
   },
+  endpoints: [vesselsVerboseMeta, vesselsVerboseByVesselIdMeta],
 };

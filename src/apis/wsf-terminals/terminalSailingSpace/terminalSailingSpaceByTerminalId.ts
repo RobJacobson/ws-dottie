@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import { terminalSailingSpaceGroup } from "./shared/terminalSailingSpace.endpoints";
 import {
   type TerminalSailingSpaceByTerminalIdInput,
@@ -38,22 +35,23 @@ export const terminalSailingSpaceByTerminalIdMeta = {
 /**
  * Fetch function for retrieving sailing space availability for a specific terminal by ID
  */
-export const fetchTerminalSailingSpaceByTerminalId: (
-  params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>
-) => Promise<TerminalSailingSpace> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceByTerminalIdMeta
-);
+export const fetchTerminalSailingSpaceByTerminalId: FetchFactory<
+  TerminalSailingSpaceByTerminalIdInput,
+  TerminalSailingSpace
+> = createFetchFunction({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalSailingSpaceByTerminalIdMeta,
+});
 
 /**
  * React Query hook for retrieving sailing space availability for a specific terminal by ID
  */
-export const useTerminalSailingSpaceByTerminalId: (
-  params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>,
-  options?: QueryHookOptions<TerminalSailingSpace>
-) => UseQueryResult<TerminalSailingSpace, Error> = createHook(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceByTerminalIdMeta
-);
+export const useTerminalSailingSpaceByTerminalId: HookFactory<
+  TerminalSailingSpaceByTerminalIdInput,
+  TerminalSailingSpace
+> = createHook({
+  apiName: wsfTerminalsApiMeta.name,
+  endpointName: terminalSailingSpaceByTerminalIdMeta.functionName,
+  fetchFn: fetchTerminalSailingSpaceByTerminalId,
+  cacheStrategy: terminalSailingSpaceGroup.cacheStrategy,
+});

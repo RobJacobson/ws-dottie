@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { serviceDisruptionsGroup } from "./shared/serviceDisruptions.endpoints";
 import {
   type RoutesHavingServiceDisruptionsByTripDateInput,
@@ -39,22 +36,23 @@ export const routesHavingServiceDisruptionsByTripDateMeta = {
 /**
  * Fetch function for retrieving routes with service disruptions for a specific trip date
  */
-export const fetchRoutesHavingServiceDisruptionsByTripDate: (
-  params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>
-) => Promise<ServiceDisruption[]> = createFetchFunction(
-  wsfScheduleApi,
-  serviceDisruptionsGroup,
-  routesHavingServiceDisruptionsByTripDateMeta
-);
+export const fetchRoutesHavingServiceDisruptionsByTripDate: FetchFactory<
+  RoutesHavingServiceDisruptionsByTripDateInput,
+  ServiceDisruption[]
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: routesHavingServiceDisruptionsByTripDateMeta,
+});
 
 /**
  * React Query hook for retrieving routes with service disruptions for a specific trip date
  */
-export const useRoutesHavingServiceDisruptionsByTripDate: (
-  params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>,
-  options?: QueryHookOptions<ServiceDisruption[]>
-) => UseQueryResult<ServiceDisruption[], Error> = createHook(
-  wsfScheduleApi,
-  serviceDisruptionsGroup,
-  routesHavingServiceDisruptionsByTripDateMeta
-);
+export const useRoutesHavingServiceDisruptionsByTripDate: HookFactory<
+  RoutesHavingServiceDisruptionsByTripDateInput,
+  ServiceDisruption[]
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: routesHavingServiceDisruptionsByTripDateMeta.functionName,
+  fetchFn: fetchRoutesHavingServiceDisruptionsByTripDate,
+  cacheStrategy: serviceDisruptionsGroup.cacheStrategy,
+});

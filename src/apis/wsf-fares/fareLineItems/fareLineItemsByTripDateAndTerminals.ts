@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfFaresApiMeta } from "../apiMeta";
 import { fareLineItemsGroup } from "./shared/fareLineItems.endpoints";
 import {
   type FareLineItemsByTripDateAndTerminalsInput,
@@ -39,22 +36,23 @@ export const fareLineItemsByTripDateAndTerminalsMeta = {
 /**
  * Fetch function for retrieving all fare line items for a specific terminal combination and trip type
  */
-export const fetchFareLineItemsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>
-) => Promise<LineItem[]> = createFetchFunction(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsByTripDateAndTerminalsMeta
-);
+export const fetchFareLineItemsByTripDateAndTerminals: FetchFactory<
+  FareLineItemsByTripDateAndTerminalsInput,
+  LineItem[]
+> = createFetchFunction({
+  api: wsfFaresApiMeta,
+  endpoint: fareLineItemsByTripDateAndTerminalsMeta,
+});
 
 /**
  * React Query hook for retrieving all fare line items for a specific terminal combination and trip type
  */
-export const useFareLineItemsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<LineItem[]>
-) => UseQueryResult<LineItem[], Error> = createHook(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsByTripDateAndTerminalsMeta
-);
+export const useFareLineItemsByTripDateAndTerminals: HookFactory<
+  FareLineItemsByTripDateAndTerminalsInput,
+  LineItem[]
+> = createHook({
+  apiName: wsfFaresApiMeta.name,
+  endpointName: fareLineItemsByTripDateAndTerminalsMeta.functionName,
+  fetchFn: fetchFareLineItemsByTripDateAndTerminals,
+  cacheStrategy: fareLineItemsGroup.cacheStrategy,
+});

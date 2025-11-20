@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { bridgeClearancesMeta } from "../bridgeClearances";
+import { bridgeClearancesByRouteMeta } from "../bridgeClearancesByRoute";
 
 /**
  * Endpoint group metadata for bridge clearances endpoints
@@ -17,4 +19,5 @@ export const bridgeClearancesGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [bridgeClearancesMeta, bridgeClearancesByRouteMeta],
 };

@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { routeDetailsGroup } from "./shared/routeDetails.endpoints";
 import {
   type RouteDetailsByTripDateAndTerminalsInput,
@@ -44,22 +41,23 @@ export const routeDetailsByTripDateAndTerminalsMeta = {
 /**
  * Fetch function for retrieving detailed route information for terminal pair on date
  */
-export const fetchRouteDetailsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>
-) => Promise<RouteDetail[]> = createFetchFunction(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndTerminalsMeta
-);
+export const fetchRouteDetailsByTripDateAndTerminals: FetchFactory<
+  RouteDetailsByTripDateAndTerminalsInput,
+  RouteDetail[]
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: routeDetailsByTripDateAndTerminalsMeta,
+});
 
 /**
  * React Query hook for retrieving detailed route information for terminal pair on date
  */
-export const useRouteDetailsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<RouteDetail[]>
-) => UseQueryResult<RouteDetail[], Error> = createHook(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndTerminalsMeta
-);
+export const useRouteDetailsByTripDateAndTerminals: HookFactory<
+  RouteDetailsByTripDateAndTerminalsInput,
+  RouteDetail[]
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: routeDetailsByTripDateAndTerminalsMeta.functionName,
+  fetchFn: fetchRouteDetailsByTripDateAndTerminals,
+  cacheStrategy: routeDetailsGroup.cacheStrategy,
+});

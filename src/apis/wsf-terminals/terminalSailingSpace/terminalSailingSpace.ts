@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import { terminalSailingSpaceGroup } from "./shared/terminalSailingSpace.endpoints";
 import {
   type TerminalSailingSpaceInput,
@@ -34,22 +31,23 @@ export const terminalSailingSpaceMeta = {
 /**
  * Fetch function for retrieving sailing space availability for all terminals
  */
-export const fetchTerminalSailingSpace: (
-  params?: FetchFunctionParams<TerminalSailingSpaceInput>
-) => Promise<TerminalSailingSpace[]> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceMeta
-);
+export const fetchTerminalSailingSpace: FetchFactory<
+  TerminalSailingSpaceInput,
+  TerminalSailingSpace[]
+> = createFetchFunction({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalSailingSpaceMeta,
+});
 
 /**
  * React Query hook for retrieving sailing space availability for all terminals
  */
-export const useTerminalSailingSpace: (
-  params?: FetchFunctionParams<TerminalSailingSpaceInput>,
-  options?: QueryHookOptions<TerminalSailingSpace[]>
-) => UseQueryResult<TerminalSailingSpace[], Error> = createHook(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceMeta
-);
+export const useTerminalSailingSpace: HookFactory<
+  TerminalSailingSpaceInput,
+  TerminalSailingSpace[]
+> = createHook({
+  apiName: wsfTerminalsApiMeta.name,
+  endpointName: terminalSailingSpaceMeta.functionName,
+  fetchFn: fetchTerminalSailingSpace,
+  cacheStrategy: terminalSailingSpaceGroup.cacheStrategy,
+});

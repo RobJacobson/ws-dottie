@@ -1,15 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
+import { wsfFaresApiMeta } from "../apiMeta";
 import { terminalComboGroup } from "./shared/terminalCombo.endpoints";
 import {
   type TerminalComboInput,
@@ -41,22 +38,23 @@ export const terminalComboFaresMeta = {
 /**
  * Fetch function for retrieving fare collection description for a specific terminal combination and trip date
  */
-export const fetchTerminalComboFares: (
-  params?: FetchFunctionParams<TerminalComboInput>
-) => Promise<TerminalComboFares> = createFetchFunction(
-  wsfFaresApi,
-  terminalComboGroup,
-  terminalComboFaresMeta
-);
+export const fetchTerminalComboFares: FetchFactory<
+  TerminalComboInput,
+  TerminalComboFares
+> = createFetchFunction({
+  api: wsfFaresApiMeta,
+  endpoint: terminalComboFaresMeta,
+});
 
 /**
  * React Query hook for retrieving fare collection description for a specific terminal combination and trip date
  */
-export const useTerminalComboFares: (
-  params?: FetchFunctionParams<TerminalComboInput>,
-  options?: QueryHookOptions<TerminalComboFares>
-) => UseQueryResult<TerminalComboFares, Error> = createHook(
-  wsfFaresApi,
-  terminalComboGroup,
-  terminalComboFaresMeta
-);
+export const useTerminalComboFares: HookFactory<
+  TerminalComboInput,
+  TerminalComboFares
+> = createHook({
+  apiName: wsfFaresApiMeta.name,
+  endpointName: terminalComboFaresMeta.functionName,
+  fetchFn: fetchTerminalComboFares,
+  cacheStrategy: terminalComboGroup.cacheStrategy,
+});

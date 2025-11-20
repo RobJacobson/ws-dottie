@@ -1,14 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
+import type { EndpointMeta } from "@/apis/types";
 import {
   createFetchFunction,
   createHook,
+  type FetchFactory,
+  type HookFactory,
 } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import { timeAdjustmentsGroup } from "./shared/timeAdjustments.endpoints";
 import {
   type TimeAdjustmentsBySchedRouteInput,
@@ -34,22 +31,23 @@ export const timeAdjustmentsBySchedRouteMeta = {
 /**
  * Fetch function for retrieving time adjustments for a specific scheduled route
  */
-export const fetchTimeAdjustmentsBySchedRoute: (
-  params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>
-) => Promise<TimeAdjustment[]> = createFetchFunction(
-  wsfScheduleApi,
-  timeAdjustmentsGroup,
-  timeAdjustmentsBySchedRouteMeta
-);
+export const fetchTimeAdjustmentsBySchedRoute: FetchFactory<
+  TimeAdjustmentsBySchedRouteInput,
+  TimeAdjustment[]
+> = createFetchFunction({
+  api: wsfScheduleApiMeta,
+  endpoint: timeAdjustmentsBySchedRouteMeta,
+});
 
 /**
  * React Query hook for retrieving time adjustments for a specific scheduled route
  */
-export const useTimeAdjustmentsBySchedRoute: (
-  params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>,
-  options?: QueryHookOptions<TimeAdjustment[]>
-) => UseQueryResult<TimeAdjustment[], Error> = createHook(
-  wsfScheduleApi,
-  timeAdjustmentsGroup,
-  timeAdjustmentsBySchedRouteMeta
-);
+export const useTimeAdjustmentsBySchedRoute: HookFactory<
+  TimeAdjustmentsBySchedRouteInput,
+  TimeAdjustment[]
+> = createHook({
+  apiName: wsfScheduleApiMeta.name,
+  endpointName: timeAdjustmentsBySchedRouteMeta.functionName,
+  fetchFn: fetchTimeAdjustmentsBySchedRoute,
+  cacheStrategy: timeAdjustmentsGroup.cacheStrategy,
+});
