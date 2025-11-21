@@ -155,7 +155,7 @@ WSF APIs include special `cacheFlushDate` endpoints that return timestamps indic
 
 ### Automatic Cache Invalidation
 
-The `createHook` factory function automatically detects WSF APIs with STATIC cache strategy and integrates with cache flush date hooks from `src/shared/cache/cacheFlushDate.ts`:
+The factory system automatically detects WSF APIs with STATIC cache strategy and integrates with cache flush date hooks from `src/shared/cache/cacheFlushDate.ts`:
 
 - **Automatic Detection**: Hooks created for WSF APIs (wsf-fares, wsf-schedule, wsf-terminals, wsf-vessels) with STATIC cache strategy automatically use cache flush date invalidation
 - **Polling**: The `useCacheFlushDate` hook polls the relevant cache flush date endpoint every 5 minutes
@@ -164,7 +164,7 @@ The `createHook` factory function automatically detects WSF APIs with STATIC cac
 - **No Persistence**: Flush dates are tracked in-memory using React refs (not localStorage) for the duration of the component lifecycle
 
 The cache flush date system works by:
-1. Each hook created with `createHook` for a WSF API with STATIC strategy calls `useCacheFlushDate(api.name)`
+1. Each hook created for a WSF API with STATIC strategy automatically calls `useCacheFlushDate(api.name)` internally
 2. The flush date query runs independently with a 5-minute refetch interval
 3. `useInvalidateOnFlushChange` monitors the flush date and invalidates the endpoint's cache when it changes
 4. This ensures data is refreshed only when the source data actually changes, not on a fixed schedule
