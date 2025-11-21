@@ -1,7 +1,7 @@
 import equal from "fast-deep-equal";
 import { expect, it } from "vitest";
+import type { Endpoint } from "@/apis/types";
 import { fetchDottie } from "@/shared/fetching";
-import type { Endpoint } from "@/shared/types";
 
 /**
  * Fields that should be ignored during data integrity comparison

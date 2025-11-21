@@ -6,8 +6,8 @@
  * function with appropriate options based on the --jsonp and --no-validation flags.
  */
 
+import type { Endpoint } from "@/apis/types";
 import { fetchDottie } from "@/shared/fetching";
-import type { Endpoint } from "@/shared/types";
 import type { CliOptions } from "./types";
 
 /**

@@ -70,7 +70,7 @@ export interface Endpoint<I, O> extends FetchEndpoint<I, O> {
   /** Computed unique identifier in format "api:function" for backward compatibility */
   id: string;
   /** One-sentence description of what this specific endpoint does */
-  endpointDescription?: string;
+  endpointDescription: string;
 }
 
 /**

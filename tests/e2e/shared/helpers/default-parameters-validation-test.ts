@@ -1,6 +1,6 @@
 import { it } from "vitest";
 import type { z } from "zod";
-import type { Endpoint } from "@/shared/types";
+import type { Endpoint } from "@/apis/types";
 
 /**
  * Creates a test that validates default parameters meet the Zod input schema
