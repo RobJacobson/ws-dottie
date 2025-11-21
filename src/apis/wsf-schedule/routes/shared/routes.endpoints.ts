@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { routesByTripDateMeta } from "../routesByTripDate";
+import { routesByTripDateAndTerminalsMeta } from "../routesByTripDateAndTerminals";
 
 /**
  * Endpoint group metadata for routes endpoints
@@ -17,4 +19,5 @@ export const routesGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [routesByTripDateMeta, routesByTripDateAndTerminalsMeta],
 };

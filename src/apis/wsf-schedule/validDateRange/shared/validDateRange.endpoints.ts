@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { scheduleValidDateRangeMeta } from "../scheduleValidDateRange";
 
 /**
  * Endpoint group metadata for schedule valid date range endpoints
@@ -17,4 +18,5 @@ export const scheduleValidDateRangeGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [scheduleValidDateRangeMeta],
 };

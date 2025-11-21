@@ -330,8 +330,8 @@ paths:
             const data = await searchWeatherInformation({
               params: {
                 "StationID": 1980,
-                "SearchStartTime": "2025-11-17T00:00:00.000Z",
-                "SearchEndTime": "2025-11-18T23:59:59.000Z"
+                "SearchStartTime": "2025-11-20T00:00:00.000Z",
+                "SearchEndTime": "2025-11-21T23:59:59.000Z"
               },
               fetchMode: 'native',
               validate: true

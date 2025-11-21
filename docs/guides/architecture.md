@@ -112,14 +112,24 @@ The endpoint factory system provides a metadata-driven approach to creating cons
 
 #### Factory Functions
 
-The factory system consists of two main factory functions:
+The factory system provides a unified approach to creating both fetch functions and React Query hooks through a single factory call. The primary factory function is:
+
+**`createFetchAndHook`** - Creates both a fetch function and a React Query hook in a single call
+   - Combines fetch function and hook creation into one factory call
+   - Uses lazy loading for cache strategy to avoid circular dependencies
+   - Returns an object with both `fetch` and `hook` properties
+   - Automatically handles cache flush date invalidation for WSF APIs with STATIC cache strategy
+
+The factory system also exports separate functions for specialized use cases:
 
 1. **`createFetchFunction`** - Creates pure fetch functions with no React dependencies
    - Suitable for server-side code, Node.js scripts, and non-React environments
+   - Used internally by cache flush date endpoints to break circular dependencies
    - Returns a strongly-typed async function that accepts `FetchFunctionParams<TInput>`
-   - Uses `buildDescriptor` internally to construct the complete endpoint descriptor
+   - Uses `buildFetchEndpoint` internally to construct the minimal endpoint descriptor
 
 2. **`createHook`** - Creates React Query hooks with intelligent caching
+   - Used internally by `createFetchAndHook`
    - Integrates with TanStack Query for automatic caching and state management
    - Automatically applies cache strategies based on endpoint group configuration
    - Handles cache flush date invalidation for WSF APIs with STATIC cache strategy
@@ -128,28 +138,24 @@ The factory system consists of two main factory functions:
 
 ```typescript
 // Example endpoint definition (metadata-driven pattern)
-const vesselsVerboseMeta = {
-  functionName: "fetchVesselsVerbose",
-  endpoint: "/vesselVerbose",
-  inputSchema: vesselVerboseInputSchema,
-  outputSchema: vesselVerboseSchema.array(),
+const vesselBasicsMeta = {
+  functionName: "fetchVesselBasics",
+  endpoint: "/vesselBasics",
+  inputSchema: vesselBasicsInputSchema,
+  outputSchema: vesselBasicSchema.array(),
   sampleParams: {},
-  endpointDescription: "List complete vessel information for all vessels.",
-} satisfies EndpointMeta<VesselVerboseInput, VesselVerbose[]>;
+  endpointDescription: "List basic information for all vessels in the fleet.",
+} satisfies EndpointMeta<VesselBasicsInput, VesselBasic[]>;
 
-// Create pure fetch function (no React dependencies)
-export const fetchVesselsVerbose = createFetchFunction(
-  apis.wsfVessels,
-  vesselVerboseGroup,
-  vesselsVerboseMeta
-);
+// Create both fetch function and hook in a single call
+const vesselBasicsFactory = createFetchAndHook<VesselBasicsInput, VesselBasic[]>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselBasicsMeta,
+  getEndpointGroup: () => require("./shared/vesselBasics.endpoints").vesselBasicsGroup,
+});
 
-// Create React Query hook (with caching and state management)
-export const useVesselsVerbose = createHook(
-  apis.wsfVessels,
-  vesselVerboseGroup,
-  vesselsVerboseMeta
-);
+// Export both from the factory result
+export const { fetch: fetchVesselBasics, hook: useVesselBasics } = vesselBasicsFactory;
 ```
 
 #### Separation of Concerns
@@ -160,30 +166,70 @@ The factory system separates concerns cleanly:
   - No React dependencies
   - Can be used in Node.js, edge workers, or any JavaScript environment
   - Minimal bundle size when only fetch functions are imported
+  - Uses `buildFetchEndpoint` to create minimal endpoint descriptors with only fetch-related fields
+
+- **`createFetchAndHook`** - Combined factory for both fetch and hook
+  - Primary factory used by all endpoint files
+  - Returns both fetch function and hook in a single call
+  - Uses lazy loading for endpoint group to avoid circular dependencies
+  - Internally calls `createFetchFunction` and `createHook`
 
 - **`createHook`** - React Query integration layer
-  - Built on top of `createFetchFunction`
+  - Used internally by `createFetchAndHook`
+  - Built on top of fetch functions from `createFetchFunction`
   - Adds caching, state management, and automatic refetching
   - Handles cache invalidation for static data sources
 
-#### Build Descriptor Function
+#### Endpoint Building Functions
 
-The `buildDescriptor` function combines three metadata objects into a complete endpoint descriptor:
+The factory system uses two different building functions depending on the use case:
+
+1. **`buildFetchEndpoint`** - Creates minimal endpoint descriptors for fetching operations
+   - Used by `createFetchFunction` to build fetch-only endpoint objects
+   - Contains only fields necessary for fetching: `urlTemplate`, `endpoint`, `inputSchema`, `outputSchema`
+   - Excludes housekeeping metadata used by hooks and other system components
+
+2. **`buildDescriptor`** - Creates complete endpoint descriptors for the registry
+   - Used by `endpointRegistry` to build full endpoint objects with all metadata
+   - Combines API, group, and endpoint metadata into a complete descriptor
+   - Includes computed properties: `urlTemplate`, `id`, `cacheStrategy`, `sampleParams`, etc.
+   - Used by CLI and E2E tests that need access to all endpoint metadata
 
 ```typescript
-function buildDescriptor<I, O>(
-  api: ApiMeta,           // API-level metadata (base URL, name, etc.)
-  group: EndpointGroupMeta, // Group-level metadata (cache strategy, etc.)
-  meta: EndpointMeta<I, O>  // Endpoint-specific metadata
-): Endpoint<I, O>
-```
+// buildFetchEndpoint - minimal descriptor for fetching
+function buildFetchEndpoint<I, O>(
+  api: ApiMeta,
+  endpoint: EndpointMeta<I, O>
+): FetchEndpoint<I, O> {
+  return {
+    urlTemplate: `${api.baseUrl}${endpoint.endpoint}`,
+    endpoint: endpoint.endpoint,
+    inputSchema: endpoint.inputSchema,
+    outputSchema: endpoint.outputSchema,
+  };
+}
 
-This descriptor includes:
-- Complete URL template (`${api.baseUrl}${meta.endpoint}`)
-- Unique endpoint ID (`${api.name}:${meta.functionName}`)
-- Input/output schemas for validation
-- Cache strategy from the group configuration
-- Sample parameters for documentation
+// buildDescriptor - complete descriptor for registry
+function buildDescriptor<I, O>(
+  api: ApiMeta,
+  group: EndpointGroupMeta,
+  endpoint: EndpointMeta<I, O>
+): Endpoint<I, O> {
+  return {
+    api,
+    group,
+    endpoint: endpoint.endpoint,
+    functionName: endpoint.functionName,
+    inputSchema: endpoint.inputSchema,
+    outputSchema: endpoint.outputSchema,
+    sampleParams: endpoint.sampleParams,
+    endpointDescription: endpoint.endpointDescription,
+    cacheStrategy: group.cacheStrategy,
+    urlTemplate: `${api.baseUrl}${endpoint.endpoint}`,
+    id: `${api.name}:${endpoint.functionName}`,
+  };
+}
+```
 
 #### Cache Strategies
 
@@ -217,7 +263,94 @@ This dual-function approach ensures:
 
 This factory system eliminates circular dependencies by keeping fetch functions separate from React hooks, and provides a clean, maintainable way to generate consistent API functions across the entire codebase.
 
-### 4. React Hooks Integration
+### 4. Endpoint Registry
+
+The endpoint registry provides a centralized, automatically-discovered list of all endpoints across all APIs. It serves as the single source of truth for endpoint metadata and is used by the CLI and E2E test infrastructure.
+
+#### Automatic Discovery
+
+The registry (`src/shared/endpointRegistry.ts`) automatically discovers endpoints by iterating through the API graph:
+
+```
+apis (from src/apis/shared/apis.ts)
+  → endpointGroups (array of EndpointGroupMeta)
+    → endpoints (array of EndpointMeta)
+```
+
+The registry creates a flat array of complete `Endpoint` objects, each containing:
+- API metadata (name, base URL, etc.)
+- Group metadata (cache strategy, documentation, etc.)
+- Endpoint metadata (function name, path, schemas, etc.)
+- Computed properties (urlTemplate, unique ID, etc.)
+
+#### Initialization Order
+
+The registry ensures proper initialization order by importing Zod OpenAPI initialization FIRST, before any API modules are imported. This guarantees that all Zod schemas have the `.openapi()` method available when the registry is constructed.
+
+```typescript
+// endpointRegistry.ts
+import "@/shared/zod";  // Initialize Zod OpenAPI FIRST
+import { apis } from "@/apis/shared/apis";
+// ... rest of registry code
+```
+
+#### Usage
+
+The registry is exported from `src/shared/endpointRegistry.ts` and provides:
+
+```typescript
+import { endpoints, apis } from '@/shared/endpointRegistry';
+
+// Flat array of all endpoints
+endpoints.forEach(endpoint => {
+  console.log(`${endpoint.id}: ${endpoint.endpoint}`);
+});
+
+// Access the full API graph
+Object.values(apis).forEach(api => {
+  console.log(`API: ${api.api.name}`);
+  console.log(`Groups: ${api.endpointGroups.length}`);
+});
+```
+
+The registry is primarily used by:
+- **CLI tool** - Discovers all available endpoints for command execution
+- **E2E tests** - Provides endpoint metadata for test generation
+- **Documentation generation** - Iterates through endpoints to generate OpenAPI specs
+
+### 5. API Graph Export
+
+The API graph provides programmatic access to all API definitions, endpoint groups, and endpoints. It is exported through the `./apis` package export and serves as the single source of truth for endpoint structure and metadata.
+
+The graph is structured hierarchically:
+- **APIs** - Top-level containers with API metadata (base URL, name, description)
+- **Endpoint Groups** - Logical groupings of related endpoints with shared cache strategy
+- **Endpoints** - Individual API endpoints with schemas, function names, and metadata
+
+```typescript
+import { apis } from 'ws-dottie/apis';
+
+// Access specific API
+const vesselsApi = apis['wsf-vessels'];
+
+// Navigate the graph structure
+vesselsApi.endpointGroups.forEach(group => {
+  console.log(`Group: ${group.name}`);
+  console.log(`Cache Strategy: ${group.cacheStrategy}`);
+  
+  group.endpoints.forEach(endpoint => {
+    console.log(`  ${endpoint.functionName}: ${endpoint.endpoint}`);
+  });
+});
+```
+
+The API graph is useful for:
+- Building tools that need to discover endpoints dynamically
+- Generating custom documentation or integrations
+- Creating type-safe endpoint introspection utilities
+- Accessing metadata for custom validation or transformation logic
+
+### 6. React Hooks Integration
 
 The library provides TanStack Query hooks for React applications:
 

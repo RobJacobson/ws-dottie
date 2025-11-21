@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { mountainPassConditionByIdMeta } from "../mountainPassConditionById";
+import { mountainPassConditionsMeta } from "../mountainPassConditions";
 
 /**
  * Endpoint group metadata for pass conditions endpoints
@@ -18,4 +20,5 @@ export const passConditionsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "15m",
   },
+  endpoints: [mountainPassConditionsMeta, mountainPassConditionByIdMeta],
 };

@@ -1,12 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
-import { vesselStatsGroup } from "./shared/vesselStats.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import {
   type VesselStatsByIdInput,
   vesselStatsByIdInputSchema,
@@ -27,24 +21,22 @@ export const vesselStatsByVesselIdMeta = {
 } satisfies EndpointMeta<VesselStatsByIdInput, VesselStat>;
 
 /**
- * Fetch function for retrieving technical specifications for a specific vessel by ID
+ * Factory result for vessel stats by vessel ID
  */
-export const fetchVesselStatsByVesselId: (
-  params?: FetchFunctionParams<VesselStatsByIdInput>
-) => Promise<VesselStat> = createFetchFunction(
-  wsfVesselsApi,
-  vesselStatsGroup,
-  vesselStatsByVesselIdMeta
-);
+const vesselStatsByVesselIdFactory = createFetchAndHook<
+  VesselStatsByIdInput,
+  VesselStat
+>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselStatsByVesselIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselStats.endpoints").vesselStatsGroup,
+});
 
 /**
- * React Query hook for retrieving technical specifications for a specific vessel by ID
+ * Fetch function and React Query hook for retrieving technical specifications for a specific vessel by ID
  */
-export const useVesselStatsByVesselId: (
-  params?: FetchFunctionParams<VesselStatsByIdInput>,
-  options?: QueryHookOptions<VesselStat>
-) => UseQueryResult<VesselStat, Error> = createHook(
-  wsfVesselsApi,
-  vesselStatsGroup,
-  vesselStatsByVesselIdMeta
-);
+export const {
+  fetch: fetchVesselStatsByVesselId,
+  hook: useVesselStatsByVesselId,
+} = vesselStatsByVesselIdFactory;

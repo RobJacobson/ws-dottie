@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalBulletinsGroup } from "./shared/terminalBulletins.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalBulletinsByIdInput,
   terminalBulletinsByIdInputSchema,
@@ -33,25 +24,22 @@ export const terminalBulletinsByTerminalIdMeta = {
 } satisfies EndpointMeta<TerminalBulletinsByIdInput, TerminalBulletin>;
 
 /**
- * Fetch function for retrieving bulletins and alerts for a specific terminal by ID
+ * Factory result for terminal bulletins by terminal ID
  */
-export const fetchTerminalBulletinsByTerminalId: (
-  params?: FetchFunctionParams<TerminalBulletinsByIdInput>
-) => Promise<TerminalBulletin> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalBulletinsGroup,
-  terminalBulletinsByTerminalIdMeta
-);
+const terminalBulletinsByTerminalIdFactory = createFetchAndHook<
+  TerminalBulletinsByIdInput,
+  TerminalBulletin
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalBulletinsByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalBulletins.endpoints").terminalBulletinsGroup,
+});
 
 /**
- * React Query hook for retrieving bulletins and alerts for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving bulletins and alerts for a specific terminal by ID
  */
-export const useTerminalBulletinsByTerminalId: (
-  params?: FetchFunctionParams<TerminalBulletinsByIdInput>,
-  options?: QueryHookOptions<TerminalBulletin>
-) => UseQueryResult<TerminalBulletin, Error> = createHook(
-  wsfTerminalsApi,
-  terminalBulletinsGroup,
-  terminalBulletinsByTerminalIdMeta
-);
-
+export const {
+  fetch: fetchTerminalBulletinsByTerminalId,
+  hook: useTerminalBulletinsByTerminalId,
+} = terminalBulletinsByTerminalIdFactory;

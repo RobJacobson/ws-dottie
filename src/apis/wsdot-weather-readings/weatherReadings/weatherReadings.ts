@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherReadingsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { weatherReadingsGroup } from "./shared/weatherReadings.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotWeatherReadingsApiMeta } from "../apiMeta";
 import {
   type WeatherReadingsInput,
   weatherReadingsInputSchema,
@@ -33,24 +24,20 @@ export const weatherReadingsMeta = {
 } satisfies EndpointMeta<WeatherReadingsInput, WeatherReading[]>;
 
 /**
- * Fetch function for retrieving comprehensive weather readings from all weather stations
+ * Factory result for weather readings
  */
-export const fetchWeatherReadings: (
-  params?: FetchFunctionParams<WeatherReadingsInput>
-) => Promise<WeatherReading[]> = createFetchFunction(
-  wsdotWeatherReadingsApi,
-  weatherReadingsGroup,
-  weatherReadingsMeta
-);
+const weatherReadingsFactory = createFetchAndHook<
+  WeatherReadingsInput,
+  WeatherReading[]
+>({
+  api: wsdotWeatherReadingsApiMeta,
+  endpoint: weatherReadingsMeta,
+  getEndpointGroup: () =>
+    require("./shared/weatherReadings.endpoints").weatherReadingsGroup,
+});
 
 /**
- * React Query hook for retrieving comprehensive weather readings from all weather stations
+ * Fetch function and React Query hook for retrieving comprehensive weather readings from all weather stations
  */
-export const useWeatherReadings: (
-  params?: FetchFunctionParams<WeatherReadingsInput>,
-  options?: QueryHookOptions<WeatherReading[]>
-) => UseQueryResult<WeatherReading[], Error> = createHook(
-  wsdotWeatherReadingsApi,
-  weatherReadingsGroup,
-  weatherReadingsMeta
-);
+export const { fetch: fetchWeatherReadings, hook: useWeatherReadings } =
+  weatherReadingsFactory;

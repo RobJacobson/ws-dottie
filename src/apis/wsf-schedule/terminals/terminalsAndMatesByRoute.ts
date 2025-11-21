@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { scheduleTerminalsGroup } from "./shared/terminals.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type TerminalsAndMatesByRouteInput,
   terminalsAndMatesByRouteInputSchema,
@@ -34,24 +25,22 @@ export const terminalsAndMatesByRouteMeta = {
 } satisfies EndpointMeta<TerminalsAndMatesByRouteInput, TerminalMate[]>;
 
 /**
- * Fetch function for retrieving valid terminal pairs for a specific route and trip date
+ * Factory result for terminals and mates by route
  */
-export const fetchTerminalsAndMatesByRoute: (
-  params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>
-) => Promise<TerminalMate[]> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleTerminalsGroup,
-  terminalsAndMatesByRouteMeta
-);
+const terminalsAndMatesByRouteFactory = createFetchAndHook<
+  TerminalsAndMatesByRouteInput,
+  TerminalMate[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: terminalsAndMatesByRouteMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminals.endpoints").scheduleTerminalsGroup,
+});
 
 /**
- * React Query hook for retrieving valid terminal pairs for a specific route and trip date
+ * Fetch function and React Query hook for retrieving valid terminal pairs for a specific route and trip date
  */
-export const useTerminalsAndMatesByRoute: (
-  params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>,
-  options?: QueryHookOptions<TerminalMate[]>
-) => UseQueryResult<TerminalMate[], Error> = createHook(
-  wsfScheduleApi,
-  scheduleTerminalsGroup,
-  terminalsAndMatesByRouteMeta
-);
+export const {
+  fetch: fetchTerminalsAndMatesByRoute,
+  hook: useTerminalsAndMatesByRoute,
+} = terminalsAndMatesByRouteFactory;

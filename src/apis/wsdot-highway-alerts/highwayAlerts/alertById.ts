@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotHighwayAlertsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { highwayAlertsGroup } from "./shared/highwayAlerts.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotHighwayAlertsApiMeta } from "../apiMeta";
 import {
   type AlertByIdInput,
   alertByIdInputSchema,
@@ -29,24 +20,16 @@ export const alertByIdMeta = {
 } satisfies EndpointMeta<AlertByIdInput, Alert>;
 
 /**
- * Fetch function for retrieving highway alert details for a specific alert ID
+ * Factory result for alert by ID
  */
-export const fetchAlertById: (
-  params?: FetchFunctionParams<AlertByIdInput>
-) => Promise<Alert> = createFetchFunction(
-  wsdotHighwayAlertsApi,
-  highwayAlertsGroup,
-  alertByIdMeta
-);
+const alertByIdFactory = createFetchAndHook<AlertByIdInput, Alert>({
+  api: wsdotHighwayAlertsApiMeta,
+  endpoint: alertByIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/highwayAlerts.endpoints").highwayAlertsGroup,
+});
 
 /**
- * React Query hook for retrieving highway alert details for a specific alert ID
+ * Fetch function and React Query hook for retrieving highway alert details for a specific alert ID
  */
-export const useAlertById: (
-  params?: FetchFunctionParams<AlertByIdInput>,
-  options?: QueryHookOptions<Alert>
-) => UseQueryResult<Alert, Error> = createHook(
-  wsdotHighwayAlertsApi,
-  highwayAlertsGroup,
-  alertByIdMeta
-);
+export const { fetch: fetchAlertById, hook: useAlertById } = alertByIdFactory;

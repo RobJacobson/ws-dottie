@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { tollTripVersionMeta } from "../tollTripVersion";
 
 /**
  * Endpoint group metadata for toll trip version endpoints
@@ -17,4 +18,5 @@ export const tollTripVersionGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "5m",
   },
+  endpoints: [tollTripVersionMeta],
 };

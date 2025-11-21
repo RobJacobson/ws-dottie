@@ -9,6 +9,18 @@ import {
 } from "./cacheFlushDate.output";
 
 /**
+ * Metadata for the cache flush date endpoint
+ */
+export const cacheFlushDateVesselsMeta = {
+  functionName: "fetchCacheFlushDateVessels",
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+  sampleParams: {},
+  endpointDescription: "Get cache flush timestamp for static wsf-vessels data.",
+} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
+
+/**
  * Endpoint group metadata for cache flush date endpoints
  */
 export const cacheFlushDateVesselsGroup: EndpointGroupMeta = {
@@ -24,17 +36,5 @@ export const cacheFlushDateVesselsGroup: EndpointGroupMeta = {
       "Coordinate cache refresh across multiple static endpoints.",
     ],
   },
+  endpoints: [cacheFlushDateVesselsMeta],
 };
-
-export const cacheFlushDateVesselsMeta = {
-  functionName: "fetchCacheFlushDateVessels",
-  endpoint: "/cacheflushdate",
-  inputSchema: cacheFlushDateInputSchema,
-  outputSchema: cacheFlushDateOutputSchema,
-  sampleParams: {},
-  endpointDescription: "Get cache flush timestamp for static wsf-vessels data.",
-} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
-
-export const cacheFlushDateVesselsEndpoints = {
-  cacheFlushDate: cacheFlushDateVesselsMeta,
-} as const;

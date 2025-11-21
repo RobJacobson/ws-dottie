@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { fareLineItemsGroup } from "./shared/fareLineItems.endpoints";
+import { wsfFaresApiMeta } from "../apiMeta";
 import {
   type FareLineItemsVerboseInput,
   fareLineItemsVerboseInputSchema,
@@ -34,24 +25,22 @@ export const fareLineItemsVerboseMeta = {
 } satisfies EndpointMeta<FareLineItemsVerboseInput, LineItemVerbose>;
 
 /**
- * Fetch function for retrieving all fare line items for all terminal combinations on a trip date
+ * Factory result for fare line items verbose
  */
-export const fetchFareLineItemsVerbose: (
-  params?: FetchFunctionParams<FareLineItemsVerboseInput>
-) => Promise<LineItemVerbose> = createFetchFunction(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsVerboseMeta
-);
+const fareLineItemsVerboseFactory = createFetchAndHook<
+  FareLineItemsVerboseInput,
+  LineItemVerbose
+>({
+  api: wsfFaresApiMeta,
+  endpoint: fareLineItemsVerboseMeta,
+  getEndpointGroup: () =>
+    require("./shared/fareLineItems.endpoints").fareLineItemsGroup,
+});
 
 /**
- * React Query hook for retrieving all fare line items for all terminal combinations on a trip date
+ * Fetch function and React Query hook for retrieving all fare line items for all terminal combinations on a trip date
  */
-export const useFareLineItemsVerbose: (
-  params?: FetchFunctionParams<FareLineItemsVerboseInput>,
-  options?: QueryHookOptions<LineItemVerbose>
-) => UseQueryResult<LineItemVerbose, Error> = createHook(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsVerboseMeta
-);
+export const {
+  fetch: fetchFareLineItemsVerbose,
+  hook: useFareLineItemsVerbose,
+} = fareLineItemsVerboseFactory;

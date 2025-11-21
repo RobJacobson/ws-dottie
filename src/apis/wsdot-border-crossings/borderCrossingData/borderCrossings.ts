@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotBorderCrossingsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { borderCrossingDataGroup } from "./shared/borderCrossingData.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotBorderCrossingsApiMeta } from "../apiMeta";
 import {
   type BorderCrossingsInput,
   borderCrossingsInputSchema,
@@ -33,24 +24,20 @@ export const borderCrossingsMeta = {
 } satisfies EndpointMeta<BorderCrossingsInput, BorderCrossing[]>;
 
 /**
- * Fetch function for retrieving current wait times for all Washington border crossings into Canada
+ * Factory result for border crossings
  */
-export const fetchBorderCrossings: (
-  params?: FetchFunctionParams<BorderCrossingsInput>
-) => Promise<BorderCrossing[]> = createFetchFunction(
-  wsdotBorderCrossingsApi,
-  borderCrossingDataGroup,
-  borderCrossingsMeta
-);
+const borderCrossingsFactory = createFetchAndHook<
+  BorderCrossingsInput,
+  BorderCrossing[]
+>({
+  api: wsdotBorderCrossingsApiMeta,
+  endpoint: borderCrossingsMeta,
+  getEndpointGroup: () =>
+    require("./shared/borderCrossingData.endpoints").borderCrossingDataGroup,
+});
 
 /**
- * React Query hook for retrieving current wait times for all Washington border crossings into Canada
+ * Fetch function and React Query hook for retrieving current wait times for all Washington border crossings into Canada
  */
-export const useBorderCrossings: (
-  params?: FetchFunctionParams<BorderCrossingsInput>,
-  options?: QueryHookOptions<BorderCrossing[]>
-) => UseQueryResult<BorderCrossing[], Error> = createHook(
-  wsdotBorderCrossingsApi,
-  borderCrossingDataGroup,
-  borderCrossingsMeta
-);
+export const { fetch: fetchBorderCrossings, hook: useBorderCrossings } =
+  borderCrossingsFactory;

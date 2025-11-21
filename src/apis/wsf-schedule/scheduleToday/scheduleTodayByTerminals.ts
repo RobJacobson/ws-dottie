@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { scheduleTodayGroup } from "./shared/scheduleToday.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type ScheduleTodayByTerminalsInput,
   scheduleTodayByTerminalsInputSchema,
@@ -34,24 +25,22 @@ export const scheduleTodayByTerminalsMeta = {
 } satisfies EndpointMeta<ScheduleTodayByTerminalsInput, Schedule>;
 
 /**
- * Fetch function for retrieving today's schedule for a terminal pair
+ * Factory result for schedule today by terminals
  */
-export const fetchScheduleTodayByTerminals: (
-  params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>
-) => Promise<Schedule> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleTodayGroup,
-  scheduleTodayByTerminalsMeta
-);
+const scheduleTodayByTerminalsFactory = createFetchAndHook<
+  ScheduleTodayByTerminalsInput,
+  Schedule
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduleTodayByTerminalsMeta,
+  getEndpointGroup: () =>
+    require("./shared/scheduleToday.endpoints").scheduleTodayGroup,
+});
 
 /**
- * React Query hook for retrieving today's schedule for a terminal pair
+ * Fetch function and React Query hook for retrieving today's schedule for a terminal pair
  */
-export const useScheduleTodayByTerminals: (
-  params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>,
-  options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error> = createHook(
-  wsfScheduleApi,
-  scheduleTodayGroup,
-  scheduleTodayByTerminalsMeta
-);
+export const {
+  fetch: fetchScheduleTodayByTerminals,
+  hook: useScheduleTodayByTerminals,
+} = scheduleTodayByTerminalsFactory;

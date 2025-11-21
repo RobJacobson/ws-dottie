@@ -1,4 +1,4 @@
-import type { Endpoint, FetchStrategy, LoggingMode } from "@/shared/types";
+import type { FetchEndpoint, FetchStrategy, LoggingMode } from "@/shared/types";
 
 /**
  * Parameters for the fetchDottie function
@@ -7,8 +7,8 @@ import type { Endpoint, FetchStrategy, LoggingMode } from "@/shared/types";
  * @template TOutput - The output response type
  */
 export interface FetchDottieParams<TInput = never, TOutput = unknown> {
-  /** Complete endpoint object containing configuration and schemas */
-  endpoint: Endpoint<TInput, TOutput>;
+  /** Minimal endpoint object containing only fetching-necessary fields */
+  endpoint: FetchEndpoint<TInput, TOutput>;
   /** Optional input parameters */
   params?: TInput;
   /** Fetch strategy - how to fetch the data (default: "native") */

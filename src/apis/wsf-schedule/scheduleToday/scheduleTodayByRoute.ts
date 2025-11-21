@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { scheduleTodayGroup } from "./shared/scheduleToday.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type ScheduleTodayByRouteInput,
   scheduleTodayByRouteSchema,
@@ -29,24 +20,22 @@ export const scheduleTodayByRouteMeta = {
 } satisfies EndpointMeta<ScheduleTodayByRouteInput, Schedule>;
 
 /**
- * Fetch function for retrieving today's schedule for a specific route
+ * Factory result for schedule today by route
  */
-export const fetchScheduleTodayByRoute: (
-  params?: FetchFunctionParams<ScheduleTodayByRouteInput>
-) => Promise<Schedule> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleTodayGroup,
-  scheduleTodayByRouteMeta
-);
+const scheduleTodayByRouteFactory = createFetchAndHook<
+  ScheduleTodayByRouteInput,
+  Schedule
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduleTodayByRouteMeta,
+  getEndpointGroup: () =>
+    require("./shared/scheduleToday.endpoints").scheduleTodayGroup,
+});
 
 /**
- * React Query hook for retrieving today's schedule for a specific route
+ * Fetch function and React Query hook for retrieving today's schedule for a specific route
  */
-export const useScheduleTodayByRoute: (
-  params?: FetchFunctionParams<ScheduleTodayByRouteInput>,
-  options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error> = createHook(
-  wsfScheduleApi,
-  scheduleTodayGroup,
-  scheduleTodayByRouteMeta
-);
+export const {
+  fetch: fetchScheduleTodayByRoute,
+  hook: useScheduleTodayByRoute,
+} = scheduleTodayByRouteFactory;

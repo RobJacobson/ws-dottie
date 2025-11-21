@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchTravelTimeByIdOutput": {
+      "FetchTravelTimesOutput": {
         "type": "object",
         "properties": {
           "AverageTime": {
@@ -203,69 +203,6 @@
     }
   },
   "paths": {
-    "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}": {
-      "get": {
-        "summary": "Get travel time data for a specific route by ID.",
-        "operationId": "fetchTravelTimeById",
-        "tags": [
-          "travel-time-routes"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchTravelTimeById } from 'ws-dottie/wsdot-travel-times/core';\n\nconst data = await fetchTravelTimeById({\n  params: {\n    \"TravelTimeID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchTravelTimeByIdInputTravelTimeIDParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FetchTravelTimeByIdOutput"
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API",
-                    "value": {
-                      "AverageTime": 27,
-                      "CurrentTime": 26,
-                      "Description": "Everett to Downtown Seattle",
-                      "Distance": 26.72,
-                      "EndPoint": {
-                        "Description": "I-5 @ University St in Seattle",
-                        "Direction": "S",
-                        "Latitude": 47.609294,
-                        "Longitude": -122.331759,
-                        "MilePost": 165.83,
-                        "RoadName": "005"
-                      },
-                      "Name": "Everett-Seattle",
-                      "StartPoint": {
-                        "Description": "I-5 @ 41st St in Everett",
-                        "Direction": "S",
-                        "Latitude": 47.964146,
-                        "Longitude": -122.199237,
-                        "MilePost": 192.55,
-                        "RoadName": "005"
-                      },
-                      "TimeUpdated": "2025-11-15T17:40:00.000Z",
-                      "TravelTimeID": 1
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/getTravelTimesAsJson": {
       "get": {
         "summary": "List travel time data for all available routes.",
@@ -287,7 +224,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchTravelTimeByIdOutput"
+                    "$ref": "#/components/schemas/FetchTravelTimesOutput"
                   }
                 },
                 "examples": {
@@ -321,6 +258,69 @@
                         "TravelTimeID": 2
                       }
                     ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}": {
+      "get": {
+        "summary": "Get travel time data for a specific route by ID.",
+        "operationId": "fetchTravelTimeById",
+        "tags": [
+          "travel-time-routes"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchTravelTimeById } from 'ws-dottie/wsdot-travel-times/core';\n\nconst data = await fetchTravelTimeById({\n  params: {\n    \"TravelTimeID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FetchTravelTimeByIdInputTravelTimeIDParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchTravelTimesOutput"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API",
+                    "value": {
+                      "AverageTime": 27,
+                      "CurrentTime": 26,
+                      "Description": "Everett to Downtown Seattle",
+                      "Distance": 26.72,
+                      "EndPoint": {
+                        "Description": "I-5 @ University St in Seattle",
+                        "Direction": "S",
+                        "Latitude": 47.609294,
+                        "Longitude": -122.331759,
+                        "MilePost": 165.83,
+                        "RoadName": "005"
+                      },
+                      "Name": "Everett-Seattle",
+                      "StartPoint": {
+                        "Description": "I-5 @ 41st St in Everett",
+                        "Direction": "S",
+                        "Latitude": 47.964146,
+                        "Longitude": -122.199237,
+                        "MilePost": 192.55,
+                        "RoadName": "005"
+                      },
+                      "TimeUpdated": "2025-11-15T17:40:00.000Z",
+                      "TravelTimeID": 1
+                    }
                   }
                 }
               }

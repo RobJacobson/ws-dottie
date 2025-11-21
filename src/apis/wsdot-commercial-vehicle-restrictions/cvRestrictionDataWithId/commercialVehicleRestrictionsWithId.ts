@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotCommercialVehicleRestrictionsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { cvRestrictionDataWithIdGroup } from "./shared/cvRestrictionDataWithId.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotCommercialVehicleRestrictionsApiMeta } from "../apiMeta";
 import {
   type CommercialVehicleRestrictionsWithIdInput,
   commercialVehicleRestrictionsWithIdInputSchema,
@@ -36,24 +27,23 @@ export const commercialVehicleRestrictionsWithIdMeta = {
 >;
 
 /**
- * Fetch function for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
+ * Factory result for commercial vehicle restrictions with ID
  */
-export const fetchCommercialVehicleRestrictionsWithId: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsWithIdInput>
-) => Promise<CVRestrictionWithId[]> = createFetchFunction(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataWithIdGroup,
-  commercialVehicleRestrictionsWithIdMeta
-);
+const commercialVehicleRestrictionsWithIdFactory = createFetchAndHook<
+  CommercialVehicleRestrictionsWithIdInput,
+  CVRestrictionWithId[]
+>({
+  api: wsdotCommercialVehicleRestrictionsApiMeta,
+  endpoint: commercialVehicleRestrictionsWithIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/cvRestrictionDataWithId.endpoints")
+      .cvRestrictionDataWithIdGroup,
+});
 
 /**
- * React Query hook for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
+ * Fetch function and React Query hook for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
  */
-export const useCommercialVehicleRestrictionsWithId: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsWithIdInput>,
-  options?: QueryHookOptions<CVRestrictionWithId[]>
-) => UseQueryResult<CVRestrictionWithId[], Error> = createHook(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataWithIdGroup,
-  commercialVehicleRestrictionsWithIdMeta
-);
+export const {
+  fetch: fetchCommercialVehicleRestrictionsWithId,
+  hook: useCommercialVehicleRestrictionsWithId,
+} = commercialVehicleRestrictionsWithIdFactory;

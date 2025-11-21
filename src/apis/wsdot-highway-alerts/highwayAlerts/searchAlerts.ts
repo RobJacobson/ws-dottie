@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotHighwayAlertsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { highwayAlertsGroup } from "./shared/highwayAlerts.endpoints";
+import { wsdotHighwayAlertsApiMeta } from "../apiMeta";
 import {
   type SearchAlertsInput,
   searchAlertsInputSchema,
@@ -38,24 +29,17 @@ export const searchAlertsMeta = {
 } satisfies EndpointMeta<SearchAlertsInput, Alert[]>;
 
 /**
- * Fetch function for searching highway alerts by route, region, time range, and milepost
+ * Factory result for search alerts
  */
-export const searchAlerts: (
-  params?: FetchFunctionParams<SearchAlertsInput>
-) => Promise<Alert[]> = createFetchFunction(
-  wsdotHighwayAlertsApi,
-  highwayAlertsGroup,
-  searchAlertsMeta
-);
+const searchAlertsFactory = createFetchAndHook<SearchAlertsInput, Alert[]>({
+  api: wsdotHighwayAlertsApiMeta,
+  endpoint: searchAlertsMeta,
+  getEndpointGroup: () =>
+    require("./shared/highwayAlerts.endpoints").highwayAlertsGroup,
+});
 
 /**
- * React Query hook for searching highway alerts by route, region, time range, and milepost
+ * Fetch function and React Query hook for searching highway alerts by route, region, time range, and milepost
  */
-export const useSearchAlerts: (
-  params?: FetchFunctionParams<SearchAlertsInput>,
-  options?: QueryHookOptions<Alert[]>
-) => UseQueryResult<Alert[], Error> = createHook(
-  wsdotHighwayAlertsApi,
-  highwayAlertsGroup,
-  searchAlertsMeta
-);
+export const { fetch: searchAlerts, hook: useSearchAlerts } =
+  searchAlertsFactory;

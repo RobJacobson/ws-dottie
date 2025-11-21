@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { terminalComboGroup } from "./shared/terminalCombo.endpoints";
+import { wsfFaresApiMeta } from "../apiMeta";
 import {
   type TerminalComboFaresVerboseInput,
   terminalComboFaresVerboseInputSchema,
@@ -37,24 +28,22 @@ export const terminalComboFaresVerboseMeta = {
 >;
 
 /**
- * Fetch function for retrieving fare collection descriptions for all terminal combinations on a trip date
+ * Factory result for terminal combo fares verbose
  */
-export const fetchTerminalComboFaresVerbose: (
-  params?: FetchFunctionParams<TerminalComboFaresVerboseInput>
-) => Promise<TerminalComboFaresVerbose[]> = createFetchFunction(
-  wsfFaresApi,
-  terminalComboGroup,
-  terminalComboFaresVerboseMeta
-);
+const terminalComboFaresVerboseFactory = createFetchAndHook<
+  TerminalComboFaresVerboseInput,
+  TerminalComboFaresVerbose[]
+>({
+  api: wsfFaresApiMeta,
+  endpoint: terminalComboFaresVerboseMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalCombo.endpoints").terminalComboGroup,
+});
 
 /**
- * React Query hook for retrieving fare collection descriptions for all terminal combinations on a trip date
+ * Fetch function and React Query hook for retrieving fare collection descriptions for all terminal combinations on a trip date
  */
-export const useTerminalComboFaresVerbose: (
-  params?: FetchFunctionParams<TerminalComboFaresVerboseInput>,
-  options?: QueryHookOptions<TerminalComboFaresVerbose[]>
-) => UseQueryResult<TerminalComboFaresVerbose[], Error> = createHook(
-  wsfFaresApi,
-  terminalComboGroup,
-  terminalComboFaresVerboseMeta
-);
+export const {
+  fetch: fetchTerminalComboFaresVerbose,
+  hook: useTerminalComboFaresVerbose,
+} = terminalComboFaresVerboseFactory;

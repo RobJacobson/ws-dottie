@@ -1,12 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
-import { vesselAccommodationsGroup } from "./shared/vesselAccommodations.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import {
   type VesselAccommodationsInput,
   vesselAccommodationsInputSchema,
@@ -30,24 +24,23 @@ export const vesselAccommodationsMeta = {
 } satisfies EndpointMeta<VesselAccommodationsInput, VesselAccommodation[]>;
 
 /**
- * Fetch function for retrieving amenities and accessibility features for all vessels
+ * Factory result for vessel accommodations
  */
-export const fetchVesselAccommodations: (
-  params?: FetchFunctionParams<VesselAccommodationsInput>
-) => Promise<VesselAccommodation[]> = createFetchFunction(
-  wsfVesselsApi,
-  vesselAccommodationsGroup,
-  vesselAccommodationsMeta
-);
+const vesselAccommodationsFactory = createFetchAndHook<
+  VesselAccommodationsInput,
+  VesselAccommodation[]
+>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselAccommodationsMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselAccommodations.endpoints")
+      .vesselAccommodationsGroup,
+});
 
 /**
- * React Query hook for retrieving amenities and accessibility features for all vessels
+ * Fetch function and React Query hook for retrieving amenities and accessibility features for all vessels
  */
-export const useVesselAccommodations: (
-  params?: FetchFunctionParams<VesselAccommodationsInput>,
-  options?: QueryHookOptions<VesselAccommodation[]>
-) => UseQueryResult<VesselAccommodation[], Error> = createHook(
-  wsfVesselsApi,
-  vesselAccommodationsGroup,
-  vesselAccommodationsMeta
-);
+export const {
+  fetch: fetchVesselAccommodations,
+  hook: useVesselAccommodations,
+} = vesselAccommodationsFactory;

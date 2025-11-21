@@ -1,20 +1,11 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
 import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
 import { terminalMatesInputSchema } from "@/apis/shared/terminals.input";
 import type { TerminalList } from "@/apis/shared/terminals.output";
 import { terminalListSchema } from "@/apis/shared/terminals.output";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { scheduleTerminalMatesGroup } from "./shared/terminalMates.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 
 /**
  * Metadata for the fetchTerminalMatesSchedule endpoint
@@ -30,24 +21,22 @@ export const terminalMatesScheduleMeta = {
 } satisfies EndpointMeta<TerminalMatesInput, TerminalList>;
 
 /**
- * Fetch function for retrieving valid arriving terminals for a departing terminal and trip date
+ * Factory result for terminal mates schedule
  */
-export const fetchTerminalMatesSchedule: (
-  params?: FetchFunctionParams<TerminalMatesInput>
-) => Promise<TerminalList> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleTerminalMatesGroup,
-  terminalMatesScheduleMeta
-);
+const terminalMatesScheduleFactory = createFetchAndHook<
+  TerminalMatesInput,
+  TerminalList
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: terminalMatesScheduleMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalMates.endpoints").scheduleTerminalMatesGroup,
+});
 
 /**
- * React Query hook for retrieving valid arriving terminals for a departing terminal and trip date
+ * Fetch function and React Query hook for retrieving valid arriving terminals for a departing terminal and trip date
  */
-export const useTerminalMatesSchedule: (
-  params?: FetchFunctionParams<TerminalMatesInput>,
-  options?: QueryHookOptions<TerminalList>
-) => UseQueryResult<TerminalList, Error> = createHook(
-  wsfScheduleApi,
-  scheduleTerminalMatesGroup,
-  terminalMatesScheduleMeta
-);
+export const {
+  fetch: fetchTerminalMatesSchedule,
+  hook: useTerminalMatesSchedule,
+} = terminalMatesScheduleFactory;

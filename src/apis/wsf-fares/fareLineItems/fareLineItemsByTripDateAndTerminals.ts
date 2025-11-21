@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { fareLineItemsGroup } from "./shared/fareLineItems.endpoints";
+import { wsfFaresApiMeta } from "../apiMeta";
 import {
   type FareLineItemsByTripDateAndTerminalsInput,
   fareLineItemsByTripDateAndTerminalsInputSchema,
@@ -37,24 +28,22 @@ export const fareLineItemsByTripDateAndTerminalsMeta = {
 } satisfies EndpointMeta<FareLineItemsByTripDateAndTerminalsInput, LineItem[]>;
 
 /**
- * Fetch function for retrieving all fare line items for a specific terminal combination and trip type
+ * Factory result for fare line items by trip date and terminals
  */
-export const fetchFareLineItemsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>
-) => Promise<LineItem[]> = createFetchFunction(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsByTripDateAndTerminalsMeta
-);
+const fareLineItemsByTripDateAndTerminalsFactory = createFetchAndHook<
+  FareLineItemsByTripDateAndTerminalsInput,
+  LineItem[]
+>({
+  api: wsfFaresApiMeta,
+  endpoint: fareLineItemsByTripDateAndTerminalsMeta,
+  getEndpointGroup: () =>
+    require("./shared/fareLineItems.endpoints").fareLineItemsGroup,
+});
 
 /**
- * React Query hook for retrieving all fare line items for a specific terminal combination and trip type
+ * Fetch function and React Query hook for retrieving all fare line items for a specific terminal combination and trip type
  */
-export const useFareLineItemsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<LineItem[]>
-) => UseQueryResult<LineItem[], Error> = createHook(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsByTripDateAndTerminalsMeta
-);
+export const {
+  fetch: fetchFareLineItemsByTripDateAndTerminals,
+  hook: useFareLineItemsByTripDateAndTerminals,
+} = fareLineItemsByTripDateAndTerminalsFactory;

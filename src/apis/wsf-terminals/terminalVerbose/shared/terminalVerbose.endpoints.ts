@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalVerboseMeta } from "../terminalVerbose";
+import { terminalVerboseByTerminalIdMeta } from "../terminalVerboseByTerminalId";
 
 /**
  * Endpoint group metadata for terminal verbose endpoints
@@ -17,4 +19,5 @@ export const terminalVerboseGroup: EndpointGroupMeta = {
       "Build integrated terminal information displays.",
     ],
   },
+  endpoints: [terminalVerboseMeta, terminalVerboseByTerminalIdMeta],
 };

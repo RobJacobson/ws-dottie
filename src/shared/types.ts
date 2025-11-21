@@ -29,31 +29,43 @@ export type CacheStrategy =
 // ============================================================================
 
 /**
- * Runtime endpoint interface with computed properties
+ * Minimal endpoint interface for fetching operations
  *
- * This interface defines the structure for runtime endpoint objects that are
- * created from endpoint configurations. It includes all necessary information
- * for validation, caching, and URL generation.
+ * Contains only the fields necessary for making API requests,
+ * excluding housekeeping metadata used elsewhere in the system.
  */
-export interface Endpoint<I, O> {
-  /** API configuration */
-  api: ApiMeta;
-  /** Endpoint group metadata */
-  group: EndpointGroupMeta;
-  /** Complete HTTP endpoint URL template */
+export interface FetchEndpoint<I, O> {
+  /** Complete URL template with domain for building requests */
+  urlTemplate: string;
+  /** Endpoint path for logging and error messages */
   endpoint: string;
   /** Zod schema for input validation (optional - excluded in lite builds) */
   inputSchema?: z.ZodSchema<I>;
   /** Zod schema for output validation (optional - excluded in lite builds) */
   outputSchema?: z.ZodSchema<O>;
+}
+
+/**
+ * Runtime endpoint interface with computed properties
+ *
+ * This interface defines the structure for runtime endpoint objects that are
+ * created from endpoint configurations. It includes all necessary information
+ * for validation, caching, and URL generation.
+ *
+ * Extends FetchEndpoint with additional housekeeping metadata used by hooks,
+ * documentation, and other system components.
+ */
+export interface Endpoint<I, O> extends FetchEndpoint<I, O> {
+  /** API configuration */
+  api: ApiMeta;
+  /** Endpoint group metadata */
+  group: EndpointGroupMeta;
   /** Optional sample parameters for testing */
   sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
   /** Cache strategy */
   cacheStrategy: CacheStrategy;
   /** Function name */
   functionName: string;
-  /** Complete URL template with domain */
-  urlTemplate: string;
   /** Computed unique identifier in format "api:function" for backward compatibility */
   id: string;
   /** One-sentence description of what this specific endpoint does */

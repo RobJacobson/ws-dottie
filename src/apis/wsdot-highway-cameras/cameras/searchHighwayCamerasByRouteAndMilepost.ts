@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotHighwayCamerasApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { camerasGroup } from "./shared/cameras.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotHighwayCamerasApiMeta } from "../apiMeta";
 import {
   type HighwayCamerasByRouteAndMilepostInput,
   highwayCamerasByRouteAndMilepostInputSchema,
@@ -33,24 +24,21 @@ export const searchHighwayCamerasByRouteAndMilepostMeta = {
 } satisfies EndpointMeta<HighwayCamerasByRouteAndMilepostInput, Camera[]>;
 
 /**
- * Fetch function for searching cameras by route and milepost range
+ * Factory result for search highway cameras by route and milepost
  */
-export const searchHighwayCamerasByRouteAndMilepost: (
-  params?: FetchFunctionParams<HighwayCamerasByRouteAndMilepostInput>
-) => Promise<Camera[]> = createFetchFunction(
-  wsdotHighwayCamerasApi,
-  camerasGroup,
-  searchHighwayCamerasByRouteAndMilepostMeta
-);
+const searchHighwayCamerasByRouteAndMilepostFactory = createFetchAndHook<
+  HighwayCamerasByRouteAndMilepostInput,
+  Camera[]
+>({
+  api: wsdotHighwayCamerasApiMeta,
+  endpoint: searchHighwayCamerasByRouteAndMilepostMeta,
+  getEndpointGroup: () => require("./shared/cameras.endpoints").camerasGroup,
+});
 
 /**
- * React Query hook for searching cameras by route and milepost range
+ * Fetch function and React Query hook for searching cameras by route and milepost range
  */
-export const useSearchHighwayCamerasByRouteAndMilepost: (
-  params?: FetchFunctionParams<HighwayCamerasByRouteAndMilepostInput>,
-  options?: QueryHookOptions<Camera[]>
-) => UseQueryResult<Camera[], Error> = createHook(
-  wsdotHighwayCamerasApi,
-  camerasGroup,
-  searchHighwayCamerasByRouteAndMilepostMeta
-);
+export const {
+  fetch: searchHighwayCamerasByRouteAndMilepost,
+  hook: useSearchHighwayCamerasByRouteAndMilepost,
+} = searchHighwayCamerasByRouteAndMilepostFactory;

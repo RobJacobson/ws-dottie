@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalBulletinsGroup } from "./shared/terminalBulletins.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalBulletinsInput,
   terminalBulletinsInputSchema,
@@ -32,24 +23,20 @@ export const terminalBulletinsMeta = {
 } satisfies EndpointMeta<TerminalBulletinsInput, TerminalBulletin[]>;
 
 /**
- * Fetch function for retrieving bulletins and alerts for all terminals
+ * Factory result for terminal bulletins
  */
-export const fetchTerminalBulletins: (
-  params?: FetchFunctionParams<TerminalBulletinsInput>
-) => Promise<TerminalBulletin[]> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalBulletinsGroup,
-  terminalBulletinsMeta
-);
+const terminalBulletinsFactory = createFetchAndHook<
+  TerminalBulletinsInput,
+  TerminalBulletin[]
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalBulletinsMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalBulletins.endpoints").terminalBulletinsGroup,
+});
 
 /**
- * React Query hook for retrieving bulletins and alerts for all terminals
+ * Fetch function and React Query hook for retrieving bulletins and alerts for all terminals
  */
-export const useTerminalBulletins: (
-  params?: FetchFunctionParams<TerminalBulletinsInput>,
-  options?: QueryHookOptions<TerminalBulletin[]>
-) => UseQueryResult<TerminalBulletin[], Error> = createHook(
-  wsfTerminalsApi,
-  terminalBulletinsGroup,
-  terminalBulletinsMeta
-);
+export const { fetch: fetchTerminalBulletins, hook: useTerminalBulletins } =
+  terminalBulletinsFactory;

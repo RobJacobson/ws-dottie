@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotMountainPassConditionsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { passConditionsGroup } from "./shared/passConditions.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotMountainPassConditionsApiMeta } from "../apiMeta";
 import {
   type MountainPassConditionByIdInput,
   mountainPassConditionByIdInputSchema,
@@ -33,24 +24,22 @@ export const mountainPassConditionByIdMeta = {
 } satisfies EndpointMeta<MountainPassConditionByIdInput, PassCondition>;
 
 /**
- * Fetch function for retrieving current conditions for a specific mountain pass by ID
+ * Factory result for mountain pass condition by ID
  */
-export const fetchMountainPassConditionById: (
-  params?: FetchFunctionParams<MountainPassConditionByIdInput>
-) => Promise<PassCondition> = createFetchFunction(
-  wsdotMountainPassConditionsApi,
-  passConditionsGroup,
-  mountainPassConditionByIdMeta
-);
+const mountainPassConditionByIdFactory = createFetchAndHook<
+  MountainPassConditionByIdInput,
+  PassCondition
+>({
+  api: wsdotMountainPassConditionsApiMeta,
+  endpoint: mountainPassConditionByIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/passConditions.endpoints").passConditionsGroup,
+});
 
 /**
- * React Query hook for retrieving current conditions for a specific mountain pass by ID
+ * Fetch function and React Query hook for retrieving current conditions for a specific mountain pass by ID
  */
-export const useMountainPassConditionById: (
-  params?: FetchFunctionParams<MountainPassConditionByIdInput>,
-  options?: QueryHookOptions<PassCondition>
-) => UseQueryResult<PassCondition, Error> = createHook(
-  wsdotMountainPassConditionsApi,
-  passConditionsGroup,
-  mountainPassConditionByIdMeta
-);
+export const {
+  fetch: fetchMountainPassConditionById,
+  hook: useMountainPassConditionById,
+} = mountainPassConditionByIdFactory;

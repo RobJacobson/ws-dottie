@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotMountainPassConditionsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { passConditionsGroup } from "./shared/passConditions.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotMountainPassConditionsApiMeta } from "../apiMeta";
 import {
   type MountainPassConditionsInput,
   mountainPassConditionsInputSchema,
@@ -33,24 +24,22 @@ export const mountainPassConditionsMeta = {
 } satisfies EndpointMeta<MountainPassConditionsInput, PassCondition[]>;
 
 /**
- * Fetch function for retrieving current conditions for all monitored mountain passes
+ * Factory result for mountain pass conditions
  */
-export const fetchMountainPassConditions: (
-  params?: FetchFunctionParams<MountainPassConditionsInput>
-) => Promise<PassCondition[]> = createFetchFunction(
-  wsdotMountainPassConditionsApi,
-  passConditionsGroup,
-  mountainPassConditionsMeta
-);
+const mountainPassConditionsFactory = createFetchAndHook<
+  MountainPassConditionsInput,
+  PassCondition[]
+>({
+  api: wsdotMountainPassConditionsApiMeta,
+  endpoint: mountainPassConditionsMeta,
+  getEndpointGroup: () =>
+    require("./shared/passConditions.endpoints").passConditionsGroup,
+});
 
 /**
- * React Query hook for retrieving current conditions for all monitored mountain passes
+ * Fetch function and React Query hook for retrieving current conditions for all monitored mountain passes
  */
-export const useMountainPassConditions: (
-  params?: FetchFunctionParams<MountainPassConditionsInput>,
-  options?: QueryHookOptions<PassCondition[]>
-) => UseQueryResult<PassCondition[], Error> = createHook(
-  wsdotMountainPassConditionsApi,
-  passConditionsGroup,
-  mountainPassConditionsMeta
-);
+export const {
+  fetch: fetchMountainPassConditions,
+  hook: useMountainPassConditions,
+} = mountainPassConditionsFactory;

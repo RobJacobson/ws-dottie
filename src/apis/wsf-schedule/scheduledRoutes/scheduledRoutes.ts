@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { scheduledRoutesGroup } from "./shared/scheduledRoutes.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type ScheduledRoutesInput,
   scheduledRoutesInputSchema,
@@ -33,24 +24,20 @@ export const scheduledRoutesMeta = {
 } satisfies EndpointMeta<ScheduledRoutesInput, SchedRoute[]>;
 
 /**
- * Fetch function for retrieving all scheduled routes across current and upcoming seasons
+ * Factory result for scheduled routes
  */
-export const fetchScheduledRoutes: (
-  params?: FetchFunctionParams<ScheduledRoutesInput>
-) => Promise<SchedRoute[]> = createFetchFunction(
-  wsfScheduleApi,
-  scheduledRoutesGroup,
-  scheduledRoutesMeta
-);
+const scheduledRoutesFactory = createFetchAndHook<
+  ScheduledRoutesInput,
+  SchedRoute[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduledRoutesMeta,
+  getEndpointGroup: () =>
+    require("./shared/scheduledRoutes.endpoints").scheduledRoutesGroup,
+});
 
 /**
- * React Query hook for retrieving all scheduled routes across current and upcoming seasons
+ * Fetch function and React Query hook for retrieving all scheduled routes across current and upcoming seasons
  */
-export const useScheduledRoutes: (
-  params?: FetchFunctionParams<ScheduledRoutesInput>,
-  options?: QueryHookOptions<SchedRoute[]>
-) => UseQueryResult<SchedRoute[], Error> = createHook(
-  wsfScheduleApi,
-  scheduledRoutesGroup,
-  scheduledRoutesMeta
-);
+export const { fetch: fetchScheduledRoutes, hook: useScheduledRoutes } =
+  scheduledRoutesFactory;

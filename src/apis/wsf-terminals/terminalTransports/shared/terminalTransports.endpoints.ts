@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalTransportsMeta } from "../terminalTransports";
+import { terminalTransportsByTerminalIdMeta } from "../terminalTransportsByTerminalId";
 
 /**
  * Endpoint group metadata for terminal transports endpoints
@@ -16,4 +18,5 @@ export const terminalTransportsGroup: EndpointGroupMeta = {
       "Show transit links and airport connection information.",
     ],
   },
+  endpoints: [terminalTransportsMeta, terminalTransportsByTerminalIdMeta],
 };

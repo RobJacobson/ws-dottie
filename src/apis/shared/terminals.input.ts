@@ -27,9 +27,7 @@ export const terminalMatesInputSchema = z
       .describe(
         "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange."
       ),
-    TerminalID: z
-      .number()
-      .describe("Numeric ID of the departing terminal."),
+    TerminalID: z.number().describe("Numeric ID of the departing terminal."),
   })
   .describe(
     "Input parameters for retrieving arriving terminals (terminal mates) for a departing terminal and trip date."

@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotBridgeClearancesApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { bridgeClearancesGroup } from "./shared/bridgeClearances.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotBridgeClearancesApiMeta } from "../apiMeta";
 import {
   type BridgeClearancesInput,
   bridgeClearancesInputSchema,
@@ -33,24 +24,20 @@ export const bridgeClearancesMeta = {
 } satisfies EndpointMeta<BridgeClearancesInput, BridgeClearance[]>;
 
 /**
- * Fetch function for retrieving vertical clearance data for all Washington State bridges
+ * Factory result for bridge clearances
  */
-export const fetchBridgeClearances: (
-  params?: FetchFunctionParams<BridgeClearancesInput>
-) => Promise<BridgeClearance[]> = createFetchFunction(
-  wsdotBridgeClearancesApi,
-  bridgeClearancesGroup,
-  bridgeClearancesMeta
-);
+const bridgeClearancesFactory = createFetchAndHook<
+  BridgeClearancesInput,
+  BridgeClearance[]
+>({
+  api: wsdotBridgeClearancesApiMeta,
+  endpoint: bridgeClearancesMeta,
+  getEndpointGroup: () =>
+    require("./shared/bridgeClearances.endpoints").bridgeClearancesGroup,
+});
 
 /**
- * React Query hook for retrieving vertical clearance data for all Washington State bridges
+ * Fetch function and React Query hook for retrieving vertical clearance data for all Washington State bridges
  */
-export const useBridgeClearances: (
-  params?: FetchFunctionParams<BridgeClearancesInput>,
-  options?: QueryHookOptions<BridgeClearance[]>
-) => UseQueryResult<BridgeClearance[], Error> = createHook(
-  wsdotBridgeClearancesApi,
-  bridgeClearancesGroup,
-  bridgeClearancesMeta
-);
+export const { fetch: fetchBridgeClearances, hook: useBridgeClearances } =
+  bridgeClearancesFactory;

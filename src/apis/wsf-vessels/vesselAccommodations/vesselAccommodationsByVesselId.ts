@@ -1,12 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
-import { vesselAccommodationsGroup } from "./shared/vesselAccommodations.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import {
   type VesselAccommodationsByIdInput,
   vesselAccommodationsByIdInputSchema,
@@ -30,24 +24,23 @@ export const vesselAccommodationsByVesselIdMeta = {
 } satisfies EndpointMeta<VesselAccommodationsByIdInput, VesselAccommodation>;
 
 /**
- * Fetch function for retrieving amenities and accessibility features for a specific vessel
+ * Factory result for vessel accommodations by vessel ID
  */
-export const fetchVesselAccommodationsByVesselId: (
-  params?: FetchFunctionParams<VesselAccommodationsByIdInput>
-) => Promise<VesselAccommodation> = createFetchFunction(
-  wsfVesselsApi,
-  vesselAccommodationsGroup,
-  vesselAccommodationsByVesselIdMeta
-);
+const vesselAccommodationsByVesselIdFactory = createFetchAndHook<
+  VesselAccommodationsByIdInput,
+  VesselAccommodation
+>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselAccommodationsByVesselIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselAccommodations.endpoints")
+      .vesselAccommodationsGroup,
+});
 
 /**
- * React Query hook for retrieving amenities and accessibility features for a specific vessel
+ * Fetch function and React Query hook for retrieving amenities and accessibility features for a specific vessel
  */
-export const useVesselAccommodationsByVesselId: (
-  params?: FetchFunctionParams<VesselAccommodationsByIdInput>,
-  options?: QueryHookOptions<VesselAccommodation>
-) => UseQueryResult<VesselAccommodation, Error> = createHook(
-  wsfVesselsApi,
-  vesselAccommodationsGroup,
-  vesselAccommodationsByVesselIdMeta
-);
+export const {
+  fetch: fetchVesselAccommodationsByVesselId,
+  hook: useVesselAccommodationsByVesselId,
+} = vesselAccommodationsByVesselIdFactory;

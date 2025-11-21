@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherReadingsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { surfaceMeasurementsGroup } from "./shared/surfaceMeasurements.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotWeatherReadingsApiMeta } from "../apiMeta";
 import {
   type SurfaceMeasurementsInput,
   surfaceMeasurementsInputSchema,
@@ -32,24 +23,20 @@ export const surfaceMeasurementsMeta = {
 } satisfies EndpointMeta<SurfaceMeasurementsInput, SurfaceMeasurement[]>;
 
 /**
- * Fetch function for retrieving surface measurements from all weather stations
+ * Factory result for surface measurements
  */
-export const fetchSurfaceMeasurements: (
-  params?: FetchFunctionParams<SurfaceMeasurementsInput>
-) => Promise<SurfaceMeasurement[]> = createFetchFunction(
-  wsdotWeatherReadingsApi,
-  surfaceMeasurementsGroup,
-  surfaceMeasurementsMeta
-);
+const surfaceMeasurementsFactory = createFetchAndHook<
+  SurfaceMeasurementsInput,
+  SurfaceMeasurement[]
+>({
+  api: wsdotWeatherReadingsApiMeta,
+  endpoint: surfaceMeasurementsMeta,
+  getEndpointGroup: () =>
+    require("./shared/surfaceMeasurements.endpoints").surfaceMeasurementsGroup,
+});
 
 /**
- * React Query hook for retrieving surface measurements from all weather stations
+ * Fetch function and React Query hook for retrieving surface measurements from all weather stations
  */
-export const useSurfaceMeasurements: (
-  params?: FetchFunctionParams<SurfaceMeasurementsInput>,
-  options?: QueryHookOptions<SurfaceMeasurement[]>
-) => UseQueryResult<SurfaceMeasurement[], Error> = createHook(
-  wsdotWeatherReadingsApi,
-  surfaceMeasurementsGroup,
-  surfaceMeasurementsMeta
-);
+export const { fetch: fetchSurfaceMeasurements, hook: useSurfaceMeasurements } =
+  surfaceMeasurementsFactory;

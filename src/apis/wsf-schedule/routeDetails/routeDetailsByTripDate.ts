@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { routeDetailsGroup } from "./shared/routeDetails.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type RouteDetailsByTripDateInput,
   routeDetailsByTripDateInputSchema,
@@ -34,24 +25,22 @@ export const routeDetailsByTripDateMeta = {
 } satisfies EndpointMeta<RouteDetailsByTripDateInput, RouteDetail[]>;
 
 /**
- * Fetch function for retrieving detailed route information for all routes on specified date
+ * Factory result for route details by trip date
  */
-export const fetchRouteDetailsByTripDate: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateInput>
-) => Promise<RouteDetail[]> = createFetchFunction(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateMeta
-);
+const routeDetailsByTripDateFactory = createFetchAndHook<
+  RouteDetailsByTripDateInput,
+  RouteDetail[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: routeDetailsByTripDateMeta,
+  getEndpointGroup: () =>
+    require("./shared/routeDetails.endpoints").routeDetailsGroup,
+});
 
 /**
- * React Query hook for retrieving detailed route information for all routes on specified date
+ * Fetch function and React Query hook for retrieving detailed route information for all routes on specified date
  */
-export const useRouteDetailsByTripDate: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateInput>,
-  options?: QueryHookOptions<RouteDetail[]>
-) => UseQueryResult<RouteDetail[], Error> = createHook(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateMeta
-);
+export const {
+  fetch: fetchRouteDetailsByTripDate,
+  hook: useRouteDetailsByTripDate,
+} = routeDetailsByTripDateFactory;

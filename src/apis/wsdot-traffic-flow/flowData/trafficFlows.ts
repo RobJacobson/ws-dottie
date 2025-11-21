@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotTrafficFlowApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { flowDataGroup } from "./shared/flowData.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotTrafficFlowApiMeta } from "../apiMeta";
 import {
   type TrafficFlowsInput,
   trafficFlowsInputSchema,
@@ -30,24 +21,16 @@ export const trafficFlowsMeta = {
 } satisfies EndpointMeta<TrafficFlowsInput, FlowData[]>;
 
 /**
- * Fetch function for retrieving current traffic flow conditions for all stations statewide
+ * Factory result for traffic flows
  */
-export const fetchTrafficFlows: (
-  params?: FetchFunctionParams<TrafficFlowsInput>
-) => Promise<FlowData[]> = createFetchFunction(
-  wsdotTrafficFlowApi,
-  flowDataGroup,
-  trafficFlowsMeta
-);
+const trafficFlowsFactory = createFetchAndHook<TrafficFlowsInput, FlowData[]>({
+  api: wsdotTrafficFlowApiMeta,
+  endpoint: trafficFlowsMeta,
+  getEndpointGroup: () => require("./shared/flowData.endpoints").flowDataGroup,
+});
 
 /**
- * React Query hook for retrieving current traffic flow conditions for all stations statewide
+ * Fetch function and React Query hook for retrieving current traffic flow conditions for all stations statewide
  */
-export const useTrafficFlows: (
-  params?: FetchFunctionParams<TrafficFlowsInput>,
-  options?: QueryHookOptions<FlowData[]>
-) => UseQueryResult<FlowData[], Error> = createHook(
-  wsdotTrafficFlowApi,
-  flowDataGroup,
-  trafficFlowsMeta
-);
+export const { fetch: fetchTrafficFlows, hook: useTrafficFlows } =
+  trafficFlowsFactory;

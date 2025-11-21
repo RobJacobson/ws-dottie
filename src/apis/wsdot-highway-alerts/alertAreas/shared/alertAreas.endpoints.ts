@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { mapAreasMeta } from "../mapAreas";
 
 /**
  * Endpoint group metadata for alert areas endpoints
@@ -17,4 +18,5 @@ export const alertAreasGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "5m",
   },
+  endpoints: [mapAreasMeta],
 };

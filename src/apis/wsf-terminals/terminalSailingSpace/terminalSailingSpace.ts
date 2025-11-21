@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalSailingSpaceGroup } from "./shared/terminalSailingSpace.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalSailingSpaceInput,
   terminalSailingSpaceInputSchema,
@@ -32,24 +23,23 @@ export const terminalSailingSpaceMeta = {
 } satisfies EndpointMeta<TerminalSailingSpaceInput, TerminalSailingSpace[]>;
 
 /**
- * Fetch function for retrieving sailing space availability for all terminals
+ * Factory result for terminal sailing space
  */
-export const fetchTerminalSailingSpace: (
-  params?: FetchFunctionParams<TerminalSailingSpaceInput>
-) => Promise<TerminalSailingSpace[]> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceMeta
-);
+const terminalSailingSpaceFactory = createFetchAndHook<
+  TerminalSailingSpaceInput,
+  TerminalSailingSpace[]
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalSailingSpaceMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalSailingSpace.endpoints")
+      .terminalSailingSpaceGroup,
+});
 
 /**
- * React Query hook for retrieving sailing space availability for all terminals
+ * Fetch function and React Query hook for retrieving sailing space availability for all terminals
  */
-export const useTerminalSailingSpace: (
-  params?: FetchFunctionParams<TerminalSailingSpaceInput>,
-  options?: QueryHookOptions<TerminalSailingSpace[]>
-) => UseQueryResult<TerminalSailingSpace[], Error> = createHook(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceMeta
-);
+export const {
+  fetch: fetchTerminalSailingSpace,
+  hook: useTerminalSailingSpace,
+} = terminalSailingSpaceFactory;

@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { scheduleTodayByRouteMeta } from "../scheduleTodayByRoute";
+import { scheduleTodayByTerminalsMeta } from "../scheduleTodayByTerminals";
 
 /**
  * Endpoint group metadata for schedule today endpoints
@@ -16,4 +18,5 @@ export const scheduleTodayGroup: EndpointGroupMeta = {
       "Filter to only upcoming sailings for today.",
     ],
   },
+  endpoints: [scheduleTodayByRouteMeta, scheduleTodayByTerminalsMeta],
 };

@@ -1,38 +1,26 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
 import type {
   CacheFlushDateInput,
   CacheFlushDateOutput,
 } from "@/apis/shared/cacheFlushDate";
-import type { FetchFunctionParams, QueryHookOptions } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import {
-  cacheFlushDateFaresGroup,
-  cacheFlushDateFaresMeta,
-} from "./shared/cacheFlushDate.endpoints";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfFaresApiMeta } from "../apiMeta";
+import { cacheFlushDateFaresMeta } from "./shared/cacheFlushDate.endpoints";
 
 /**
- * Fetch function for retrieving cache flush timestamp for static fares data
+ * Factory result for cache flush date fares
  */
-export const fetchCacheFlushDateFares: (
-  params?: FetchFunctionParams<CacheFlushDateInput>
-) => Promise<CacheFlushDateOutput> = createFetchFunction(
-  wsfFaresApi,
-  cacheFlushDateFaresGroup,
-  cacheFlushDateFaresMeta
-);
+const cacheFlushDateFaresFactory = createFetchAndHook<
+  CacheFlushDateInput,
+  CacheFlushDateOutput
+>({
+  api: wsfFaresApiMeta,
+  endpoint: cacheFlushDateFaresMeta,
+  getEndpointGroup: () =>
+    require("./shared/cacheFlushDate.endpoints").cacheFlushDateFaresGroup,
+});
 
 /**
- * React Query hook for retrieving cache flush timestamp for static fares data
+ * Fetch function and React Query hook for retrieving cache flush timestamp for static fares data
  */
-export const useCacheFlushDateFares: (
-  params?: FetchFunctionParams<CacheFlushDateInput>,
-  options?: QueryHookOptions<CacheFlushDateOutput>
-) => UseQueryResult<CacheFlushDateOutput, Error> = createHook(
-  wsfFaresApi,
-  cacheFlushDateFaresGroup,
-  cacheFlushDateFaresMeta
-);
+export const { fetch: fetchCacheFlushDateFares, hook: useCacheFlushDateFares } =
+  cacheFlushDateFaresFactory;

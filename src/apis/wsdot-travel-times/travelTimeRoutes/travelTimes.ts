@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotTravelTimesApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { travelTimeRoutesGroup } from "./shared/travelTimeRoutes.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotTravelTimesApiMeta } from "../apiMeta";
 import {
   type TravelTimesInput,
   travelTimesInputSchema,
@@ -32,24 +23,20 @@ export const travelTimesMeta = {
 } satisfies EndpointMeta<TravelTimesInput, TravelTimeRoute[]>;
 
 /**
- * Fetch function for retrieving travel time data for all available routes
+ * Factory result for travel times
  */
-export const fetchTravelTimes: (
-  params?: FetchFunctionParams<TravelTimesInput>
-) => Promise<TravelTimeRoute[]> = createFetchFunction(
-  wsdotTravelTimesApi,
-  travelTimeRoutesGroup,
-  travelTimesMeta
-);
+const travelTimesFactory = createFetchAndHook<
+  TravelTimesInput,
+  TravelTimeRoute[]
+>({
+  api: wsdotTravelTimesApiMeta,
+  endpoint: travelTimesMeta,
+  getEndpointGroup: () =>
+    require("./shared/travelTimeRoutes.endpoints").travelTimeRoutesGroup,
+});
 
 /**
- * React Query hook for retrieving travel time data for all available routes
+ * Fetch function and React Query hook for retrieving travel time data for all available routes
  */
-export const useTravelTimes: (
-  params?: FetchFunctionParams<TravelTimesInput>,
-  options?: QueryHookOptions<TravelTimeRoute[]>
-) => UseQueryResult<TravelTimeRoute[], Error> = createHook(
-  wsdotTravelTimesApi,
-  travelTimeRoutesGroup,
-  travelTimesMeta
-);
+export const { fetch: fetchTravelTimes, hook: useTravelTimes } =
+  travelTimesFactory;

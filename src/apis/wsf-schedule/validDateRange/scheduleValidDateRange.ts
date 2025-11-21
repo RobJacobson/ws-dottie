@@ -1,17 +1,8 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
 import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { scheduleValidDateRangeGroup } from "./shared/validDateRange.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type ScheduleValidDateRangeInput,
   scheduleValidDateRangeInputSchema,
@@ -30,24 +21,22 @@ export const scheduleValidDateRangeMeta = {
 } satisfies EndpointMeta<ScheduleValidDateRangeInput, ValidDateRange>;
 
 /**
- * Fetch function for retrieving the valid date range for schedule data
+ * Factory result for schedule valid date range
  */
-export const fetchScheduleValidDateRange: (
-  params?: FetchFunctionParams<ScheduleValidDateRangeInput>
-) => Promise<ValidDateRange> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleValidDateRangeGroup,
-  scheduleValidDateRangeMeta
-);
+const scheduleValidDateRangeFactory = createFetchAndHook<
+  ScheduleValidDateRangeInput,
+  ValidDateRange
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduleValidDateRangeMeta,
+  getEndpointGroup: () =>
+    require("./shared/validDateRange.endpoints").scheduleValidDateRangeGroup,
+});
 
 /**
- * React Query hook for retrieving the valid date range for schedule data
+ * Fetch function and React Query hook for retrieving the valid date range for schedule data
  */
-export const useScheduleValidDateRange: (
-  params?: FetchFunctionParams<ScheduleValidDateRangeInput>,
-  options?: QueryHookOptions<ValidDateRange>
-) => UseQueryResult<ValidDateRange, Error> = createHook(
-  wsfScheduleApi,
-  scheduleValidDateRangeGroup,
-  scheduleValidDateRangeMeta
-);
+export const {
+  fetch: fetchScheduleValidDateRange,
+  hook: useScheduleValidDateRange,
+} = scheduleValidDateRangeFactory;

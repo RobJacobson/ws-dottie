@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherReadingsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { subSurfaceMeasurementsGroup } from "./shared/subSurfaceMeasurements.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotWeatherReadingsApiMeta } from "../apiMeta";
 import {
   type SubSurfaceMeasurementsInput,
   subSurfaceMeasurementsInputSchema,
@@ -33,24 +24,23 @@ export const subSurfaceMeasurementsMeta = {
 } satisfies EndpointMeta<SubSurfaceMeasurementsInput, SubsurfaceMeasurement[]>;
 
 /**
- * Fetch function for retrieving subsurface measurements from all weather stations statewide
+ * Factory result for sub-surface measurements
  */
-export const fetchSubSurfaceMeasurements: (
-  params?: FetchFunctionParams<SubSurfaceMeasurementsInput>
-) => Promise<SubsurfaceMeasurement[]> = createFetchFunction(
-  wsdotWeatherReadingsApi,
-  subSurfaceMeasurementsGroup,
-  subSurfaceMeasurementsMeta
-);
+const subSurfaceMeasurementsFactory = createFetchAndHook<
+  SubSurfaceMeasurementsInput,
+  SubsurfaceMeasurement[]
+>({
+  api: wsdotWeatherReadingsApiMeta,
+  endpoint: subSurfaceMeasurementsMeta,
+  getEndpointGroup: () =>
+    require("./shared/subSurfaceMeasurements.endpoints")
+      .subSurfaceMeasurementsGroup,
+});
 
 /**
- * React Query hook for retrieving subsurface measurements from all weather stations statewide
+ * Fetch function and React Query hook for retrieving subsurface measurements from all weather stations statewide
  */
-export const useSubSurfaceMeasurements: (
-  params?: FetchFunctionParams<SubSurfaceMeasurementsInput>,
-  options?: QueryHookOptions<SubsurfaceMeasurement[]>
-) => UseQueryResult<SubsurfaceMeasurement[], Error> = createHook(
-  wsdotWeatherReadingsApi,
-  subSurfaceMeasurementsGroup,
-  subSurfaceMeasurementsMeta
-);
+export const {
+  fetch: fetchSubSurfaceMeasurements,
+  hook: useSubSurfaceMeasurements,
+} = subSurfaceMeasurementsFactory;

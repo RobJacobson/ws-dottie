@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalLocationsGroup } from "./shared/terminalLocations.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalLocationsByIdInput,
   terminalLocationsByIdInputSchema,
@@ -33,24 +24,22 @@ export const terminalLocationsByTerminalIdMeta = {
 } satisfies EndpointMeta<TerminalLocationsByIdInput, TerminalLocation>;
 
 /**
- * Fetch function for retrieving location information for a specific terminal by ID
+ * Factory result for terminal locations by terminal ID
  */
-export const fetchTerminalLocationsByTerminalId: (
-  params?: FetchFunctionParams<TerminalLocationsByIdInput>
-) => Promise<TerminalLocation> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalLocationsGroup,
-  terminalLocationsByTerminalIdMeta
-);
+const terminalLocationsByTerminalIdFactory = createFetchAndHook<
+  TerminalLocationsByIdInput,
+  TerminalLocation
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalLocationsByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalLocations.endpoints").terminalLocationsGroup,
+});
 
 /**
- * React Query hook for retrieving location information for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving location information for a specific terminal by ID
  */
-export const useTerminalLocationsByTerminalId: (
-  params?: FetchFunctionParams<TerminalLocationsByIdInput>,
-  options?: QueryHookOptions<TerminalLocation>
-) => UseQueryResult<TerminalLocation, Error> = createHook(
-  wsfTerminalsApi,
-  terminalLocationsGroup,
-  terminalLocationsByTerminalIdMeta
-);
+export const {
+  fetch: fetchTerminalLocationsByTerminalId,
+  hook: useTerminalLocationsByTerminalId,
+} = terminalLocationsByTerminalIdFactory;

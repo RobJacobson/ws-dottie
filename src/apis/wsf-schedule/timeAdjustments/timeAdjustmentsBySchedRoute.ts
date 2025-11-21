@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { timeAdjustmentsGroup } from "./shared/timeAdjustments.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type TimeAdjustmentsBySchedRouteInput,
   timeAdjustmentsBySchedRouteInputSchema,
@@ -32,24 +23,22 @@ export const timeAdjustmentsBySchedRouteMeta = {
 } satisfies EndpointMeta<TimeAdjustmentsBySchedRouteInput, TimeAdjustment[]>;
 
 /**
- * Fetch function for retrieving time adjustments for a specific scheduled route
+ * Factory result for time adjustments by scheduled route
  */
-export const fetchTimeAdjustmentsBySchedRoute: (
-  params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>
-) => Promise<TimeAdjustment[]> = createFetchFunction(
-  wsfScheduleApi,
-  timeAdjustmentsGroup,
-  timeAdjustmentsBySchedRouteMeta
-);
+const timeAdjustmentsBySchedRouteFactory = createFetchAndHook<
+  TimeAdjustmentsBySchedRouteInput,
+  TimeAdjustment[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: timeAdjustmentsBySchedRouteMeta,
+  getEndpointGroup: () =>
+    require("./shared/timeAdjustments.endpoints").timeAdjustmentsGroup,
+});
 
 /**
- * React Query hook for retrieving time adjustments for a specific scheduled route
+ * Fetch function and React Query hook for retrieving time adjustments for a specific scheduled route
  */
-export const useTimeAdjustmentsBySchedRoute: (
-  params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>,
-  options?: QueryHookOptions<TimeAdjustment[]>
-) => UseQueryResult<TimeAdjustment[], Error> = createHook(
-  wsfScheduleApi,
-  timeAdjustmentsGroup,
-  timeAdjustmentsBySchedRouteMeta
-);
+export const {
+  fetch: fetchTimeAdjustmentsBySchedRoute,
+  hook: useTimeAdjustmentsBySchedRoute,
+} = timeAdjustmentsBySchedRouteFactory;

@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { schedulesGroup } from "./shared/schedules.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type ScheduleByTripDateAndTerminalsInput,
   scheduleByTripDateAndTerminals,
@@ -35,24 +26,20 @@ export const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta = {
 } satisfies EndpointMeta<ScheduleByTripDateAndTerminalsInput, Schedule>;
 
 /**
- * Fetch function for retrieving sailing schedule for a terminal pair and trip date
+ * Factory result for schedule by trip date and departing terminal ID and terminal IDs
  */
-export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndTerminalsInput>
-) => Promise<Schedule> = createFetchFunction(
-  wsfScheduleApi,
-  schedulesGroup,
-  scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta
-);
+const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsFactory =
+  createFetchAndHook<ScheduleByTripDateAndTerminalsInput, Schedule>({
+    api: wsfScheduleApiMeta,
+    endpoint: scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta,
+    getEndpointGroup: () =>
+      require("./shared/schedules.endpoints").schedulesGroup,
+  });
 
 /**
- * React Query hook for retrieving sailing schedule for a terminal pair and trip date
+ * Fetch function and React Query hook for retrieving sailing schedule for a terminal pair and trip date
  */
-export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error> = createHook(
-  wsfScheduleApi,
-  schedulesGroup,
-  scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta
-);
+export const {
+  fetch: fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
+  hook: useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
+} = scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsFactory;

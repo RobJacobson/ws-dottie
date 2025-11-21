@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotTollRatesApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { tollTripVersionGroup } from "./shared/tollTripVersion.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotTollRatesApiMeta } from "../apiMeta";
 import {
   type TollTripVersionInput,
   tollTripVersionInputSchema,
@@ -32,25 +23,20 @@ export const tollTripVersionMeta = {
 } satisfies EndpointMeta<TollTripVersionInput, TollTripVersion>;
 
 /**
- * Fetch function for retrieving current version and timestamp for toll trip data
+ * Factory result for toll trip version
  */
-export const fetchTollTripVersion: (
-  params?: FetchFunctionParams<TollTripVersionInput>
-) => Promise<TollTripVersion> = createFetchFunction(
-  wsdotTollRatesApi,
-  tollTripVersionGroup,
-  tollTripVersionMeta
-);
+const tollTripVersionFactory = createFetchAndHook<
+  TollTripVersionInput,
+  TollTripVersion
+>({
+  api: wsdotTollRatesApiMeta,
+  endpoint: tollTripVersionMeta,
+  getEndpointGroup: () =>
+    require("./shared/tollTripVersion.endpoints").tollTripVersionGroup,
+});
 
 /**
- * React Query hook for retrieving current version and timestamp for toll trip data
+ * Fetch function and React Query hook for retrieving current version and timestamp for toll trip data
  */
-export const useTollTripVersion: (
-  params?: FetchFunctionParams<TollTripVersionInput>,
-  options?: QueryHookOptions<TollTripVersion>
-) => UseQueryResult<TollTripVersion, Error> = createHook(
-  wsdotTollRatesApi,
-  tollTripVersionGroup,
-  tollTripVersionMeta
-);
-
+export const { fetch: fetchTollTripVersion, hook: useTollTripVersion } =
+  tollTripVersionFactory;

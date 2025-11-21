@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalVerboseGroup } from "./shared/terminalVerbose.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalVerboseByTerminalIdInput,
   terminalVerboseByTerminalIdInputSchema,
@@ -33,24 +24,22 @@ export const terminalVerboseByTerminalIdMeta = {
 } satisfies EndpointMeta<TerminalVerboseByTerminalIdInput, TerminalVerbose>;
 
 /**
- * Fetch function for retrieving comprehensive information for a specific terminal by ID
+ * Factory result for terminal verbose by terminal ID
  */
-export const fetchTerminalVerboseByTerminalId: (
-  params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>
-) => Promise<TerminalVerbose> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalVerboseGroup,
-  terminalVerboseByTerminalIdMeta
-);
+const terminalVerboseByTerminalIdFactory = createFetchAndHook<
+  TerminalVerboseByTerminalIdInput,
+  TerminalVerbose
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalVerboseByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalVerbose.endpoints").terminalVerboseGroup,
+});
 
 /**
- * React Query hook for retrieving comprehensive information for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving comprehensive information for a specific terminal by ID
  */
-export const useTerminalVerboseByTerminalId: (
-  params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>,
-  options?: QueryHookOptions<TerminalVerbose>
-) => UseQueryResult<TerminalVerbose, Error> = createHook(
-  wsfTerminalsApi,
-  terminalVerboseGroup,
-  terminalVerboseByTerminalIdMeta
-);
+export const {
+  fetch: fetchTerminalVerboseByTerminalId,
+  hook: useTerminalVerboseByTerminalId,
+} = terminalVerboseByTerminalIdFactory;

@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { sailingsGroup } from "./shared/sailings.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type AllSailingsBySchedRouteIDInput,
   allSailingsBySchedRouteIDInputSchema,
@@ -30,24 +21,21 @@ export const allSailingsBySchedRouteIDMeta = {
 } satisfies EndpointMeta<AllSailingsBySchedRouteIDInput, Sailing[]>;
 
 /**
- * Fetch function for retrieving all sailings for scheduled route including inactive sailings
+ * Factory result for all sailings by scheduled route ID
  */
-export const fetchAllSailingsBySchedRouteID: (
-  params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>
-) => Promise<Sailing[]> = createFetchFunction(
-  wsfScheduleApi,
-  sailingsGroup,
-  allSailingsBySchedRouteIDMeta
-);
+const allSailingsBySchedRouteIDFactory = createFetchAndHook<
+  AllSailingsBySchedRouteIDInput,
+  Sailing[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: allSailingsBySchedRouteIDMeta,
+  getEndpointGroup: () => require("./shared/sailings.endpoints").sailingsGroup,
+});
 
 /**
- * React Query hook for retrieving all sailings for scheduled route including inactive sailings
+ * Fetch function and React Query hook for retrieving all sailings for scheduled route including inactive sailings
  */
-export const useAllSailingsBySchedRouteID: (
-  params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>,
-  options?: QueryHookOptions<Sailing[]>
-) => UseQueryResult<Sailing[], Error> = createHook(
-  wsfScheduleApi,
-  sailingsGroup,
-  allSailingsBySchedRouteIDMeta
-);
+export const {
+  fetch: fetchAllSailingsBySchedRouteID,
+  hook: useAllSailingsBySchedRouteID,
+} = allSailingsBySchedRouteIDFactory;

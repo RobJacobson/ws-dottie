@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotBridgeClearancesApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { bridgeClearancesGroup } from "./shared/bridgeClearances.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotBridgeClearancesApiMeta } from "../apiMeta";
 import {
   type BridgeClearancesByRouteInput,
   bridgeClearancesByRouteInputSchema,
@@ -33,24 +24,22 @@ export const bridgeClearancesByRouteMeta = {
 } satisfies EndpointMeta<BridgeClearancesByRouteInput, BridgeClearance[]>;
 
 /**
- * Fetch function for retrieving vertical clearance data for bridges on a specific state route
+ * Factory result for bridge clearances by route
  */
-export const fetchBridgeClearancesByRoute: (
-  params?: FetchFunctionParams<BridgeClearancesByRouteInput>
-) => Promise<BridgeClearance[]> = createFetchFunction(
-  wsdotBridgeClearancesApi,
-  bridgeClearancesGroup,
-  bridgeClearancesByRouteMeta
-);
+const bridgeClearancesByRouteFactory = createFetchAndHook<
+  BridgeClearancesByRouteInput,
+  BridgeClearance[]
+>({
+  api: wsdotBridgeClearancesApiMeta,
+  endpoint: bridgeClearancesByRouteMeta,
+  getEndpointGroup: () =>
+    require("./shared/bridgeClearances.endpoints").bridgeClearancesGroup,
+});
 
 /**
- * React Query hook for retrieving vertical clearance data for bridges on a specific state route
+ * Fetch function and React Query hook for retrieving vertical clearance data for bridges on a specific state route
  */
-export const useBridgeClearancesByRoute: (
-  params?: FetchFunctionParams<BridgeClearancesByRouteInput>,
-  options?: QueryHookOptions<BridgeClearance[]>
-) => UseQueryResult<BridgeClearance[], Error> = createHook(
-  wsdotBridgeClearancesApi,
-  bridgeClearancesGroup,
-  bridgeClearancesByRouteMeta
-);
+export const {
+  fetch: fetchBridgeClearancesByRoute,
+  hook: useBridgeClearancesByRoute,
+} = bridgeClearancesByRouteFactory;

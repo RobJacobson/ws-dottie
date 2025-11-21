@@ -1,4 +1,7 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalsMeta } from "../terminals";
+import { terminalsAndMatesMeta } from "../terminalsAndMates";
+import { terminalsAndMatesByRouteMeta } from "../terminalsAndMatesByRoute";
 
 /**
  * Endpoint group metadata for schedule terminals endpoints
@@ -18,4 +21,9 @@ export const scheduleTerminalsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [
+    terminalsMeta,
+    terminalsAndMatesMeta,
+    terminalsAndMatesByRouteMeta,
+  ],
 };

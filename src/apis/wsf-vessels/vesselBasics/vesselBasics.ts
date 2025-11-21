@@ -1,12 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
-import { vesselBasicsGroup } from "./shared/vesselBasics.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import {
   type VesselBasicsInput,
   vesselBasicsInputSchema,
@@ -29,24 +23,20 @@ export const vesselBasicsMeta = {
 } satisfies EndpointMeta<VesselBasicsInput, VesselBasic[]>;
 
 /**
- * Fetch function for retrieving basic information for all vessels in the fleet
+ * Factory result for vessel basics
  */
-export const fetchVesselBasics: (
-  params?: FetchFunctionParams<VesselBasicsInput>
-) => Promise<VesselBasic[]> = createFetchFunction(
-  wsfVesselsApi,
-  vesselBasicsGroup,
-  vesselBasicsMeta
-);
+const vesselBasicsFactory = createFetchAndHook<
+  VesselBasicsInput,
+  VesselBasic[]
+>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselBasicsMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselBasics.endpoints").vesselBasicsGroup,
+});
 
 /**
- * React Query hook for retrieving basic information for all vessels in the fleet
+ * Fetch function and React Query hook for retrieving basic information for all vessels in the fleet
  */
-export const useVesselBasics: (
-  params?: FetchFunctionParams<VesselBasicsInput>,
-  options?: QueryHookOptions<VesselBasic[]>
-) => UseQueryResult<VesselBasic[], Error> = createHook(
-  wsfVesselsApi,
-  vesselBasicsGroup,
-  vesselBasicsMeta
-);
+export const { fetch: fetchVesselBasics, hook: useVesselBasics } =
+  vesselBasicsFactory;

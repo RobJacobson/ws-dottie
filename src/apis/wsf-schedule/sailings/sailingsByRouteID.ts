@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { sailingsGroup } from "./shared/sailings.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type SailingsByRouteIDInput,
   sailingsByRouteIDInputSchema,
@@ -29,24 +20,19 @@ export const sailingsByRouteIDMeta = {
 } satisfies EndpointMeta<SailingsByRouteIDInput, Sailing[]>;
 
 /**
- * Fetch function for retrieving active sailings for specified scheduled route
+ * Factory result for sailings by route ID
  */
-export const fetchSailingsByRouteID: (
-  params?: FetchFunctionParams<SailingsByRouteIDInput>
-) => Promise<Sailing[]> = createFetchFunction(
-  wsfScheduleApi,
-  sailingsGroup,
-  sailingsByRouteIDMeta
-);
+const sailingsByRouteIDFactory = createFetchAndHook<
+  SailingsByRouteIDInput,
+  Sailing[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: sailingsByRouteIDMeta,
+  getEndpointGroup: () => require("./shared/sailings.endpoints").sailingsGroup,
+});
 
 /**
- * React Query hook for retrieving active sailings for specified scheduled route
+ * Fetch function and React Query hook for retrieving active sailings for specified scheduled route
  */
-export const useSailingsByRouteID: (
-  params?: FetchFunctionParams<SailingsByRouteIDInput>,
-  options?: QueryHookOptions<Sailing[]>
-) => UseQueryResult<Sailing[], Error> = createHook(
-  wsfScheduleApi,
-  sailingsGroup,
-  sailingsByRouteIDMeta
-);
+export const { fetch: fetchSailingsByRouteID, hook: useSailingsByRouteID } =
+  sailingsByRouteIDFactory;

@@ -1,19 +1,10 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
 import {
   type ValidDateRange,
   validDateRangeSchema,
 } from "@/apis/shared/validDateRange.output";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { validDateRangeGroup } from "./shared/validDateRange.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfFaresApiMeta } from "../apiMeta";
 import {
   type FaresValidDateRangeInput,
   faresValidDateRangeInputSchema,
@@ -32,24 +23,20 @@ export const faresValidDateRangeMeta = {
 } satisfies EndpointMeta<FaresValidDateRangeInput, ValidDateRange>;
 
 /**
- * Fetch function for retrieving the validity date range for published fares data
+ * Factory result for fares valid date range
  */
-export const fetchFaresValidDateRange: (
-  params?: FetchFunctionParams<FaresValidDateRangeInput>
-) => Promise<ValidDateRange> = createFetchFunction(
-  wsfFaresApi,
-  validDateRangeGroup,
-  faresValidDateRangeMeta
-);
+const faresValidDateRangeFactory = createFetchAndHook<
+  FaresValidDateRangeInput,
+  ValidDateRange
+>({
+  api: wsfFaresApiMeta,
+  endpoint: faresValidDateRangeMeta,
+  getEndpointGroup: () =>
+    require("./shared/validDateRange.endpoints").validDateRangeGroup,
+});
 
 /**
- * React Query hook for retrieving the validity date range for published fares data
+ * Fetch function and React Query hook for retrieving the validity date range for published fares data
  */
-export const useFaresValidDateRange: (
-  params?: FetchFunctionParams<FaresValidDateRangeInput>,
-  options?: QueryHookOptions<ValidDateRange>
-) => UseQueryResult<ValidDateRange, Error> = createHook(
-  wsfFaresApi,
-  validDateRangeGroup,
-  faresValidDateRangeMeta
-);
+export const { fetch: fetchFaresValidDateRange, hook: useFaresValidDateRange } =
+  faresValidDateRangeFactory;

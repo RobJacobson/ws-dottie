@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { routeDetailsGroup } from "./shared/routeDetails.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type RouteDetailsByTripDateAndRouteIdInput,
   routeDetailsByTripDateAndRouteIdInputSchema,
@@ -34,24 +25,22 @@ export const routeDetailsByTripDateAndRouteIdMeta = {
 } satisfies EndpointMeta<RouteDetailsByTripDateAndRouteIdInput, RouteDetail>;
 
 /**
- * Fetch function for retrieving detailed route information for specific route on date
+ * Factory result for route details by trip date and route ID
  */
-export const fetchRouteDetailsByTripDateAndRouteId: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>
-) => Promise<RouteDetail> = createFetchFunction(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndRouteIdMeta
-);
+const routeDetailsByTripDateAndRouteIdFactory = createFetchAndHook<
+  RouteDetailsByTripDateAndRouteIdInput,
+  RouteDetail
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: routeDetailsByTripDateAndRouteIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/routeDetails.endpoints").routeDetailsGroup,
+});
 
 /**
- * React Query hook for retrieving detailed route information for specific route on date
+ * Fetch function and React Query hook for retrieving detailed route information for specific route on date
  */
-export const useRouteDetailsByTripDateAndRouteId: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>,
-  options?: QueryHookOptions<RouteDetail>
-) => UseQueryResult<RouteDetail, Error> = createHook(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndRouteIdMeta
-);
+export const {
+  fetch: fetchRouteDetailsByTripDateAndRouteId,
+  hook: useRouteDetailsByTripDateAndRouteId,
+} = routeDetailsByTripDateAndRouteIdFactory;

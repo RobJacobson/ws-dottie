@@ -7,6 +7,18 @@ import {
 import type { EndpointGroupMeta, EndpointMeta } from "@/apis/types";
 
 /**
+ * Metadata for the cache flush date schedule endpoint
+ */
+export const cacheFlushDateScheduleMeta = {
+  functionName: "fetchCacheFlushDateSchedule",
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+  sampleParams: {},
+  endpointDescription: "Get cache flush timestamp for static schedule data.",
+} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
+
+/**
  * Endpoint group metadata for cache flush date endpoints
  */
 export const cacheFlushDateScheduleGroup: EndpointGroupMeta = {
@@ -23,17 +35,5 @@ export const cacheFlushDateScheduleGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "on-change",
   },
+  endpoints: [cacheFlushDateScheduleMeta],
 };
-
-export const cacheFlushDateScheduleMeta = {
-  functionName: "fetchCacheFlushDateSchedule",
-  endpoint: "/cacheflushdate",
-  inputSchema: cacheFlushDateInputSchema,
-  outputSchema: cacheFlushDateOutputSchema,
-  sampleParams: {},
-  endpointDescription: "Get cache flush timestamp for static schedule data.",
-} satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
-
-export const cacheFlushDateScheduleEndpoints = {
-  cacheFlushDate: cacheFlushDateScheduleMeta,
-} as const;

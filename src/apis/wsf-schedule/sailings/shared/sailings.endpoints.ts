@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { allSailingsBySchedRouteIDMeta } from "../allSailingsBySchedRouteID";
+import { sailingsByRouteIDMeta } from "../sailingsByRouteID";
 
 /**
  * Endpoint group metadata for sailings endpoints
@@ -17,4 +19,5 @@ export const sailingsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [sailingsByRouteIDMeta, allSailingsBySchedRouteIDMeta],
 };

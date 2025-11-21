@@ -1,24 +1,12 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { fareTotalsGroup } from "./shared/fareTotals.endpoints";
+import { wsfFaresApiMeta } from "../apiMeta";
 import {
   type FareTotalsByTripDateAndRouteInput,
   fareTotalsByTripDateAndRouteInputSchema,
 } from "./shared/fareTotals.input";
-import {
-  type FareTotal,
-  fareTotalSchema,
-} from "./shared/fareTotals.output";
+import { type FareTotal, fareTotalSchema } from "./shared/fareTotals.output";
 
 /**
  * Metadata for the fetchFareTotalsByTripDateAndRoute endpoint
@@ -42,25 +30,22 @@ export const fareTotalsByTripDateAndRouteMeta = {
 } satisfies EndpointMeta<FareTotalsByTripDateAndRouteInput, FareTotal[]>;
 
 /**
- * Fetch function for calculating fare totals for a terminal combination with selected line items and quantities
+ * Factory result for fare totals by trip date and route
  */
-export const fetchFareTotalsByTripDateAndRoute: (
-  params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>
-) => Promise<FareTotal[]> = createFetchFunction(
-  wsfFaresApi,
-  fareTotalsGroup,
-  fareTotalsByTripDateAndRouteMeta
-);
+const fareTotalsByTripDateAndRouteFactory = createFetchAndHook<
+  FareTotalsByTripDateAndRouteInput,
+  FareTotal[]
+>({
+  api: wsfFaresApiMeta,
+  endpoint: fareTotalsByTripDateAndRouteMeta,
+  getEndpointGroup: () =>
+    require("./shared/fareTotals.endpoints").fareTotalsGroup,
+});
 
 /**
- * React Query hook for calculating fare totals for a terminal combination with selected line items and quantities
+ * Fetch function and React Query hook for calculating fare totals for a terminal combination with selected line items and quantities
  */
-export const useFareTotalsByTripDateAndRoute: (
-  params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>,
-  options?: QueryHookOptions<FareTotal[]>
-) => UseQueryResult<FareTotal[], Error> = createHook(
-  wsfFaresApi,
-  fareTotalsGroup,
-  fareTotalsByTripDateAndRouteMeta
-);
-
+export const {
+  fetch: fetchFareTotalsByTripDateAndRoute,
+  hook: useFareTotalsByTripDateAndRoute,
+} = fareTotalsByTripDateAndRouteFactory;

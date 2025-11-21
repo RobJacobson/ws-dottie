@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalWaitTimesGroup } from "./shared/terminalWaitTimes.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalWaitTimesByIdInput,
   terminalWaitTimesByIdInputSchema,
@@ -33,24 +24,22 @@ export const terminalWaitTimesByTerminalIdMeta = {
 } satisfies EndpointMeta<TerminalWaitTimesByIdInput, TerminalWaitTime>;
 
 /**
- * Fetch function for retrieving wait time information for a specific terminal by ID
+ * Factory result for terminal wait times by terminal ID
  */
-export const fetchTerminalWaitTimesByTerminalId: (
-  params?: FetchFunctionParams<TerminalWaitTimesByIdInput>
-) => Promise<TerminalWaitTime> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalWaitTimesGroup,
-  terminalWaitTimesByTerminalIdMeta
-);
+const terminalWaitTimesByTerminalIdFactory = createFetchAndHook<
+  TerminalWaitTimesByIdInput,
+  TerminalWaitTime
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalWaitTimesByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalWaitTimes.endpoints").terminalWaitTimesGroup,
+});
 
 /**
- * React Query hook for retrieving wait time information for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving wait time information for a specific terminal by ID
  */
-export const useTerminalWaitTimesByTerminalId: (
-  params?: FetchFunctionParams<TerminalWaitTimesByIdInput>,
-  options?: QueryHookOptions<TerminalWaitTime>
-) => UseQueryResult<TerminalWaitTime, Error> = createHook(
-  wsfTerminalsApi,
-  terminalWaitTimesGroup,
-  terminalWaitTimesByTerminalIdMeta
-);
+export const {
+  fetch: fetchTerminalWaitTimesByTerminalId,
+  hook: useTerminalWaitTimesByTerminalId,
+} = terminalWaitTimesByTerminalIdFactory;

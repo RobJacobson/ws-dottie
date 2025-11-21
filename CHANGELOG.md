@@ -7,6 +7,23 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.5.0] - 2025-11-20
+
+- Features
+  - **Centralized Endpoint Registry**: New `endpointRegistry` module provides single source of truth for all endpoints with automatic discovery from API graph
+  - **OpenAPI YAML Support**: Added YAML format support alongside JSON for broader tool compatibility
+  - **API Graph Export**: Exported centralized API graph via `./apis` package export for programmatic endpoint introspection
+
+- Improvements
+  - **Unified Factory System**: Introduced `createFetchAndHook` factory that creates both fetch functions and React Query hooks in a single call
+  - **API Metadata Organization**: Added `apiMeta.ts` files across all APIs for centralized metadata management
+  - **Endpoint Export Consistency**: Streamlined endpoint exports using factory functions consistently, reducing code duplication
+  - **Cache Management**: Simplified cache flush date fetching logic
+
+- Docs
+  - **API Graph Documentation**: Added API graph section to README with programmatic endpoint discovery examples
+  - **Architecture Guide**: Enhanced with factory system details and improved clarity
+
 ## [1.4.0] - 2025-11-18
 
 - Features

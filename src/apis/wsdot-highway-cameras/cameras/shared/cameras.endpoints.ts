@@ -1,4 +1,7 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { highwayCameraByCameraIdMeta } from "../highwayCameraByCameraId";
+import { highwayCamerasMeta } from "../highwayCameras";
+import { searchHighwayCamerasByRouteAndMilepostMeta } from "../searchHighwayCamerasByRouteAndMilepost";
 
 /**
  * Endpoint group metadata for cameras endpoints
@@ -17,4 +20,9 @@ export const camerasGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "5m",
   },
+  endpoints: [
+    searchHighwayCamerasByRouteAndMilepostMeta,
+    highwayCameraByCameraIdMeta,
+    highwayCamerasMeta,
+  ],
 };

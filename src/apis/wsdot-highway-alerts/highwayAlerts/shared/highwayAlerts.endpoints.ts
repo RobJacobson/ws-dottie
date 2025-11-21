@@ -1,4 +1,9 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { alertByIdMeta } from "../alertById";
+import { alertsMeta } from "../alerts";
+import { alertsByMapAreaMeta } from "../alertsByMapArea";
+import { alertsByRegionIdMeta } from "../alertsByRegionId";
+import { searchAlertsMeta } from "../searchAlerts";
 
 /**
  * Endpoint group metadata for highway alerts endpoints
@@ -20,4 +25,11 @@ export const highwayAlertsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "5m",
   },
+  endpoints: [
+    alertsMeta,
+    searchAlertsMeta,
+    alertsByRegionIdMeta,
+    alertsByMapAreaMeta,
+    alertByIdMeta,
+  ],
 };

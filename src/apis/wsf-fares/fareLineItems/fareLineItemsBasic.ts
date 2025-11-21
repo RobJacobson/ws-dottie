@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { fareLineItemsGroup } from "./shared/fareLineItems.endpoints";
+import { wsfFaresApiMeta } from "../apiMeta";
 import {
   type FareLineItemsBasicInput,
   fareLineItemsBasicInputSchema,
@@ -37,24 +28,20 @@ export const fareLineItemsBasicMeta = {
 } satisfies EndpointMeta<FareLineItemsBasicInput, LineItem[]>;
 
 /**
- * Fetch function for retrieving popular fare line items for a terminal combination
+ * Factory result for fare line items basic
  */
-export const fetchFareLineItemsBasic: (
-  params?: FetchFunctionParams<FareLineItemsBasicInput>
-) => Promise<LineItem[]> = createFetchFunction(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsBasicMeta
-);
+const fareLineItemsBasicFactory = createFetchAndHook<
+  FareLineItemsBasicInput,
+  LineItem[]
+>({
+  api: wsfFaresApiMeta,
+  endpoint: fareLineItemsBasicMeta,
+  getEndpointGroup: () =>
+    require("./shared/fareLineItems.endpoints").fareLineItemsGroup,
+});
 
 /**
- * React Query hook for retrieving popular fare line items for a terminal combination
+ * Fetch function and React Query hook for retrieving popular fare line items for a terminal combination
  */
-export const useFareLineItemsBasic: (
-  params?: FetchFunctionParams<FareLineItemsBasicInput>,
-  options?: QueryHookOptions<LineItem[]>
-) => UseQueryResult<LineItem[], Error> = createHook(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fareLineItemsBasicMeta
-);
+export const { fetch: fetchFareLineItemsBasic, hook: useFareLineItemsBasic } =
+  fareLineItemsBasicFactory;

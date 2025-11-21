@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalWaitTimesMeta } from "../terminalWaitTimes";
+import { terminalWaitTimesByTerminalIdMeta } from "../terminalWaitTimesByTerminalId";
 
 /**
  * Endpoint group metadata for terminal wait times endpoints
@@ -17,4 +19,5 @@ export const terminalWaitTimesGroup: EndpointGroupMeta = {
       "Show route-specific wait time conditions.",
     ],
   },
+  endpoints: [terminalWaitTimesMeta, terminalWaitTimesByTerminalIdMeta],
 };

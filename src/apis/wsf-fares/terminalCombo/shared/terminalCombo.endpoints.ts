@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { terminalComboFaresMeta } from "../terminalComboFares";
+import { terminalComboFaresVerboseMeta } from "../terminalComboFaresVerbose";
 
 /**
  * Endpoint group metadata for terminal combo endpoints
@@ -18,4 +20,5 @@ export const terminalComboGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [terminalComboFaresMeta, terminalComboFaresVerboseMeta],
 };

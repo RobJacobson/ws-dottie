@@ -1,5 +1,6 @@
 import type { ApiDefinition } from "@/apis/types";
 import { activeSeasonsGroup } from "./activeSeasons/shared/activeSeasons.endpoints";
+import { wsfScheduleApiMeta } from "./apiMeta";
 import { cacheFlushDateScheduleGroup } from "./cacheFlushDate/shared/cacheFlushDate.endpoints";
 import { routeDetailsGroup } from "./routeDetails/shared/routeDetails.endpoints";
 import { routesGroup } from "./routes/shared/routes.endpoints";
@@ -15,10 +16,7 @@ import { timeAdjustmentsGroup } from "./timeAdjustments/shared/timeAdjustments.e
 import { scheduleValidDateRangeGroup } from "./validDateRange/shared/validDateRange.endpoints";
 
 export const wsfScheduleApi: ApiDefinition = {
-  api: {
-    name: "wsf-schedule",
-    baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
-  },
+  api: wsfScheduleApiMeta,
   endpointGroups: [
     activeSeasonsGroup,
     sailingsGroup,

@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { serviceDisruptionsGroup } from "./shared/serviceDisruptions.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type RoutesHavingServiceDisruptionsByTripDateInput,
   routesHavingServiceDisruptionsByTripDateInputSchema,
@@ -37,24 +28,22 @@ export const routesHavingServiceDisruptionsByTripDateMeta = {
 >;
 
 /**
- * Fetch function for retrieving routes with service disruptions for a specific trip date
+ * Factory result for routes having service disruptions by trip date
  */
-export const fetchRoutesHavingServiceDisruptionsByTripDate: (
-  params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>
-) => Promise<ServiceDisruption[]> = createFetchFunction(
-  wsfScheduleApi,
-  serviceDisruptionsGroup,
-  routesHavingServiceDisruptionsByTripDateMeta
-);
+const routesHavingServiceDisruptionsByTripDateFactory = createFetchAndHook<
+  RoutesHavingServiceDisruptionsByTripDateInput,
+  ServiceDisruption[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: routesHavingServiceDisruptionsByTripDateMeta,
+  getEndpointGroup: () =>
+    require("./shared/serviceDisruptions.endpoints").serviceDisruptionsGroup,
+});
 
 /**
- * React Query hook for retrieving routes with service disruptions for a specific trip date
+ * Fetch function and React Query hook for retrieving routes with service disruptions for a specific trip date
  */
-export const useRoutesHavingServiceDisruptionsByTripDate: (
-  params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>,
-  options?: QueryHookOptions<ServiceDisruption[]>
-) => UseQueryResult<ServiceDisruption[], Error> = createHook(
-  wsfScheduleApi,
-  serviceDisruptionsGroup,
-  routesHavingServiceDisruptionsByTripDateMeta
-);
+export const {
+  fetch: fetchRoutesHavingServiceDisruptionsByTripDate,
+  hook: useRoutesHavingServiceDisruptionsByTripDate,
+} = routesHavingServiceDisruptionsByTripDateFactory;

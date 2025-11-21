@@ -1,12 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
-import { vesselLocationsGroup } from "./shared/vesselLocations.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import {
   type VesselLocationsInput,
   vesselLocationsInputSchema,
@@ -30,24 +24,20 @@ export const vesselLocationsMeta = {
 } satisfies EndpointMeta<VesselLocationsInput, VesselLocation[]>;
 
 /**
- * Fetch function for retrieving current locations and status for all active vessels
+ * Factory result for vessel locations
  */
-export const fetchVesselLocations: (
-  params?: FetchFunctionParams<VesselLocationsInput>
-) => Promise<VesselLocation[]> = createFetchFunction(
-  wsfVesselsApi,
-  vesselLocationsGroup,
-  vesselLocationsMeta
-);
+const vesselLocationsFactory = createFetchAndHook<
+  VesselLocationsInput,
+  VesselLocation[]
+>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselLocationsMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselLocations.endpoints").vesselLocationsGroup,
+});
 
 /**
- * React Query hook for retrieving current locations and status for all active vessels
+ * Fetch function and React Query hook for retrieving current locations and status for all active vessels
  */
-export const useVesselLocations: (
-  params?: FetchFunctionParams<VesselLocationsInput>,
-  options?: QueryHookOptions<VesselLocation[]>
-) => UseQueryResult<VesselLocation[], Error> = createHook(
-  wsfVesselsApi,
-  vesselLocationsGroup,
-  vesselLocationsMeta
-);
+export const { fetch: fetchVesselLocations, hook: useVesselLocations } =
+  vesselLocationsFactory;

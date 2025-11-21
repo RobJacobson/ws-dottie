@@ -1,4 +1,7 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { timeAdjustmentsMeta } from "../timeAdjustments";
+import { timeAdjustmentsByRouteMeta } from "../timeAdjustmentsByRoute";
+import { timeAdjustmentsBySchedRouteMeta } from "../timeAdjustmentsBySchedRoute";
 
 /**
  * Endpoint group metadata for time adjustments endpoints
@@ -17,4 +20,9 @@ export const timeAdjustmentsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [
+    timeAdjustmentsMeta,
+    timeAdjustmentsByRouteMeta,
+    timeAdjustmentsBySchedRouteMeta,
+  ],
 };

@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalSailingSpaceGroup } from "./shared/terminalSailingSpace.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalSailingSpaceByTerminalIdInput,
   terminalSailingSpaceByTerminalIdInputSchema,
@@ -36,24 +27,23 @@ export const terminalSailingSpaceByTerminalIdMeta = {
 >;
 
 /**
- * Fetch function for retrieving sailing space availability for a specific terminal by ID
+ * Factory result for terminal sailing space by terminal ID
  */
-export const fetchTerminalSailingSpaceByTerminalId: (
-  params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>
-) => Promise<TerminalSailingSpace> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceByTerminalIdMeta
-);
+const terminalSailingSpaceByTerminalIdFactory = createFetchAndHook<
+  TerminalSailingSpaceByTerminalIdInput,
+  TerminalSailingSpace
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalSailingSpaceByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalSailingSpace.endpoints")
+      .terminalSailingSpaceGroup,
+});
 
 /**
- * React Query hook for retrieving sailing space availability for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving sailing space availability for a specific terminal by ID
  */
-export const useTerminalSailingSpaceByTerminalId: (
-  params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>,
-  options?: QueryHookOptions<TerminalSailingSpace>
-) => UseQueryResult<TerminalSailingSpace, Error> = createHook(
-  wsfTerminalsApi,
-  terminalSailingSpaceGroup,
-  terminalSailingSpaceByTerminalIdMeta
-);
+export const {
+  fetch: fetchTerminalSailingSpaceByTerminalId,
+  hook: useTerminalSailingSpaceByTerminalId,
+} = terminalSailingSpaceByTerminalIdFactory;

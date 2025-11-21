@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalTransportsGroup } from "./shared/terminalTransports.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalTransportsInput,
   terminalTransportsInputSchema,
@@ -32,24 +23,20 @@ export const terminalTransportsMeta = {
 } satisfies EndpointMeta<TerminalTransportsInput, TerminalTransport[]>;
 
 /**
- * Fetch function for retrieving transportation information for all terminals
+ * Factory result for terminal transports
  */
-export const fetchTerminalTransports: (
-  params?: FetchFunctionParams<TerminalTransportsInput>
-) => Promise<TerminalTransport[]> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalTransportsGroup,
-  terminalTransportsMeta
-);
+const terminalTransportsFactory = createFetchAndHook<
+  TerminalTransportsInput,
+  TerminalTransport[]
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalTransportsMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalTransports.endpoints").terminalTransportsGroup,
+});
 
 /**
- * React Query hook for retrieving transportation information for all terminals
+ * Fetch function and React Query hook for retrieving transportation information for all terminals
  */
-export const useTerminalTransports: (
-  params?: FetchFunctionParams<TerminalTransportsInput>,
-  options?: QueryHookOptions<TerminalTransport[]>
-) => UseQueryResult<TerminalTransport[], Error> = createHook(
-  wsfTerminalsApi,
-  terminalTransportsGroup,
-  terminalTransportsMeta
-);
+export const { fetch: fetchTerminalTransports, hook: useTerminalTransports } =
+  terminalTransportsFactory;

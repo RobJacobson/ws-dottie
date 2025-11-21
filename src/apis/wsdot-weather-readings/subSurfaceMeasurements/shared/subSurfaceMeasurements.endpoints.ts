@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { subSurfaceMeasurementsMeta } from "../subSurfaceMeasurements";
 
 /**
  * Endpoint group metadata for sub-surface measurements endpoints
@@ -18,4 +19,5 @@ export const subSurfaceMeasurementsGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "5m",
   },
+  endpoints: [subSurfaceMeasurementsMeta],
 };

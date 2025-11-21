@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherInformationApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { weatherInfoGroup } from "./shared/weatherInfo.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotWeatherInformationApiMeta } from "../apiMeta";
 import {
   type WeatherInformationByStationIdInput,
   weatherInformationByStationIdInputSchema,
@@ -34,24 +25,22 @@ export const weatherInformationByStationIdMeta = {
 } satisfies EndpointMeta<WeatherInformationByStationIdInput, WeatherInfo>;
 
 /**
- * Fetch function for retrieving current weather information for a specific station by ID
+ * Factory result for weather information by station ID
  */
-export const fetchWeatherInformationByStationId: (
-  params?: FetchFunctionParams<WeatherInformationByStationIdInput>
-) => Promise<WeatherInfo> = createFetchFunction(
-  wsdotWeatherInformationApi,
-  weatherInfoGroup,
-  weatherInformationByStationIdMeta
-);
+const weatherInformationByStationIdFactory = createFetchAndHook<
+  WeatherInformationByStationIdInput,
+  WeatherInfo
+>({
+  api: wsdotWeatherInformationApiMeta,
+  endpoint: weatherInformationByStationIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/weatherInfo.endpoints").weatherInfoGroup,
+});
 
 /**
- * React Query hook for retrieving current weather information for a specific station by ID
+ * Fetch function and React Query hook for retrieving current weather information for a specific station by ID
  */
-export const useWeatherInformationByStationId: (
-  params?: FetchFunctionParams<WeatherInformationByStationIdInput>,
-  options?: QueryHookOptions<WeatherInfo>
-) => UseQueryResult<WeatherInfo, Error> = createHook(
-  wsdotWeatherInformationApi,
-  weatherInfoGroup,
-  weatherInformationByStationIdMeta
-);
+export const {
+  fetch: fetchWeatherInformationByStationId,
+  hook: useWeatherInformationByStationId,
+} = weatherInformationByStationIdFactory;

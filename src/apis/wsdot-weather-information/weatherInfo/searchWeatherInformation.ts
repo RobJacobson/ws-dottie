@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherInformationApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { weatherInfoGroup } from "./shared/weatherInfo.endpoints";
+import { wsdotWeatherInformationApiMeta } from "../apiMeta";
 import {
   type SearchWeatherInformationInput,
   searchWeatherInformationInputSchema,
@@ -41,24 +32,22 @@ export const searchWeatherInformationMeta = {
 } satisfies EndpointMeta<SearchWeatherInformationInput, WeatherInfo[]>;
 
 /**
- * Fetch function for retrieving historical weather information for a station within a time range
+ * Factory result for search weather information
  */
-export const searchWeatherInformation: (
-  params?: FetchFunctionParams<SearchWeatherInformationInput>
-) => Promise<WeatherInfo[]> = createFetchFunction(
-  wsdotWeatherInformationApi,
-  weatherInfoGroup,
-  searchWeatherInformationMeta
-);
+const searchWeatherInformationFactory = createFetchAndHook<
+  SearchWeatherInformationInput,
+  WeatherInfo[]
+>({
+  api: wsdotWeatherInformationApiMeta,
+  endpoint: searchWeatherInformationMeta,
+  getEndpointGroup: () =>
+    require("./shared/weatherInfo.endpoints").weatherInfoGroup,
+});
 
 /**
- * React Query hook for retrieving historical weather information for a station within a time range
+ * Fetch function and React Query hook for retrieving historical weather information for a station within a time range
  */
-export const useSearchWeatherInformation: (
-  params?: FetchFunctionParams<SearchWeatherInformationInput>,
-  options?: QueryHookOptions<WeatherInfo[]>
-) => UseQueryResult<WeatherInfo[], Error> = createHook(
-  wsdotWeatherInformationApi,
-  weatherInfoGroup,
-  searchWeatherInformationMeta
-);
+export const {
+  fetch: searchWeatherInformation,
+  hook: useSearchWeatherInformation,
+} = searchWeatherInformationFactory;

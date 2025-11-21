@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { vesselBasicsMeta } from "../vesselBasics";
+import { vesselBasicsByVesselIdMeta } from "../vesselBasicsByVesselId";
 
 /**
  * Endpoint group metadata for vessel basics endpoints
@@ -16,4 +18,5 @@ export const vesselBasicsGroup: EndpointGroupMeta = {
       "Provide foundation data for vessel selection.",
     ],
   },
+  endpoints: [vesselBasicsMeta, vesselBasicsByVesselIdMeta],
 };

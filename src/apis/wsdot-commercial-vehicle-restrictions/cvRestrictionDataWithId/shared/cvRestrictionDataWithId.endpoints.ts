@@ -1,4 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { commercialVehicleRestrictionsWithIdMeta } from "../commercialVehicleRestrictionsWithId";
 
 /**
  * Endpoint group metadata for commercial vehicle restriction data with ID endpoints
@@ -18,4 +19,5 @@ export const cvRestrictionDataWithIdGroup: EndpointGroupMeta = {
     ],
     updateFrequency: "daily",
   },
+  endpoints: [commercialVehicleRestrictionsWithIdMeta],
 };

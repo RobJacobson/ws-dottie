@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotTollRatesApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { tollTripInfoGroup } from "./shared/tollTripInfo.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotTollRatesApiMeta } from "../apiMeta";
 import {
   type TollTripInfoInput,
   tollTripInfoInputSchema,
@@ -32,24 +23,20 @@ export const tollTripInfoMeta = {
 } satisfies EndpointMeta<TollTripInfoInput, TollTripInfo[]>;
 
 /**
- * Fetch function for retrieving trip information for all toll trips statewide
+ * Factory result for toll trip info
  */
-export const fetchTollTripInfo: (
-  params?: FetchFunctionParams<TollTripInfoInput>
-) => Promise<TollTripInfo[]> = createFetchFunction(
-  wsdotTollRatesApi,
-  tollTripInfoGroup,
-  tollTripInfoMeta
-);
+const tollTripInfoFactory = createFetchAndHook<
+  TollTripInfoInput,
+  TollTripInfo[]
+>({
+  api: wsdotTollRatesApiMeta,
+  endpoint: tollTripInfoMeta,
+  getEndpointGroup: () =>
+    require("./shared/tollTripInfo.endpoints").tollTripInfoGroup,
+});
 
 /**
- * React Query hook for retrieving trip information for all toll trips statewide
+ * Fetch function and React Query hook for retrieving trip information for all toll trips statewide
  */
-export const useTollTripInfo: (
-  params?: FetchFunctionParams<TollTripInfoInput>,
-  options?: QueryHookOptions<TollTripInfo[]>
-) => UseQueryResult<TollTripInfo[], Error> = createHook(
-  wsdotTollRatesApi,
-  tollTripInfoGroup,
-  tollTripInfoMeta
-);
+export const { fetch: fetchTollTripInfo, hook: useTollTripInfo } =
+  tollTripInfoFactory;

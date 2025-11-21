@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { routeDetailsGroup } from "./shared/routeDetails.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type RouteDetailsByTripDateAndTerminalsInput,
   routeDetailsByTripDateAndTerminalsInputSchema,
@@ -42,24 +33,22 @@ export const routeDetailsByTripDateAndTerminalsMeta = {
 >;
 
 /**
- * Fetch function for retrieving detailed route information for terminal pair on date
+ * Factory result for route details by trip date and terminals
  */
-export const fetchRouteDetailsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>
-) => Promise<RouteDetail[]> = createFetchFunction(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndTerminalsMeta
-);
+const routeDetailsByTripDateAndTerminalsFactory = createFetchAndHook<
+  RouteDetailsByTripDateAndTerminalsInput,
+  RouteDetail[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: routeDetailsByTripDateAndTerminalsMeta,
+  getEndpointGroup: () =>
+    require("./shared/routeDetails.endpoints").routeDetailsGroup,
+});
 
 /**
- * React Query hook for retrieving detailed route information for terminal pair on date
+ * Fetch function and React Query hook for retrieving detailed route information for terminal pair on date
  */
-export const useRouteDetailsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<RouteDetail[]>
-) => UseQueryResult<RouteDetail[], Error> = createHook(
-  wsfScheduleApi,
-  routeDetailsGroup,
-  routeDetailsByTripDateAndTerminalsMeta
-);
+export const {
+  fetch: fetchRouteDetailsByTripDateAndTerminals,
+  hook: useRouteDetailsByTripDateAndTerminals,
+} = routeDetailsByTripDateAndTerminalsFactory;

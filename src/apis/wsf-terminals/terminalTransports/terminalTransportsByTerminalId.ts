@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalTransportsGroup } from "./shared/terminalTransports.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalTransportsByTerminalIdInput,
   terminalTransportsByTerminalIdInputSchema,
@@ -36,24 +27,22 @@ export const terminalTransportsByTerminalIdMeta = {
 >;
 
 /**
- * Fetch function for retrieving transportation information for a specific terminal by ID
+ * Factory result for terminal transports by terminal ID
  */
-export const fetchTerminalTransportsByTerminalId: (
-  params?: FetchFunctionParams<TerminalTransportsByTerminalIdInput>
-) => Promise<TerminalTransport> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalTransportsGroup,
-  terminalTransportsByTerminalIdMeta
-);
+const terminalTransportsByTerminalIdFactory = createFetchAndHook<
+  TerminalTransportsByTerminalIdInput,
+  TerminalTransport
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalTransportsByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalTransports.endpoints").terminalTransportsGroup,
+});
 
 /**
- * React Query hook for retrieving transportation information for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving transportation information for a specific terminal by ID
  */
-export const useTerminalTransportsByTerminalId: (
-  params?: FetchFunctionParams<TerminalTransportsByTerminalIdInput>,
-  options?: QueryHookOptions<TerminalTransport>
-) => UseQueryResult<TerminalTransport, Error> = createHook(
-  wsfTerminalsApi,
-  terminalTransportsGroup,
-  terminalTransportsByTerminalIdMeta
-);
+export const {
+  fetch: fetchTerminalTransportsByTerminalId,
+  hook: useTerminalTransportsByTerminalId,
+} = terminalTransportsByTerminalIdFactory;

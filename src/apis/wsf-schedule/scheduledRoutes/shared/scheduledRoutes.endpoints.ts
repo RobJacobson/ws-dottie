@@ -1,4 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
+import { scheduledRoutesMeta } from "../scheduledRoutes";
+import { scheduledRoutesByIdMeta } from "../scheduledRoutesById";
 
 /**
  * Endpoint group metadata for scheduled routes endpoints
@@ -16,4 +18,5 @@ export const scheduledRoutesGroup: EndpointGroupMeta = {
       "Identify contingency routes and service disruptions.",
     ],
   },
+  endpoints: [scheduledRoutesMeta, scheduledRoutesByIdMeta],
 };

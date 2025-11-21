@@ -1,12 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import { createFetchFunction, createHook } from "@/shared/factories";
-import { wsfVesselsApi } from "../api";
-import { vesselVerboseGroup } from "./shared/vesselVerbose.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfVesselsApiMeta } from "../apiMeta";
 import {
   type VesselVerboseInput,
   vesselVerboseInputSchema,
@@ -29,24 +23,20 @@ export const vesselsVerboseMeta = {
 } satisfies EndpointMeta<VesselVerboseInput, VesselVerbose[]>;
 
 /**
- * Fetch function for retrieving complete vessel information for all vessels
+ * Factory result for vessels verbose
  */
-export const fetchVesselsVerbose: (
-  params?: FetchFunctionParams<VesselVerboseInput>
-) => Promise<VesselVerbose[]> = createFetchFunction(
-  wsfVesselsApi,
-  vesselVerboseGroup,
-  vesselsVerboseMeta
-);
+const vesselsVerboseFactory = createFetchAndHook<
+  VesselVerboseInput,
+  VesselVerbose[]
+>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselsVerboseMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselVerbose.endpoints").vesselVerboseGroup,
+});
 
 /**
- * React Query hook for retrieving complete vessel information for all vessels
+ * Fetch function and React Query hook for retrieving complete vessel information for all vessels
  */
-export const useVesselsVerbose: (
-  params?: FetchFunctionParams<VesselVerboseInput>,
-  options?: QueryHookOptions<VesselVerbose[]>
-) => UseQueryResult<VesselVerbose[], Error> = createHook(
-  wsfVesselsApi,
-  vesselVerboseGroup,
-  vesselsVerboseMeta
-);
+export const { fetch: fetchVesselsVerbose, hook: useVesselsVerbose } =
+  vesselsVerboseFactory;

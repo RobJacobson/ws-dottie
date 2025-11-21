@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { activeSeasonsGroup } from "./shared/activeSeasons.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type ActiveSeasonsInput,
   activeSeasonsInputSchema,
@@ -33,24 +24,20 @@ export const activeSeasonsMeta = {
 } satisfies EndpointMeta<ActiveSeasonsInput, ActiveSeason[]>;
 
 /**
- * Fetch function for retrieving all active schedule seasons with dates and PDF URLs
+ * Factory result for active seasons
  */
-export const fetchActiveSeasons: (
-  params?: FetchFunctionParams<ActiveSeasonsInput>
-) => Promise<ActiveSeason[]> = createFetchFunction(
-  wsfScheduleApi,
-  activeSeasonsGroup,
-  activeSeasonsMeta
-);
+const activeSeasonsFactory = createFetchAndHook<
+  ActiveSeasonsInput,
+  ActiveSeason[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: activeSeasonsMeta,
+  getEndpointGroup: () =>
+    require("./shared/activeSeasons.endpoints").activeSeasonsGroup,
+});
 
 /**
- * React Query hook for retrieving all active schedule seasons with dates and PDF URLs
+ * Fetch function and React Query hook for retrieving all active schedule seasons with dates and PDF URLs
  */
-export const useActiveSeasons: (
-  params?: FetchFunctionParams<ActiveSeasonsInput>,
-  options?: QueryHookOptions<ActiveSeason[]>
-) => UseQueryResult<ActiveSeason[], Error> = createHook(
-  wsfScheduleApi,
-  activeSeasonsGroup,
-  activeSeasonsMeta
-);
+export const { fetch: fetchActiveSeasons, hook: useActiveSeasons } =
+  activeSeasonsFactory;

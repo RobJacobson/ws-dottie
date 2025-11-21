@@ -49,6 +49,8 @@ export interface EndpointGroupMeta {
   documentation: ResourceDocumentation;
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
+  /** Array of endpoint metadata for this group */
+  endpoints: EndpointMeta<unknown, unknown>[];
 }
 
 /**

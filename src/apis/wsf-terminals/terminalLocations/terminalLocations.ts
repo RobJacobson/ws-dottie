@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalLocationsGroup } from "./shared/terminalLocations.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalLocationsInput,
   terminalLocationsInputSchema,
@@ -32,24 +23,20 @@ export const terminalLocationsMeta = {
 } satisfies EndpointMeta<TerminalLocationsInput, TerminalLocation[]>;
 
 /**
- * Fetch function for retrieving location information for all terminals
+ * Factory result for terminal locations
  */
-export const fetchTerminalLocations: (
-  params?: FetchFunctionParams<TerminalLocationsInput>
-) => Promise<TerminalLocation[]> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalLocationsGroup,
-  terminalLocationsMeta
-);
+const terminalLocationsFactory = createFetchAndHook<
+  TerminalLocationsInput,
+  TerminalLocation[]
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalLocationsMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalLocations.endpoints").terminalLocationsGroup,
+});
 
 /**
- * React Query hook for retrieving location information for all terminals
+ * Fetch function and React Query hook for retrieving location information for all terminals
  */
-export const useTerminalLocations: (
-  params?: FetchFunctionParams<TerminalLocationsInput>,
-  options?: QueryHookOptions<TerminalLocation[]>
-) => UseQueryResult<TerminalLocation[], Error> = createHook(
-  wsfTerminalsApi,
-  terminalLocationsGroup,
-  terminalLocationsMeta
-);
+export const { fetch: fetchTerminalLocations, hook: useTerminalLocations } =
+  terminalLocationsFactory;

@@ -5,33 +5,24 @@
  * queries when flush dates change. This is specifically for WSF APIs that
  * use cache flush dates to indicate when static data has been updated.
  *
- * Uses internal fetch functions created with createFetchFunction to break
- * circular dependencies. These are separate from the public-facing fetch
- * functions exported from API modules.
+ * Uses simple fetch functions that directly call fetchDottie with minimal
+ * endpoint descriptors, avoiding circular dependencies.
  */
 
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { apis } from "@/apis/shared/apis";
 import type { CacheFlushDateOutput } from "@/apis/shared/cacheFlushDate";
 import {
-  cacheFlushDateFaresGroup,
-  cacheFlushDateFaresMeta,
-} from "@/apis/wsf-fares/cacheFlushDate/shared/cacheFlushDate.endpoints";
-import {
-  cacheFlushDateScheduleGroup,
-  cacheFlushDateScheduleMeta,
-} from "@/apis/wsf-schedule/cacheFlushDate/shared/cacheFlushDate.endpoints";
-import {
-  cacheFlushDateTerminalsGroup,
-  cacheFlushDateTerminalsMeta,
-} from "@/apis/wsf-terminals/cacheFlushDate/shared/cacheFlushDate.endpoints";
-import {
-  cacheFlushDateVesselsGroup,
-  cacheFlushDateVesselsMeta,
-} from "@/apis/wsf-vessels/cacheFlushDate/shared/cacheFlushDate.endpoints";
-import { createFetchFunction } from "@/shared/factories/createFetchFunction";
+  cacheFlushDateInputSchema,
+  cacheFlushDateOutputSchema,
+} from "@/apis/shared/cacheFlushDate";
+import { wsfFaresApiMeta } from "@/apis/wsf-fares/apiMeta";
+import { wsfScheduleApiMeta } from "@/apis/wsf-schedule/apiMeta";
+import { wsfTerminalsApiMeta } from "@/apis/wsf-terminals/apiMeta";
+import { wsfVesselsApiMeta } from "@/apis/wsf-vessels/apiMeta";
+import { fetchDottie } from "@/shared/fetching";
+import type { FetchEndpoint } from "@/shared/types";
 
 type CacheFlushApiName =
   | "wsf-fares"
@@ -39,103 +30,91 @@ type CacheFlushApiName =
   | "wsf-terminals"
   | "wsf-vessels";
 
-type CacheFlushFetchFn = () => Promise<string>;
+const CACHE_FLUSH_API_NAMES = new Set<CacheFlushApiName>([
+  "wsf-fares",
+  "wsf-schedule",
+  "wsf-terminals",
+  "wsf-vessels",
+]);
 
-// Internal fetch functions created using createFetchFunction
-// These are separate from the public-facing functions exported from API modules
-// This breaks the circular dependency because createFetchFunction has no
-// dependencies on cache or React hooks
-const internalFetchCacheFlushDateFares = createFetchFunction(
-  apis["wsf-fares"],
-  cacheFlushDateFaresGroup,
-  cacheFlushDateFaresMeta
-);
-
-const internalFetchCacheFlushDateSchedule = createFetchFunction(
-  apis["wsf-schedule"],
-  cacheFlushDateScheduleGroup,
-  cacheFlushDateScheduleMeta
-);
-
-const internalFetchCacheFlushDateTerminals = createFetchFunction(
-  apis["wsf-terminals"],
-  cacheFlushDateTerminalsGroup,
-  cacheFlushDateTerminalsMeta
-);
-
-const internalFetchCacheFlushDateVessels = createFetchFunction(
-  apis["wsf-vessels"],
-  cacheFlushDateVesselsGroup,
-  cacheFlushDateVesselsMeta
-);
-
-// Strategy pattern: map API names to fetch functions
-// Now accepts fetchMode parameter to match the underlying hook configuration
-const CACHE_FLUSH_STRATEGIES: Record<
-  CacheFlushApiName,
-  (fetchMode?: "native" | "jsonp") => CacheFlushFetchFn
-> = {
-  "wsf-fares":
-    (fetchMode = "native") =>
-    async () => {
-      const result = await internalFetchCacheFlushDateFares({
-        fetchMode,
-        validate: false,
-        logMode: "none",
-      });
-      return normalizeFlushDate(result);
-    },
-  "wsf-schedule":
-    (fetchMode = "native") =>
-    async () => {
-      const result = await internalFetchCacheFlushDateSchedule({
-        fetchMode,
-        validate: false,
-        logMode: "none",
-      });
-      return normalizeFlushDate(result);
-    },
-  "wsf-terminals":
-    (fetchMode = "native") =>
-    async () => {
-      const result = await internalFetchCacheFlushDateTerminals({
-        fetchMode,
-        validate: false,
-        logMode: "none",
-      });
-      return normalizeFlushDate(result);
-    },
-  "wsf-vessels":
-    (fetchMode = "native") =>
-    async () => {
-      const result = await internalFetchCacheFlushDateVessels({
-        fetchMode,
-        validate: false,
-        logMode: "none",
-      });
-      return normalizeFlushDate(result);
-    },
+// Map API names to their base URLs
+const CACHE_FLUSH_BASE_URLS: Record<CacheFlushApiName, string> = {
+  "wsf-fares": wsfFaresApiMeta.baseUrl,
+  "wsf-schedule": wsfScheduleApiMeta.baseUrl,
+  "wsf-terminals": wsfTerminalsApiMeta.baseUrl,
+  "wsf-vessels": wsfVesselsApiMeta.baseUrl,
 } as const;
 
-// Getter that retrieves the fetch function from the strategy map
-const getCachedFetchFunction = (
+/**
+ * Creates a minimal FetchEndpoint for cache flush date endpoints
+ *
+ * These are simple GET requests with no parameters.
+ *
+ * @param baseUrl - The base URL for the API (e.g., "https://www.wsdot.wa.gov/ferries/api/vessels/rest")
+ * @returns A FetchEndpoint object configured for the cache flush date endpoint
+ */
+const createCacheFlushEndpoint = (
+  baseUrl: string
+): FetchEndpoint<Record<string, never>, CacheFlushDateOutput> => ({
+  urlTemplate: `${baseUrl}/cacheflushdate`,
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+});
+
+/**
+ * Fetches and normalizes cache flush date for a given API
+ *
+ * @param apiName - The name of the API (must be one of the WSF APIs with cache flush support)
+ * @param fetchMode - Optional fetch mode to use (default: "native")
+ * @returns Promise resolving to the normalized cache flush date as an ISO string
+ * @throws Error if the API name is not found in the base URL mapping
+ */
+const fetchCacheFlushDate = async (
   apiName: CacheFlushApiName,
-  fetchMode?: "native" | "jsonp"
-): CacheFlushFetchFn => {
-  const strategy = CACHE_FLUSH_STRATEGIES[apiName];
-  if (!strategy) {
-    throw new Error(`No cache flush strategy found for API: ${apiName}`);
+  fetchMode: "native" | "jsonp" = "native"
+): Promise<string> => {
+  const baseUrl = CACHE_FLUSH_BASE_URLS[apiName];
+  if (!baseUrl) {
+    throw new Error(`No base URL found for API: ${apiName}`);
   }
-  return strategy(fetchMode);
+
+  const result = await fetchDottie({
+    endpoint: createCacheFlushEndpoint(baseUrl),
+    fetchMode,
+    validate: false,
+    logMode: "none",
+  });
+
+  return normalizeFlushDate(result);
 };
 
-const CACHE_FLUSH_ENDPOINT_IDS: Record<CacheFlushApiName, string> = {
-  "wsf-fares": "wsf-fares:fetchCacheFlushDateFares",
-  "wsf-schedule": "wsf-schedule:fetchCacheFlushDateSchedule",
-  "wsf-terminals": "wsf-terminals:fetchCacheFlushDateTerminals",
-  "wsf-vessels": "wsf-vessels:fetchCacheFlushDateVessels",
-} as const;
+/**
+ * Generates endpoint ID in format "api-name:fetchCacheFlushDateApiName"
+ *
+ * Converts API names like "wsf-vessels" to function names like "fetchCacheFlushDateVessels".
+ *
+ * @param apiName - The name of the API (e.g., "wsf-vessels")
+ * @returns Endpoint ID string in format "api-name:functionName"
+ */
+const getEndpointId = (apiName: CacheFlushApiName): string => {
+  const functionName = `fetchCacheFlushDate${apiName
+    .replace("wsf-", "")
+    .split("-")
+    .map((s) => s[0].toUpperCase() + s.slice(1))
+    .join("")}`;
+  return `${apiName}:${functionName}`;
+};
 
+/**
+ * Normalizes cache flush date value to a consistent string format
+ *
+ * Converts Date objects to ISO strings, other values to strings.
+ * Returns empty string for falsy values.
+ *
+ * @param value - The cache flush date value (can be Date, string, or other)
+ * @returns Normalized date string (ISO format for Dates, empty string for falsy values)
+ */
 const normalizeFlushDate = (value: CacheFlushDateOutput): string => {
   if (!value) {
     return "";
@@ -146,31 +125,29 @@ const normalizeFlushDate = (value: CacheFlushDateOutput): string => {
 /**
  * Hook to poll cache flush date endpoint
  *
+ * Automatically polls the cache flush date endpoint every 5 minutes for WSF APIs
+ * with cache flush support. Returns an empty string for APIs without cache flush support.
+ *
  * @param apiName - The name of the API (e.g., "wsf-vessels")
- * @param fetchMode - Optional fetch mode to use ("native" or "jsonp").
- *                    Defaults to "native". Should match the fetchMode used
- *                    by the underlying hook to ensure consistent behavior.
+ * @param fetchMode - Optional fetch mode to use (default: "native"). Should match the fetchMode used by the underlying hook to ensure consistent behavior
+ * @returns UseQueryResult containing the cache flush date as an ISO string, or empty string for unsupported APIs
  */
 export const useCacheFlushDate = (
   apiName: string,
-  fetchMode?: "native" | "jsonp"
+  fetchMode: "native" | "jsonp" = "native"
 ): UseQueryResult<string, Error> => {
-  const isCacheFlushApi: boolean =
-    apiName === "wsf-fares" ||
-    apiName === "wsf-schedule" ||
-    apiName === "wsf-terminals" ||
-    apiName === "wsf-vessels";
-
-  const fetchFn = isCacheFlushApi
-    ? getCachedFetchFunction(apiName as CacheFlushApiName, fetchMode)
-    : undefined;
-
-  const endpointId =
-    CACHE_FLUSH_ENDPOINT_IDS[apiName as CacheFlushApiName] || "no-cache-flush";
+  const isCacheFlushApi = CACHE_FLUSH_API_NAMES.has(
+    apiName as CacheFlushApiName
+  );
+  const endpointId = isCacheFlushApi
+    ? getEndpointId(apiName as CacheFlushApiName)
+    : "no-cache-flush";
 
   return useQuery({
-    queryKey: [endpointId, fetchMode], // Include fetchMode in query key
-    queryFn: fetchFn ?? (() => Promise.resolve("")),
+    queryKey: [endpointId, fetchMode],
+    queryFn: isCacheFlushApi
+      ? () => fetchCacheFlushDate(apiName as CacheFlushApiName, fetchMode)
+      : () => Promise.resolve(""),
     refetchInterval: isCacheFlushApi ? 5 * 60 * 1000 : undefined,
     staleTime: isCacheFlushApi ? 5 * 60 * 1000 : undefined,
     refetchOnWindowFocus: false,
@@ -179,6 +156,13 @@ export const useCacheFlushDate = (
 
 /**
  * Hook to handle cache invalidation when flush date changes
+ *
+ * Monitors the cache flush date query and invalidates the specified endpoint's
+ * queries when the flush date changes, ensuring fresh data is fetched.
+ *
+ * @param endpointId - The endpoint ID to invalidate when flush date changes
+ * @param flushDateQuery - Optional React Query result from useCacheFlushDate hook
+ * @returns void
  */
 export const useInvalidateOnFlushChange = (
   endpointId: string,

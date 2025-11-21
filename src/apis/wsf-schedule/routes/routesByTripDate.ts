@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { routesGroup } from "./shared/routes.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type RoutesByTripDateInput,
   routesByTripDateInputSchema,
@@ -30,24 +21,19 @@ export const routesByTripDateMeta = {
 } satisfies EndpointMeta<RoutesByTripDateInput, Route[]>;
 
 /**
- * Fetch function for retrieving all routes available for specified trip date
+ * Factory result for routes by trip date
  */
-export const fetchRoutesByTripDate: (
-  params?: FetchFunctionParams<RoutesByTripDateInput>
-) => Promise<Route[]> = createFetchFunction(
-  wsfScheduleApi,
-  routesGroup,
-  routesByTripDateMeta
-);
+const routesByTripDateFactory = createFetchAndHook<
+  RoutesByTripDateInput,
+  Route[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: routesByTripDateMeta,
+  getEndpointGroup: () => require("./shared/routes.endpoints").routesGroup,
+});
 
 /**
- * React Query hook for retrieving all routes available for specified trip date
+ * Fetch function and React Query hook for retrieving all routes available for specified trip date
  */
-export const useRoutesByTripDate: (
-  params?: FetchFunctionParams<RoutesByTripDateInput>,
-  options?: QueryHookOptions<Route[]>
-) => UseQueryResult<Route[], Error> = createHook(
-  wsfScheduleApi,
-  routesGroup,
-  routesByTripDateMeta
-);
+export const { fetch: fetchRoutesByTripDate, hook: useRoutesByTripDate } =
+  routesByTripDateFactory;

@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { terminalBasicsGroup } from "./shared/terminalBasics.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfTerminalsApiMeta } from "../apiMeta";
 import {
   type TerminalBasicsByIdInput,
   terminalBasicsByIdInputSchema,
@@ -32,24 +23,22 @@ export const terminalBasicsByTerminalIdMeta = {
 } satisfies EndpointMeta<TerminalBasicsByIdInput, TerminalBasic>;
 
 /**
- * Fetch function for retrieving basic information for a specific terminal by ID
+ * Factory result for terminal basics by terminal ID
  */
-export const fetchTerminalBasicsByTerminalId: (
-  params?: FetchFunctionParams<TerminalBasicsByIdInput>
-) => Promise<TerminalBasic> = createFetchFunction(
-  wsfTerminalsApi,
-  terminalBasicsGroup,
-  terminalBasicsByTerminalIdMeta
-);
+const terminalBasicsByTerminalIdFactory = createFetchAndHook<
+  TerminalBasicsByIdInput,
+  TerminalBasic
+>({
+  api: wsfTerminalsApiMeta,
+  endpoint: terminalBasicsByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalBasics.endpoints").terminalBasicsGroup,
+});
 
 /**
- * React Query hook for retrieving basic information for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving basic information for a specific terminal by ID
  */
-export const useTerminalBasicsByTerminalId: (
-  params?: FetchFunctionParams<TerminalBasicsByIdInput>,
-  options?: QueryHookOptions<TerminalBasic>
-) => UseQueryResult<TerminalBasic, Error> = createHook(
-  wsfTerminalsApi,
-  terminalBasicsGroup,
-  terminalBasicsByTerminalIdMeta
-);
+export const {
+  fetch: fetchTerminalBasicsByTerminalId,
+  hook: useTerminalBasicsByTerminalId,
+} = terminalBasicsByTerminalIdFactory;

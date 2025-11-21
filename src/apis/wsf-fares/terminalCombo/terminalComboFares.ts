@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { terminalComboGroup } from "./shared/terminalCombo.endpoints";
+import { wsfFaresApiMeta } from "../apiMeta";
 import {
   type TerminalComboInput,
   terminalComboInputSchema,
@@ -39,24 +30,20 @@ export const terminalComboFaresMeta = {
 } satisfies EndpointMeta<TerminalComboInput, TerminalComboFares>;
 
 /**
- * Fetch function for retrieving fare collection description for a specific terminal combination and trip date
+ * Factory result for terminal combo fares
  */
-export const fetchTerminalComboFares: (
-  params?: FetchFunctionParams<TerminalComboInput>
-) => Promise<TerminalComboFares> = createFetchFunction(
-  wsfFaresApi,
-  terminalComboGroup,
-  terminalComboFaresMeta
-);
+const terminalComboFaresFactory = createFetchAndHook<
+  TerminalComboInput,
+  TerminalComboFares
+>({
+  api: wsfFaresApiMeta,
+  endpoint: terminalComboFaresMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalCombo.endpoints").terminalComboGroup,
+});
 
 /**
- * React Query hook for retrieving fare collection description for a specific terminal combination and trip date
+ * Fetch function and React Query hook for retrieving fare collection description for a specific terminal combination and trip date
  */
-export const useTerminalComboFares: (
-  params?: FetchFunctionParams<TerminalComboInput>,
-  options?: QueryHookOptions<TerminalComboFares>
-) => UseQueryResult<TerminalComboFares, Error> = createHook(
-  wsfFaresApi,
-  terminalComboGroup,
-  terminalComboFaresMeta
-);
+export const { fetch: fetchTerminalComboFares, hook: useTerminalComboFares } =
+  terminalComboFaresFactory;

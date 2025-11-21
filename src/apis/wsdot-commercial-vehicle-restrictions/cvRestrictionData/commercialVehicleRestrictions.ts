@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotCommercialVehicleRestrictionsApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { cvRestrictionDataGroup } from "./shared/cvRestrictionData.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsdotCommercialVehicleRestrictionsApiMeta } from "../apiMeta";
 import {
   type CommercialVehicleRestrictionsInput,
   commercialVehicleRestrictionsInputSchema,
@@ -33,24 +24,22 @@ export const commercialVehicleRestrictionsMeta = {
 } satisfies EndpointMeta<CommercialVehicleRestrictionsInput, CVRestriction[]>;
 
 /**
- * Fetch function for retrieving commercial vehicle restrictions for all Washington State highways
+ * Factory result for commercial vehicle restrictions
  */
-export const fetchCommercialVehicleRestrictions: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>
-) => Promise<CVRestriction[]> = createFetchFunction(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataGroup,
-  commercialVehicleRestrictionsMeta
-);
+const commercialVehicleRestrictionsFactory = createFetchAndHook<
+  CommercialVehicleRestrictionsInput,
+  CVRestriction[]
+>({
+  api: wsdotCommercialVehicleRestrictionsApiMeta,
+  endpoint: commercialVehicleRestrictionsMeta,
+  getEndpointGroup: () =>
+    require("./shared/cvRestrictionData.endpoints").cvRestrictionDataGroup,
+});
 
 /**
- * React Query hook for retrieving commercial vehicle restrictions for all Washington State highways
+ * Fetch function and React Query hook for retrieving commercial vehicle restrictions for all Washington State highways
  */
-export const useCommercialVehicleRestrictions: (
-  params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>,
-  options?: QueryHookOptions<CVRestriction[]>
-) => UseQueryResult<CVRestriction[], Error> = createHook(
-  wsdotCommercialVehicleRestrictionsApi,
-  cvRestrictionDataGroup,
-  commercialVehicleRestrictionsMeta
-);
+export const {
+  fetch: fetchCommercialVehicleRestrictions,
+  hook: useCommercialVehicleRestrictions,
+} = commercialVehicleRestrictionsFactory;

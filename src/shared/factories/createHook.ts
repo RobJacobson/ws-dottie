@@ -5,66 +5,49 @@
  * Handles both regular hooks and cache-flush-date-aware hooks.
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type {
-  ApiDefinition,
-  EndpointGroupMeta,
-  EndpointMeta,
-} from "@/apis/types";
 import { useCacheFlushDate, useInvalidateOnFlushChange } from "@/shared/cache";
-import { buildDescriptor } from "./buildDescriptor";
-import { createFetchFunction } from "./createFetchFunction";
+import type { CacheStrategy } from "@/shared/types";
 import { cacheStrategies } from "./strategies";
-import type { FetchFunctionParams, QueryHookOptions } from "./types";
+import type {
+  FetchFunctionParams,
+  HookFactory,
+  QueryHookOptions,
+} from "./types";
 
 /**
- * Determines if an endpoint should use cache flush date invalidation.
+ * Creates a strongly-typed React Query hook from parameter objects
+ *
+ * Automatically handles cache flush date polling and invalidation for WSF APIs
+ * with STATIC cache strategy. For other APIs or strategies, creates a standard
+ * React Query hook with the specified cache strategy.
+ *
+ * @template I - The input parameters type
+ * @template O - The output response type
+ * @param params - Configuration object for hook creation
+ * @param params.apiName - The name of the API (e.g., "wsf-vessels")
+ * @param params.endpointName - The function name of the endpoint (e.g., "vesselBasics")
+ * @param params.fetchFn - The fetch function created by createFetchFunction
+ * @param params.cacheStrategy - The cache strategy to use (REALTIME, FREQUENT, MODERATE, STATIC)
+ * @returns A React Query hook function that accepts optional parameters and query options, returning UseQueryResult
  */
-function shouldUseCacheFlushDate(
-  apiDefinition: ApiDefinition,
-  group: EndpointGroupMeta
-): boolean {
-  const isWsfApi = apiDefinition.api.name.startsWith("wsf-");
-
-  if (
-    group.name === "cache-flush-date" ||
-    group.name === "schedule-cache-flush-date"
-  ) {
-    return false;
-  }
-
-  return isWsfApi && group.cacheStrategy === "STATIC";
-}
-
-/**
- * Creates a strongly-typed React Query hook from three metadata objects.
- */
-export function createHook<I, O>(
-  apiDefinition: ApiDefinition,
-  group: EndpointGroupMeta,
-  endpoint: EndpointMeta<I, O>
-): (
-  params?: FetchFunctionParams<I>,
-  options?: QueryHookOptions<O>
-) => UseQueryResult<O, Error> {
-  const descriptor = buildDescriptor(apiDefinition, group, endpoint);
-  const fetchFn = createFetchFunction(apiDefinition, group, endpoint);
-  const useCacheFlush = shouldUseCacheFlushDate(apiDefinition, group);
+export function createHook<I, O>(params: {
+  apiName: string;
+  endpointName: string;
+  fetchFn: (params?: FetchFunctionParams<I>) => Promise<O>;
+  cacheStrategy: CacheStrategy;
+}): HookFactory<I, O> {
+  const { apiName, endpointName, fetchFn, cacheStrategy } = params;
+  const useCacheFlush =
+    apiName.startsWith("wsf-") && cacheStrategy === "STATIC";
 
   if (useCacheFlush) {
-    return (
-      params?: FetchFunctionParams<I>,
-      options?: QueryHookOptions<O>
-    ): UseQueryResult<O, Error> => {
-      const flushDateQuery = useCacheFlushDate(
-        apiDefinition.api.name,
-        params?.fetchMode
-      );
-      useInvalidateOnFlushChange(descriptor.id, flushDateQuery);
+    return (params?: FetchFunctionParams<I>, options?: QueryHookOptions<O>) => {
+      const flushDateQuery = useCacheFlushDate(apiName, params?.fetchMode);
+      useInvalidateOnFlushChange(endpointName, flushDateQuery);
 
       return useQuery({
-        queryKey: [descriptor.id, params?.params ?? null],
+        queryKey: [endpointName, params?.params ?? null],
         queryFn: () => fetchFn(params),
         ...cacheStrategies.STATIC,
         refetchOnWindowFocus: false,
@@ -73,16 +56,12 @@ export function createHook<I, O>(
     };
   }
 
-  return (
-    params?: FetchFunctionParams<I>,
-    options?: QueryHookOptions<O>
-  ): UseQueryResult<O, Error> => {
-    return useQuery({
-      queryKey: [descriptor.id, params?.params ?? null],
+  return (params?: FetchFunctionParams<I>, options?: QueryHookOptions<O>) =>
+    useQuery({
+      queryKey: [endpointName, params?.params ?? null],
       queryFn: () => fetchFn(params),
-      ...cacheStrategies[group.cacheStrategy as keyof typeof cacheStrategies],
+      ...cacheStrategies[cacheStrategy],
       refetchOnWindowFocus: false,
       ...options,
     });
-  };
 }

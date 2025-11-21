@@ -1,15 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
-import { scheduleAlertsGroup } from "./shared/scheduleAlerts.endpoints";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type ScheduleAlertsInput,
   scheduleAlertsInputSchema,
@@ -32,24 +23,20 @@ export const scheduleAlertsMeta = {
 } satisfies EndpointMeta<ScheduleAlertsInput, AlertDetail[]>;
 
 /**
- * Fetch function for retrieving all current schedule alerts
+ * Factory result for schedule alerts
  */
-export const fetchScheduleAlerts: (
-  params?: FetchFunctionParams<ScheduleAlertsInput>
-) => Promise<AlertDetail[]> = createFetchFunction(
-  wsfScheduleApi,
-  scheduleAlertsGroup,
-  scheduleAlertsMeta
-);
+const scheduleAlertsFactory = createFetchAndHook<
+  ScheduleAlertsInput,
+  AlertDetail[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduleAlertsMeta,
+  getEndpointGroup: () =>
+    require("./shared/scheduleAlerts.endpoints").scheduleAlertsGroup,
+});
 
 /**
- * React Query hook for retrieving all current schedule alerts
+ * Fetch function and React Query hook for retrieving all current schedule alerts
  */
-export const useScheduleAlerts: (
-  params?: FetchFunctionParams<ScheduleAlertsInput>,
-  options?: QueryHookOptions<AlertDetail[]>
-) => UseQueryResult<AlertDetail[], Error> = createHook(
-  wsfScheduleApi,
-  scheduleAlertsGroup,
-  scheduleAlertsMeta
-);
+export const { fetch: fetchScheduleAlerts, hook: useScheduleAlerts } =
+  scheduleAlertsFactory;

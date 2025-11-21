@@ -49,7 +49,8 @@ export const logger = {
  * Used only by fetchCore.ts for basic API operation monitoring.
  *
  * @param endpoint - The full API endpoint path (will extract endpoint name internally)
- * @param params - Parameters being sent to the endpoint
+ * @param params - Optional parameters being sent to the endpoint
+ * @returns void
  */
 export const logApiCall = (endpoint: string, params?: unknown): void => {
   const endpointName = endpoint.split("/").pop() || endpoint;
@@ -67,8 +68,9 @@ export const logApiCall = (endpoint: string, params?: unknown): void => {
  * Provides basic performance metrics including duration and response size.
  *
  * @param jsonData - The parsed JSON response data (will calculate object count internally)
- * @param startTime - The timestamp when the request started (will calculate duration internally)
+ * @param startTime - The timestamp when the request started in milliseconds (will calculate duration internally)
  * @param responseSize - Response size in bytes
+ * @returns void
  */
 export const logApiResults = (
   jsonData: unknown,

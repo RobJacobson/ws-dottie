@@ -1,16 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "../api";
-import type {
-  EndpointMeta,
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-} from "@/shared/factories";
+import type { EndpointMeta } from "@/apis/types";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
-import { routesGroup } from "./shared/routes.endpoints";
+import { wsfScheduleApiMeta } from "../apiMeta";
 import {
   type RoutesByTripDateAndTerminalsInput,
   routesByTripDateAndTerminalsInputSchema,
@@ -34,24 +25,21 @@ export const routesByTripDateAndTerminalsMeta = {
 } satisfies EndpointMeta<RoutesByTripDateAndTerminalsInput, Route[]>;
 
 /**
- * Fetch function for retrieving routes matching terminal pair for specified date
+ * Factory result for routes by trip date and terminals
  */
-export const fetchRoutesByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>
-) => Promise<Route[]> = createFetchFunction(
-  wsfScheduleApi,
-  routesGroup,
-  routesByTripDateAndTerminalsMeta
-);
+const routesByTripDateAndTerminalsFactory = createFetchAndHook<
+  RoutesByTripDateAndTerminalsInput,
+  Route[]
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: routesByTripDateAndTerminalsMeta,
+  getEndpointGroup: () => require("./shared/routes.endpoints").routesGroup,
+});
 
 /**
- * React Query hook for retrieving routes matching terminal pair for specified date
+ * Fetch function and React Query hook for retrieving routes matching terminal pair for specified date
  */
-export const useRoutesByTripDateAndTerminals: (
-  params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<Route[]>
-) => UseQueryResult<Route[], Error> = createHook(
-  wsfScheduleApi,
-  routesGroup,
-  routesByTripDateAndTerminalsMeta
-);
+export const {
+  fetch: fetchRoutesByTripDateAndTerminals,
+  hook: useRoutesByTripDateAndTerminals,
+} = routesByTripDateAndTerminalsFactory;
