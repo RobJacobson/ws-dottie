@@ -11,8 +11,45 @@
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod";
 import type { Endpoint } from "@/shared/types";
-import { apis } from "./index";
 import type { ApiMeta, EndpointGroupMeta, EndpointMeta } from "./types";
+
+// Import all API definitions directly to avoid circular dependency with index.ts
+import { wsdotBorderCrossings } from "./wsdot-border-crossings/api";
+import { wsdotBridgeClearances } from "./wsdot-bridge-clearances/api";
+import { wsdotCommercialVehicleRestrictions } from "./wsdot-commercial-vehicle-restrictions/api";
+import { wsdotHighwayAlerts } from "./wsdot-highway-alerts/api";
+import { wsdotHighwayCameras } from "./wsdot-highway-cameras/api";
+import { wsdotMountainPassConditions } from "./wsdot-mountain-pass-conditions/api";
+import { wsdotTollRates } from "./wsdot-toll-rates/api";
+import { wsdotTrafficFlow } from "./wsdot-traffic-flow/api";
+import { wsdotTravelTimes } from "./wsdot-travel-times/api";
+import { wsdotWeatherInformation } from "./wsdot-weather-information/api";
+import { wsdotWeatherReadings } from "./wsdot-weather-readings/api";
+import { wsdotWeatherStations } from "./wsdot-weather-stations/api";
+import { wsfFares } from "./wsf-fares/api";
+import { wsfSchedule } from "./wsf-schedule/api";
+import { wsfTerminals } from "./wsf-terminals/api";
+import { wsfVessels } from "./wsf-vessels/api";
+
+// Build apis object locally to avoid circular dependency
+const apis = {
+  wsdotBorderCrossings,
+  wsdotBridgeClearances,
+  wsdotCommercialVehicleRestrictions,
+  wsdotHighwayAlerts,
+  wsdotHighwayCameras,
+  wsdotMountainPassConditions,
+  wsdotTollRates,
+  wsdotTrafficFlow,
+  wsdotTravelTimes,
+  wsdotWeatherInformation,
+  wsdotWeatherReadings,
+  wsdotWeatherStations,
+  wsfFares,
+  wsfSchedule,
+  wsfTerminals,
+  wsfVessels,
+} as const;
 
 /**
  * All endpoints from all APIs as a flat array
@@ -64,6 +101,3 @@ function toEndpointDescriptor<I, O>(
     id: `${api.name}:${endpoint.functionName}`,
   };
 }
-
-// Re-export apis from the single source of truth for backward compatibility
-export { apis } from "./index";
