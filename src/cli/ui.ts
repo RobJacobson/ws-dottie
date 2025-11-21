@@ -15,7 +15,7 @@
  */
 
 import pc from "picocolors";
-import { endpoints } from "@/shared/endpointRegistry";
+import { endpoints } from "@/apis";
 import type { ApiError } from "@/shared/fetching";
 import { isApiError } from "@/shared/fetching";
 import type { CliOptions } from "./types";

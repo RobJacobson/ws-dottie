@@ -3,9 +3,6 @@
  *
  * This module provides the centralized APIs registry for consumers who need
  * to access API definitions programmatically.
- *
- * IMPORTANT: This module imports zod-openapi-init FIRST to ensure Zod schemas
- * have `.openapi()` method available before any API modules are imported.
  */
 
 // Import Zod OpenAPI initialization FIRST, before any schema creation
@@ -77,3 +74,6 @@ export const apis = {
 
 // Re-export type for convenience
 export type { ApiDefinition };
+
+// Re-export endpoints registry
+export { endpoints } from "./endpoints";

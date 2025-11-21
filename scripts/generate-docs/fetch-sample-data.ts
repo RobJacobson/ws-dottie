@@ -16,7 +16,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { endpoints } from "../../src/shared/endpoints.ts";
+import { endpoints } from "../../src/apis/endpoints.ts";
 import { fetchDottie } from "../../src/shared/fetching/index.ts";
 import type { Endpoint } from "../../src/shared/types.ts";
 

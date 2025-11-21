@@ -9,7 +9,7 @@
 
 import { Command } from "commander";
 import pc from "picocolors";
-import { endpoints } from "@/shared/endpointRegistry";
+import { endpoints } from "@/apis";
 import type { Endpoint } from "@/shared/types";
 import { executeApiRequest, getStrategyDescription } from "./execution";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";

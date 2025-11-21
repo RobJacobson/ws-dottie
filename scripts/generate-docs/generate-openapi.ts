@@ -19,7 +19,7 @@ import yaml from "js-yaml";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
 import type { ApiDefinition } from "../../src/apis/types.ts";
-import { apis, endpoints } from "../../src/shared/endpointRegistry.ts";
+import { apis, endpoints } from "../../src/apis/index.ts";
 import type { Endpoint } from "../../src/shared/types.ts";
 import { z } from "../../src/shared/zod.ts";
 
@@ -560,7 +560,7 @@ const registerEndpoint = async (
 /**
  * All API modules to process
  *
- * Uses the shared API_MODULES array from src/shared/endpoints.ts
+ * Uses the endpoints array from src/apis/endpoints.ts
  * to ensure consistency with the rest of the codebase.
  */
 const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);

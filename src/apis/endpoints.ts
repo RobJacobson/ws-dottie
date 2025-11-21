@@ -5,17 +5,14 @@
  * API structure. It automatically discovers all endpoints by iterating through
  * the API graph: apis -> endpointGroups -> endpoints, creating a flat array of
  * Endpoint objects for CLI and e2e test consumption.
- *
- * IMPORTANT: This module imports zod-openapi-init FIRST to ensure Zod schemas
- * have `.openapi()` method available before any API modules are imported.
  */
 
 // Import Zod OpenAPI initialization FIRST, before any schema creation
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod";
-import { apis } from "@/apis";
-import type { ApiMeta, EndpointGroupMeta, EndpointMeta } from "@/apis/types";
-import type { Endpoint } from "./types";
+import type { Endpoint } from "@/shared/types";
+import { apis } from "./index";
+import type { ApiMeta, EndpointGroupMeta, EndpointMeta } from "./types";
 
 /**
  * All endpoints from all APIs as a flat array
@@ -30,7 +27,7 @@ export const endpoints: Endpoint<unknown, unknown>[] = Object.values(
 ).flatMap((apiDefinition) =>
   apiDefinition.endpointGroups.flatMap((group) =>
     group.endpoints.map((endpoint) =>
-      buildDescriptor(apiDefinition.api, group, endpoint)
+      toEndpointDescriptor(apiDefinition.api, group, endpoint)
     )
   )
 );
@@ -48,7 +45,7 @@ export const endpoints: Endpoint<unknown, unknown>[] = Object.values(
  * @param endpoint - Endpoint metadata containing path, schemas, and function name
  * @returns A complete Endpoint object with all metadata and computed properties
  */
-function buildDescriptor<I, O>(
+function toEndpointDescriptor<I, O>(
   api: ApiMeta,
   group: EndpointGroupMeta,
   endpoint: EndpointMeta<I, O>
@@ -69,4 +66,4 @@ function buildDescriptor<I, O>(
 }
 
 // Re-export apis from the single source of truth for backward compatibility
-export { apis } from "@/apis";
+export { apis } from "./index";
