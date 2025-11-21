@@ -7,7 +7,6 @@
  */
 
 import type { ApiMeta, EndpointGroupMeta, EndpointMeta } from "@/apis/types";
-import type { CacheStrategy } from "@/shared/types";
 import { createFetchFunction } from "./createFetchFunction";
 import { createHook } from "./createHook";
 import type { FetchFactory, HookFactory } from "./types";
