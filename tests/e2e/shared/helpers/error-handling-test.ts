@@ -1,12 +1,12 @@
 import { expect, it } from "vitest";
-import type { Endpoint } from "@/apis/types";
+import type { Endpoint, EndpointParams, EndpointResponse } from "@/apis/types";
 import { fetchDottie } from "@/shared/fetching";
 
 /**
  * Creates a test that handles invalid parameters appropriately
  */
 export const createErrorHandlingTest = (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ) => {
   it(`It should handle invalid parameters appropriately for ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     // Test with invalid parameters

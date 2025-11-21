@@ -1,12 +1,12 @@
 import { it } from "vitest";
 import type { z } from "zod";
-import type { Endpoint } from "@/apis/types";
+import type { Endpoint, EndpointParams, EndpointResponse } from "@/apis/types";
 
 /**
  * Creates a test that validates default parameters meet the Zod input schema
  */
 export const createDefaultParametersValidationTest = (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ) => {
   it(`It should validate that default parameters meet the Zod input schema for ${endpoint.functionName}`, () => {
     if (!endpoint.sampleParams) {

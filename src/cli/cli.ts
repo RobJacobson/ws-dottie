@@ -10,7 +10,7 @@
 import { Command } from "commander";
 import pc from "picocolors";
 import { endpointsFlat } from "@/apis";
-import type { Endpoint } from "@/apis/types";
+import type { Endpoint, EndpointParams, EndpointResponse } from "@/apis/types";
 import { executeApiRequest, getStrategyDescription } from "./execution";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
@@ -201,11 +201,11 @@ const validateFunctionName = (functionName: string): void => {
 const findEndpoint = (
   functionName: string,
   consoleRestore: () => void
-): Endpoint<unknown, unknown> => {
+): Endpoint<EndpointParams, EndpointResponse> => {
   const { api, endpoint: endpointName } = parseFunctionName(functionName);
   const allEndpoints = endpointsFlat;
 
-  let endpoint: Endpoint<unknown, unknown> | undefined;
+  let endpoint: Endpoint<EndpointParams, EndpointResponse> | undefined;
 
   if (api) {
     // Namespace specified - find exact match

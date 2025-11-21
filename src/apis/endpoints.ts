@@ -31,6 +31,8 @@ import type {
   Endpoint,
   EndpointGroupMeta,
   EndpointMeta,
+  EndpointParams,
+  EndpointResponse,
 } from "./types";
 
 // Import all API definitions directly to avoid circular dependency with index.ts
@@ -111,7 +113,7 @@ const toEndpoint = <I, O>(
  */
 export const endpointsByApi: Record<
   string,
-  Record<string, Record<string, Endpoint<unknown, unknown>>>
+  Record<string, Record<string, Endpoint<EndpointParams, EndpointResponse>>>
 > = Object.fromEntries(
   Object.values(apis).map((apiDefinition) => [
     apiDefinition.api.name,
@@ -127,7 +129,10 @@ export const endpointsByApi: Record<
       ])
     ),
   ])
-) as Record<string, Record<string, Record<string, Endpoint<unknown, unknown>>>>;
+) as Record<
+  string,
+  Record<string, Record<string, Endpoint<EndpointParams, EndpointResponse>>>
+>;
 
 /**
  * All endpoints from all APIs as a flat array
@@ -137,12 +142,11 @@ export const endpointsByApi: Record<
  * Endpoints are automatically discovered by iterating through the API graph:
  * apis -> endpointGroups -> endpoints.
  */
-export const endpointsFlat: Endpoint<unknown, unknown>[] = Object.values(
-  apis
-).flatMap((apiDefinition) =>
-  apiDefinition.endpointGroups.flatMap((group) =>
-    group.endpoints.map((endpoint) =>
-      toEndpoint(apiDefinition.api, group, endpoint)
+export const endpointsFlat: Endpoint<EndpointParams, EndpointResponse>[] =
+  Object.values(apis).flatMap((apiDefinition) =>
+    apiDefinition.endpointGroups.flatMap((group) =>
+      group.endpoints.map((endpoint) =>
+        toEndpoint(apiDefinition.api, group, endpoint)
+      )
     )
-  )
-) satisfies Endpoint<unknown, unknown>[];
+  ) satisfies Endpoint<EndpointParams, EndpointResponse>[];

@@ -30,6 +30,24 @@ export type CacheStrategy =
 // ============================================================================
 
 /**
+ * Type representing endpoint input parameters
+ *
+ * All endpoint inputs are plain objects with string keys, typically
+ * containing query parameters, path parameters, or request body data.
+ * This type provides semantic meaning over the generic Record<string, unknown>.
+ */
+export type EndpointParams = Record<string, unknown>;
+
+/**
+ * Type representing endpoint response data
+ *
+ * Endpoint responses are JSON-serializable values that can be objects,
+ * arrays, primitives, or null. Using `unknown` ensures type safety by
+ * requiring explicit type narrowing when accessing response data.
+ */
+export type EndpointResponse = unknown;
+
+/**
  * Minimal endpoint interface for fetching operations
  *
  * Contains only the fields necessary for making API requests,
@@ -114,7 +132,7 @@ export interface EndpointGroupMeta {
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
   /** Array of endpoint metadata for this group */
-  endpoints: EndpointMeta<unknown, unknown>[];
+  endpoints: EndpointMeta<EndpointParams, EndpointResponse>[];
 }
 
 /**

@@ -17,7 +17,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { endpointsFlat } from "../../src/apis/endpoints.ts";
-import type { Endpoint } from "../../src/apis/types.ts";
+import type {
+  Endpoint,
+  EndpointParams,
+  EndpointResponse,
+} from "../../src/apis/types.ts";
 import { fetchDottie } from "../../src/shared/fetching/index.ts";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -63,7 +67,7 @@ const parseArgs = (): {
  * @returns The fetched JSON data, or null on error
  */
 const fetchSample = async (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): Promise<unknown | null> => {
   try {
     // Use fetchDottie to get the data with sampleParams directly
@@ -91,7 +95,7 @@ const fetchSample = async (
  * @param data - The JSON data to save
  */
 const saveSample = (
-  endpoint: Endpoint<unknown, unknown>,
+  endpoint: Endpoint<EndpointParams, EndpointResponse>,
   data: unknown
 ): void => {
   const apiDir = join(docsRoot, endpoint.api);
@@ -106,7 +110,9 @@ const saveSample = (
  *
  * @param endpoint - The endpoint definition
  */
-const createPlaceholderFile = (endpoint: Endpoint<unknown, unknown>): void => {
+const createPlaceholderFile = (
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
+): void => {
   const apiDir = join(docsRoot, endpoint.api);
   mkdirSync(apiDir, { recursive: true });
 
@@ -123,10 +129,13 @@ const createPlaceholderFile = (endpoint: Endpoint<unknown, unknown>): void => {
  * Process a single endpoint and return the result
  */
 const processEndpoint = async (
-  endpoint: Endpoint<unknown, unknown>,
+  endpoint: Endpoint<EndpointParams, EndpointResponse>,
   index: number,
   total: number
-): Promise<{ success: boolean; endpoint: Endpoint<unknown, unknown> }> => {
+): Promise<{
+  success: boolean;
+  endpoint: Endpoint<EndpointParams, EndpointResponse>;
+}> => {
   process.stdout.write(
     `  [${index + 1}/${total}] Fetching ${endpoint.api}.${endpoint.functionName}...\r`
   );
@@ -196,8 +205,10 @@ const main = async (): Promise<void> => {
   console.log(`\nFound ${filteredEndpoints.length} endpoint(s) to fetch\n`);
 
   // Process endpoints sequentially to avoid overwhelming the API
-  const results: { success: boolean; endpoint: Endpoint<unknown, unknown> }[] =
-    [];
+  const results: {
+    success: boolean;
+    endpoint: Endpoint<EndpointParams, EndpointResponse>;
+  }[] = [];
   for (const [index, endpoint] of filteredEndpoints.entries()) {
     const result = await processEndpoint(
       endpoint,

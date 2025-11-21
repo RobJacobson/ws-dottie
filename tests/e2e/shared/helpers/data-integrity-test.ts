@@ -1,6 +1,6 @@
 import equal from "fast-deep-equal";
 import { expect, it } from "vitest";
-import type { Endpoint } from "@/apis/types";
+import type { Endpoint, EndpointParams, EndpointResponse } from "@/apis/types";
 import { fetchDottie } from "@/shared/fetching";
 
 /**
@@ -92,7 +92,7 @@ const deepEqual = (a: unknown, b: unknown): boolean => {
  * Creates a test that fetches the same data both with and without validation from an endpoint
  */
 export const createDataIntegrityTest = (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ) => {
   it(`It should fetch the same data both with and without validation from ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     // Execute both fetches simultaneously to ensure consistent data

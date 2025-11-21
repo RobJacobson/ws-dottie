@@ -6,7 +6,7 @@
 
 import { describe } from "vitest";
 import { endpointsFlat } from "@/apis";
-import type { Endpoint } from "@/apis/types";
+import type { Endpoint, EndpointParams, EndpointResponse } from "@/apis/types";
 import { createStandardEndpointTests, SKIP_ALL_TESTS } from "./test-templates";
 
 /**
@@ -25,7 +25,7 @@ export const createEndpointSuite = (endpointId: string) => {
 
   // Find the specific endpoint
   const endpoint = endpointsFlat.find(
-    (ep: Endpoint<unknown, unknown>) =>
+    (ep: Endpoint<EndpointParams, EndpointResponse>) =>
       ep.api.name === apiName && ep.functionName === functionName
   );
 

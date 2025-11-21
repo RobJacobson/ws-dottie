@@ -19,7 +19,12 @@ import yaml from "js-yaml";
 import { apis, endpointsFlat } from "../../src/apis/index.ts";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
-import type { ApiDefinition, Endpoint } from "../../src/apis/types.ts";
+import type {
+  ApiDefinition,
+  Endpoint,
+  EndpointParams,
+  EndpointResponse,
+} from "../../src/apis/types.ts";
 import { z } from "../../src/shared/zod.ts";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -131,7 +136,7 @@ const formatSampleData = (
  */
 const findEndpointGroup = (
   api: ApiDefinition,
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): string => {
   // Try to match endpoint to a group by checking function name patterns
   // This is a heuristic approach - we match based on common naming patterns
@@ -160,7 +165,7 @@ const findEndpointGroup = (
 const fetchAndSaveSampleData = async (
   api: ApiDefinition,
   functionName: string,
-  _endpoint: Endpoint<unknown, unknown>
+  _endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): Promise<{
   data: unknown;
   isTruncated: boolean;
@@ -212,7 +217,7 @@ const fetchAndSaveSampleData = async (
 const generateCodeExample = (
   api: ApiDefinition,
   functionName: string,
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): string => {
   const sampleParams = endpoint.sampleParams;
   const hasParams =
@@ -398,7 +403,7 @@ const registerSchema = (
 const registerEndpoint = async (
   registry: OpenAPIRegistry,
   api: ApiDefinition,
-  endpoint: Endpoint<unknown, unknown>,
+  endpoint: Endpoint<EndpointParams, EndpointResponse>,
   groupName: string
 ): Promise<void> => {
   const operationId = endpoint.functionName;

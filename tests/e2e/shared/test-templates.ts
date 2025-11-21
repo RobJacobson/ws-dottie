@@ -1,4 +1,4 @@
-import type { Endpoint } from "@/apis/types";
+import type { Endpoint, EndpointParams, EndpointResponse } from "@/apis/types";
 import { createDataIntegrityTest } from "./helpers/data-integrity-test";
 import { createDefaultParametersTest } from "./helpers/default-parameters-test";
 import { createDefaultParametersValidationTest } from "./helpers/default-parameters-validation-test";
@@ -38,7 +38,7 @@ export const SKIP_ALL_TESTS = new Set([
  * Creates all standard tests for an endpoint
  */
 export const createStandardEndpointTests = (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ) => {
   const endpointIdentifier = `${endpoint.api.name}.${endpoint.functionName}`;
 
