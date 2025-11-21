@@ -22,7 +22,7 @@ import { wsfScheduleApiMeta } from "@/apis/wsf-schedule/apiMeta";
 import { wsfTerminalsApiMeta } from "@/apis/wsf-terminals/apiMeta";
 import { wsfVesselsApiMeta } from "@/apis/wsf-vessels/apiMeta";
 import { fetchDottie } from "@/shared/fetching";
-import type { FetchEndpoint } from "@/shared/types";
+import type { FetchEndpoint } from "@/apis/types";
 
 type CacheFlushApiName =
   | "wsf-fares"

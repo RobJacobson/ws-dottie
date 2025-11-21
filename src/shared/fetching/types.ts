@@ -1,4 +1,5 @@
-import type { FetchEndpoint, FetchStrategy, LoggingMode } from "@/shared/types";
+import type { FetchEndpoint } from "@/apis/types";
+import type { FetchStrategy, LoggingMode } from "@/shared/types";
 
 /**
  * Parameters for the fetchDottie function

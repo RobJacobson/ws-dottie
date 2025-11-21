@@ -16,11 +16,10 @@ import {
   OpenApiGeneratorV3,
 } from "@asteasolutions/zod-to-openapi";
 import yaml from "js-yaml";
+import { apis, endpoints } from "../../src/apis/index.ts";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
-import type { ApiDefinition } from "../../src/apis/types.ts";
-import { apis, endpoints } from "../../src/apis/index.ts";
-import type { Endpoint } from "../../src/shared/types.ts";
+import type { ApiDefinition, Endpoint } from "../../src/apis/types.ts";
 import { z } from "../../src/shared/zod.ts";
 
 const __filename = fileURLToPath(import.meta.url);

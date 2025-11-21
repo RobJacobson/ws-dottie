@@ -6,7 +6,8 @@
  * between the four main fetch functions.
  */
 
-import type { FetchEndpoint, FetchStrategy, LoggingMode } from "@/shared/types";
+import type { FetchEndpoint } from "@/apis/types";
+import type { FetchStrategy, LoggingMode } from "@/shared/types";
 import { parseJsonWithFallback } from "@/shared/utils/jsonParser";
 import { logApiCall, logApiResults } from "@/shared/utils/logger";
 import { buildCompleteUrl } from "./buildUrl";

@@ -6,7 +6,7 @@
 
 import { describe } from "vitest";
 import { endpoints } from "@/apis";
-import type { Endpoint } from "@/shared/types";
+import type { Endpoint } from "@/apis/types";
 import { createStandardEndpointTests, SKIP_ALL_TESTS } from "./test-templates";
 
 /**

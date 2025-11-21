@@ -10,8 +10,12 @@
 // Import Zod OpenAPI initialization FIRST, before any schema creation
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod";
-import type { Endpoint } from "@/shared/types";
-import type { ApiMeta, EndpointGroupMeta, EndpointMeta } from "./types";
+import type {
+  ApiMeta,
+  Endpoint,
+  EndpointGroupMeta,
+  EndpointMeta,
+} from "./types";
 
 // Import all API definitions directly to avoid circular dependency with index.ts
 import { wsdotBorderCrossings } from "./wsdot-border-crossings/api";
@@ -64,10 +68,10 @@ export const endpoints: Endpoint<unknown, unknown>[] = Object.values(
 ).flatMap((apiDefinition) =>
   apiDefinition.endpointGroups.flatMap((group) =>
     group.endpoints.map((endpoint) =>
-      toEndpointDescriptor(apiDefinition.api, group, endpoint)
+      toEndpoint(apiDefinition.api, group, endpoint)
     )
   )
-);
+) satisfies Endpoint<unknown, unknown>[];
 
 /**
  * Builds a complete endpoint descriptor from metadata objects
@@ -82,22 +86,20 @@ export const endpoints: Endpoint<unknown, unknown>[] = Object.values(
  * @param endpoint - Endpoint metadata containing path, schemas, and function name
  * @returns A complete Endpoint object with all metadata and computed properties
  */
-function toEndpointDescriptor<I, O>(
+const toEndpoint = <I, O>(
   api: ApiMeta,
   group: EndpointGroupMeta,
   endpoint: EndpointMeta<I, O>
-): Endpoint<I, O> {
-  return {
-    api,
-    group,
-    endpoint: endpoint.endpoint,
-    functionName: endpoint.functionName,
-    inputSchema: endpoint.inputSchema,
-    outputSchema: endpoint.outputSchema,
-    sampleParams: endpoint.sampleParams,
-    endpointDescription: endpoint.endpointDescription,
-    cacheStrategy: group.cacheStrategy,
-    urlTemplate: `${api.baseUrl}${endpoint.endpoint}`,
-    id: `${api.name}:${endpoint.functionName}`,
-  };
-}
+): Endpoint<I, O> => ({
+  api,
+  group,
+  endpoint: endpoint.endpoint,
+  functionName: endpoint.functionName,
+  inputSchema: endpoint.inputSchema,
+  outputSchema: endpoint.outputSchema,
+  sampleParams: endpoint.sampleParams,
+  endpointDescription: endpoint.endpointDescription,
+  cacheStrategy: group.cacheStrategy,
+  urlTemplate: `${api.baseUrl}${endpoint.endpoint}`,
+  id: `${api.name}:${endpoint.functionName}`,
+});

@@ -6,7 +6,7 @@
  */
 
 import type { ApiMeta, EndpointMeta } from "@/apis/types";
-import type { FetchEndpoint } from "@/shared/types";
+import type { FetchEndpoint } from "@/apis/types";
 
 /**
  * Builds a minimal fetch endpoint from metadata objects

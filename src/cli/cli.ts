@@ -10,7 +10,7 @@
 import { Command } from "commander";
 import pc from "picocolors";
 import { endpoints } from "@/apis";
-import type { Endpoint } from "@/shared/types";
+import type { Endpoint } from "@/apis/types";
 import { executeApiRequest, getStrategyDescription } from "./execution";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
