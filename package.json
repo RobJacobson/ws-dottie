@@ -156,6 +156,27 @@
     "./openapi/wsdot-weather-information.json": "./dist/openapi/wsdot-weather-information.json",
     "./openapi/wsdot-weather-readings.json": "./dist/openapi/wsdot-weather-readings.json",
     "./openapi/wsdot-weather-stations.json": "./dist/openapi/wsdot-weather-stations.json",
+    "./openapi/wsf-vessels.yaml": "./dist/openapi/wsf-vessels.yaml",
+    "./openapi/wsf-terminals.yaml": "./dist/openapi/wsf-terminals.yaml",
+    "./openapi/wsf-schedule.yaml": "./dist/openapi/wsf-schedule.yaml",
+    "./openapi/wsf-fares.yaml": "./dist/openapi/wsf-fares.yaml",
+    "./openapi/wsdot-border-crossings.yaml": "./dist/openapi/wsdot-border-crossings.yaml",
+    "./openapi/wsdot-bridge-clearances.yaml": "./dist/openapi/wsdot-bridge-clearances.yaml",
+    "./openapi/wsdot-commercial-vehicle-restrictions.yaml": "./dist/openapi/wsdot-commercial-vehicle-restrictions.yaml",
+    "./openapi/wsdot-highway-alerts.yaml": "./dist/openapi/wsdot-highway-alerts.yaml",
+    "./openapi/wsdot-highway-cameras.yaml": "./dist/openapi/wsdot-highway-cameras.yaml",
+    "./openapi/wsdot-mountain-pass-conditions.yaml": "./dist/openapi/wsdot-mountain-pass-conditions.yaml",
+    "./openapi/wsdot-toll-rates.yaml": "./dist/openapi/wsdot-toll-rates.yaml",
+    "./openapi/wsdot-traffic-flow.yaml": "./dist/openapi/wsdot-traffic-flow.yaml",
+    "./openapi/wsdot-travel-times.yaml": "./dist/openapi/wsdot-travel-times.yaml",
+    "./openapi/wsdot-weather-information.yaml": "./dist/openapi/wsdot-weather-information.yaml",
+    "./openapi/wsdot-weather-readings.yaml": "./dist/openapi/wsdot-weather-readings.yaml",
+    "./openapi/wsdot-weather-stations.yaml": "./dist/openapi/wsdot-weather-stations.yaml",
+    "./apis": {
+      "types": "./dist/apis/index.d.ts",
+      "import": "./dist/apis/index.mjs",
+      "require": "./dist/apis/index.js"
+    },
     "./wsf-vessels": {
       "types": "./dist/apis/wsf-vessels/index.d.ts",
       "import": "./dist/apis/wsf-vessels/index.mjs",
@@ -590,6 +611,9 @@
       ],
       "openapi/wsdot-weather-stations.json": [
         "dist/openapi/wsdot-weather-stations.json"
+      ],
+      "apis": [
+        "dist/apis/index.d.ts"
       ]
     }
   },

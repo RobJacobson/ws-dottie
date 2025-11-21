@@ -1,11 +1,12 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: [
     "src/index.ts",
     "src/cli/fetch-dottie.ts",
+    "src/apis/index.ts",
     // Add API-specific entry points
     "src/apis/wsf-vessels/index.ts",
     "src/apis/wsf-vessels/core.ts",
@@ -60,6 +61,7 @@ export default defineConfig({
   dts: {
     entry: [
       "src/index.ts",
+      "src/apis/index.ts",
       // Add API-specific type definition entries
       "src/apis/wsf-vessels/index.ts",
       "src/apis/wsf-vessels/core.ts",
@@ -140,11 +142,10 @@ export default defineConfig({
     };
     return options;
   },
-  // Custom post-build hook to copy OpenAPI JSON files
+  // Custom post-build hook to copy OpenAPI JSON and YAML files
   async onSuccess() {
-    console.log("Copying OpenAPI JSON files to dist/openapi...");
+    console.log("Copying OpenAPI files to dist/openapi...");
 
-    const sourceDir = join(__dirname, "docs", "generated", "openapi-json");
     const targetDir = join(__dirname, "dist", "openapi");
 
     // Create target directory if it doesn't exist
@@ -152,36 +153,68 @@ export default defineConfig({
       mkdirSync(targetDir, { recursive: true });
     }
 
-    // Check if source directory exists
-    if (!existsSync(sourceDir)) {
+    // Copy JSON files
+    const jsonSourceDir = join(__dirname, "docs", "generated", "openapi-json");
+    let jsonCopiedCount = 0;
+
+    if (existsSync(jsonSourceDir)) {
+      const jsonFiles = readdirSync(jsonSourceDir).filter((file) =>
+        file.endsWith(".json")
+      );
+
+      for (const file of jsonFiles) {
+        const sourcePath = join(jsonSourceDir, file);
+        const targetPath = join(targetDir, file);
+
+        try {
+          copyFileSync(sourcePath, targetPath);
+          jsonCopiedCount++;
+          console.log(`  Copied ${file}`);
+        } catch (error) {
+          console.error(`  Failed to copy ${file}:`, error);
+        }
+      }
+    } else {
       console.warn(
-        `Warning: OpenAPI JSON source directory not found at ${sourceDir}`
+        `Warning: OpenAPI JSON source directory not found at ${jsonSourceDir}`
       );
       console.warn(
         "Please run 'npm run docs:openapi:json' first to generate OpenAPI specifications."
       );
-      return;
     }
 
-    // Copy all JSON files
-    const jsonFiles = readdirSync(sourceDir).filter((file) =>
-      file.endsWith(".json")
-    );
-    let copiedCount = 0;
+    // Copy YAML files
+    const yamlSourceDir = join(__dirname, "docs", "generated", "openapi-yaml");
+    let yamlCopiedCount = 0;
 
-    for (const file of jsonFiles) {
-      const sourcePath = join(sourceDir, file);
-      const targetPath = join(targetDir, file);
+    if (existsSync(yamlSourceDir)) {
+      const yamlFiles = readdirSync(yamlSourceDir).filter((file) =>
+        file.endsWith(".yaml")
+      );
 
-      try {
-        copyFileSync(sourcePath, targetPath);
-        copiedCount++;
-        console.log(`  Copied ${file}`);
-      } catch (error) {
-        console.error(`  Failed to copy ${file}:`, error);
+      for (const file of yamlFiles) {
+        const sourcePath = join(yamlSourceDir, file);
+        const targetPath = join(targetDir, file);
+
+        try {
+          copyFileSync(sourcePath, targetPath);
+          yamlCopiedCount++;
+          console.log(`  Copied ${file}`);
+        } catch (error) {
+          console.error(`  Failed to copy ${file}:`, error);
+        }
       }
+    } else {
+      console.warn(
+        `Warning: OpenAPI YAML source directory not found at ${yamlSourceDir}`
+      );
+      console.warn(
+        "Please run 'npm run docs:openapi:yaml' first to generate OpenAPI YAML specifications."
+      );
     }
 
-    console.log(`✓ Copied ${copiedCount} OpenAPI JSON files to dist/openapi/`);
+    console.log(
+      `✓ Copied ${jsonCopiedCount} OpenAPI JSON files and ${yamlCopiedCount} YAML files to dist/openapi/`
+    );
   },
 });
