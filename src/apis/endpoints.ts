@@ -3,8 +3,11 @@
  *
  * This module provides a centralized registry of all endpoints from the new
  * API structure. It automatically discovers all endpoints by iterating through
- * the API graph: apis -> endpointGroups -> endpoints, creating a flat array of
- * Endpoint objects for CLI and e2e test consumption.
+ * the API graph: apis -> endpointGroups -> endpoints.
+ *
+ * Exports:
+ * - endpointsByApi: Nested structure organized by API name, then endpoint group, then function name
+ * - endpointsFlat: Flat array of all endpoints for easy iteration and searching
  */
 
 // Import Zod OpenAPI initialization FIRST, before any schema creation
@@ -56,24 +59,6 @@ const apis = {
 } as const;
 
 /**
- * All endpoints from all APIs as a flat array
- *
- * This array contains all endpoints from all APIs flattened into a single
- * array for easy iteration and processing by CLI and e2e tests.
- * Endpoints are automatically discovered by iterating through the API graph:
- * apis -> endpointGroups -> endpoints.
- */
-export const endpoints: Endpoint<unknown, unknown>[] = Object.values(
-  apis
-).flatMap((apiDefinition) =>
-  apiDefinition.endpointGroups.flatMap((group) =>
-    group.endpoints.map((endpoint) =>
-      toEndpoint(apiDefinition.api, group, endpoint)
-    )
-  )
-) satisfies Endpoint<unknown, unknown>[];
-
-/**
  * Builds a complete endpoint descriptor from metadata objects
  *
  * Combines API, group, and endpoint metadata into a single descriptor
@@ -103,3 +88,48 @@ const toEndpoint = <I, O>(
   urlTemplate: `${api.baseUrl}${endpoint.endpoint}`,
   id: `${api.name}:${endpoint.functionName}`,
 });
+
+/**
+ * All endpoints organized by API name, then endpoint group, then function name
+ *
+ * This nested structure provides organized access to endpoints by their
+ * hierarchical structure: API -> Endpoint Group -> Function Name.
+ * Useful for programmatic access when you know the API and group structure.
+ */
+export const endpointsByApi: Record<
+  string,
+  Record<string, Record<string, Endpoint<unknown, unknown>>>
+> = Object.fromEntries(
+  Object.values(apis).map((apiDefinition) => [
+    apiDefinition.api.name,
+    Object.fromEntries(
+      apiDefinition.endpointGroups.map((group) => [
+        group.name,
+        Object.fromEntries(
+          group.endpoints.map((endpoint) => [
+            endpoint.functionName,
+            toEndpoint(apiDefinition.api, group, endpoint),
+          ])
+        ),
+      ])
+    ),
+  ])
+) as Record<string, Record<string, Record<string, Endpoint<unknown, unknown>>>>;
+
+/**
+ * All endpoints from all APIs as a flat array
+ *
+ * This array contains all endpoints from all APIs flattened into a single
+ * array for easy iteration and processing by CLI and e2e tests.
+ * Endpoints are automatically discovered by iterating through the API graph:
+ * apis -> endpointGroups -> endpoints.
+ */
+export const endpointsFlat: Endpoint<unknown, unknown>[] = Object.values(
+  apis
+).flatMap((apiDefinition) =>
+  apiDefinition.endpointGroups.flatMap((group) =>
+    group.endpoints.map((endpoint) =>
+      toEndpoint(apiDefinition.api, group, endpoint)
+    )
+  )
+) satisfies Endpoint<unknown, unknown>[];

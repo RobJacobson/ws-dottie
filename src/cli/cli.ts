@@ -9,7 +9,7 @@
 
 import { Command } from "commander";
 import pc from "picocolors";
-import { endpoints } from "@/apis";
+import { endpointsFlat } from "@/apis";
 import type { Endpoint } from "@/apis/types";
 import { executeApiRequest, getStrategyDescription } from "./execution";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
@@ -127,8 +127,8 @@ export const setupCli = (): void => {
  */
 const handleListOption = (consoleRestore: () => void): void => {
   consoleRestore();
-  const allEndpoints = endpoints;
-  const functionList = endpoints
+  const allEndpoints = endpointsFlat;
+  const functionList = endpointsFlat
     .map((endpointDef) => {
       const { functionName, api } = endpointDef;
       const description = `${api} - ${functionName}`;
@@ -203,7 +203,7 @@ const findEndpoint = (
   consoleRestore: () => void
 ): Endpoint<unknown, unknown> => {
   const { api, endpoint: endpointName } = parseFunctionName(functionName);
-  const allEndpoints = endpoints;
+  const allEndpoints = endpointsFlat;
 
   let endpoint: Endpoint<unknown, unknown> | undefined;
 

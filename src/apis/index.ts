@@ -73,5 +73,5 @@ export const apis = {
   wsfVessels,
 } as const;
 
-// Re-export endpoints registry
-export { endpoints } from "./endpoints";
+// Re-export endpoints registries
+export { endpointsByApi, endpointsFlat } from "./endpoints";

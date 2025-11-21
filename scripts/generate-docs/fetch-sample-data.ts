@@ -16,9 +16,9 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { endpoints } from "../../src/apis/endpoints.ts";
+import { endpointsFlat } from "../../src/apis/endpoints.ts";
+import type { Endpoint } from "../../src/apis/types.ts";
 import { fetchDottie } from "../../src/shared/fetching/index.ts";
-import type { Endpoint } from "../../src/shared/types.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -175,9 +175,9 @@ const main = async (): Promise<void> => {
   }
 
   // Filter endpoints based on arguments (skip list is handled in processEndpoint)
-  const filteredEndpoints = endpoints.filter((endpoint) => {
+  const filteredEndpoints = endpointsFlat.filter((endpoint) => {
     // Apply filters
-    if (apiFilter && endpoint.api !== apiFilter) {
+    if (apiFilter && endpoint.api.name !== apiFilter) {
       return false;
     }
     if (endpointFilter && endpoint.functionName !== endpointFilter) {

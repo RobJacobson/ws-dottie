@@ -5,7 +5,7 @@
  */
 
 import { describe } from "vitest";
-import { endpoints } from "@/apis";
+import { endpointsFlat } from "@/apis";
 import type { Endpoint } from "@/apis/types";
 import { createStandardEndpointTests, SKIP_ALL_TESTS } from "./test-templates";
 
@@ -24,14 +24,14 @@ export const createEndpointSuite = (endpointId: string) => {
   }
 
   // Find the specific endpoint
-  const endpoint = endpoints.find(
+  const endpoint = endpointsFlat.find(
     (ep: Endpoint<unknown, unknown>) =>
       ep.api.name === apiName && ep.functionName === functionName
   );
 
   if (!endpoint) {
     throw new Error(
-      `Endpoint not found: "${endpointId}". Available endpoints: ${endpoints
+      `Endpoint not found: "${endpointId}". Available endpoints: ${endpointsFlat
         .map((ep) => `${ep.api.name}.${ep.functionName}`)
         .join(", ")}`
     );

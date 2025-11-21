@@ -16,7 +16,7 @@ import {
   OpenApiGeneratorV3,
 } from "@asteasolutions/zod-to-openapi";
 import yaml from "js-yaml";
-import { apis, endpoints } from "../../src/apis/index.ts";
+import { apis, endpointsFlat } from "../../src/apis/index.ts";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
 import type { ApiDefinition, Endpoint } from "../../src/apis/types.ts";
@@ -559,7 +559,7 @@ const registerEndpoint = async (
 /**
  * All API modules to process
  *
- * Uses the endpoints array from src/apis/endpoints.ts
+ * Uses the endpointsFlat array from src/apis/endpoints.ts
  * to ensure consistency with the rest of the codebase.
  */
 const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);
@@ -585,7 +585,7 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
   }
 
   // Filter endpoints for this API from the flat registry
-  const apiEndpoints = endpoints.filter((e) => e.api.name === api.api.name);
+  const apiEndpoints = endpointsFlat.filter((e) => e.api.name === api.api.name);
   const totalEndpoints = apiEndpoints.length;
 
   // Register all endpoints and wait for completion
