@@ -5,9 +5,22 @@
  * API structure. It automatically discovers all endpoints by iterating through
  * the API graph: apis -> endpointGroups -> endpoints.
  *
- * Exports:
- * - endpointsByApi: Nested structure organized by API name, then endpoint group, then function name
- * - endpointsFlat: Flat array of all endpoints for easy iteration and searching
+ * ## Exports
+ *
+ * **`endpointsByApi`** - Nested structure organized by API name, then endpoint group, then function name.
+ * Useful for direct hierarchical access when you know the full path to an endpoint.
+ *
+ * ```typescript
+ * const endpoint = endpointsByApi['wsf-vessels']['vesselBasics']['vesselBasics'];
+ * ```
+ *
+ * **`endpointsFlat`** - Flat array of all endpoints from all APIs. Ideal for iteration,
+ * searching, and filtering operations. This is the primary export used by most consumers
+ * (CLI, E2E tests, documentation generation).
+ *
+ * ```typescript
+ * const endpoint = endpointsFlat.find(ep => ep.functionName === 'vesselBasics');
+ * ```
  */
 
 // Import Zod OpenAPI initialization FIRST, before any schema creation

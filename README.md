@@ -495,6 +495,33 @@ const allEndpoints = Object.values(apis).flatMap(api =>
 );
 ```
 
+### Endpoint Registry
+
+WS-Dottie also exports a centralized endpoint registry that provides two complementary views of all endpoints:
+
+**`endpointsFlat`** - A flat array of all endpoints, ideal for iteration and searching:
+
+```javascript
+import { endpointsFlat } from 'ws-dottie/apis';
+
+// Find an endpoint by function name
+const endpoint = endpointsFlat.find(ep => ep.functionName === 'vesselBasics');
+
+// Filter by API
+const wsfEndpoints = endpointsFlat.filter(ep => ep.api.name.startsWith('wsf-'));
+```
+
+**`endpointsByApi`** - A nested structure organized by API → Group → Function, useful for direct hierarchical access:
+
+```javascript
+import { endpointsByApi } from 'ws-dottie/apis';
+
+// Direct access to a specific endpoint
+const vesselEndpoint = endpointsByApi['wsf-vessels']['vesselBasics']['vesselBasics'];
+```
+
+The registry is automatically generated from the API graph and includes complete endpoint metadata (schemas, cache strategies, URLs, etc.). It's used internally by the CLI, E2E tests, and documentation generation tools.
+
 ## 🖥️ Command Line Interface
 
 WS-Dottie includes a comprehensive CLI tool (`fetch-dottie`) that provides **production-ready debugging and testing capabilities**. Access all 98 endpoints directly from your terminal with configurable transport strategies and validation options.                                                                      
