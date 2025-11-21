@@ -466,6 +466,35 @@ const mcpServer = new MCPServer({
 });
 ```
 
+## 📊 API Graph
+
+WS-Dottie exports a centralized API graph that serves as the single source of truth for all endpoint definitions. The graph provides structured access to API metadata, endpoint groups, and endpoint configurations, enabling programmatic introspection of available endpoints and their properties.
+
+The API graph is available through the `./apis` package export and contains metadata for all 16 APIs, their endpoint groups, and individual endpoints with their schemas, cache strategies, and documentation. This makes it ideal for building tools that need to discover endpoints dynamically, generate documentation, or create custom integrations.
+
+```javascript
+import { apis } from 'ws-dottie/apis';
+
+// Access a specific API
+const vesselsApi = apis['wsf-vessels'];
+
+// Iterate through endpoint groups
+vesselsApi.endpointGroups.forEach(group => {
+  console.log(`Group: ${group.name}, Strategy: ${group.cacheStrategy}`);
+  
+  // Access endpoints in each group
+  group.endpoints.forEach(endpoint => {
+    console.log(`  Endpoint: ${endpoint.functionName}`);
+    console.log(`  Path: ${endpoint.endpoint}`);
+  });
+});
+
+// Get all endpoints across all APIs
+const allEndpoints = Object.values(apis).flatMap(api => 
+  api.endpointGroups.flatMap(group => group.endpoints)
+);
+```
+
 ## 🖥️ Command Line Interface
 
 WS-Dottie includes a comprehensive CLI tool (`fetch-dottie`) that provides **production-ready debugging and testing capabilities**. Access all 98 endpoints directly from your terminal with configurable transport strategies and validation options.                                                                      
