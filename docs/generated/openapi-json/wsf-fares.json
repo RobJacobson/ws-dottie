@@ -58,6 +58,104 @@
         "type": "string",
         "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."
       },
+      "FetchFaresValidDateRangeOutput": {
+        "type": "object",
+        "properties": {
+          "DateFrom": {
+            "type": "string",
+            "description": "UTC datetime when data becomes available (earliest valid trip date)."
+          },
+          "DateThru": {
+            "type": "string",
+            "description": "UTC datetime when data stops being available (latest valid trip date)."
+          }
+        },
+        "required": [
+          "DateFrom",
+          "DateThru"
+        ],
+        "description": "Date range for which fares data is currently published and available."
+      },
+      "FetchTerminalFaresOutput": {
+        "type": "object",
+        "properties": {
+          "TerminalID": {
+            "type": "number",
+            "description": "Numeric ID of the terminal."
+          },
+          "Description": {
+            "type": "string",
+            "description": "Display name of the terminal."
+          }
+        },
+        "required": [
+          "TerminalID",
+          "Description"
+        ],
+        "description": "Terminal information with identifier and display name."
+      },
+      "FetchTerminalComboFaresOutput": {
+        "type": "object",
+        "properties": {
+          "DepartingDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the departing terminal, or null if unavailable."
+          },
+          "ArrivingDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the arriving terminal, or null if unavailable."
+          },
+          "CollectionDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Text description of fare collection procedures for this terminal combination, or null if unavailable."
+          }
+        },
+        "required": [
+          "DepartingDescription",
+          "ArrivingDescription",
+          "CollectionDescription"
+        ],
+        "description": "Fare collection description for a terminal combination with terminal names and collection procedures."
+      },
+      "FetchTerminalComboFaresVerboseOutput": {
+        "type": "object",
+        "properties": {
+          "DepartingTerminalID": {
+            "type": "number",
+            "description": "Numeric ID of the departing terminal."
+          },
+          "DepartingDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the departing terminal, or null if unavailable."
+          },
+          "ArrivingTerminalID": {
+            "type": "number",
+            "description": "Numeric ID of the arriving terminal."
+          },
+          "ArrivingDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the arriving terminal, or null if unavailable."
+          },
+          "CollectionDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Text description of fare collection procedures for this terminal combination, or null if unavailable."
+          }
+        },
+        "required": [
+          "DepartingTerminalID",
+          "DepartingDescription",
+          "ArrivingTerminalID",
+          "ArrivingDescription",
+          "CollectionDescription"
+        ],
+        "description": "Fare collection description for a terminal combination with IDs, names, and collection procedures."
+      },
       "FetchFareLineItemsBasicOutput": {
         "type": "object",
         "properties": {
@@ -305,103 +403,33 @@
         ],
         "description": "Fare total breakdown with type, description, and amount."
       },
-      "FetchTerminalComboFaresOutput": {
-        "type": "object",
-        "properties": {
-          "DepartingDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the departing terminal, or null if unavailable."
-          },
-          "ArrivingDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the arriving terminal, or null if unavailable."
-          },
-          "CollectionDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "Text description of fare collection procedures for this terminal combination, or null if unavailable."
-          }
-        },
-        "required": [
-          "DepartingDescription",
-          "ArrivingDescription",
-          "CollectionDescription"
-        ],
-        "description": "Fare collection description for a terminal combination with terminal names and collection procedures."
+      "FetchTerminalFaresInputTripDateParam": {
+        "type": "string",
+        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange."
       },
-      "FetchTerminalComboFaresVerboseOutput": {
-        "type": "object",
-        "properties": {
-          "DepartingTerminalID": {
-            "type": "number",
-            "description": "Numeric ID of the departing terminal."
-          },
-          "DepartingDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the departing terminal, or null if unavailable."
-          },
-          "ArrivingTerminalID": {
-            "type": "number",
-            "description": "Numeric ID of the arriving terminal."
-          },
-          "ArrivingDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the arriving terminal, or null if unavailable."
-          },
-          "CollectionDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "Text description of fare collection procedures for this terminal combination, or null if unavailable."
-          }
-        },
-        "required": [
-          "DepartingTerminalID",
-          "DepartingDescription",
-          "ArrivingTerminalID",
-          "ArrivingDescription",
-          "CollectionDescription"
-        ],
-        "description": "Fare collection description for a terminal combination with IDs, names, and collection procedures."
+      "FetchTerminalMatesFaresInputTripDateParam": {
+        "type": "string",
+        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange."
       },
-      "FetchTerminalFaresOutput": {
-        "type": "object",
-        "properties": {
-          "TerminalID": {
-            "type": "number",
-            "description": "Numeric ID of the terminal."
-          },
-          "Description": {
-            "type": "string",
-            "description": "Display name of the terminal."
-          }
-        },
-        "required": [
-          "TerminalID",
-          "Description"
-        ],
-        "description": "Terminal information with identifier and display name."
+      "FetchTerminalMatesFaresInputTerminalIDParam": {
+        "type": "number",
+        "description": "Numeric ID of the departing terminal."
       },
-      "FetchFaresValidDateRangeOutput": {
-        "type": "object",
-        "properties": {
-          "DateFrom": {
-            "type": "string",
-            "description": "UTC datetime when data becomes available (earliest valid trip date)."
-          },
-          "DateThru": {
-            "type": "string",
-            "description": "UTC datetime when data stops being available (latest valid trip date)."
-          }
-        },
-        "required": [
-          "DateFrom",
-          "DateThru"
-        ],
-        "description": "Date range for which fares data is currently published and available."
+      "FetchTerminalComboFaresInputTripDateParam": {
+        "type": "string",
+        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range."
+      },
+      "FetchTerminalComboFaresInputDepartingTerminalIDParam": {
+        "type": "number",
+        "description": "Numeric ID of the departing terminal."
+      },
+      "FetchTerminalComboFaresInputArrivingTerminalIDParam": {
+        "type": "number",
+        "description": "Numeric ID of the arriving terminal."
+      },
+      "FetchTerminalComboFaresVerboseInputTripDateParam": {
+        "type": "string",
+        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range."
       },
       "FetchFareLineItemsBasicInputTripDateParam": {
         "type": "string",
@@ -419,6 +447,10 @@
         "type": "boolean",
         "description": "True for round trip fares, false for one-way fares."
       },
+      "FetchFareLineItemsVerboseInputTripDateParam": {
+        "type": "string",
+        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range."
+      },
       "FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam": {
         "type": "string",
         "description": "Trip date in YYYY-MM-DD format. Must be within valid date range."
@@ -434,10 +466,6 @@
       "FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam": {
         "type": "boolean",
         "description": "True for round trip fares, false for one-way fares."
-      },
-      "FetchFareLineItemsVerboseInputTripDateParam": {
-        "type": "string",
-        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range."
       },
       "FetchFareTotalsByTripDateAndRouteInputTripDateParam": {
         "type": "string",
@@ -462,37 +490,72 @@
       "FetchFareTotalsByTripDateAndRouteInputQuantityParam": {
         "type": "string",
         "description": "Comma-separated list of quantities matching FareLineItemID order (e.g., '2,1,0'). Values must be >= 0."
-      },
-      "FetchTerminalComboFaresInputTripDateParam": {
-        "type": "string",
-        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range."
-      },
-      "FetchTerminalComboFaresInputDepartingTerminalIDParam": {
-        "type": "number",
-        "description": "Numeric ID of the departing terminal."
-      },
-      "FetchTerminalComboFaresInputArrivingTerminalIDParam": {
-        "type": "number",
-        "description": "Numeric ID of the arriving terminal."
-      },
-      "FetchTerminalComboFaresVerboseInputTripDateParam": {
-        "type": "string",
-        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range."
-      },
-      "FetchTerminalFaresInputTripDateParam": {
-        "type": "string",
-        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange."
-      },
-      "FetchTerminalMatesFaresInputTripDateParam": {
-        "type": "string",
-        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange."
-      },
-      "FetchTerminalMatesFaresInputTerminalIDParam": {
-        "type": "number",
-        "description": "Numeric ID of the departing terminal."
       }
     },
     "parameters": {
+      "FetchTerminalFaresInputTripDateParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchTerminalFaresInputTripDateParam"
+        },
+        "required": true,
+        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.",
+        "name": "TripDate",
+        "in": "path"
+      },
+      "FetchTerminalMatesFaresInputTripDateParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchTerminalMatesFaresInputTripDateParam"
+        },
+        "required": true,
+        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.",
+        "name": "TripDate",
+        "in": "path"
+      },
+      "FetchTerminalMatesFaresInputTerminalIDParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchTerminalMatesFaresInputTerminalIDParam"
+        },
+        "required": true,
+        "description": "Numeric ID of the departing terminal.",
+        "name": "TerminalID",
+        "in": "path"
+      },
+      "FetchTerminalComboFaresInputTripDateParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchTerminalComboFaresInputTripDateParam"
+        },
+        "required": true,
+        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range.",
+        "name": "TripDate",
+        "in": "path"
+      },
+      "FetchTerminalComboFaresInputDepartingTerminalIDParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchTerminalComboFaresInputDepartingTerminalIDParam"
+        },
+        "required": true,
+        "description": "Numeric ID of the departing terminal.",
+        "name": "DepartingTerminalID",
+        "in": "path"
+      },
+      "FetchTerminalComboFaresInputArrivingTerminalIDParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchTerminalComboFaresInputArrivingTerminalIDParam"
+        },
+        "required": true,
+        "description": "Numeric ID of the arriving terminal.",
+        "name": "ArrivingTerminalID",
+        "in": "path"
+      },
+      "FetchTerminalComboFaresVerboseInputTripDateParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchTerminalComboFaresVerboseInputTripDateParam"
+        },
+        "required": true,
+        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range.",
+        "name": "TripDate",
+        "in": "path"
+      },
       "FetchFareLineItemsBasicInputTripDateParam": {
         "schema": {
           "$ref": "#/components/schemas/FetchFareLineItemsBasicInputTripDateParam"
@@ -529,6 +592,15 @@
         "name": "RoundTrip",
         "in": "path"
       },
+      "FetchFareLineItemsVerboseInputTripDateParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchFareLineItemsVerboseInputTripDateParam"
+        },
+        "required": true,
+        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range.",
+        "name": "TripDate",
+        "in": "path"
+      },
       "FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam": {
         "schema": {
           "$ref": "#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam"
@@ -563,15 +635,6 @@
         "required": true,
         "description": "True for round trip fares, false for one-way fares.",
         "name": "RoundTrip",
-        "in": "path"
-      },
-      "FetchFareLineItemsVerboseInputTripDateParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchFareLineItemsVerboseInputTripDateParam"
-        },
-        "required": true,
-        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range.",
-        "name": "TripDate",
         "in": "path"
       },
       "FetchFareTotalsByTripDateAndRouteInputTripDateParam": {
@@ -627,69 +690,6 @@
         "description": "Comma-separated list of quantities matching FareLineItemID order (e.g., '2,1,0'). Values must be >= 0.",
         "name": "Quantity",
         "in": "path"
-      },
-      "FetchTerminalComboFaresInputTripDateParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTerminalComboFaresInputTripDateParam"
-        },
-        "required": true,
-        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range.",
-        "name": "TripDate",
-        "in": "path"
-      },
-      "FetchTerminalComboFaresInputDepartingTerminalIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTerminalComboFaresInputDepartingTerminalIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the departing terminal.",
-        "name": "DepartingTerminalID",
-        "in": "path"
-      },
-      "FetchTerminalComboFaresInputArrivingTerminalIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTerminalComboFaresInputArrivingTerminalIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the arriving terminal.",
-        "name": "ArrivingTerminalID",
-        "in": "path"
-      },
-      "FetchTerminalComboFaresVerboseInputTripDateParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTerminalComboFaresVerboseInputTripDateParam"
-        },
-        "required": true,
-        "description": "Trip date in YYYY-MM-DD format. Must be within valid date range.",
-        "name": "TripDate",
-        "in": "path"
-      },
-      "FetchTerminalFaresInputTripDateParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTerminalFaresInputTripDateParam"
-        },
-        "required": true,
-        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.",
-        "name": "TripDate",
-        "in": "path"
-      },
-      "FetchTerminalMatesFaresInputTripDateParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTerminalMatesFaresInputTripDateParam"
-        },
-        "required": true,
-        "description": "Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.",
-        "name": "TripDate",
-        "in": "path"
-      },
-      "FetchTerminalMatesFaresInputTerminalIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTerminalMatesFaresInputTerminalIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the departing terminal.",
-        "name": "TerminalID",
-        "in": "path"
       }
     }
   },
@@ -728,6 +728,239 @@
         }
       }
     },
+    "/validdaterange": {
+      "get": {
+        "summary": "Get the validity date range for published fares data.",
+        "operationId": "fetchFaresValidDateRange",
+        "tags": [
+          "valid-date-range"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchFaresValidDateRange } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFaresValidDateRange({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchFaresValidDateRangeOutput"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API",
+                    "value": {
+                      "DateFrom": "2025-11-15T08:00:00.000Z",
+                      "DateThru": "2026-03-21T07:00:00.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/terminals/{TripDate}": {
+      "get": {
+        "summary": "List valid departing terminals for a trip date.",
+        "operationId": "fetchTerminalFares",
+        "tags": [
+          "cache-flush-date-fares"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchTerminalFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalFares({\n  params: {\n    \"TripDate\": \"2025-11-22\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FetchTerminalFaresInputTripDateParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchTerminalFaresOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 19 total)",
+                    "value": [
+                      {
+                        "TerminalID": 1,
+                        "Description": "Anacortes"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/terminalMates/{TripDate}/{TerminalID}": {
+      "get": {
+        "summary": "List arriving terminals for a given departing terminal and trip date.",
+        "operationId": "fetchTerminalMatesFares",
+        "tags": [
+          "cache-flush-date-fares"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchTerminalMatesFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalMatesFares({\n  params: {\n    \"TripDate\": \"2025-11-22\",\n    \"TerminalID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FetchTerminalMatesFaresInputTripDateParam"
+          },
+          {
+            "$ref": "#/components/parameters/FetchTerminalMatesFaresInputTerminalIDParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchTerminalFaresOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 4 total)",
+                    "value": [
+                      {
+                        "TerminalID": 10,
+                        "Description": "Friday Harbor"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}": {
+      "get": {
+        "summary": "Get fare collection description for a specific terminal combination and trip date.",
+        "operationId": "fetchTerminalComboFares",
+        "tags": [
+          "terminal-combo"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchTerminalComboFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFares({\n  params: {\n    \"TripDate\": \"2025-11-22\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FetchTerminalComboFaresInputTripDateParam"
+          },
+          {
+            "$ref": "#/components/parameters/FetchTerminalComboFaresInputDepartingTerminalIDParam"
+          },
+          {
+            "$ref": "#/components/parameters/FetchTerminalComboFaresInputArrivingTerminalIDParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchTerminalComboFaresOutput"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API",
+                    "value": {
+                      "DepartingDescription": "Anacortes",
+                      "ArrivingDescription": "Friday Harbor",
+                      "CollectionDescription": "Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/terminalComboVerbose/{TripDate}": {
+      "get": {
+        "summary": "Get fare collection descriptions for all terminal combinations on a trip date.",
+        "operationId": "fetchTerminalComboFaresVerbose",
+        "tags": [
+          "terminal-combo"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchTerminalComboFaresVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFaresVerbose({\n  params: {\n    \"TripDate\": \"2025-11-22\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FetchTerminalComboFaresVerboseInputTripDateParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchTerminalComboFaresVerboseOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 38 total)",
+                    "value": [
+                      {
+                        "DepartingTerminalID": 1,
+                        "DepartingDescription": "Anacortes",
+                        "ArrivingTerminalID": 10,
+                        "ArrivingDescription": "Friday Harbor",
+                        "CollectionDescription": "Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor."
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}": {
       "get": {
         "summary": "List popular fare line items for a terminal combination.",
@@ -738,7 +971,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchFareLineItemsBasic } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsBasic({\n  params: {\n    \"TripDate\": \"2025-11-19\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchFareLineItemsBasic } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsBasic({\n  params: {\n    \"TripDate\": \"2025-11-22\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -787,65 +1020,6 @@
         }
       }
     },
-    "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}": {
-      "get": {
-        "summary": "List all fare line items for a specific terminal combination and trip type.",
-        "operationId": "fetchFareLineItemsByTripDateAndTerminals",
-        "tags": [
-          "terminals"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2025-11-19\",\n    \"DepartingTerminalID\": 3,\n    \"ArrivingTerminalID\": 7,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchFareLineItemsBasicOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 23 total)",
-                    "value": [
-                      {
-                        "FareLineItemID": 1,
-                        "FareLineItem": "Adult (age 19 - 64)",
-                        "Category": "Passenger",
-                        "DirectionIndependent": false,
-                        "Amount": 0
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/fareLineItemsVerbose/{TripDate}": {
       "get": {
         "summary": "Get all fare line items for all terminal combinations on a trip date.",
@@ -856,7 +1030,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchFareLineItemsVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsVerbose({\n  params: {\n    \"TripDate\": \"2025-11-18\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchFareLineItemsVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsVerbose({\n  params: {\n    \"TripDate\": \"2025-11-21\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -9816,6 +9990,65 @@
         }
       }
     },
+    "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}": {
+      "get": {
+        "summary": "List all fare line items for a specific terminal combination and trip type.",
+        "operationId": "fetchFareLineItemsByTripDateAndTerminals",
+        "tags": [
+          "terminals"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2025-11-22\",\n    \"DepartingTerminalID\": 3,\n    \"ArrivingTerminalID\": 7,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam"
+          },
+          {
+            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam"
+          },
+          {
+            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam"
+          },
+          {
+            "$ref": "#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchFareLineItemsBasicOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 23 total)",
+                    "value": [
+                      {
+                        "FareLineItemID": 1,
+                        "FareLineItem": "Adult (age 19 - 64)",
+                        "Category": "Passenger",
+                        "DirectionIndependent": false,
+                        "Amount": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}": {
       "get": {
         "summary": "Calculate fare totals for a terminal combination with selected line items and quantities.",
@@ -9826,7 +10059,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchFareTotalsByTripDateAndRoute } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareTotalsByTripDateAndRoute({\n  params: {\n    \"TripDate\": \"2025-11-18\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false,\n    \"FareLineItemID\": \"1,2\",\n    \"Quantity\": \"3,1\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchFareTotalsByTripDateAndRoute } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareTotalsByTripDateAndRoute({\n  params: {\n    \"TripDate\": \"2025-11-21\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false,\n    \"FareLineItemID\": \"1,2\",\n    \"Quantity\": \"3,1\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -9872,239 +10105,6 @@
                         "Amount": 61.25
                       }
                     ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}": {
-      "get": {
-        "summary": "Get fare collection description for a specific terminal combination and trip date.",
-        "operationId": "fetchTerminalComboFares",
-        "tags": [
-          "terminal-combo"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchTerminalComboFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFares({\n  params: {\n    \"TripDate\": \"2025-11-19\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchTerminalComboFaresInputTripDateParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchTerminalComboFaresInputDepartingTerminalIDParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchTerminalComboFaresInputArrivingTerminalIDParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FetchTerminalComboFaresOutput"
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API",
-                    "value": {
-                      "DepartingDescription": "Anacortes",
-                      "ArrivingDescription": "Friday Harbor",
-                      "CollectionDescription": "Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/terminalComboVerbose/{TripDate}": {
-      "get": {
-        "summary": "Get fare collection descriptions for all terminal combinations on a trip date.",
-        "operationId": "fetchTerminalComboFaresVerbose",
-        "tags": [
-          "terminal-combo"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchTerminalComboFaresVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFaresVerbose({\n  params: {\n    \"TripDate\": \"2025-11-19\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchTerminalComboFaresVerboseInputTripDateParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchTerminalComboFaresVerboseOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 38 total)",
-                    "value": [
-                      {
-                        "DepartingTerminalID": 1,
-                        "DepartingDescription": "Anacortes",
-                        "ArrivingTerminalID": 10,
-                        "ArrivingDescription": "Friday Harbor",
-                        "CollectionDescription": "Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor."
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/terminals/{TripDate}": {
-      "get": {
-        "summary": "List valid departing terminals for a trip date.",
-        "operationId": "fetchTerminalFares",
-        "tags": [
-          "cache-flush-date-fares"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchTerminalFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalFares({\n  params: {\n    \"TripDate\": \"2025-11-19\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchTerminalFaresInputTripDateParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchTerminalFaresOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 19 total)",
-                    "value": [
-                      {
-                        "TerminalID": 1,
-                        "Description": "Anacortes"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/terminalMates/{TripDate}/{TerminalID}": {
-      "get": {
-        "summary": "List arriving terminals for a given departing terminal and trip date.",
-        "operationId": "fetchTerminalMatesFares",
-        "tags": [
-          "cache-flush-date-fares"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchTerminalMatesFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalMatesFares({\n  params: {\n    \"TripDate\": \"2025-11-19\",\n    \"TerminalID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchTerminalMatesFaresInputTripDateParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchTerminalMatesFaresInputTerminalIDParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchTerminalFaresOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 4 total)",
-                    "value": [
-                      {
-                        "TerminalID": 10,
-                        "Description": "Friday Harbor"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/validdaterange": {
-      "get": {
-        "summary": "Get the validity date range for published fares data.",
-        "operationId": "fetchFaresValidDateRange",
-        "tags": [
-          "valid-date-range"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchFaresValidDateRange } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFaresValidDateRange({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FetchFaresValidDateRangeOutput"
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API",
-                    "value": {
-                      "DateFrom": "2025-11-15T08:00:00.000Z",
-                      "DateThru": "2026-03-21T07:00:00.000Z"
-                    }
                   }
                 }
               }

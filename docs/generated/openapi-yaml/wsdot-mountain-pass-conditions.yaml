@@ -40,7 +40,7 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchMountainPassConditionByIdOutput:
+    FetchMountainPassConditionsOutput:
       type: object
       properties:
         MountainPassId:
@@ -136,6 +136,53 @@ components:
       name: PassConditionID
       in: path
 paths:
+  /getMountainPassConditionsAsJson:
+    get:
+      summary: List current conditions for all monitored mountain passes.
+      operationId: fetchMountainPassConditions
+      tags:
+        - pass-conditions
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
+
+            const data = await fetchMountainPassConditions({
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchMountainPassConditionsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 16 total)
+                  value:
+                    - MountainPassId: 1
+                      MountainPassName: Blewett Pass US 97
+                      Latitude: 47.335298205
+                      Longitude: -120.581068216
+                      DateUpdated: '2025-11-15T14:49:36.827Z'
+                      TemperatureInFahrenheit: 43
+                      ElevationInFeet: 4102
+                      WeatherCondition: Partly cloudy.
+                      RoadCondition: Bare and wet.
+                      TravelAdvisoryActive: true
+                      RestrictionOne:
+                        RestrictionText: No restrictions
+                        TravelDirection: Northbound
+                      RestrictionTwo:
+                        RestrictionText: No restrictions
+                        TravelDirection: Southbound
   /getMountainPassConditionAsJon?PassConditionID={PassConditionID}:
     get:
       summary: Get current conditions for a specific mountain pass by ID.
@@ -164,7 +211,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
+                $ref: '#/components/schemas/FetchMountainPassConditionsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -186,53 +233,6 @@ paths:
                     RestrictionTwo:
                       RestrictionText: No restrictions
                       TravelDirection: Westbound
-  /getMountainPassConditionsAsJson:
-    get:
-      summary: List current conditions for all monitored mountain passes.
-      operationId: fetchMountainPassConditions
-      tags:
-        - pass-conditions
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
-
-            const data = await fetchMountainPassConditions({
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 16 total)
-                  value:
-                    - MountainPassId: 1
-                      MountainPassName: Blewett Pass US 97
-                      Latitude: 47.335298205
-                      Longitude: -120.581068216
-                      DateUpdated: '2025-11-15T14:49:36.827Z'
-                      TemperatureInFahrenheit: 43
-                      ElevationInFeet: 4102
-                      WeatherCondition: Partly cloudy.
-                      RoadCondition: Bare and wet.
-                      TravelAdvisoryActive: true
-                      RestrictionOne:
-                        RestrictionText: No restrictions
-                        TravelDirection: Northbound
-                      RestrictionTwo:
-                        RestrictionText: No restrictions
-                        TravelDirection: Southbound
 tags:
   - name: pass-conditions
     description: Real-time mountain pass conditions including weather, road status, and travel restrictions.

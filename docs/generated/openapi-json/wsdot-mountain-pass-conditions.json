@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchMountainPassConditionByIdOutput": {
+      "FetchMountainPassConditionsOutput": {
         "type": "object",
         "properties": {
           "MountainPassId": {
@@ -179,64 +179,6 @@
     }
   },
   "paths": {
-    "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}": {
-      "get": {
-        "summary": "Get current conditions for a specific mountain pass by ID.",
-        "operationId": "fetchMountainPassConditionById",
-        "tags": [
-          "pass-conditions"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchMountainPassConditionById } from 'ws-dottie/wsdot-mountain-pass-conditions/core';\n\nconst data = await fetchMountainPassConditionById({\n  params: {\n    \"PassConditionID\": 12\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchMountainPassConditionByIdInputPassConditionIDParam"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FetchMountainPassConditionByIdOutput"
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API",
-                    "value": {
-                      "MountainPassId": 12,
-                      "MountainPassName": "White Pass  US 12",
-                      "Latitude": 46.638333,
-                      "Longitude": -121.39,
-                      "DateUpdated": "2025-11-15T16:32:50.010Z",
-                      "TemperatureInFahrenheit": 44,
-                      "ElevationInFeet": 4500,
-                      "WeatherCondition": "Raining",
-                      "RoadCondition": "Bare and wet",
-                      "TravelAdvisoryActive": true,
-                      "RestrictionOne": {
-                        "RestrictionText": "No restrictions",
-                        "TravelDirection": "Eastbound"
-                      },
-                      "RestrictionTwo": {
-                        "RestrictionText": "No restrictions",
-                        "TravelDirection": "Westbound"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/getMountainPassConditionsAsJson": {
       "get": {
         "summary": "List current conditions for all monitored mountain passes.",
@@ -258,7 +200,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchMountainPassConditionByIdOutput"
+                    "$ref": "#/components/schemas/FetchMountainPassConditionsOutput"
                   }
                 },
                 "examples": {
@@ -287,6 +229,64 @@
                         }
                       }
                     ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}": {
+      "get": {
+        "summary": "Get current conditions for a specific mountain pass by ID.",
+        "operationId": "fetchMountainPassConditionById",
+        "tags": [
+          "pass-conditions"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchMountainPassConditionById } from 'ws-dottie/wsdot-mountain-pass-conditions/core';\n\nconst data = await fetchMountainPassConditionById({\n  params: {\n    \"PassConditionID\": 12\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FetchMountainPassConditionByIdInputPassConditionIDParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchMountainPassConditionsOutput"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API",
+                    "value": {
+                      "MountainPassId": 12,
+                      "MountainPassName": "White Pass  US 12",
+                      "Latitude": 46.638333,
+                      "Longitude": -121.39,
+                      "DateUpdated": "2025-11-15T16:32:50.010Z",
+                      "TemperatureInFahrenheit": 44,
+                      "ElevationInFeet": 4500,
+                      "WeatherCondition": "Raining",
+                      "RoadCondition": "Bare and wet",
+                      "TravelAdvisoryActive": true,
+                      "RestrictionOne": {
+                        "RestrictionText": "No restrictions",
+                        "TravelDirection": "Eastbound"
+                      },
+                      "RestrictionTwo": {
+                        "RestrictionText": "No restrictions",
+                        "TravelDirection": "Westbound"
+                      }
+                    }
                   }
                 }
               }

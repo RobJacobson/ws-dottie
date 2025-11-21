@@ -54,29 +54,6 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchMapAreasOutput": {
-        "type": "object",
-        "properties": {
-          "MapArea": {
-            "type": "string",
-            "nullable": true,
-            "description": "Map area identifier code for geographic filtering, or null when unavailable."
-          },
-          "MapAreaDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the map area, or null when unavailable."
-          }
-        },
-        "required": [
-          "MapArea",
-          "MapAreaDescription"
-        ],
-        "description": "Geographic map area with identifier code and display name for filtering highway alerts by region."
-      },
-      "FetchEventCategoriesOutput": {
-        "type": "string"
-      },
       "FetchAlertsOutput": {
         "type": "object",
         "properties": {
@@ -236,17 +213,28 @@
         ],
         "description": "Highway alert with identification, event category, priority, location data, timestamps, and descriptions for traffic incidents and road conditions."
       },
-      "FetchAlertByIdInputAlertIDParam": {
-        "type": "number",
-        "description": "Numeric ID of the highway alert."
+      "FetchMapAreasOutput": {
+        "type": "object",
+        "properties": {
+          "MapArea": {
+            "type": "string",
+            "nullable": true,
+            "description": "Map area identifier code for geographic filtering, or null when unavailable."
+          },
+          "MapAreaDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the map area, or null when unavailable."
+          }
+        },
+        "required": [
+          "MapArea",
+          "MapAreaDescription"
+        ],
+        "description": "Geographic map area with identifier code and display name for filtering highway alerts by region."
       },
-      "FetchAlertsByRegionIdInputRegionIDParam": {
-        "type": "number",
-        "description": "WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest."
-      },
-      "FetchAlertsByMapAreaInputMapAreaParam": {
-        "type": "string",
-        "description": "Map area identifier code for geographic filtering."
+      "FetchEventCategoriesOutput": {
+        "type": "string"
       },
       "SearchAlertsInputStateRouteParam": {
         "type": "string",
@@ -271,36 +259,21 @@
       "SearchAlertsInputEndingMilepostParam": {
         "type": "number",
         "description": "Ending milepost value for range filtering, or undefined for no end limit."
+      },
+      "FetchAlertsByRegionIdInputRegionIDParam": {
+        "type": "number",
+        "description": "WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest."
+      },
+      "FetchAlertsByMapAreaInputMapAreaParam": {
+        "type": "string",
+        "description": "Map area identifier code for geographic filtering."
+      },
+      "FetchAlertByIdInputAlertIDParam": {
+        "type": "number",
+        "description": "Numeric ID of the highway alert."
       }
     },
     "parameters": {
-      "FetchAlertByIdInputAlertIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchAlertByIdInputAlertIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the highway alert.",
-        "name": "AlertID",
-        "in": "path"
-      },
-      "FetchAlertsByRegionIdInputRegionIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchAlertsByRegionIdInputRegionIDParam"
-        },
-        "required": true,
-        "description": "WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest.",
-        "name": "RegionID",
-        "in": "path"
-      },
-      "FetchAlertsByMapAreaInputMapAreaParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchAlertsByMapAreaInputMapAreaParam"
-        },
-        "required": true,
-        "description": "Map area identifier code for geographic filtering.",
-        "name": "MapArea",
-        "in": "path"
-      },
       "SearchAlertsInputStateRouteParam": {
         "schema": {
           "$ref": "#/components/schemas/SearchAlertsInputStateRouteParam"
@@ -354,91 +327,37 @@
         "description": "Ending milepost value for range filtering, or undefined for no end limit.",
         "name": "EndingMilepost",
         "in": "path"
+      },
+      "FetchAlertsByRegionIdInputRegionIDParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchAlertsByRegionIdInputRegionIDParam"
+        },
+        "required": true,
+        "description": "WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest.",
+        "name": "RegionID",
+        "in": "path"
+      },
+      "FetchAlertsByMapAreaInputMapAreaParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchAlertsByMapAreaInputMapAreaParam"
+        },
+        "required": true,
+        "description": "Map area identifier code for geographic filtering.",
+        "name": "MapArea",
+        "in": "path"
+      },
+      "FetchAlertByIdInputAlertIDParam": {
+        "schema": {
+          "$ref": "#/components/schemas/FetchAlertByIdInputAlertIDParam"
+        },
+        "required": true,
+        "description": "Numeric ID of the highway alert.",
+        "name": "AlertID",
+        "in": "path"
       }
     }
   },
   "paths": {
-    "/getMapAreasAsJson": {
-      "get": {
-        "summary": "List all available geographic map areas for filtering alerts.",
-        "operationId": "fetchMapAreas",
-        "tags": [
-          "highwayAlerts"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchMapAreas } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await fetchMapAreas({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchMapAreasOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 51 total)",
-                    "value": [
-                      {
-                        "MapArea": "L2CE",
-                        "MapAreaDescription": "Eastern"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/getEventCategoriesAsJson": {
-      "get": {
-        "summary": "List all available event category names for filtering alerts.",
-        "operationId": "fetchEventCategories",
-        "tags": [
-          "event-categories"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchEventCategories } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await fetchEventCategories({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchEventCategoriesOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 123 total)",
-                    "value": [
-                      ""
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/getAlertsAsJson": {
       "get": {
         "summary": "List all current highway alerts statewide.",
@@ -506,22 +425,37 @@
         }
       }
     },
-    "/getAlertAsJson?AlertID={AlertID}": {
+    "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}": {
       "get": {
-        "summary": "Get highway alert details for a specific alert ID.",
-        "operationId": "fetchAlertById",
+        "summary": "Search highway alerts by route, region, time range, and milepost.",
+        "operationId": "searchAlerts",
         "tags": [
           "highwayAlerts"
         ],
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchAlertById } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await fetchAlertById({\n  params: {\n    \"AlertID\": 468632\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2025-11-20\",\n    \"SearchTimeEnd\": \"2025-11-21\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/FetchAlertByIdInputAlertIDParam"
+            "$ref": "#/components/parameters/SearchAlertsInputStateRouteParam"
+          },
+          {
+            "$ref": "#/components/parameters/SearchAlertsInputRegionParam"
+          },
+          {
+            "$ref": "#/components/parameters/SearchAlertsInputSearchTimeStartParam"
+          },
+          {
+            "$ref": "#/components/parameters/SearchAlertsInputSearchTimeEndParam"
+          },
+          {
+            "$ref": "#/components/parameters/SearchAlertsInputStartingMilepostParam"
+          },
+          {
+            "$ref": "#/components/parameters/SearchAlertsInputEndingMilepostParam"
           }
         ],
         "responses": {
@@ -530,41 +464,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchAlertsOutput"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchAlertsOutput"
+                  }
                 },
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API",
-                    "value": {
-                      "AlertID": 468632,
-                      "County": null,
-                      "EndRoadwayLocation": {
-                        "Description": null,
-                        "Direction": "B",
-                        "Latitude": 47.6390387,
-                        "Longitude": -122.220590099,
-                        "MilePost": 5,
-                        "RoadName": "520"
-                      },
-                      "EndTime": null,
-                      "EventCategory": "Flammable Cargo Restriction",
-                      "EventStatus": "Closed",
-                      "ExtendedDescription": "",
-                      "HeadlineDescription": "Flammable cargo is prohibited on SR 520 eastbound & westbound from Montlake Blvd (MP 1) to 84th Ave NE (MP 5).",
-                      "LastUpdatedTime": "2025-09-03T04:40:03.430Z",
-                      "Priority": "High",
-                      "Region": "Northwest",
-                      "StartRoadwayLocation": {
-                        "Description": null,
-                        "Direction": "B",
-                        "Latitude": 47.644373883,
-                        "Longitude": -122.303082155,
-                        "MilePost": 1,
-                        "RoadName": "520"
-                      },
-                      "StartTime": "2021-09-13T13:59:00.000Z"
-                    }
+                    "description": "Example of a successful response from the API (showing first item of 14 total)",
+                    "value": [
+                      {
+                        "AlertID": 671050,
+                        "County": null,
+                        "EndRoadwayLocation": {
+                          "Description": null,
+                          "Direction": "S",
+                          "Latitude": 0,
+                          "Longitude": 0,
+                          "MilePost": 0,
+                          "RoadName": "405"
+                        },
+                        "EndTime": "2025-11-14T15:22:31.000Z",
+                        "EventCategory": "Disabled vehicle",
+                        "EventStatus": "Closed",
+                        "ExtendedDescription": "",
+                        "HeadlineDescription": "Cleared 7:22 AM : On I-405 southbound at NE 70th Pl (MP 17) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.",
+                        "LastUpdatedTime": "2025-11-14T15:22:31.560Z",
+                        "Priority": "Highest",
+                        "Region": "Northwest",
+                        "StartRoadwayLocation": {
+                          "Description": null,
+                          "Direction": "S",
+                          "Latitude": 47.670427237,
+                          "Longitude": -122.187174248,
+                          "MilePost": 17.49,
+                          "RoadName": "405"
+                        },
+                        "StartTime": "2025-11-14T14:54:00.000Z"
+                      }
+                    ]
                   }
                 }
               }
@@ -687,37 +626,84 @@
         }
       }
     },
-    "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}": {
+    "/getAlertAsJson?AlertID={AlertID}": {
       "get": {
-        "summary": "Search highway alerts by route, region, time range, and milepost.",
-        "operationId": "searchAlerts",
+        "summary": "Get highway alert details for a specific alert ID.",
+        "operationId": "fetchAlertById",
         "tags": [
           "highwayAlerts"
         ],
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2025-11-17\",\n    \"SearchTimeEnd\": \"2025-11-18\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchAlertById } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await fetchAlertById({\n  params: {\n    \"AlertID\": 468632\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/SearchAlertsInputStateRouteParam"
-          },
+            "$ref": "#/components/parameters/FetchAlertByIdInputAlertIDParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchAlertsOutput"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API",
+                    "value": {
+                      "AlertID": 468632,
+                      "County": null,
+                      "EndRoadwayLocation": {
+                        "Description": null,
+                        "Direction": "B",
+                        "Latitude": 47.6390387,
+                        "Longitude": -122.220590099,
+                        "MilePost": 5,
+                        "RoadName": "520"
+                      },
+                      "EndTime": null,
+                      "EventCategory": "Flammable Cargo Restriction",
+                      "EventStatus": "Closed",
+                      "ExtendedDescription": "",
+                      "HeadlineDescription": "Flammable cargo is prohibited on SR 520 eastbound & westbound from Montlake Blvd (MP 1) to 84th Ave NE (MP 5).",
+                      "LastUpdatedTime": "2025-09-03T04:40:03.430Z",
+                      "Priority": "High",
+                      "Region": "Northwest",
+                      "StartRoadwayLocation": {
+                        "Description": null,
+                        "Direction": "B",
+                        "Latitude": 47.644373883,
+                        "Longitude": -122.303082155,
+                        "MilePost": 1,
+                        "RoadName": "520"
+                      },
+                      "StartTime": "2021-09-13T13:59:00.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getMapAreasAsJson": {
+      "get": {
+        "summary": "List all available geographic map areas for filtering alerts.",
+        "operationId": "fetchMapAreas",
+        "tags": [
+          "highwayAlerts"
+        ],
+        "x-codeSamples": [
           {
-            "$ref": "#/components/parameters/SearchAlertsInputRegionParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchAlertsInputSearchTimeStartParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchAlertsInputSearchTimeEndParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchAlertsInputStartingMilepostParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchAlertsInputEndingMilepostParam"
+            "lang": "JavaScript",
+            "source": "import { fetchMapAreas } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await fetchMapAreas({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "responses": {
@@ -728,43 +714,57 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchAlertsOutput"
+                    "$ref": "#/components/schemas/FetchMapAreasOutput"
                   }
                 },
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 14 total)",
+                    "description": "Example of a successful response from the API (showing first item of 51 total)",
                     "value": [
                       {
-                        "AlertID": 671050,
-                        "County": null,
-                        "EndRoadwayLocation": {
-                          "Description": null,
-                          "Direction": "S",
-                          "Latitude": 0,
-                          "Longitude": 0,
-                          "MilePost": 0,
-                          "RoadName": "405"
-                        },
-                        "EndTime": "2025-11-14T15:22:31.000Z",
-                        "EventCategory": "Disabled vehicle",
-                        "EventStatus": "Closed",
-                        "ExtendedDescription": "",
-                        "HeadlineDescription": "Cleared 7:22 AM : On I-405 southbound at NE 70th Pl (MP 17) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.",
-                        "LastUpdatedTime": "2025-11-14T15:22:31.560Z",
-                        "Priority": "Highest",
-                        "Region": "Northwest",
-                        "StartRoadwayLocation": {
-                          "Description": null,
-                          "Direction": "S",
-                          "Latitude": 47.670427237,
-                          "Longitude": -122.187174248,
-                          "MilePost": 17.49,
-                          "RoadName": "405"
-                        },
-                        "StartTime": "2025-11-14T14:54:00.000Z"
+                        "MapArea": "L2CE",
+                        "MapAreaDescription": "Eastern"
                       }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getEventCategoriesAsJson": {
+      "get": {
+        "summary": "List all available event category names for filtering alerts.",
+        "operationId": "fetchEventCategories",
+        "tags": [
+          "event-categories"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchEventCategories } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await fetchEventCategories({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FetchEventCategoriesOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 123 total)",
+                    "value": [
+                      ""
                     ]
                   }
                 }

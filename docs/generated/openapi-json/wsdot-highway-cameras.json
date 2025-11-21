@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchHighwayCamerasOutput": {
+      "SearchHighwayCamerasByRouteAndMilepostOutput": {
         "type": "object",
         "properties": {
           "CameraID": {
@@ -248,67 +248,6 @@
     }
   },
   "paths": {
-    "/getCamerasAsJson": {
-      "get": {
-        "summary": "List all highway cameras statewide.",
-        "operationId": "fetchHighwayCameras",
-        "tags": [
-          "cameras"
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "JavaScript",
-            "source": "import { fetchHighwayCameras } from 'ws-dottie/wsdot-highway-cameras/core';\n\nconst data = await fetchHighwayCameras({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FetchHighwayCamerasOutput"
-                  }
-                },
-                "examples": {
-                  "sampleResponse": {
-                    "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 1648 total)",
-                    "value": [
-                      {
-                        "CameraID": 9818,
-                        "CameraLocation": {
-                          "Description": null,
-                          "Direction": "W",
-                          "Latitude": 48.498333,
-                          "Longitude": -122.6625,
-                          "MilePost": 1,
-                          "RoadName": "Airports"
-                        },
-                        "CameraOwner": "WSDOT Aviation",
-                        "Description": null,
-                        "DisplayLatitude": 48.498333,
-                        "DisplayLongitude": -122.6625,
-                        "ImageHeight": 208,
-                        "ImageURL": "https://images.wsdot.wa.gov/airports/anafuel.jpg",
-                        "ImageWidth": 352,
-                        "IsActive": true,
-                        "OwnerURL": "https://wsdot.wa.gov/travel/aviation/airports-list/anacortes",
-                        "Region": "WA",
-                        "SortOrder": 5300,
-                        "Title": "Anacortes Airport Fuel Pump"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/searchCamerasAsJson": {
       "get": {
         "summary": "Search cameras by route and milepost range.",
@@ -344,7 +283,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchHighwayCamerasOutput"
+                    "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostOutput"
                   }
                 },
                 "examples": {
@@ -408,7 +347,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchHighwayCamerasOutput"
+                  "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -437,6 +376,67 @@
                       "SortOrder": 5300,
                       "Title": "Anacortes Airport Fuel Pump"
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getCamerasAsJson": {
+      "get": {
+        "summary": "List all highway cameras statewide.",
+        "operationId": "fetchHighwayCameras",
+        "tags": [
+          "cameras"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "JavaScript",
+            "source": "import { fetchHighwayCameras } from 'ws-dottie/wsdot-highway-cameras/core';\n\nconst data = await fetchHighwayCameras({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostOutput"
+                  }
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample response",
+                    "description": "Example of a successful response from the API (showing first item of 1648 total)",
+                    "value": [
+                      {
+                        "CameraID": 9818,
+                        "CameraLocation": {
+                          "Description": null,
+                          "Direction": "W",
+                          "Latitude": 48.498333,
+                          "Longitude": -122.6625,
+                          "MilePost": 1,
+                          "RoadName": "Airports"
+                        },
+                        "CameraOwner": "WSDOT Aviation",
+                        "Description": null,
+                        "DisplayLatitude": 48.498333,
+                        "DisplayLongitude": -122.6625,
+                        "ImageHeight": 208,
+                        "ImageURL": "https://images.wsdot.wa.gov/airports/anafuel.jpg",
+                        "ImageWidth": 352,
+                        "IsActive": true,
+                        "OwnerURL": "https://wsdot.wa.gov/travel/aviation/airports-list/anacortes",
+                        "Region": "WA",
+                        "SortOrder": 5300,
+                        "Title": "Anacortes Airport Fuel Pump"
+                      }
+                    ]
                   }
                 }
               }
