@@ -19,7 +19,7 @@ import yaml from "js-yaml";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
 import type { ApiDefinition } from "../../src/apis/types.ts";
-import { apis, endpoints } from "../../src/shared/endpoints.ts";
+import { apis, endpoints } from "../../src/shared/endpointRegistry.ts";
 import type { Endpoint } from "../../src/shared/types.ts";
 import { z } from "../../src/shared/zod.ts";
 
