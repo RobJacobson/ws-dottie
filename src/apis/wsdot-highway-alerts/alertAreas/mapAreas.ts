@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotHighwayAlertsApiMeta } from "../apiMeta";
-import { alertAreasGroup } from "./shared/alertAreas.endpoints";
 import {
   type MapAreasInput,
   mapAreasInputSchema,
@@ -27,20 +21,16 @@ export const mapAreasMeta = {
 } satisfies EndpointMeta<MapAreasInput, Area[]>;
 
 /**
- * Fetch function for retrieving all available geographic map areas for filtering alerts
+ * Factory result for map areas
  */
-export const fetchMapAreas: FetchFactory<MapAreasInput, Area[]> =
-  createFetchFunction({
-    api: wsdotHighwayAlertsApiMeta,
-    endpoint: mapAreasMeta,
-  });
+const mapAreasFactory = createFetchAndHook<MapAreasInput, Area[]>({
+  api: wsdotHighwayAlertsApiMeta,
+  endpoint: mapAreasMeta,
+  getEndpointGroup: () =>
+    require("./shared/alertAreas.endpoints").alertAreasGroup,
+});
 
 /**
- * React Query hook for retrieving all available geographic map areas for filtering alerts
+ * Fetch function and React Query hook for retrieving all available geographic map areas for filtering alerts
  */
-export const useMapAreas: HookFactory<MapAreasInput, Area[]> = createHook({
-  apiName: wsdotHighwayAlertsApiMeta.name,
-  endpointName: mapAreasMeta.functionName,
-  fetchFn: fetchMapAreas,
-  cacheStrategy: alertAreasGroup.cacheStrategy,
-});
+export const { fetch: fetchMapAreas, hook: useMapAreas } = mapAreasFactory;

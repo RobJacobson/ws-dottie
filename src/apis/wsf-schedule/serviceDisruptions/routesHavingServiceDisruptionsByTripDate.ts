@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { serviceDisruptionsGroup } from "./shared/serviceDisruptions.endpoints";
 import {
   type RoutesHavingServiceDisruptionsByTripDateInput,
   routesHavingServiceDisruptionsByTripDateInputSchema,
@@ -34,25 +28,22 @@ export const routesHavingServiceDisruptionsByTripDateMeta = {
 >;
 
 /**
- * Fetch function for retrieving routes with service disruptions for a specific trip date
+ * Factory result for routes having service disruptions by trip date
  */
-export const fetchRoutesHavingServiceDisruptionsByTripDate: FetchFactory<
+const routesHavingServiceDisruptionsByTripDateFactory = createFetchAndHook<
   RoutesHavingServiceDisruptionsByTripDateInput,
   ServiceDisruption[]
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: routesHavingServiceDisruptionsByTripDateMeta,
+  getEndpointGroup: () =>
+    require("./shared/serviceDisruptions.endpoints").serviceDisruptionsGroup,
 });
 
 /**
- * React Query hook for retrieving routes with service disruptions for a specific trip date
+ * Fetch function and React Query hook for retrieving routes with service disruptions for a specific trip date
  */
-export const useRoutesHavingServiceDisruptionsByTripDate: HookFactory<
-  RoutesHavingServiceDisruptionsByTripDateInput,
-  ServiceDisruption[]
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: routesHavingServiceDisruptionsByTripDateMeta.functionName,
-  fetchFn: fetchRoutesHavingServiceDisruptionsByTripDate,
-  cacheStrategy: serviceDisruptionsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchRoutesHavingServiceDisruptionsByTripDate,
+  hook: useRoutesHavingServiceDisruptionsByTripDate,
+} = routesHavingServiceDisruptionsByTripDateFactory;

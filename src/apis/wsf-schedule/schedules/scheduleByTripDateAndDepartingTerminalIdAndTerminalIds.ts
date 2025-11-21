@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { schedulesGroup } from "./shared/schedules.endpoints";
 import {
   type ScheduleByTripDateAndTerminalsInput,
   scheduleByTripDateAndTerminals,
@@ -32,26 +26,20 @@ export const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta = {
 } satisfies EndpointMeta<ScheduleByTripDateAndTerminalsInput, Schedule>;
 
 /**
- * Fetch function for retrieving sailing schedule for a terminal pair and trip date
+ * Factory result for schedule by trip date and departing terminal ID and terminal IDs
  */
-export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: FetchFactory<
-  ScheduleByTripDateAndTerminalsInput,
-  Schedule
-> = createFetchFunction({
-  api: wsfScheduleApiMeta,
-  endpoint: scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta,
-});
+const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsFactory =
+  createFetchAndHook<ScheduleByTripDateAndTerminalsInput, Schedule>({
+    api: wsfScheduleApiMeta,
+    endpoint: scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta,
+    getEndpointGroup: () =>
+      require("./shared/schedules.endpoints").schedulesGroup,
+  });
 
 /**
- * React Query hook for retrieving sailing schedule for a terminal pair and trip date
+ * Fetch function and React Query hook for retrieving sailing schedule for a terminal pair and trip date
  */
-export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: HookFactory<
-  ScheduleByTripDateAndTerminalsInput,
-  Schedule
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName:
-    scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta.functionName,
-  fetchFn: fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
-  cacheStrategy: schedulesGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
+  hook: useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
+} = scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsFactory;

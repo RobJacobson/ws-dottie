@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotHighwayAlertsApiMeta } from "../apiMeta";
-import { highwayAlertsGroup } from "./shared/highwayAlerts.endpoints";
 import {
   type AlertsByRegionIDInput,
   alertsByRegionIDInputSchema,
@@ -26,23 +20,20 @@ export const alertsByRegionIdMeta = {
 } satisfies EndpointMeta<AlertsByRegionIDInput, Alert[]>;
 
 /**
- * Fetch function for retrieving highway alerts filtered by WSDOT region ID
+ * Factory result for alerts by region ID
  */
-export const fetchAlertsByRegionId: FetchFactory<
+const alertsByRegionIdFactory = createFetchAndHook<
   AlertsByRegionIDInput,
   Alert[]
-> = createFetchFunction({
+>({
   api: wsdotHighwayAlertsApiMeta,
   endpoint: alertsByRegionIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/highwayAlerts.endpoints").highwayAlertsGroup,
 });
 
 /**
- * React Query hook for retrieving highway alerts filtered by WSDOT region ID
+ * Fetch function and React Query hook for retrieving highway alerts filtered by WSDOT region ID
  */
-export const useAlertsByRegionId: HookFactory<AlertsByRegionIDInput, Alert[]> =
-  createHook({
-    apiName: wsdotHighwayAlertsApiMeta.name,
-    endpointName: alertsByRegionIdMeta.functionName,
-    fetchFn: fetchAlertsByRegionId,
-    cacheStrategy: highwayAlertsGroup.cacheStrategy,
-  });
+export const { fetch: fetchAlertsByRegionId, hook: useAlertsByRegionId } =
+  alertsByRegionIdFactory;

@@ -2,38 +2,25 @@ import type {
   CacheFlushDateInput,
   CacheFlushDateOutput,
 } from "@/apis/shared/cacheFlushDate";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfFaresApiMeta } from "../apiMeta";
-import {
-  cacheFlushDateFaresGroup,
-  cacheFlushDateFaresMeta,
-} from "./shared/cacheFlushDate.endpoints";
+import { cacheFlushDateFaresMeta } from "./shared/cacheFlushDate.endpoints";
 
 /**
- * Fetch function for retrieving cache flush timestamp for static fares data
+ * Factory result for cache flush date fares
  */
-export const fetchCacheFlushDateFares: FetchFactory<
+const cacheFlushDateFaresFactory = createFetchAndHook<
   CacheFlushDateInput,
   CacheFlushDateOutput
-> = createFetchFunction({
+>({
   api: wsfFaresApiMeta,
   endpoint: cacheFlushDateFaresMeta,
+  getEndpointGroup: () =>
+    require("./shared/cacheFlushDate.endpoints").cacheFlushDateFaresGroup,
 });
 
 /**
- * React Query hook for retrieving cache flush timestamp for static fares data
+ * Fetch function and React Query hook for retrieving cache flush timestamp for static fares data
  */
-export const useCacheFlushDateFares: HookFactory<
-  CacheFlushDateInput,
-  CacheFlushDateOutput
-> = createHook({
-  apiName: wsfFaresApiMeta.name,
-  endpointName: cacheFlushDateFaresMeta.functionName,
-  fetchFn: fetchCacheFlushDateFares,
-  cacheStrategy: cacheFlushDateFaresGroup.cacheStrategy,
-});
+export const { fetch: fetchCacheFlushDateFares, hook: useCacheFlushDateFares } =
+  cacheFlushDateFaresFactory;

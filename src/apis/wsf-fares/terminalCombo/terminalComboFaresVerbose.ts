@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfFaresApiMeta } from "../apiMeta";
-import { terminalComboGroup } from "./shared/terminalCombo.endpoints";
 import {
   type TerminalComboFaresVerboseInput,
   terminalComboFaresVerboseInputSchema,
@@ -34,25 +28,22 @@ export const terminalComboFaresVerboseMeta = {
 >;
 
 /**
- * Fetch function for retrieving fare collection descriptions for all terminal combinations on a trip date
+ * Factory result for terminal combo fares verbose
  */
-export const fetchTerminalComboFaresVerbose: FetchFactory<
+const terminalComboFaresVerboseFactory = createFetchAndHook<
   TerminalComboFaresVerboseInput,
   TerminalComboFaresVerbose[]
-> = createFetchFunction({
+>({
   api: wsfFaresApiMeta,
   endpoint: terminalComboFaresVerboseMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalCombo.endpoints").terminalComboGroup,
 });
 
 /**
- * React Query hook for retrieving fare collection descriptions for all terminal combinations on a trip date
+ * Fetch function and React Query hook for retrieving fare collection descriptions for all terminal combinations on a trip date
  */
-export const useTerminalComboFaresVerbose: HookFactory<
-  TerminalComboFaresVerboseInput,
-  TerminalComboFaresVerbose[]
-> = createHook({
-  apiName: wsfFaresApiMeta.name,
-  endpointName: terminalComboFaresVerboseMeta.functionName,
-  fetchFn: fetchTerminalComboFaresVerbose,
-  cacheStrategy: terminalComboGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchTerminalComboFaresVerbose,
+  hook: useTerminalComboFaresVerbose,
+} = terminalComboFaresVerboseFactory;

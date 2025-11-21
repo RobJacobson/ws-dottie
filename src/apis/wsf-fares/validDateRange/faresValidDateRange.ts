@@ -3,14 +3,8 @@ import {
   validDateRangeSchema,
 } from "@/apis/shared/validDateRange.output";
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfFaresApiMeta } from "../apiMeta";
-import { validDateRangeGroup } from "./shared/validDateRange.endpoints";
 import {
   type FaresValidDateRangeInput,
   faresValidDateRangeInputSchema,
@@ -29,25 +23,20 @@ export const faresValidDateRangeMeta = {
 } satisfies EndpointMeta<FaresValidDateRangeInput, ValidDateRange>;
 
 /**
- * Fetch function for retrieving the validity date range for published fares data
+ * Factory result for fares valid date range
  */
-export const fetchFaresValidDateRange: FetchFactory<
+const faresValidDateRangeFactory = createFetchAndHook<
   FaresValidDateRangeInput,
   ValidDateRange
-> = createFetchFunction({
+>({
   api: wsfFaresApiMeta,
   endpoint: faresValidDateRangeMeta,
+  getEndpointGroup: () =>
+    require("./shared/validDateRange.endpoints").validDateRangeGroup,
 });
 
 /**
- * React Query hook for retrieving the validity date range for published fares data
+ * Fetch function and React Query hook for retrieving the validity date range for published fares data
  */
-export const useFaresValidDateRange: HookFactory<
-  FaresValidDateRangeInput,
-  ValidDateRange
-> = createHook({
-  apiName: wsfFaresApiMeta.name,
-  endpointName: faresValidDateRangeMeta.functionName,
-  fetchFn: fetchFaresValidDateRange,
-  cacheStrategy: validDateRangeGroup.cacheStrategy,
-});
+export const { fetch: fetchFaresValidDateRange, hook: useFaresValidDateRange } =
+  faresValidDateRangeFactory;

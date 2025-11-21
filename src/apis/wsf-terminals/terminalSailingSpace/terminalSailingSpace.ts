@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfTerminalsApiMeta } from "../apiMeta";
-import { terminalSailingSpaceGroup } from "./shared/terminalSailingSpace.endpoints";
 import {
   type TerminalSailingSpaceInput,
   terminalSailingSpaceInputSchema,
@@ -29,25 +23,23 @@ export const terminalSailingSpaceMeta = {
 } satisfies EndpointMeta<TerminalSailingSpaceInput, TerminalSailingSpace[]>;
 
 /**
- * Fetch function for retrieving sailing space availability for all terminals
+ * Factory result for terminal sailing space
  */
-export const fetchTerminalSailingSpace: FetchFactory<
+const terminalSailingSpaceFactory = createFetchAndHook<
   TerminalSailingSpaceInput,
   TerminalSailingSpace[]
-> = createFetchFunction({
+>({
   api: wsfTerminalsApiMeta,
   endpoint: terminalSailingSpaceMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalSailingSpace.endpoints")
+      .terminalSailingSpaceGroup,
 });
 
 /**
- * React Query hook for retrieving sailing space availability for all terminals
+ * Fetch function and React Query hook for retrieving sailing space availability for all terminals
  */
-export const useTerminalSailingSpace: HookFactory<
-  TerminalSailingSpaceInput,
-  TerminalSailingSpace[]
-> = createHook({
-  apiName: wsfTerminalsApiMeta.name,
-  endpointName: terminalSailingSpaceMeta.functionName,
-  fetchFn: fetchTerminalSailingSpace,
-  cacheStrategy: terminalSailingSpaceGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchTerminalSailingSpace,
+  hook: useTerminalSailingSpace,
+} = terminalSailingSpaceFactory;

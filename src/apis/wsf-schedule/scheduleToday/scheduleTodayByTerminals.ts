@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { scheduleTodayGroup } from "./shared/scheduleToday.endpoints";
 import {
   type ScheduleTodayByTerminalsInput,
   scheduleTodayByTerminalsInputSchema,
@@ -31,25 +25,22 @@ export const scheduleTodayByTerminalsMeta = {
 } satisfies EndpointMeta<ScheduleTodayByTerminalsInput, Schedule>;
 
 /**
- * Fetch function for retrieving today's schedule for a terminal pair
+ * Factory result for schedule today by terminals
  */
-export const fetchScheduleTodayByTerminals: FetchFactory<
+const scheduleTodayByTerminalsFactory = createFetchAndHook<
   ScheduleTodayByTerminalsInput,
   Schedule
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: scheduleTodayByTerminalsMeta,
+  getEndpointGroup: () =>
+    require("./shared/scheduleToday.endpoints").scheduleTodayGroup,
 });
 
 /**
- * React Query hook for retrieving today's schedule for a terminal pair
+ * Fetch function and React Query hook for retrieving today's schedule for a terminal pair
  */
-export const useScheduleTodayByTerminals: HookFactory<
-  ScheduleTodayByTerminalsInput,
-  Schedule
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: scheduleTodayByTerminalsMeta.functionName,
-  fetchFn: fetchScheduleTodayByTerminals,
-  cacheStrategy: scheduleTodayGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchScheduleTodayByTerminals,
+  hook: useScheduleTodayByTerminals,
+} = scheduleTodayByTerminalsFactory;

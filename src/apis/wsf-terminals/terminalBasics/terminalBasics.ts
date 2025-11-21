@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfTerminalsApiMeta } from "../apiMeta";
-import { terminalBasicsGroup } from "./shared/terminalBasics.endpoints";
 import {
   type TerminalBasicsInput,
   terminalBasicsInputSchema,
@@ -29,25 +23,20 @@ export const terminalBasicsMeta = {
 } satisfies EndpointMeta<TerminalBasicsInput, TerminalBasic[]>;
 
 /**
- * Fetch function for retrieving basic information for all terminals
+ * Factory result for terminal basics
  */
-export const fetchTerminalBasics: FetchFactory<
+const terminalBasicsFactory = createFetchAndHook<
   TerminalBasicsInput,
   TerminalBasic[]
-> = createFetchFunction({
+>({
   api: wsfTerminalsApiMeta,
   endpoint: terminalBasicsMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalBasics.endpoints").terminalBasicsGroup,
 });
 
 /**
- * React Query hook for retrieving basic information for all terminals
+ * Fetch function and React Query hook for retrieving basic information for all terminals
  */
-export const useTerminalBasics: HookFactory<
-  TerminalBasicsInput,
-  TerminalBasic[]
-> = createHook({
-  apiName: wsfTerminalsApiMeta.name,
-  endpointName: terminalBasicsMeta.functionName,
-  fetchFn: fetchTerminalBasics,
-  cacheStrategy: terminalBasicsGroup.cacheStrategy,
-});
+export const { fetch: fetchTerminalBasics, hook: useTerminalBasics } =
+  terminalBasicsFactory;

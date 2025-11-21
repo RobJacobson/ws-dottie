@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfVesselsApiMeta } from "../apiMeta";
-import { vesselHistoriesGroup } from "./shared/vesselHistories.endpoints";
 import {
   type VesselHistoriesInput,
   vesselHistoriesInputSchema,
@@ -29,25 +23,20 @@ export const vesselHistoriesMeta = {
 } satisfies EndpointMeta<VesselHistoriesInput, VesselHistory[]>;
 
 /**
- * Fetch function for retrieving historical sailing records for all vessels
+ * Factory result for vessel histories
  */
-export const fetchVesselHistories: FetchFactory<
+const vesselHistoriesFactory = createFetchAndHook<
   VesselHistoriesInput,
   VesselHistory[]
-> = createFetchFunction({
+>({
   api: wsfVesselsApiMeta,
   endpoint: vesselHistoriesMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselHistories.endpoints").vesselHistoriesGroup,
 });
 
 /**
- * React Query hook for retrieving historical sailing records for all vessels
+ * Fetch function and React Query hook for retrieving historical sailing records for all vessels
  */
-export const useVesselHistories: HookFactory<
-  VesselHistoriesInput,
-  VesselHistory[]
-> = createHook({
-  apiName: wsfVesselsApiMeta.name,
-  endpointName: vesselHistoriesMeta.functionName,
-  fetchFn: fetchVesselHistories,
-  cacheStrategy: vesselHistoriesGroup.cacheStrategy,
-});
+export const { fetch: fetchVesselHistories, hook: useVesselHistories } =
+  vesselHistoriesFactory;

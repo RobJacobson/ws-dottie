@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfVesselsApiMeta } from "../apiMeta";
-import { vesselHistoriesGroup } from "./shared/vesselHistories.endpoints";
 import {
   type VesselHistoriesByVesselNameAndDateRangeInput,
   vesselHistoriesByVesselNameAndDateRangeInputSchema,
@@ -37,25 +31,22 @@ export const vesselHistoriesByVesselNameAndDateRangeMeta = {
 >;
 
 /**
- * Fetch function for retrieving historical sailing records for a vessel within a date range
+ * Factory result for vessel histories by vessel name and date range
  */
-export const fetchVesselHistoriesByVesselNameAndDateRange: FetchFactory<
+const vesselHistoriesByVesselNameAndDateRangeFactory = createFetchAndHook<
   VesselHistoriesByVesselNameAndDateRangeInput,
   VesselHistory[]
-> = createFetchFunction({
+>({
   api: wsfVesselsApiMeta,
   endpoint: vesselHistoriesByVesselNameAndDateRangeMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselHistories.endpoints").vesselHistoriesGroup,
 });
 
 /**
- * React Query hook for retrieving historical sailing records for a vessel within a date range
+ * Fetch function and React Query hook for retrieving historical sailing records for a vessel within a date range
  */
-export const useVesselHistoriesByVesselNameAndDateRange: HookFactory<
-  VesselHistoriesByVesselNameAndDateRangeInput,
-  VesselHistory[]
-> = createHook({
-  apiName: wsfVesselsApiMeta.name,
-  endpointName: vesselHistoriesByVesselNameAndDateRangeMeta.functionName,
-  fetchFn: fetchVesselHistoriesByVesselNameAndDateRange,
-  cacheStrategy: vesselHistoriesGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchVesselHistoriesByVesselNameAndDateRange,
+  hook: useVesselHistoriesByVesselNameAndDateRange,
+} = vesselHistoriesByVesselNameAndDateRangeFactory;

@@ -7,15 +7,9 @@ import {
   terminalListSchema,
 } from "@/apis/shared/terminals.output";
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfFaresApiMeta } from "../apiMeta";
-import { terminalsGroup } from "./shared/terminals.endpoints";
 
 /**
  * Metadata for the fetchTerminalMatesFares endpoint
@@ -31,25 +25,20 @@ export const terminalMatesFaresMeta = {
 } satisfies EndpointMeta<TerminalMatesInput, TerminalList>;
 
 /**
- * Fetch function for retrieving arriving terminals for a given departing terminal and trip date
+ * Factory result for terminal mates fares
  */
-export const fetchTerminalMatesFares: FetchFactory<
+const terminalMatesFaresFactory = createFetchAndHook<
   TerminalMatesInput,
   TerminalList
-> = createFetchFunction({
+>({
   api: wsfFaresApiMeta,
   endpoint: terminalMatesFaresMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminals.endpoints").terminalsGroup,
 });
 
 /**
- * React Query hook for retrieving arriving terminals for a given departing terminal and trip date
+ * Fetch function and React Query hook for retrieving arriving terminals for a given departing terminal and trip date
  */
-export const useTerminalMatesFares: HookFactory<
-  TerminalMatesInput,
-  TerminalList
-> = createHook({
-  apiName: wsfFaresApiMeta.name,
-  endpointName: terminalMatesFaresMeta.functionName,
-  fetchFn: fetchTerminalMatesFares,
-  cacheStrategy: terminalsGroup.cacheStrategy,
-});
+export const { fetch: fetchTerminalMatesFares, hook: useTerminalMatesFares } =
+  terminalMatesFaresFactory;

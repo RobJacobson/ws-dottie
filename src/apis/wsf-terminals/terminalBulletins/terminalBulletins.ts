@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfTerminalsApiMeta } from "../apiMeta";
-import { terminalBulletinsGroup } from "./shared/terminalBulletins.endpoints";
 import {
   type TerminalBulletinsInput,
   terminalBulletinsInputSchema,
@@ -29,25 +23,20 @@ export const terminalBulletinsMeta = {
 } satisfies EndpointMeta<TerminalBulletinsInput, TerminalBulletin[]>;
 
 /**
- * Fetch function for retrieving bulletins and alerts for all terminals
+ * Factory result for terminal bulletins
  */
-export const fetchTerminalBulletins: FetchFactory<
+const terminalBulletinsFactory = createFetchAndHook<
   TerminalBulletinsInput,
   TerminalBulletin[]
-> = createFetchFunction({
+>({
   api: wsfTerminalsApiMeta,
   endpoint: terminalBulletinsMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalBulletins.endpoints").terminalBulletinsGroup,
 });
 
 /**
- * React Query hook for retrieving bulletins and alerts for all terminals
+ * Fetch function and React Query hook for retrieving bulletins and alerts for all terminals
  */
-export const useTerminalBulletins: HookFactory<
-  TerminalBulletinsInput,
-  TerminalBulletin[]
-> = createHook({
-  apiName: wsfTerminalsApiMeta.name,
-  endpointName: terminalBulletinsMeta.functionName,
-  fetchFn: fetchTerminalBulletins,
-  cacheStrategy: terminalBulletinsGroup.cacheStrategy,
-});
+export const { fetch: fetchTerminalBulletins, hook: useTerminalBulletins } =
+  terminalBulletinsFactory;

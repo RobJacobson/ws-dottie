@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfTerminalsApiMeta } from "../apiMeta";
-import { terminalVerboseGroup } from "./shared/terminalVerbose.endpoints";
 import {
   type TerminalVerboseInput,
   terminalVerboseInputSchema,
@@ -29,25 +23,20 @@ export const terminalVerboseMeta = {
 } satisfies EndpointMeta<TerminalVerboseInput, TerminalVerbose[]>;
 
 /**
- * Fetch function for retrieving comprehensive information for all terminals
+ * Factory result for terminal verbose
  */
-export const fetchTerminalVerbose: FetchFactory<
+const terminalVerboseFactory = createFetchAndHook<
   TerminalVerboseInput,
   TerminalVerbose[]
-> = createFetchFunction({
+>({
   api: wsfTerminalsApiMeta,
   endpoint: terminalVerboseMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalVerbose.endpoints").terminalVerboseGroup,
 });
 
 /**
- * React Query hook for retrieving comprehensive information for all terminals
+ * Fetch function and React Query hook for retrieving comprehensive information for all terminals
  */
-export const useTerminalVerbose: HookFactory<
-  TerminalVerboseInput,
-  TerminalVerbose[]
-> = createHook({
-  apiName: wsfTerminalsApiMeta.name,
-  endpointName: terminalVerboseMeta.functionName,
-  fetchFn: fetchTerminalVerbose,
-  cacheStrategy: terminalVerboseGroup.cacheStrategy,
-});
+export const { fetch: fetchTerminalVerbose, hook: useTerminalVerbose } =
+  terminalVerboseFactory;

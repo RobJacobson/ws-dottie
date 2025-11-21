@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfFaresApiMeta } from "../apiMeta";
-import { fareLineItemsGroup } from "./shared/fareLineItems.endpoints";
 import {
   type FareLineItemsByTripDateAndTerminalsInput,
   fareLineItemsByTripDateAndTerminalsInputSchema,
@@ -34,25 +28,22 @@ export const fareLineItemsByTripDateAndTerminalsMeta = {
 } satisfies EndpointMeta<FareLineItemsByTripDateAndTerminalsInput, LineItem[]>;
 
 /**
- * Fetch function for retrieving all fare line items for a specific terminal combination and trip type
+ * Factory result for fare line items by trip date and terminals
  */
-export const fetchFareLineItemsByTripDateAndTerminals: FetchFactory<
+const fareLineItemsByTripDateAndTerminalsFactory = createFetchAndHook<
   FareLineItemsByTripDateAndTerminalsInput,
   LineItem[]
-> = createFetchFunction({
+>({
   api: wsfFaresApiMeta,
   endpoint: fareLineItemsByTripDateAndTerminalsMeta,
+  getEndpointGroup: () =>
+    require("./shared/fareLineItems.endpoints").fareLineItemsGroup,
 });
 
 /**
- * React Query hook for retrieving all fare line items for a specific terminal combination and trip type
+ * Fetch function and React Query hook for retrieving all fare line items for a specific terminal combination and trip type
  */
-export const useFareLineItemsByTripDateAndTerminals: HookFactory<
-  FareLineItemsByTripDateAndTerminalsInput,
-  LineItem[]
-> = createHook({
-  apiName: wsfFaresApiMeta.name,
-  endpointName: fareLineItemsByTripDateAndTerminalsMeta.functionName,
-  fetchFn: fetchFareLineItemsByTripDateAndTerminals,
-  cacheStrategy: fareLineItemsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchFareLineItemsByTripDateAndTerminals,
+  hook: useFareLineItemsByTripDateAndTerminals,
+} = fareLineItemsByTripDateAndTerminalsFactory;

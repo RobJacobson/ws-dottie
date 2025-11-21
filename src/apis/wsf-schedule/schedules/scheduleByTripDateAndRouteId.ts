@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { schedulesGroup } from "./shared/schedules.endpoints";
 import {
   type ScheduleByTripDateAndRouteIdInput,
   scheduleByTripDateAndRouteIdInputSchema,
@@ -28,25 +22,22 @@ export const scheduleByTripDateAndRouteIdMeta = {
 } satisfies EndpointMeta<ScheduleByTripDateAndRouteIdInput, Schedule>;
 
 /**
- * Fetch function for retrieving sailing schedule for a specific route and trip date
+ * Factory result for schedule by trip date and route ID
  */
-export const fetchScheduleByTripDateAndRouteId: FetchFactory<
+const scheduleByTripDateAndRouteIdFactory = createFetchAndHook<
   ScheduleByTripDateAndRouteIdInput,
   Schedule
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: scheduleByTripDateAndRouteIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/schedules.endpoints").schedulesGroup,
 });
 
 /**
- * React Query hook for retrieving sailing schedule for a specific route and trip date
+ * Fetch function and React Query hook for retrieving sailing schedule for a specific route and trip date
  */
-export const useScheduleByTripDateAndRouteId: HookFactory<
-  ScheduleByTripDateAndRouteIdInput,
-  Schedule
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: scheduleByTripDateAndRouteIdMeta.functionName,
-  fetchFn: fetchScheduleByTripDateAndRouteId,
-  cacheStrategy: schedulesGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchScheduleByTripDateAndRouteId,
+  hook: useScheduleByTripDateAndRouteId,
+} = scheduleByTripDateAndRouteIdFactory;

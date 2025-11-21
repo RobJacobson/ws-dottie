@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfVesselsApiMeta } from "../apiMeta";
-import { vesselStatsGroup } from "./shared/vesselStats.endpoints";
 import {
   type VesselStatsInput,
   vesselStatsInputSchema,
@@ -26,21 +20,17 @@ export const vesselStatsMeta = {
 } satisfies EndpointMeta<VesselStatsInput, VesselStat[]>;
 
 /**
- * Fetch function for retrieving technical specifications for all vessels
+ * Factory result for vessel stats
  */
-export const fetchVesselStats: FetchFactory<VesselStatsInput, VesselStat[]> =
-  createFetchFunction({
-    api: wsfVesselsApiMeta,
-    endpoint: vesselStatsMeta,
-  });
+const vesselStatsFactory = createFetchAndHook<VesselStatsInput, VesselStat[]>({
+  api: wsfVesselsApiMeta,
+  endpoint: vesselStatsMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselStats.endpoints").vesselStatsGroup,
+});
 
 /**
- * React Query hook for retrieving technical specifications for all vessels
+ * Fetch function and React Query hook for retrieving technical specifications for all vessels
  */
-export const useVesselStats: HookFactory<VesselStatsInput, VesselStat[]> =
-  createHook({
-    apiName: wsfVesselsApiMeta.name,
-    endpointName: vesselStatsMeta.functionName,
-    fetchFn: fetchVesselStats,
-    cacheStrategy: vesselStatsGroup.cacheStrategy,
-  });
+export const { fetch: fetchVesselStats, hook: useVesselStats } =
+  vesselStatsFactory;

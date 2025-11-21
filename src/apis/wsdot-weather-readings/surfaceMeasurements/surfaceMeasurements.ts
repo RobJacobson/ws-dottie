@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotWeatherReadingsApiMeta } from "../apiMeta";
-import { surfaceMeasurementsGroup } from "./shared/surfaceMeasurements.endpoints";
 import {
   type SurfaceMeasurementsInput,
   surfaceMeasurementsInputSchema,
@@ -29,25 +23,20 @@ export const surfaceMeasurementsMeta = {
 } satisfies EndpointMeta<SurfaceMeasurementsInput, SurfaceMeasurement[]>;
 
 /**
- * Fetch function for retrieving surface measurements from all weather stations
+ * Factory result for surface measurements
  */
-export const fetchSurfaceMeasurements: FetchFactory<
+const surfaceMeasurementsFactory = createFetchAndHook<
   SurfaceMeasurementsInput,
   SurfaceMeasurement[]
-> = createFetchFunction({
+>({
   api: wsdotWeatherReadingsApiMeta,
   endpoint: surfaceMeasurementsMeta,
+  getEndpointGroup: () =>
+    require("./shared/surfaceMeasurements.endpoints").surfaceMeasurementsGroup,
 });
 
 /**
- * React Query hook for retrieving surface measurements from all weather stations
+ * Fetch function and React Query hook for retrieving surface measurements from all weather stations
  */
-export const useSurfaceMeasurements: HookFactory<
-  SurfaceMeasurementsInput,
-  SurfaceMeasurement[]
-> = createHook({
-  apiName: wsdotWeatherReadingsApiMeta.name,
-  endpointName: surfaceMeasurementsMeta.functionName,
-  fetchFn: fetchSurfaceMeasurements,
-  cacheStrategy: surfaceMeasurementsGroup.cacheStrategy,
-});
+export const { fetch: fetchSurfaceMeasurements, hook: useSurfaceMeasurements } =
+  surfaceMeasurementsFactory;

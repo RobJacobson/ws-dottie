@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { timeAdjustmentsGroup } from "./shared/timeAdjustments.endpoints";
 import {
   type TimeAdjustmentsBySchedRouteInput,
   timeAdjustmentsBySchedRouteInputSchema,
@@ -29,25 +23,22 @@ export const timeAdjustmentsBySchedRouteMeta = {
 } satisfies EndpointMeta<TimeAdjustmentsBySchedRouteInput, TimeAdjustment[]>;
 
 /**
- * Fetch function for retrieving time adjustments for a specific scheduled route
+ * Factory result for time adjustments by scheduled route
  */
-export const fetchTimeAdjustmentsBySchedRoute: FetchFactory<
+const timeAdjustmentsBySchedRouteFactory = createFetchAndHook<
   TimeAdjustmentsBySchedRouteInput,
   TimeAdjustment[]
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: timeAdjustmentsBySchedRouteMeta,
+  getEndpointGroup: () =>
+    require("./shared/timeAdjustments.endpoints").timeAdjustmentsGroup,
 });
 
 /**
- * React Query hook for retrieving time adjustments for a specific scheduled route
+ * Fetch function and React Query hook for retrieving time adjustments for a specific scheduled route
  */
-export const useTimeAdjustmentsBySchedRoute: HookFactory<
-  TimeAdjustmentsBySchedRouteInput,
-  TimeAdjustment[]
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: timeAdjustmentsBySchedRouteMeta.functionName,
-  fetchFn: fetchTimeAdjustmentsBySchedRoute,
-  cacheStrategy: timeAdjustmentsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchTimeAdjustmentsBySchedRoute,
+  hook: useTimeAdjustmentsBySchedRoute,
+} = timeAdjustmentsBySchedRouteFactory;

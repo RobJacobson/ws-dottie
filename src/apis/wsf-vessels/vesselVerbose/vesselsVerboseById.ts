@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfVesselsApiMeta } from "../apiMeta";
-import { vesselVerboseGroup } from "./shared/vesselVerbose.endpoints";
 import {
   type VesselVerboseByIdInput,
   vesselVerboseByIdInputSchema,
@@ -30,25 +24,22 @@ export const vesselsVerboseByVesselIdMeta = {
 } satisfies EndpointMeta<VesselVerboseByIdInput, VesselVerbose>;
 
 /**
- * Fetch function for retrieving complete vessel information for a specific vessel by ID
+ * Factory result for vessels verbose by vessel ID
  */
-export const fetchVesselsVerboseByVesselId: FetchFactory<
+const vesselsVerboseByVesselIdFactory = createFetchAndHook<
   VesselVerboseByIdInput,
   VesselVerbose
-> = createFetchFunction({
+>({
   api: wsfVesselsApiMeta,
   endpoint: vesselsVerboseByVesselIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselVerbose.endpoints").vesselVerboseGroup,
 });
 
 /**
- * React Query hook for retrieving complete vessel information for a specific vessel by ID
+ * Fetch function and React Query hook for retrieving complete vessel information for a specific vessel by ID
  */
-export const useVesselsVerboseByVesselId: HookFactory<
-  VesselVerboseByIdInput,
-  VesselVerbose
-> = createHook({
-  apiName: wsfVesselsApiMeta.name,
-  endpointName: vesselsVerboseByVesselIdMeta.functionName,
-  fetchFn: fetchVesselsVerboseByVesselId,
-  cacheStrategy: vesselVerboseGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchVesselsVerboseByVesselId,
+  hook: useVesselsVerboseByVesselId,
+} = vesselsVerboseByVesselIdFactory;

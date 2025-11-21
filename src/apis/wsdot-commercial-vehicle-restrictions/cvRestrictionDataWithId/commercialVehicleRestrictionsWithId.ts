@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotCommercialVehicleRestrictionsApiMeta } from "../apiMeta";
-import { cvRestrictionDataWithIdGroup } from "./shared/cvRestrictionDataWithId.endpoints";
 import {
   type CommercialVehicleRestrictionsWithIdInput,
   commercialVehicleRestrictionsWithIdInputSchema,
@@ -33,25 +27,23 @@ export const commercialVehicleRestrictionsWithIdMeta = {
 >;
 
 /**
- * Fetch function for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
+ * Factory result for commercial vehicle restrictions with ID
  */
-export const fetchCommercialVehicleRestrictionsWithId: FetchFactory<
+const commercialVehicleRestrictionsWithIdFactory = createFetchAndHook<
   CommercialVehicleRestrictionsWithIdInput,
   CVRestrictionWithId[]
-> = createFetchFunction({
+>({
   api: wsdotCommercialVehicleRestrictionsApiMeta,
   endpoint: commercialVehicleRestrictionsWithIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/cvRestrictionDataWithId.endpoints")
+      .cvRestrictionDataWithIdGroup,
 });
 
 /**
- * React Query hook for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
+ * Fetch function and React Query hook for retrieving commercial vehicle restrictions with unique identifiers for all Washington State highways
  */
-export const useCommercialVehicleRestrictionsWithId: HookFactory<
-  CommercialVehicleRestrictionsWithIdInput,
-  CVRestrictionWithId[]
-> = createHook({
-  apiName: wsdotCommercialVehicleRestrictionsApiMeta.name,
-  endpointName: commercialVehicleRestrictionsWithIdMeta.functionName,
-  fetchFn: fetchCommercialVehicleRestrictionsWithId,
-  cacheStrategy: cvRestrictionDataWithIdGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchCommercialVehicleRestrictionsWithId,
+  hook: useCommercialVehicleRestrictionsWithId,
+} = commercialVehicleRestrictionsWithIdFactory;

@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotTravelTimesApiMeta } from "../apiMeta";
-import { travelTimeRoutesGroup } from "./shared/travelTimeRoutes.endpoints";
 import {
   type TravelTimesInput,
   travelTimesInputSchema,
@@ -29,23 +23,20 @@ export const travelTimesMeta = {
 } satisfies EndpointMeta<TravelTimesInput, TravelTimeRoute[]>;
 
 /**
- * Fetch function for retrieving travel time data for all available routes
+ * Factory result for travel times
  */
-export const fetchTravelTimes: FetchFactory<
+const travelTimesFactory = createFetchAndHook<
   TravelTimesInput,
   TravelTimeRoute[]
-> = createFetchFunction({
+>({
   api: wsdotTravelTimesApiMeta,
   endpoint: travelTimesMeta,
+  getEndpointGroup: () =>
+    require("./shared/travelTimeRoutes.endpoints").travelTimeRoutesGroup,
 });
 
 /**
- * React Query hook for retrieving travel time data for all available routes
+ * Fetch function and React Query hook for retrieving travel time data for all available routes
  */
-export const useTravelTimes: HookFactory<TravelTimesInput, TravelTimeRoute[]> =
-  createHook({
-    apiName: wsdotTravelTimesApiMeta.name,
-    endpointName: travelTimesMeta.functionName,
-    fetchFn: fetchTravelTimes,
-    cacheStrategy: travelTimeRoutesGroup.cacheStrategy,
-  });
+export const { fetch: fetchTravelTimes, hook: useTravelTimes } =
+  travelTimesFactory;

@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfVesselsApiMeta } from "../apiMeta";
-import { vesselAccommodationsGroup } from "./shared/vesselAccommodations.endpoints";
 import {
   type VesselAccommodationsInput,
   vesselAccommodationsInputSchema,
@@ -30,25 +24,23 @@ export const vesselAccommodationsMeta = {
 } satisfies EndpointMeta<VesselAccommodationsInput, VesselAccommodation[]>;
 
 /**
- * Fetch function for retrieving amenities and accessibility features for all vessels
+ * Factory result for vessel accommodations
  */
-export const fetchVesselAccommodations: FetchFactory<
+const vesselAccommodationsFactory = createFetchAndHook<
   VesselAccommodationsInput,
   VesselAccommodation[]
-> = createFetchFunction({
+>({
   api: wsfVesselsApiMeta,
   endpoint: vesselAccommodationsMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselAccommodations.endpoints")
+      .vesselAccommodationsGroup,
 });
 
 /**
- * React Query hook for retrieving amenities and accessibility features for all vessels
+ * Fetch function and React Query hook for retrieving amenities and accessibility features for all vessels
  */
-export const useVesselAccommodations: HookFactory<
-  VesselAccommodationsInput,
-  VesselAccommodation[]
-> = createHook({
-  apiName: wsfVesselsApiMeta.name,
-  endpointName: vesselAccommodationsMeta.functionName,
-  fetchFn: fetchVesselAccommodations,
-  cacheStrategy: vesselAccommodationsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchVesselAccommodations,
+  hook: useVesselAccommodations,
+} = vesselAccommodationsFactory;

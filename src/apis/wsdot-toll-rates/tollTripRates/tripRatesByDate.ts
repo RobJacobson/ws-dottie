@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsdotTollRatesApiMeta } from "../apiMeta";
-import { tollTripRatesGroup } from "./shared/tollTripRates.endpoints";
 import {
   type TripRatesByDateInput,
   tripRatesByDateInputSchema,
@@ -33,25 +27,20 @@ export const tripRatesByDateMeta = {
 } satisfies EndpointMeta<TripRatesByDateInput, TollTripsRates[]>;
 
 /**
- * Fetch function for retrieving historical toll rates for a specified date range
+ * Factory result for trip rates by date
  */
-export const fetchTripRatesByDate: FetchFactory<
+const tripRatesByDateFactory = createFetchAndHook<
   TripRatesByDateInput,
   TollTripsRates[]
-> = createFetchFunction({
+>({
   api: wsdotTollRatesApiMeta,
   endpoint: tripRatesByDateMeta,
+  getEndpointGroup: () =>
+    require("./shared/tollTripRates.endpoints").tollTripRatesGroup,
 });
 
 /**
- * React Query hook for retrieving historical toll rates for a specified date range
+ * Fetch function and React Query hook for retrieving historical toll rates for a specified date range
  */
-export const useTripRatesByDate: HookFactory<
-  TripRatesByDateInput,
-  TollTripsRates[]
-> = createHook({
-  apiName: wsdotTollRatesApiMeta.name,
-  endpointName: tripRatesByDateMeta.functionName,
-  fetchFn: fetchTripRatesByDate,
-  cacheStrategy: tollTripRatesGroup.cacheStrategy,
-});
+export const { fetch: fetchTripRatesByDate, hook: useTripRatesByDate } =
+  tripRatesByDateFactory;

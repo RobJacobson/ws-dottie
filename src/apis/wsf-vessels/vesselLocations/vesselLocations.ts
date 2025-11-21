@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfVesselsApiMeta } from "../apiMeta";
-import { vesselLocationsGroup } from "./shared/vesselLocations.endpoints";
 import {
   type VesselLocationsInput,
   vesselLocationsInputSchema,
@@ -30,25 +24,20 @@ export const vesselLocationsMeta = {
 } satisfies EndpointMeta<VesselLocationsInput, VesselLocation[]>;
 
 /**
- * Fetch function for retrieving current locations and status for all active vessels
+ * Factory result for vessel locations
  */
-export const fetchVesselLocations: FetchFactory<
+const vesselLocationsFactory = createFetchAndHook<
   VesselLocationsInput,
   VesselLocation[]
-> = createFetchFunction({
+>({
   api: wsfVesselsApiMeta,
   endpoint: vesselLocationsMeta,
+  getEndpointGroup: () =>
+    require("./shared/vesselLocations.endpoints").vesselLocationsGroup,
 });
 
 /**
- * React Query hook for retrieving current locations and status for all active vessels
+ * Fetch function and React Query hook for retrieving current locations and status for all active vessels
  */
-export const useVesselLocations: HookFactory<
-  VesselLocationsInput,
-  VesselLocation[]
-> = createHook({
-  apiName: wsfVesselsApiMeta.name,
-  endpointName: vesselLocationsMeta.functionName,
-  fetchFn: fetchVesselLocations,
-  cacheStrategy: vesselLocationsGroup.cacheStrategy,
-});
+export const { fetch: fetchVesselLocations, hook: useVesselLocations } =
+  vesselLocationsFactory;

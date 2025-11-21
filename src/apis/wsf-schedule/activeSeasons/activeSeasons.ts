@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { activeSeasonsGroup } from "./shared/activeSeasons.endpoints";
 import {
   type ActiveSeasonsInput,
   activeSeasonsInputSchema,
@@ -30,23 +24,20 @@ export const activeSeasonsMeta = {
 } satisfies EndpointMeta<ActiveSeasonsInput, ActiveSeason[]>;
 
 /**
- * Fetch function for retrieving all active schedule seasons with dates and PDF URLs
+ * Factory result for active seasons
  */
-export const fetchActiveSeasons: FetchFactory<
+const activeSeasonsFactory = createFetchAndHook<
   ActiveSeasonsInput,
   ActiveSeason[]
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: activeSeasonsMeta,
+  getEndpointGroup: () =>
+    require("./shared/activeSeasons.endpoints").activeSeasonsGroup,
 });
 
 /**
- * React Query hook for retrieving all active schedule seasons with dates and PDF URLs
+ * Fetch function and React Query hook for retrieving all active schedule seasons with dates and PDF URLs
  */
-export const useActiveSeasons: HookFactory<ActiveSeasonsInput, ActiveSeason[]> =
-  createHook({
-    apiName: wsfScheduleApiMeta.name,
-    endpointName: activeSeasonsMeta.functionName,
-    fetchFn: fetchActiveSeasons,
-    cacheStrategy: activeSeasonsGroup.cacheStrategy,
-  });
+export const { fetch: fetchActiveSeasons, hook: useActiveSeasons } =
+  activeSeasonsFactory;

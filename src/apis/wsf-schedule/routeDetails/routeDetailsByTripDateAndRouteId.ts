@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { routeDetailsGroup } from "./shared/routeDetails.endpoints";
 import {
   type RouteDetailsByTripDateAndRouteIdInput,
   routeDetailsByTripDateAndRouteIdInputSchema,
@@ -31,25 +25,22 @@ export const routeDetailsByTripDateAndRouteIdMeta = {
 } satisfies EndpointMeta<RouteDetailsByTripDateAndRouteIdInput, RouteDetail>;
 
 /**
- * Fetch function for retrieving detailed route information for specific route on date
+ * Factory result for route details by trip date and route ID
  */
-export const fetchRouteDetailsByTripDateAndRouteId: FetchFactory<
+const routeDetailsByTripDateAndRouteIdFactory = createFetchAndHook<
   RouteDetailsByTripDateAndRouteIdInput,
   RouteDetail
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: routeDetailsByTripDateAndRouteIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/routeDetails.endpoints").routeDetailsGroup,
 });
 
 /**
- * React Query hook for retrieving detailed route information for specific route on date
+ * Fetch function and React Query hook for retrieving detailed route information for specific route on date
  */
-export const useRouteDetailsByTripDateAndRouteId: HookFactory<
-  RouteDetailsByTripDateAndRouteIdInput,
-  RouteDetail
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: routeDetailsByTripDateAndRouteIdMeta.functionName,
-  fetchFn: fetchRouteDetailsByTripDateAndRouteId,
-  cacheStrategy: routeDetailsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchRouteDetailsByTripDateAndRouteId,
+  hook: useRouteDetailsByTripDateAndRouteId,
+} = routeDetailsByTripDateAndRouteIdFactory;

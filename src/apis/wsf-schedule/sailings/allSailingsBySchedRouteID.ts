@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { sailingsGroup } from "./shared/sailings.endpoints";
 import {
   type AllSailingsBySchedRouteIDInput,
   allSailingsBySchedRouteIDInputSchema,
@@ -27,25 +21,21 @@ export const allSailingsBySchedRouteIDMeta = {
 } satisfies EndpointMeta<AllSailingsBySchedRouteIDInput, Sailing[]>;
 
 /**
- * Fetch function for retrieving all sailings for scheduled route including inactive sailings
+ * Factory result for all sailings by scheduled route ID
  */
-export const fetchAllSailingsBySchedRouteID: FetchFactory<
+const allSailingsBySchedRouteIDFactory = createFetchAndHook<
   AllSailingsBySchedRouteIDInput,
   Sailing[]
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: allSailingsBySchedRouteIDMeta,
+  getEndpointGroup: () => require("./shared/sailings.endpoints").sailingsGroup,
 });
 
 /**
- * React Query hook for retrieving all sailings for scheduled route including inactive sailings
+ * Fetch function and React Query hook for retrieving all sailings for scheduled route including inactive sailings
  */
-export const useAllSailingsBySchedRouteID: HookFactory<
-  AllSailingsBySchedRouteIDInput,
-  Sailing[]
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: allSailingsBySchedRouteIDMeta.functionName,
-  fetchFn: fetchAllSailingsBySchedRouteID,
-  cacheStrategy: sailingsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchAllSailingsBySchedRouteID,
+  hook: useAllSailingsBySchedRouteID,
+} = allSailingsBySchedRouteIDFactory;

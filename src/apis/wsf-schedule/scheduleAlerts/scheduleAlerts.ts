@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { scheduleAlertsGroup } from "./shared/scheduleAlerts.endpoints";
 import {
   type ScheduleAlertsInput,
   scheduleAlertsInputSchema,
@@ -29,25 +23,20 @@ export const scheduleAlertsMeta = {
 } satisfies EndpointMeta<ScheduleAlertsInput, AlertDetail[]>;
 
 /**
- * Fetch function for retrieving all current schedule alerts
+ * Factory result for schedule alerts
  */
-export const fetchScheduleAlerts: FetchFactory<
+const scheduleAlertsFactory = createFetchAndHook<
   ScheduleAlertsInput,
   AlertDetail[]
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: scheduleAlertsMeta,
+  getEndpointGroup: () =>
+    require("./shared/scheduleAlerts.endpoints").scheduleAlertsGroup,
 });
 
 /**
- * React Query hook for retrieving all current schedule alerts
+ * Fetch function and React Query hook for retrieving all current schedule alerts
  */
-export const useScheduleAlerts: HookFactory<
-  ScheduleAlertsInput,
-  AlertDetail[]
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: scheduleAlertsMeta.functionName,
-  fetchFn: fetchScheduleAlerts,
-  cacheStrategy: scheduleAlertsGroup.cacheStrategy,
-});
+export const { fetch: fetchScheduleAlerts, hook: useScheduleAlerts } =
+  scheduleAlertsFactory;

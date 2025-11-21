@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotCommercialVehicleRestrictionsApiMeta } from "../apiMeta";
-import { cvRestrictionDataGroup } from "./shared/cvRestrictionData.endpoints";
 import {
   type CommercialVehicleRestrictionsInput,
   commercialVehicleRestrictionsInputSchema,
@@ -30,25 +24,22 @@ export const commercialVehicleRestrictionsMeta = {
 } satisfies EndpointMeta<CommercialVehicleRestrictionsInput, CVRestriction[]>;
 
 /**
- * Fetch function for retrieving commercial vehicle restrictions for all Washington State highways
+ * Factory result for commercial vehicle restrictions
  */
-export const fetchCommercialVehicleRestrictions: FetchFactory<
+const commercialVehicleRestrictionsFactory = createFetchAndHook<
   CommercialVehicleRestrictionsInput,
   CVRestriction[]
-> = createFetchFunction({
+>({
   api: wsdotCommercialVehicleRestrictionsApiMeta,
   endpoint: commercialVehicleRestrictionsMeta,
+  getEndpointGroup: () =>
+    require("./shared/cvRestrictionData.endpoints").cvRestrictionDataGroup,
 });
 
 /**
- * React Query hook for retrieving commercial vehicle restrictions for all Washington State highways
+ * Fetch function and React Query hook for retrieving commercial vehicle restrictions for all Washington State highways
  */
-export const useCommercialVehicleRestrictions: HookFactory<
-  CommercialVehicleRestrictionsInput,
-  CVRestriction[]
-> = createHook({
-  apiName: wsdotCommercialVehicleRestrictionsApiMeta.name,
-  endpointName: commercialVehicleRestrictionsMeta.functionName,
-  fetchFn: fetchCommercialVehicleRestrictions,
-  cacheStrategy: cvRestrictionDataGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchCommercialVehicleRestrictions,
+  hook: useCommercialVehicleRestrictions,
+} = commercialVehicleRestrictionsFactory;

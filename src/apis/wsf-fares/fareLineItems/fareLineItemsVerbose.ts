@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfFaresApiMeta } from "../apiMeta";
-import { fareLineItemsGroup } from "./shared/fareLineItems.endpoints";
 import {
   type FareLineItemsVerboseInput,
   fareLineItemsVerboseInputSchema,
@@ -31,25 +25,22 @@ export const fareLineItemsVerboseMeta = {
 } satisfies EndpointMeta<FareLineItemsVerboseInput, LineItemVerbose>;
 
 /**
- * Fetch function for retrieving all fare line items for all terminal combinations on a trip date
+ * Factory result for fare line items verbose
  */
-export const fetchFareLineItemsVerbose: FetchFactory<
+const fareLineItemsVerboseFactory = createFetchAndHook<
   FareLineItemsVerboseInput,
   LineItemVerbose
-> = createFetchFunction({
+>({
   api: wsfFaresApiMeta,
   endpoint: fareLineItemsVerboseMeta,
+  getEndpointGroup: () =>
+    require("./shared/fareLineItems.endpoints").fareLineItemsGroup,
 });
 
 /**
- * React Query hook for retrieving all fare line items for all terminal combinations on a trip date
+ * Fetch function and React Query hook for retrieving all fare line items for all terminal combinations on a trip date
  */
-export const useFareLineItemsVerbose: HookFactory<
-  FareLineItemsVerboseInput,
-  LineItemVerbose
-> = createHook({
-  apiName: wsfFaresApiMeta.name,
-  endpointName: fareLineItemsVerboseMeta.functionName,
-  fetchFn: fetchFareLineItemsVerbose,
-  cacheStrategy: fareLineItemsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchFareLineItemsVerbose,
+  hook: useFareLineItemsVerbose,
+} = fareLineItemsVerboseFactory;

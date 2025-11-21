@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotTollRatesApiMeta } from "../apiMeta";
-import { tollTripInfoGroup } from "./shared/tollTripInfo.endpoints";
 import {
   type TollTripInfoInput,
   tollTripInfoInputSchema,
@@ -29,23 +23,20 @@ export const tollTripInfoMeta = {
 } satisfies EndpointMeta<TollTripInfoInput, TollTripInfo[]>;
 
 /**
- * Fetch function for retrieving trip information for all toll trips statewide
+ * Factory result for toll trip info
  */
-export const fetchTollTripInfo: FetchFactory<
+const tollTripInfoFactory = createFetchAndHook<
   TollTripInfoInput,
   TollTripInfo[]
-> = createFetchFunction({
+>({
   api: wsdotTollRatesApiMeta,
   endpoint: tollTripInfoMeta,
+  getEndpointGroup: () =>
+    require("./shared/tollTripInfo.endpoints").tollTripInfoGroup,
 });
 
 /**
- * React Query hook for retrieving trip information for all toll trips statewide
+ * Fetch function and React Query hook for retrieving trip information for all toll trips statewide
  */
-export const useTollTripInfo: HookFactory<TollTripInfoInput, TollTripInfo[]> =
-  createHook({
-    apiName: wsdotTollRatesApiMeta.name,
-    endpointName: tollTripInfoMeta.functionName,
-    fetchFn: fetchTollTripInfo,
-    cacheStrategy: tollTripInfoGroup.cacheStrategy,
-  });
+export const { fetch: fetchTollTripInfo, hook: useTollTripInfo } =
+  tollTripInfoFactory;

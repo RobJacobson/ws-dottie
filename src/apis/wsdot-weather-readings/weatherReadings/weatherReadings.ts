@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotWeatherReadingsApiMeta } from "../apiMeta";
-import { weatherReadingsGroup } from "./shared/weatherReadings.endpoints";
 import {
   type WeatherReadingsInput,
   weatherReadingsInputSchema,
@@ -30,25 +24,20 @@ export const weatherReadingsMeta = {
 } satisfies EndpointMeta<WeatherReadingsInput, WeatherReading[]>;
 
 /**
- * Fetch function for retrieving comprehensive weather readings from all weather stations
+ * Factory result for weather readings
  */
-export const fetchWeatherReadings: FetchFactory<
+const weatherReadingsFactory = createFetchAndHook<
   WeatherReadingsInput,
   WeatherReading[]
-> = createFetchFunction({
+>({
   api: wsdotWeatherReadingsApiMeta,
   endpoint: weatherReadingsMeta,
+  getEndpointGroup: () =>
+    require("./shared/weatherReadings.endpoints").weatherReadingsGroup,
 });
 
 /**
- * React Query hook for retrieving comprehensive weather readings from all weather stations
+ * Fetch function and React Query hook for retrieving comprehensive weather readings from all weather stations
  */
-export const useWeatherReadings: HookFactory<
-  WeatherReadingsInput,
-  WeatherReading[]
-> = createHook({
-  apiName: wsdotWeatherReadingsApiMeta.name,
-  endpointName: weatherReadingsMeta.functionName,
-  fetchFn: fetchWeatherReadings,
-  cacheStrategy: weatherReadingsGroup.cacheStrategy,
-});
+export const { fetch: fetchWeatherReadings, hook: useWeatherReadings } =
+  weatherReadingsFactory;

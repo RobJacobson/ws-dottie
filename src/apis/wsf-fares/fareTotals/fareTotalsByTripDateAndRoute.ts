@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfFaresApiMeta } from "../apiMeta";
-import { fareTotalsGroup } from "./shared/fareTotals.endpoints";
 import {
   type FareTotalsByTripDateAndRouteInput,
   fareTotalsByTripDateAndRouteInputSchema,
@@ -36,25 +30,22 @@ export const fareTotalsByTripDateAndRouteMeta = {
 } satisfies EndpointMeta<FareTotalsByTripDateAndRouteInput, FareTotal[]>;
 
 /**
- * Fetch function for calculating fare totals for a terminal combination with selected line items and quantities
+ * Factory result for fare totals by trip date and route
  */
-export const fetchFareTotalsByTripDateAndRoute: FetchFactory<
+const fareTotalsByTripDateAndRouteFactory = createFetchAndHook<
   FareTotalsByTripDateAndRouteInput,
   FareTotal[]
-> = createFetchFunction({
+>({
   api: wsfFaresApiMeta,
   endpoint: fareTotalsByTripDateAndRouteMeta,
+  getEndpointGroup: () =>
+    require("./shared/fareTotals.endpoints").fareTotalsGroup,
 });
 
 /**
- * React Query hook for calculating fare totals for a terminal combination with selected line items and quantities
+ * Fetch function and React Query hook for calculating fare totals for a terminal combination with selected line items and quantities
  */
-export const useFareTotalsByTripDateAndRoute: HookFactory<
-  FareTotalsByTripDateAndRouteInput,
-  FareTotal[]
-> = createHook({
-  apiName: wsfFaresApiMeta.name,
-  endpointName: fareTotalsByTripDateAndRouteMeta.functionName,
-  fetchFn: fetchFareTotalsByTripDateAndRoute,
-  cacheStrategy: fareTotalsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchFareTotalsByTripDateAndRoute,
+  hook: useFareTotalsByTripDateAndRoute,
+} = fareTotalsByTripDateAndRouteFactory;

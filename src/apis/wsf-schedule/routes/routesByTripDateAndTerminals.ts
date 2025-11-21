@@ -1,13 +1,7 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { datesHelper } from "@/shared/utils";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { routesGroup } from "./shared/routes.endpoints";
 import {
   type RoutesByTripDateAndTerminalsInput,
   routesByTripDateAndTerminalsInputSchema,
@@ -31,25 +25,21 @@ export const routesByTripDateAndTerminalsMeta = {
 } satisfies EndpointMeta<RoutesByTripDateAndTerminalsInput, Route[]>;
 
 /**
- * Fetch function for retrieving routes matching terminal pair for specified date
+ * Factory result for routes by trip date and terminals
  */
-export const fetchRoutesByTripDateAndTerminals: FetchFactory<
+const routesByTripDateAndTerminalsFactory = createFetchAndHook<
   RoutesByTripDateAndTerminalsInput,
   Route[]
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: routesByTripDateAndTerminalsMeta,
+  getEndpointGroup: () => require("./shared/routes.endpoints").routesGroup,
 });
 
 /**
- * React Query hook for retrieving routes matching terminal pair for specified date
+ * Fetch function and React Query hook for retrieving routes matching terminal pair for specified date
  */
-export const useRoutesByTripDateAndTerminals: HookFactory<
-  RoutesByTripDateAndTerminalsInput,
-  Route[]
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: routesByTripDateAndTerminalsMeta.functionName,
-  fetchFn: fetchRoutesByTripDateAndTerminals,
-  cacheStrategy: routesGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchRoutesByTripDateAndTerminals,
+  hook: useRoutesByTripDateAndTerminals,
+} = routesByTripDateAndTerminalsFactory;

@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotHighwayCamerasApiMeta } from "../apiMeta";
-import { camerasGroup } from "./shared/cameras.endpoints";
 import {
   type HighwayCameraByCameraIdInput,
   highwayCameraByCameraIdInputSchema,
@@ -26,25 +20,21 @@ export const highwayCameraByCameraIdMeta = {
 } satisfies EndpointMeta<HighwayCameraByCameraIdInput, Camera>;
 
 /**
- * Fetch function for retrieving camera details by camera ID
+ * Factory result for highway camera by camera ID
  */
-export const fetchHighwayCameraByCameraId: FetchFactory<
+const highwayCameraByCameraIdFactory = createFetchAndHook<
   HighwayCameraByCameraIdInput,
   Camera
-> = createFetchFunction({
+>({
   api: wsdotHighwayCamerasApiMeta,
   endpoint: highwayCameraByCameraIdMeta,
+  getEndpointGroup: () => require("./shared/cameras.endpoints").camerasGroup,
 });
 
 /**
- * React Query hook for retrieving camera details by camera ID
+ * Fetch function and React Query hook for retrieving camera details by camera ID
  */
-export const useHighwayCameraByCameraId: HookFactory<
-  HighwayCameraByCameraIdInput,
-  Camera
-> = createHook({
-  apiName: wsdotHighwayCamerasApiMeta.name,
-  endpointName: highwayCameraByCameraIdMeta.functionName,
-  fetchFn: fetchHighwayCameraByCameraId,
-  cacheStrategy: camerasGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchHighwayCameraByCameraId,
+  hook: useHighwayCameraByCameraId,
+} = highwayCameraByCameraIdFactory;

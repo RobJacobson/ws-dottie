@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfTerminalsApiMeta } from "../apiMeta";
-import { terminalTransportsGroup } from "./shared/terminalTransports.endpoints";
 import {
   type TerminalTransportsByTerminalIdInput,
   terminalTransportsByTerminalIdInputSchema,
@@ -33,25 +27,22 @@ export const terminalTransportsByTerminalIdMeta = {
 >;
 
 /**
- * Fetch function for retrieving transportation information for a specific terminal by ID
+ * Factory result for terminal transports by terminal ID
  */
-export const fetchTerminalTransportsByTerminalId: FetchFactory<
+const terminalTransportsByTerminalIdFactory = createFetchAndHook<
   TerminalTransportsByTerminalIdInput,
   TerminalTransport
-> = createFetchFunction({
+>({
   api: wsfTerminalsApiMeta,
   endpoint: terminalTransportsByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalTransports.endpoints").terminalTransportsGroup,
 });
 
 /**
- * React Query hook for retrieving transportation information for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving transportation information for a specific terminal by ID
  */
-export const useTerminalTransportsByTerminalId: HookFactory<
-  TerminalTransportsByTerminalIdInput,
-  TerminalTransport
-> = createHook({
-  apiName: wsfTerminalsApiMeta.name,
-  endpointName: terminalTransportsByTerminalIdMeta.functionName,
-  fetchFn: fetchTerminalTransportsByTerminalId,
-  cacheStrategy: terminalTransportsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchTerminalTransportsByTerminalId,
+  hook: useTerminalTransportsByTerminalId,
+} = terminalTransportsByTerminalIdFactory;

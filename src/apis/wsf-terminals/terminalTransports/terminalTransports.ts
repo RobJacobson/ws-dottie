@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfTerminalsApiMeta } from "../apiMeta";
-import { terminalTransportsGroup } from "./shared/terminalTransports.endpoints";
 import {
   type TerminalTransportsInput,
   terminalTransportsInputSchema,
@@ -29,25 +23,20 @@ export const terminalTransportsMeta = {
 } satisfies EndpointMeta<TerminalTransportsInput, TerminalTransport[]>;
 
 /**
- * Fetch function for retrieving transportation information for all terminals
+ * Factory result for terminal transports
  */
-export const fetchTerminalTransports: FetchFactory<
+const terminalTransportsFactory = createFetchAndHook<
   TerminalTransportsInput,
   TerminalTransport[]
-> = createFetchFunction({
+>({
   api: wsfTerminalsApiMeta,
   endpoint: terminalTransportsMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalTransports.endpoints").terminalTransportsGroup,
 });
 
 /**
- * React Query hook for retrieving transportation information for all terminals
+ * Fetch function and React Query hook for retrieving transportation information for all terminals
  */
-export const useTerminalTransports: HookFactory<
-  TerminalTransportsInput,
-  TerminalTransport[]
-> = createHook({
-  apiName: wsfTerminalsApiMeta.name,
-  endpointName: terminalTransportsMeta.functionName,
-  fetchFn: fetchTerminalTransports,
-  cacheStrategy: terminalTransportsGroup.cacheStrategy,
-});
+export const { fetch: fetchTerminalTransports, hook: useTerminalTransports } =
+  terminalTransportsFactory;

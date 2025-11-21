@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotMountainPassConditionsApiMeta } from "../apiMeta";
-import { passConditionsGroup } from "./shared/passConditions.endpoints";
 import {
   type MountainPassConditionsInput,
   mountainPassConditionsInputSchema,
@@ -30,25 +24,22 @@ export const mountainPassConditionsMeta = {
 } satisfies EndpointMeta<MountainPassConditionsInput, PassCondition[]>;
 
 /**
- * Fetch function for retrieving current conditions for all monitored mountain passes
+ * Factory result for mountain pass conditions
  */
-export const fetchMountainPassConditions: FetchFactory<
+const mountainPassConditionsFactory = createFetchAndHook<
   MountainPassConditionsInput,
   PassCondition[]
-> = createFetchFunction({
+>({
   api: wsdotMountainPassConditionsApiMeta,
   endpoint: mountainPassConditionsMeta,
+  getEndpointGroup: () =>
+    require("./shared/passConditions.endpoints").passConditionsGroup,
 });
 
 /**
- * React Query hook for retrieving current conditions for all monitored mountain passes
+ * Fetch function and React Query hook for retrieving current conditions for all monitored mountain passes
  */
-export const useMountainPassConditions: HookFactory<
-  MountainPassConditionsInput,
-  PassCondition[]
-> = createHook({
-  apiName: wsdotMountainPassConditionsApiMeta.name,
-  endpointName: mountainPassConditionsMeta.functionName,
-  fetchFn: fetchMountainPassConditions,
-  cacheStrategy: passConditionsGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchMountainPassConditions,
+  hook: useMountainPassConditions,
+} = mountainPassConditionsFactory;

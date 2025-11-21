@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotTrafficFlowApiMeta } from "../apiMeta";
-import { flowDataGroup } from "./shared/flowData.endpoints";
 import {
   type TrafficFlowsInput,
   trafficFlowsInputSchema,
@@ -27,21 +21,16 @@ export const trafficFlowsMeta = {
 } satisfies EndpointMeta<TrafficFlowsInput, FlowData[]>;
 
 /**
- * Fetch function for retrieving current traffic flow conditions for all stations statewide
+ * Factory result for traffic flows
  */
-export const fetchTrafficFlows: FetchFactory<TrafficFlowsInput, FlowData[]> =
-  createFetchFunction({
-    api: wsdotTrafficFlowApiMeta,
-    endpoint: trafficFlowsMeta,
-  });
+const trafficFlowsFactory = createFetchAndHook<TrafficFlowsInput, FlowData[]>({
+  api: wsdotTrafficFlowApiMeta,
+  endpoint: trafficFlowsMeta,
+  getEndpointGroup: () => require("./shared/flowData.endpoints").flowDataGroup,
+});
 
 /**
- * React Query hook for retrieving current traffic flow conditions for all stations statewide
+ * Fetch function and React Query hook for retrieving current traffic flow conditions for all stations statewide
  */
-export const useTrafficFlows: HookFactory<TrafficFlowsInput, FlowData[]> =
-  createHook({
-    apiName: wsdotTrafficFlowApiMeta.name,
-    endpointName: trafficFlowsMeta.functionName,
-    fetchFn: fetchTrafficFlows,
-    cacheStrategy: flowDataGroup.cacheStrategy,
-  });
+export const { fetch: fetchTrafficFlows, hook: useTrafficFlows } =
+  trafficFlowsFactory;

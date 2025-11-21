@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsdotTollRatesApiMeta } from "../apiMeta";
-import { tollTripRatesGroup } from "./shared/tollTripRates.endpoints";
 import {
   type TripRatesByVersionInput,
   tripRatesByVersionInputSchema,
@@ -29,25 +23,20 @@ export const tripRatesByVersionMeta = {
 } satisfies EndpointMeta<TripRatesByVersionInput, TollTripsRates>;
 
 /**
- * Fetch function for retrieving toll rates for a specific version number
+ * Factory result for trip rates by version
  */
-export const fetchTripRatesByVersion: FetchFactory<
+const tripRatesByVersionFactory = createFetchAndHook<
   TripRatesByVersionInput,
   TollTripsRates
-> = createFetchFunction({
+>({
   api: wsdotTollRatesApiMeta,
   endpoint: tripRatesByVersionMeta,
+  getEndpointGroup: () =>
+    require("./shared/tollTripRates.endpoints").tollTripRatesGroup,
 });
 
 /**
- * React Query hook for retrieving toll rates for a specific version number
+ * Fetch function and React Query hook for retrieving toll rates for a specific version number
  */
-export const useTripRatesByVersion: HookFactory<
-  TripRatesByVersionInput,
-  TollTripsRates
-> = createHook({
-  apiName: wsdotTollRatesApiMeta.name,
-  endpointName: tripRatesByVersionMeta.functionName,
-  fetchFn: fetchTripRatesByVersion,
-  cacheStrategy: tollTripRatesGroup.cacheStrategy,
-});
+export const { fetch: fetchTripRatesByVersion, hook: useTripRatesByVersion } =
+  tripRatesByVersionFactory;

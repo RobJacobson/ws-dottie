@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfScheduleApiMeta } from "../apiMeta";
-import { scheduledRoutesGroup } from "./shared/scheduledRoutes.endpoints";
 import {
   type ScheduledRoutesInput,
   scheduledRoutesInputSchema,
@@ -30,25 +24,20 @@ export const scheduledRoutesMeta = {
 } satisfies EndpointMeta<ScheduledRoutesInput, SchedRoute[]>;
 
 /**
- * Fetch function for retrieving all scheduled routes across current and upcoming seasons
+ * Factory result for scheduled routes
  */
-export const fetchScheduledRoutes: FetchFactory<
+const scheduledRoutesFactory = createFetchAndHook<
   ScheduledRoutesInput,
   SchedRoute[]
-> = createFetchFunction({
+>({
   api: wsfScheduleApiMeta,
   endpoint: scheduledRoutesMeta,
+  getEndpointGroup: () =>
+    require("./shared/scheduledRoutes.endpoints").scheduledRoutesGroup,
 });
 
 /**
- * React Query hook for retrieving all scheduled routes across current and upcoming seasons
+ * Fetch function and React Query hook for retrieving all scheduled routes across current and upcoming seasons
  */
-export const useScheduledRoutes: HookFactory<
-  ScheduledRoutesInput,
-  SchedRoute[]
-> = createHook({
-  apiName: wsfScheduleApiMeta.name,
-  endpointName: scheduledRoutesMeta.functionName,
-  fetchFn: fetchScheduledRoutes,
-  cacheStrategy: scheduledRoutesGroup.cacheStrategy,
-});
+export const { fetch: fetchScheduledRoutes, hook: useScheduledRoutes } =
+  scheduledRoutesFactory;

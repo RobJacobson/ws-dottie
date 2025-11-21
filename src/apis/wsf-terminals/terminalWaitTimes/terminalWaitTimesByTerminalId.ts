@@ -1,12 +1,6 @@
 import type { EndpointMeta } from "@/apis/types";
-import {
-  createFetchFunction,
-  createHook,
-  type FetchFactory,
-  type HookFactory,
-} from "@/shared/factories";
+import { createFetchAndHook } from "@/shared/factories";
 import { wsfTerminalsApiMeta } from "../apiMeta";
-import { terminalWaitTimesGroup } from "./shared/terminalWaitTimes.endpoints";
 import {
   type TerminalWaitTimesByIdInput,
   terminalWaitTimesByIdInputSchema,
@@ -30,25 +24,22 @@ export const terminalWaitTimesByTerminalIdMeta = {
 } satisfies EndpointMeta<TerminalWaitTimesByIdInput, TerminalWaitTime>;
 
 /**
- * Fetch function for retrieving wait time information for a specific terminal by ID
+ * Factory result for terminal wait times by terminal ID
  */
-export const fetchTerminalWaitTimesByTerminalId: FetchFactory<
+const terminalWaitTimesByTerminalIdFactory = createFetchAndHook<
   TerminalWaitTimesByIdInput,
   TerminalWaitTime
-> = createFetchFunction({
+>({
   api: wsfTerminalsApiMeta,
   endpoint: terminalWaitTimesByTerminalIdMeta,
+  getEndpointGroup: () =>
+    require("./shared/terminalWaitTimes.endpoints").terminalWaitTimesGroup,
 });
 
 /**
- * React Query hook for retrieving wait time information for a specific terminal by ID
+ * Fetch function and React Query hook for retrieving wait time information for a specific terminal by ID
  */
-export const useTerminalWaitTimesByTerminalId: HookFactory<
-  TerminalWaitTimesByIdInput,
-  TerminalWaitTime
-> = createHook({
-  apiName: wsfTerminalsApiMeta.name,
-  endpointName: terminalWaitTimesByTerminalIdMeta.functionName,
-  fetchFn: fetchTerminalWaitTimesByTerminalId,
-  cacheStrategy: terminalWaitTimesGroup.cacheStrategy,
-});
+export const {
+  fetch: fetchTerminalWaitTimesByTerminalId,
+  hook: useTerminalWaitTimesByTerminalId,
+} = terminalWaitTimesByTerminalIdFactory;
