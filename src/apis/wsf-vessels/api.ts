@@ -8,7 +8,7 @@ import { vesselLocationsGroup } from "./vesselLocations/shared/vesselLocations.e
 import { vesselStatsGroup } from "./vesselStats/shared/vesselStats.endpoints";
 import { vesselVerboseGroup } from "./vesselVerbose/shared/vesselVerbose.endpoints";
 
-export const wsfVesselsApi: ApiDefinition = {
+export const wsfVessels: ApiDefinition = {
   api: wsfVesselsApiMeta,
   endpointGroups: [
     cacheFlushDateVesselsGroup,

@@ -5,7 +5,7 @@ import { tollTripInfoGroup } from "./tollTripInfo/shared/tollTripInfo.endpoints"
 import { tollTripRatesGroup } from "./tollTripRates/shared/tollTripRates.endpoints";
 import { tollTripVersionGroup } from "./tollTripVersion/shared/tollTripVersion.endpoints";
 
-export const wsdotTollRatesApi: ApiDefinition = {
+export const wsdotTollRates: ApiDefinition = {
   api: wsdotTollRatesApiMeta,
   endpointGroups: [
     tollRatesGroup,

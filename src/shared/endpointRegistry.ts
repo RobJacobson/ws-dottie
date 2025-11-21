@@ -13,7 +13,7 @@
 // Import Zod OpenAPI initialization FIRST, before any schema creation
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod";
-import { apis } from "@/apis/shared/apis";
+import { apis } from "@/apis";
 import type { ApiMeta, EndpointGroupMeta, EndpointMeta } from "@/apis/types";
 import type { Endpoint } from "./types";
 
@@ -69,4 +69,4 @@ function buildDescriptor<I, O>(
 }
 
 // Re-export apis from the single source of truth for backward compatibility
-export { apis } from "@/apis/shared/apis";
+export { apis } from "@/apis";

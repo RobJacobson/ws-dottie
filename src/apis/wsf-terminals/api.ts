@@ -9,7 +9,7 @@ import { terminalTransportsGroup } from "./terminalTransports/shared/terminalTra
 import { terminalVerboseGroup } from "./terminalVerbose/shared/terminalVerbose.endpoints";
 import { terminalWaitTimesGroup } from "./terminalWaitTimes/shared/terminalWaitTimes.endpoints";
 
-export const wsfTerminalsApi: ApiDefinition = {
+export const wsfTerminals: ApiDefinition = {
   api: wsfTerminalsApiMeta,
   endpointGroups: [
     cacheFlushDateTerminalsGroup,

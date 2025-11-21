@@ -15,7 +15,7 @@ import { scheduleTerminalsGroup } from "./terminals/shared/terminals.endpoints";
 import { timeAdjustmentsGroup } from "./timeAdjustments/shared/timeAdjustments.endpoints";
 import { scheduleValidDateRangeGroup } from "./validDateRange/shared/validDateRange.endpoints";
 
-export const wsfScheduleApi: ApiDefinition = {
+export const wsfSchedule: ApiDefinition = {
   api: wsfScheduleApiMeta,
   endpointGroups: [
     activeSeasonsGroup,

@@ -3,7 +3,7 @@ import { wsdotCommercialVehicleRestrictionsApiMeta } from "./apiMeta";
 import { cvRestrictionDataGroup } from "./cvRestrictionData/shared/cvRestrictionData.endpoints";
 import { cvRestrictionDataWithIdGroup } from "./cvRestrictionDataWithId/shared/cvRestrictionDataWithId.endpoints";
 
-export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {
+export const wsdotCommercialVehicleRestrictions: ApiDefinition = {
   api: wsdotCommercialVehicleRestrictionsApiMeta,
   endpointGroups: [cvRestrictionDataGroup, cvRestrictionDataWithIdGroup],
 };
