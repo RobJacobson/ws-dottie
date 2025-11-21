@@ -184,18 +184,3 @@ export interface ResourceDocumentation {
    */
   businessContext?: string;
 }
-
-// ============================================================================
-// RE-EXPORTS FOR CONVENIENCE
-// ============================================================================
-
-/**
- * Re-export commonly used factory types for convenience.
- *
- * This allows endpoint files to import all types from one central location
- * (@/apis/types) instead of importing from multiple modules.
- */
-export type {
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/shared/factories/types";

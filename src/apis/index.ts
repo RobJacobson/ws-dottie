@@ -9,7 +9,8 @@
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod";
 
-import type { ApiDefinition, Endpoint } from "./types";
+// Re-export all types from types module
+export type * from "./types";
 
 // Import all API definitions
 import { wsdotBorderCrossings } from "./wsdot-border-crossings/api";
@@ -71,9 +72,6 @@ export const apis = {
   wsfTerminals,
   wsfVessels,
 } as const;
-
-// Re-export type for convenience
-export type { ApiDefinition, Endpoint };
 
 // Re-export endpoints registry
 export { endpoints } from "./endpoints";
