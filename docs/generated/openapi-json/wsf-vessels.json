@@ -56,7 +56,8 @@
       },
       "FetchCacheFlushDateVesselsOutput": {
         "type": "string",
-        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."
+        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.",
+        "format": "date-time"
       },
       "FetchVesselAccommodationsByVesselIdOutput": {
         "type": "object",
@@ -321,12 +322,14 @@
           "DepartingTerminalName": {
             "type": "string",
             "nullable": true,
-            "description": "Display name of the departing terminal."
+            "description": "Display name of the departing terminal.",
+            "format": "date-time"
           },
           "DepartingTerminalAbbrev": {
             "type": "string",
             "nullable": true,
-            "description": "Abbreviation code of the departing terminal."
+            "description": "Abbreviation code of the departing terminal.",
+            "format": "date-time"
           },
           "ArrivingTerminalID": {
             "type": "integer",
@@ -370,12 +373,14 @@
           "LeftDock": {
             "type": "string",
             "nullable": true,
-            "description": "UTC datetime when vessel last departed from dock."
+            "description": "UTC datetime when vessel last departed from dock.",
+            "format": "date-time"
           },
           "Eta": {
             "type": "string",
             "nullable": true,
-            "description": "UTC datetime of estimated arrival at destination terminal."
+            "description": "UTC datetime of estimated arrival at destination terminal.",
+            "format": "date-time"
           },
           "EtaBasis": {
             "type": "string",
@@ -385,7 +390,8 @@
           "ScheduledDeparture": {
             "type": "string",
             "nullable": true,
-            "description": "UTC datetime of scheduled departure from origin terminal."
+            "description": "UTC datetime of scheduled departure from origin terminal.",
+            "format": "date-time"
           },
           "OpRouteAbbrev": {
             "type": "array",
@@ -423,7 +429,8 @@
           },
           "TimeStamp": {
             "type": "string",
-            "description": "UTC datetime when vessel location data was last updated."
+            "description": "UTC datetime when vessel location data was last updated.",
+            "format": "date-time"
           },
           "VesselWatchShutID": {
             "type": "integer",
@@ -1675,7 +1682,8 @@
                       "Departing": {
                         "type": "string",
                         "nullable": true,
-                        "description": "Display name of the departing terminal."
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
                       },
                       "Arriving": {
                         "type": "string",
@@ -1685,22 +1693,26 @@
                       "ScheduledDepart": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of scheduled departure from origin terminal."
+                        "description": "UTC datetime of scheduled departure from origin terminal.",
+                        "format": "date-time"
                       },
                       "ActualDepart": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of actual departure from origin terminal."
+                        "description": "UTC datetime of actual departure from origin terminal.",
+                        "format": "date-time"
                       },
                       "EstArrival": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of estimated arrival at destination terminal."
+                        "description": "UTC datetime of estimated arrival at destination terminal.",
+                        "format": "date-time"
                       },
                       "Date": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime indicating the calendar date when this voyage occurred."
+                        "description": "UTC datetime indicating the calendar date when this voyage occurred.",
+                        "format": "date-time"
                       }
                     },
                     "required": [
@@ -1775,7 +1787,8 @@
                       "Departing": {
                         "type": "string",
                         "nullable": true,
-                        "description": "Display name of the departing terminal."
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
                       },
                       "Arriving": {
                         "type": "string",
@@ -1785,22 +1798,26 @@
                       "ScheduledDepart": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of scheduled departure from origin terminal."
+                        "description": "UTC datetime of scheduled departure from origin terminal.",
+                        "format": "date-time"
                       },
                       "ActualDepart": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of actual departure from origin terminal."
+                        "description": "UTC datetime of actual departure from origin terminal.",
+                        "format": "date-time"
                       },
                       "EstArrival": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of estimated arrival at destination terminal."
+                        "description": "UTC datetime of estimated arrival at destination terminal.",
+                        "format": "date-time"
                       },
                       "Date": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime indicating the calendar date when this voyage occurred."
+                        "description": "UTC datetime indicating the calendar date when this voyage occurred.",
+                        "format": "date-time"
                       }
                     },
                     "required": [
@@ -1884,12 +1901,14 @@
                       "DepartingTerminalName": {
                         "type": "string",
                         "nullable": true,
-                        "description": "Display name of the departing terminal."
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
                       },
                       "DepartingTerminalAbbrev": {
                         "type": "string",
                         "nullable": true,
-                        "description": "Abbreviation code of the departing terminal."
+                        "description": "Abbreviation code of the departing terminal.",
+                        "format": "date-time"
                       },
                       "ArrivingTerminalID": {
                         "type": "integer",
@@ -1933,12 +1952,14 @@
                       "LeftDock": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime when vessel last departed from dock."
+                        "description": "UTC datetime when vessel last departed from dock.",
+                        "format": "date-time"
                       },
                       "Eta": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of estimated arrival at destination terminal."
+                        "description": "UTC datetime of estimated arrival at destination terminal.",
+                        "format": "date-time"
                       },
                       "EtaBasis": {
                         "type": "string",
@@ -1948,7 +1969,8 @@
                       "ScheduledDeparture": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of scheduled departure from origin terminal."
+                        "description": "UTC datetime of scheduled departure from origin terminal.",
+                        "format": "date-time"
                       },
                       "OpRouteAbbrev": {
                         "type": "array",
@@ -1986,7 +2008,8 @@
                       },
                       "TimeStamp": {
                         "type": "string",
-                        "description": "UTC datetime when vessel location data was last updated."
+                        "description": "UTC datetime when vessel location data was last updated.",
+                        "format": "date-time"
                       },
                       "VesselWatchShutID": {
                         "type": "integer",

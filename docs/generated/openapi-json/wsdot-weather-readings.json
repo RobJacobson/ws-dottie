@@ -104,7 +104,8 @@
                       "ReadingTime": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime when the comprehensive weather reading was taken (ISO-8601 format)."
+                        "description": "UTC datetime when the comprehensive weather reading was taken (ISO-8601 format).",
+                        "format": "date-time"
                       },
                       "AirTemperature": {
                         "type": "number",

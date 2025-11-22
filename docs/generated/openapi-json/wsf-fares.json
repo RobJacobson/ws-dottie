@@ -56,18 +56,21 @@
       },
       "FetchCacheFlushDateFaresOutput": {
         "type": "string",
-        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."
+        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.",
+        "format": "date-time"
       },
       "FetchFaresValidDateRangeOutput": {
         "type": "object",
         "properties": {
           "DateFrom": {
             "type": "string",
-            "description": "UTC datetime when data becomes available (earliest valid trip date)."
+            "description": "UTC datetime when data becomes available (earliest valid trip date).",
+            "format": "date-time"
           },
           "DateThru": {
             "type": "string",
-            "description": "UTC datetime when data stops being available (latest valid trip date)."
+            "description": "UTC datetime when data stops being available (latest valid trip date).",
+            "format": "date-time"
           }
         },
         "required": [
@@ -82,7 +85,8 @@
           "DepartingDescription": {
             "type": "string",
             "nullable": true,
-            "description": "Display name of the departing terminal, or null if unavailable."
+            "description": "Display name of the departing terminal, or null if unavailable.",
+            "format": "date-time"
           },
           "ArrivingDescription": {
             "type": "string",
@@ -117,7 +121,8 @@
                 "DepartingDescription": {
                   "type": "string",
                   "nullable": true,
-                  "description": "Display name of the departing terminal, or null if unavailable."
+                  "description": "Display name of the departing terminal, or null if unavailable.",
+                  "format": "date-time"
                 },
                 "ArrivingTerminalID": {
                   "type": "number",
@@ -518,7 +523,8 @@
                       "DepartingDescription": {
                         "type": "string",
                         "nullable": true,
-                        "description": "Display name of the departing terminal, or null if unavailable."
+                        "description": "Display name of the departing terminal, or null if unavailable.",
+                        "format": "date-time"
                       },
                       "ArrivingTerminalID": {
                         "type": "number",

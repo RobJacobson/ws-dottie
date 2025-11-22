@@ -43,7 +43,8 @@ components:
     FetchCacheFlushDateTerminalsOutput:
       type: string
       description: UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.
-    FetchTerminalBasicsOutput:
+      format: date-time
+    FetchTerminalBasicsByTerminalIdOutput:
       type: object
       properties:
         TerminalID:
@@ -94,7 +95,7 @@ components:
         - FoodService
         - Restroom
       description: Basic terminal information including identification, amenities, and regional assignments.
-    FetchTerminalBulletinsOutput:
+    FetchTerminalBulletinsByTerminalIdOutput:
       type: object
       properties:
         TerminalID:
@@ -137,10 +138,12 @@ components:
                 type: string
                 nullable: true
                 description: UTC datetime when the bulletin was last updated.
+                format: date-time
               BulletinLastUpdatedSortable:
                 type: string
                 nullable: true
                 description: Legacy sortable string representation of the bulletin update date.
+                format: date-time
             required:
               - BulletinTitle
               - BulletinText
@@ -158,7 +161,7 @@ components:
         - SortSeq
         - Bulletins
       description: Terminal information with associated bulletins and alerts.
-    FetchTerminalLocationsOutput:
+    FetchTerminalLocationsByTerminalIdOutput:
       type: object
       properties:
         TerminalID:
@@ -263,7 +266,7 @@ components:
         - Directions
         - DispGISZoomLoc
       description: Detailed terminal location information including coordinates, address, map link, driving directions, and GIS zoom level locations.
-    FetchTerminalSailingSpaceOutput:
+    FetchTerminalSailingSpaceByTerminalIdOutput:
       type: object
       properties:
         TerminalID:
@@ -295,6 +298,7 @@ components:
               Departure:
                 type: string
                 description: Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.
+                format: date-time
               IsCancelled:
                 type: boolean
                 description: Indicator whether departure is cancelled, as a boolean. E.g., false for active departures, true for cancelled departures. Used to determine if departure is operational.
@@ -401,7 +405,7 @@ components:
         - IsNoFareCollected
         - NoFareCollectedMsg
       description: Terminal sailing space information including terminal identification, upcoming departures with space availability, and fare collection status.
-    FetchTerminalTransportsOutput:
+    FetchTerminalTransportsByTerminalIdOutput:
       type: object
       properties:
         TerminalID:
@@ -507,7 +511,7 @@ components:
         - HovInfo
         - TransitLinks
       description: Terminal transportation and commuter information including parking details, vehicle-specific tips, airport information, transit links, and HOV/carpool information.
-    FetchTerminalVerboseOutput:
+    FetchTerminalVerboseByTerminalIdOutput:
       allOf:
         - type: object
           properties:
@@ -558,6 +562,7 @@ components:
             - WaitingRoom
             - FoodService
             - Restroom
+          description: Base terminal information including identification, naming, regional association, and display ordering.
         - type: object
           properties:
             Bulletins:
@@ -580,10 +585,12 @@ components:
                     type: string
                     nullable: true
                     description: UTC datetime when the bulletin was last updated.
+                    format: date-time
                   BulletinLastUpdatedSortable:
                     type: string
                     nullable: true
                     description: Legacy sortable string representation of the bulletin update date.
+                    format: date-time
                 required:
                   - BulletinTitle
                   - BulletinText
@@ -682,6 +689,7 @@ components:
                   Departure:
                     type: string
                     description: Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.
+                    format: date-time
                   IsCancelled:
                     type: boolean
                     description: Indicator whether departure is cancelled, as a boolean. E.g., false for active departures, true for cancelled departures. Used to determine if departure is operational.
@@ -879,14 +887,17 @@ components:
                     type: string
                     nullable: true
                     description: Text notes detailing wait time conditions and tips for vehicles and passengers.
+                    format: date-time
                   WaitTimeLastUpdated:
                     type: string
                     nullable: true
                     description: UTC datetime when the wait time information was last updated.
+                    format: date-time
                   WaitTimeIVRNotes:
                     type: string
                     nullable: true
                     description: Wait time notes formatted for Interactive Voice Response systems.
+                    format: date-time
                 required:
                   - RouteID
                   - RouteName
@@ -903,6 +914,7 @@ components:
               type: string
               nullable: true
               description: Introductory message explaining real-time terminal conditions data display, as HTML-formatted text. E.g., message about approximate vehicle spaces available in holding area for Anacortes terminal, null when intro message is unavailable. Used to provide context for real-time conditions data.
+              format: date-time
             AdditionalInfo:
               type: string
               nullable: true
@@ -975,6 +987,7 @@ components:
               type: string
               nullable: true
               description: Message explaining why real-time conditions data is unavailable, as a status message. E.g., 'The Real-Time Conditions are unavailable due to technical difficulties' for terminals with shutoff flag true, null when real-time data is available. Used to inform users about real-time data status.
+              format: date-time
             VisitorLinks:
               type: array
               nullable: true
@@ -1017,7 +1030,7 @@ components:
             - REALTIME_SHUTOFF_MESSAGE
             - VisitorLinks
       description: Comprehensive terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints.
-    FetchTerminalWaitTimesOutput:
+    FetchTerminalWaitTimesByTerminalIdOutput:
       type: object
       properties:
         TerminalID:
@@ -1058,14 +1071,17 @@ components:
                 type: string
                 nullable: true
                 description: Text notes detailing wait time conditions and tips for vehicles and passengers.
+                format: date-time
               WaitTimeLastUpdated:
                 type: string
                 nullable: true
                 description: UTC datetime when the wait time information was last updated.
+                format: date-time
               WaitTimeIVRNotes:
                 type: string
                 nullable: true
                 description: Wait time notes formatted for Interactive Voice Response systems.
+                format: date-time
             required:
               - RouteID
               - RouteName
@@ -1083,77 +1099,7 @@ components:
         - SortSeq
         - WaitTimes
       description: Terminal wait time information including terminal identification and wait time list.
-    FetchTerminalBasicsByTerminalIdInputTerminalIDParam:
-      type: integer
-      description: Numeric ID of the terminal.
-    FetchTerminalBulletinsByTerminalIdInputTerminalIDParam:
-      type: integer
-      description: Numeric ID of the terminal.
-    FetchTerminalLocationsByTerminalIdInputTerminalIDParam:
-      type: integer
-      description: Numeric ID of the terminal.
-    FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam:
-      type: integer
-      description: Numeric ID of the terminal.
-    FetchTerminalTransportsByTerminalIdInputTerminalIDParam:
-      type: integer
-      description: Numeric ID of the terminal.
-    FetchTerminalVerboseByTerminalIdInputTerminalIDParam:
-      type: integer
-      description: Numeric ID of the terminal.
-    FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam:
-      type: integer
-      description: Numeric ID of the terminal.
-  parameters:
-    FetchTerminalBasicsByTerminalIdInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalBasicsByTerminalIdInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the terminal.
-      name: TerminalID
-      in: path
-    FetchTerminalBulletinsByTerminalIdInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalBulletinsByTerminalIdInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the terminal.
-      name: TerminalID
-      in: path
-    FetchTerminalLocationsByTerminalIdInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalLocationsByTerminalIdInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the terminal.
-      name: TerminalID
-      in: path
-    FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the terminal.
-      name: TerminalID
-      in: path
-    FetchTerminalTransportsByTerminalIdInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalTransportsByTerminalIdInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the terminal.
-      name: TerminalID
-      in: path
-    FetchTerminalVerboseByTerminalIdInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalVerboseByTerminalIdInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the terminal.
-      name: TerminalID
-      in: path
-    FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the terminal.
-      name: TerminalID
-      in: path
+  parameters: {}
 paths:
   /cacheflushdate:
     get:
@@ -1209,7 +1155,56 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalBasicsOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: integer
+                      description: Numeric ID of the terminal.
+                    TerminalSubjectID:
+                      type: integer
+                      description: Numeric ID of the terminal in the WSF subject management system.
+                    RegionID:
+                      type: integer
+                      description: Numeric ID of the geographical region where the terminal is located.
+                    TerminalName:
+                      type: string
+                      nullable: true
+                      description: Display name of the terminal.
+                    TerminalAbbrev:
+                      type: string
+                      nullable: true
+                      description: Abbreviation code for the terminal.
+                    SortSeq:
+                      type: integer
+                      description: Display sort order; lower values appear first in lists.
+                    OverheadPassengerLoading:
+                      type: boolean
+                      description: True if overhead passenger loading facility is available; otherwise false.
+                    Elevator:
+                      type: boolean
+                      description: True if terminal has elevator access; otherwise false.
+                    WaitingRoom:
+                      type: boolean
+                      description: True if terminal has waiting room facility; otherwise false.
+                    FoodService:
+                      type: boolean
+                      description: True if terminal offers food service; otherwise false.
+                    Restroom:
+                      type: boolean
+                      description: True if terminal has restroom facilities; otherwise false.
+                  required:
+                    - TerminalID
+                    - TerminalSubjectID
+                    - RegionID
+                    - TerminalName
+                    - TerminalAbbrev
+                    - SortSeq
+                    - OverheadPassengerLoading
+                    - Elevator
+                    - WaitingRoom
+                    - FoodService
+                    - Restroom
+                  description: Basic terminal information including identification, amenities, and regional assignments.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1246,15 +1241,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalBasicsByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalBasicsOutput'
+                $ref: '#/components/schemas/FetchTerminalBasicsByTerminalIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1296,7 +1289,71 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: integer
+                      description: Numeric ID of the terminal.
+                    TerminalSubjectID:
+                      type: integer
+                      description: Numeric ID of the terminal in the WSF subject management system.
+                    RegionID:
+                      type: integer
+                      description: Numeric ID of the geographical region where the terminal is located.
+                    TerminalName:
+                      type: string
+                      nullable: true
+                      description: Display name of the terminal.
+                    TerminalAbbrev:
+                      type: string
+                      nullable: true
+                      description: Abbreviation code for the terminal.
+                    SortSeq:
+                      type: integer
+                      description: Display sort order; lower values appear first in lists.
+                    Bulletins:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          BulletinTitle:
+                            type: string
+                            nullable: true
+                            description: Title of the bulletin.
+                          BulletinText:
+                            type: string
+                            nullable: true
+                            description: HTML-formatted content of the bulletin.
+                          BulletinSortSeq:
+                            type: integer
+                            description: Display sort order for the bulletin; lower values appear first.
+                          BulletinLastUpdated:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the bulletin was last updated.
+                            format: date-time
+                          BulletinLastUpdatedSortable:
+                            type: string
+                            nullable: true
+                            description: Legacy sortable string representation of the bulletin update date.
+                            format: date-time
+                        required:
+                          - BulletinTitle
+                          - BulletinText
+                          - BulletinSortSeq
+                          - BulletinLastUpdated
+                          - BulletinLastUpdatedSortable
+                        description: Bulletin information including title, HTML content, sort order, and update date.
+                      description: Array of bulletins and alerts associated with the terminal.
+                  required:
+                    - TerminalID
+                    - TerminalSubjectID
+                    - RegionID
+                    - TerminalName
+                    - TerminalAbbrev
+                    - SortSeq
+                    - Bulletins
+                  description: Terminal information with associated bulletins and alerts.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1334,15 +1391,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalBulletinsByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
+                $ref: '#/components/schemas/FetchTerminalBulletinsByTerminalIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1380,7 +1435,110 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalLocationsOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: integer
+                      description: Numeric ID of the terminal.
+                    TerminalSubjectID:
+                      type: integer
+                      description: Numeric ID of the terminal in the WSF subject management system.
+                    RegionID:
+                      type: integer
+                      description: Numeric ID of the geographical region where the terminal is located.
+                    TerminalName:
+                      type: string
+                      nullable: true
+                      description: Display name of the terminal.
+                    TerminalAbbrev:
+                      type: string
+                      nullable: true
+                      description: Abbreviation code for the terminal.
+                    SortSeq:
+                      type: integer
+                      description: Display sort order; lower values appear first in lists.
+                    Latitude:
+                      type: number
+                      nullable: true
+                      description: Latitude of the terminal in decimal degrees.
+                    Longitude:
+                      type: number
+                      nullable: true
+                      description: Longitude of the terminal in decimal degrees.
+                    AddressLineOne:
+                      type: string
+                      nullable: true
+                      description: First line of the terminal street address.
+                    AddressLineTwo:
+                      type: string
+                      nullable: true
+                      description: Second line of the terminal street address.
+                    City:
+                      type: string
+                      nullable: true
+                      description: City where the terminal is located.
+                    State:
+                      type: string
+                      nullable: true
+                      description: State code where the terminal is located.
+                    ZipCode:
+                      type: string
+                      nullable: true
+                      description: Postal zip code for the terminal location.
+                    Country:
+                      type: string
+                      nullable: true
+                      description: Country code where the terminal is located.
+                    MapLink:
+                      type: string
+                      nullable: true
+                      description: URL to a map displaying the terminal location.
+                    Directions:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted driving directions to the terminal.
+                    DispGISZoomLoc:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          ZoomLevel:
+                            type: integer
+                            description: GIS zoom level for map display.
+                          Latitude:
+                            type: number
+                            nullable: true
+                            description: Latitude coordinate for this zoom level in decimal degrees.
+                          Longitude:
+                            type: number
+                            nullable: true
+                            description: Longitude coordinate for this zoom level in decimal degrees.
+                        required:
+                          - ZoomLevel
+                          - Latitude
+                          - Longitude
+                        description: GIS zoom level location information including zoom level and coordinates.
+                      description: Array of GIS zoom level locations for the terminal.
+                  required:
+                    - TerminalID
+                    - TerminalSubjectID
+                    - RegionID
+                    - TerminalName
+                    - TerminalAbbrev
+                    - SortSeq
+                    - Latitude
+                    - Longitude
+                    - AddressLineOne
+                    - AddressLineTwo
+                    - City
+                    - State
+                    - ZipCode
+                    - Country
+                    - MapLink
+                    - Directions
+                    - DispGISZoomLoc
+                  description: Detailed terminal location information including coordinates, address, map link, driving directions, and GIS zoom level locations.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1477,15 +1635,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalLocationsByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalLocationsOutput'
+                $ref: '#/components/schemas/FetchTerminalLocationsByTerminalIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1587,7 +1743,144 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: integer
+                      description: Numeric ID of the terminal.
+                    TerminalSubjectID:
+                      type: integer
+                      description: Numeric ID of the terminal in the WSF subject management system.
+                    RegionID:
+                      type: integer
+                      description: Numeric ID of the geographical region where the terminal is located.
+                    TerminalName:
+                      type: string
+                      nullable: true
+                      description: Display name of the terminal.
+                    TerminalAbbrev:
+                      type: string
+                      nullable: true
+                      description: Abbreviation code for the terminal.
+                    SortSeq:
+                      type: integer
+                      description: Display sort order; lower values appear first in lists.
+                    DepartingSpaces:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          Departure:
+                            type: string
+                            description: Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.
+                            format: date-time
+                          IsCancelled:
+                            type: boolean
+                            description: Indicator whether departure is cancelled, as a boolean. E.g., false for active departures, true for cancelled departures. Used to determine if departure is operational.
+                          VesselID:
+                            type: integer
+                            description: Unique identifier for vessel planned to service departure, as an integer ID. E.g., '69' for Samish vessel, '38' for Yakima vessel, '17' for Kaleetan vessel. Used to identify which vessel operates departure.
+                          VesselName:
+                            type: string
+                            nullable: true
+                            description: Human-readable name of vessel planned to service departure, as a vessel name. E.g., 'Samish' for vessel 69, 'Yakima' for vessel 38, 'Kaleetan' for vessel 17, null when vessel name is unavailable. Provides vessel identification for display.
+                          MaxSpaceCount:
+                            type: integer
+                            description: Maximum vehicle capacity on vessel making departure, as an integer count. E.g., '141' for Samish vessel capacity, '139' for Yakima vessel capacity, '197' for Tacoma vessel capacity. Used to calculate space availability percentage.
+                          SpaceForArrivalTerminals:
+                            type: array
+                            nullable: true
+                            items:
+                              type: object
+                              properties:
+                                TerminalID:
+                                  type: integer
+                                  description: Unique identifier for arrival terminal destination, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Used to identify destination terminal for space availability.
+                                TerminalName:
+                                  type: string
+                                  nullable: true
+                                  description: Human-readable name of arrival terminal destination, as a terminal name. E.g., 'Anacortes -> Friday Harbor' for multi-destination sailing, 'Seattle' for single destination, null when terminal name is unavailable. Provides destination identification for display.
+                                VesselID:
+                                  type: integer
+                                  description: Unique identifier for vessel planned to service departure, as an integer ID. E.g., '69' for Samish vessel, '38' for Yakima vessel, '17' for Kaleetan vessel. Used to identify which vessel operates departure.
+                                VesselName:
+                                  type: string
+                                  nullable: true
+                                  description: Human-readable name of vessel planned to service departure, as a vessel name. E.g., 'Samish' for vessel 69, 'Yakima' for vessel 38, 'Kaleetan' for vessel 17, null when vessel name is unavailable. Provides vessel identification for display.
+                                DisplayReservableSpace:
+                                  type: boolean
+                                  description: Indicator whether reservable space information should be displayed, as a boolean. E.g., true for routes supporting reservations, false for routes without reservations. Used to determine if reservation space data should be shown.
+                                ReservableSpaceCount:
+                                  type: integer
+                                  nullable: true
+                                  description: Remaining reservable vehicle spaces available on vessel, as an integer count. E.g., '45' for 45 reservable spaces remaining, '36' for 36 reservable spaces, null when reservations are not supported or count is unavailable. Used for reservation availability display.
+                                ReservableSpaceHexColor:
+                                  type: string
+                                  nullable: true
+                                  description: Hex color code representing reservable space availability status, as a hex color. E.g., '#FFFF00' for yellow (limited availability), '#888888' for gray (not available), null when color is unavailable. Used for visual space availability indicators.
+                                DisplayDriveUpSpace:
+                                  type: boolean
+                                  description: Indicator whether drive-up space information should be displayed, as a boolean. E.g., true for routes with drive-up space tracking, false when drive-up space is not tracked. Used to determine if drive-up space data should be shown.
+                                DriveUpSpaceCount:
+                                  type: integer
+                                  nullable: true
+                                  description: Remaining drive-up vehicle spaces available on vessel, as an integer count. E.g., '67' for 67 drive-up spaces remaining, '197' for 197 drive-up spaces, null when drive-up space is not tracked or count is unavailable. Used for drive-up availability display.
+                                DriveUpSpaceHexColor:
+                                  type: string
+                                  nullable: true
+                                  description: Hex color code representing drive-up space availability status, as a hex color. E.g., '#00FF00' for green (good availability), '#FFFF00' for yellow (limited availability), null when color is unavailable. Used for visual space availability indicators.
+                                MaxSpaceCount:
+                                  type: integer
+                                  description: Maximum vehicle capacity on vessel making departure, as an integer count. E.g., '141' for Samish vessel capacity, '139' for Yakima vessel capacity, '197' for Tacoma vessel capacity. Used to calculate space availability percentage.
+                                ArrivalTerminalIDs:
+                                  type: array
+                                  nullable: true
+                                  items:
+                                    type: integer
+                                  description: Array of arrival terminal IDs associated with this space count set, as terminal ID integers. E.g., array containing terminal 10 for single destination, array containing terminals 13, 10 for multi-destination sailing, null when terminal IDs are unavailable. Used to identify all destinations served by this space count.
+                              required:
+                                - TerminalID
+                                - TerminalName
+                                - VesselID
+                                - VesselName
+                                - DisplayReservableSpace
+                                - ReservableSpaceCount
+                                - ReservableSpaceHexColor
+                                - DisplayDriveUpSpace
+                                - DriveUpSpaceCount
+                                - DriveUpSpaceHexColor
+                                - MaxSpaceCount
+                                - ArrivalTerminalIDs
+                              description: Represents space availability information for arrival terminal destination including terminal/vessel identification, reservable space count and color, drive-up space count and color, maximum capacity, and arrival terminal IDs. E.g., Friday Harbor destination with 67 drive-up spaces (green) and 141 maximum capacity on Samish vessel. Used for real-time space availability display.
+                            description: Array of space availability information for one or more arrival terminal destinations, as space for arrival terminal objects. E.g., array containing Friday Harbor destination with space counts, array containing multiple destinations for multi-destination sailing, null when space information is unavailable. Used for real-time space availability display by destination.
+                        required:
+                          - Departure
+                          - IsCancelled
+                          - VesselID
+                          - VesselName
+                          - MaxSpaceCount
+                          - SpaceForArrivalTerminals
+                        description: Represents departing space information including departure time, cancellation status, vessel details, maximum capacity, and space availability for arrival terminals. E.g., departure at 9:35 PM with Samish vessel (ID 69, capacity 141) and space information for Friday Harbor destination. Used for real-time departure space availability display.
+                      description: Array of upcoming departures leaving terminal with space availability information, as departing space objects. E.g., array containing multiple departures with vessel and space details, null when departure information is unavailable. Used for real-time departure space availability display.
+                    IsNoFareCollected:
+                      type: boolean
+                      nullable: true
+                      description: Indicator whether terminal is capable of collecting fares, as a boolean. E.g., null when fare collection status is unknown, false when terminal collects fares, true when terminal does not collect fares. Used to determine fare collection capability.
+                    NoFareCollectedMsg:
+                      type: string
+                      nullable: true
+                      description: Optional message explaining how inability to collect fares affects terminal conditions data, as a message string. E.g., null when fare collection is available, message when fare collection affects space tracking accuracy. Used to inform users about data limitations.
+                  required:
+                    - TerminalID
+                    - TerminalSubjectID
+                    - RegionID
+                    - TerminalName
+                    - TerminalAbbrev
+                    - SortSeq
+                    - IsNoFareCollected
+                    - NoFareCollectedMsg
+                  description: Terminal sailing space information including terminal identification, upcoming departures with space availability, and fare collection status.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1840,15 +2133,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
+                $ref: '#/components/schemas/FetchTerminalSailingSpaceByTerminalIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2401,7 +2692,111 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalTransportsOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: integer
+                      description: Numeric ID of the terminal.
+                    TerminalSubjectID:
+                      type: integer
+                      description: Numeric ID of the terminal in the WSF subject management system.
+                    RegionID:
+                      type: integer
+                      description: Numeric ID of the geographical region where the terminal is located.
+                    TerminalName:
+                      type: string
+                      nullable: true
+                      description: Display name of the terminal.
+                    TerminalAbbrev:
+                      type: string
+                      nullable: true
+                      description: Abbreviation code for the terminal.
+                    SortSeq:
+                      type: integer
+                      description: Display sort order; lower values appear first in lists.
+                    ParkingInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted parking information for terminal, as parking details. E.g., 'Off-Peak rates effective October 1 through April 30, 2026...' for Anacortes parking rates, null when parking information is unavailable. HTML-formatted text for parking information display.
+                    ParkingShuttleInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted information about parking-related shuttles servicing terminal, as shuttle information. E.g., null when no parking shuttles, shuttle details when available. Used for parking shuttle information display.
+                    AirportInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted tips for commuting to terminal from airport, as airport directions. E.g., 'From the Seattle-Tacoma International Airport, allow a minimum of 2 1/2 hours...' for Anacortes airport directions, null when airport information is unavailable. HTML-formatted text for airport commuter information.
+                    AirportShuttleInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted information about airport shuttles servicing terminal, as shuttle information. E.g., 'When traveling from Sea-Tac Airport to Anacortes there is a shuttle...' for Anacortes airport shuttle, null when airport shuttle information is unavailable. HTML-formatted text for airport shuttle information.
+                    MotorcycleInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted information for motorcycle travelers, as motorcycle tips. E.g., 'While motorcycles are not, by Washington Administrative Code...' for motorcycle staging and loading information, null when motorcycle information is unavailable. HTML-formatted text for motorcycle commuter information.
+                    TruckInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted information for truck travelers, as truck tips. E.g., 'Expect heavy truck traffic on the first 3 sailings in the morning...' for truck travel information, null when truck information is unavailable. HTML-formatted text for truck commuter information.
+                    BikeInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted information for bicycle travelers, as bicycle tips. E.g., 'Approaching the Anacortes Terminal, you will arrive at the vehicle tollbooths...' for bicycle staging information, null when bicycle information is unavailable. HTML-formatted text for bicycle commuter information.
+                    TrainInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted information about trains servicing terminal, as train information. E.g., null when no train service, train details when available. Used for train commuter information display.
+                    TaxiInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted information about taxis servicing terminal, as taxi information. E.g., null when no taxi information, taxi details when available. Used for taxi commuter information display.
+                    HovInfo:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted tips for carpool/vanpool commuters, as HOV information. E.g., 'Carpool/Vanpools must be ticketed and in line 10 minutes before...' for Bainbridge Island HOV information, null when HOV information is unavailable. HTML-formatted text for carpool/vanpool commuter information.
+                    TransitLinks:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          LinkURL:
+                            type: string
+                            nullable: true
+                            description: URL to transit agency website or service page, as a transit URL. E.g., 'http://www.skagittransit.org/' for Skagit Transit, 'http://www.kitsaptransit.com/service/routed-buses' for Kitsap Transit, null when transit link is unavailable. Used for accessing transit agency information.
+                          LinkName:
+                            type: string
+                            nullable: true
+                            description: Human-readable name of transit agency, as a transit agency name. E.g., 'Skagit Transit' for Skagit Transit agency, 'Kitsap Transit' for Kitsap Transit agency, null when transit name is unavailable. Provides transit agency identification for display.
+                          SortSeq:
+                            type: integer
+                            nullable: true
+                            description: Preferred sort order for transit link display, as an integer. E.g., null when sort order is not specified. Lower values appear first when sorting transit links in ascending order. Used for transit link display ordering.
+                        required:
+                          - LinkURL
+                          - LinkName
+                          - SortSeq
+                        description: Represents transit link information including transit agency URL, name, and sort order. E.g., Skagit Transit link (http://www.skagittransit.org/). Used for displaying transit agency connections and links.
+                      description: Array of transit agency links servicing terminal, as transit link objects. E.g., array containing Skagit Transit link for Anacortes terminal, array containing Kitsap Transit link for Bainbridge Island terminal, null when transit links are unavailable. Used for displaying transit agency connections.
+                  required:
+                    - TerminalID
+                    - TerminalSubjectID
+                    - RegionID
+                    - TerminalName
+                    - TerminalAbbrev
+                    - SortSeq
+                    - ParkingInfo
+                    - ParkingShuttleInfo
+                    - AirportInfo
+                    - AirportShuttleInfo
+                    - MotorcycleInfo
+                    - TruckInfo
+                    - BikeInfo
+                    - TrainInfo
+                    - TaxiInfo
+                    - HovInfo
+                    - TransitLinks
+                  description: Terminal transportation and commuter information including parking details, vehicle-specific tips, airport information, transit links, and HOV/carpool information.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2447,15 +2842,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalTransportsByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalTransportsOutput'
+                $ref: '#/components/schemas/FetchTerminalTransportsByTerminalIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2503,7 +2896,524 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalVerboseOutput'
+                  allOf:
+                    - type: object
+                      properties:
+                        TerminalID:
+                          type: integer
+                          description: Numeric ID of the terminal.
+                        TerminalSubjectID:
+                          type: integer
+                          description: Numeric ID of the terminal in the WSF subject management system.
+                        RegionID:
+                          type: integer
+                          description: Numeric ID of the geographical region where the terminal is located.
+                        TerminalName:
+                          type: string
+                          nullable: true
+                          description: Display name of the terminal.
+                        TerminalAbbrev:
+                          type: string
+                          nullable: true
+                          description: Abbreviation code for the terminal.
+                        SortSeq:
+                          type: integer
+                          description: Display sort order; lower values appear first in lists.
+                        OverheadPassengerLoading:
+                          type: boolean
+                          description: Indicator whether terminal supports overhead passenger loading from upper vehicle deck, as a boolean. E.g., true for terminals with overhead walkways like Anacortes and Bainbridge Island, false for terminals without overhead loading capability. Used to determine passenger boarding capabilities and accessibility features.
+                        Elevator:
+                          type: boolean
+                          description: Indicator whether terminal has elevator access for passengers, as a boolean. E.g., false for terminals like Anacortes and Bainbridge Island without elevators, true for terminals with elevator access. Used to determine ADA accessibility and passenger mobility accommodations.
+                        WaitingRoom:
+                          type: boolean
+                          description: Indicator whether terminal has indoor waiting room facility, as a boolean. E.g., true for terminals like Anacortes and Bainbridge Island with waiting rooms, false for terminals without waiting facilities. Used to determine passenger comfort amenities and sheltered waiting areas.
+                        FoodService:
+                          type: boolean
+                          description: Indicator whether terminal offers food service facilities, as a boolean. E.g., true for terminals like Anacortes and Bainbridge Island with galleys or cafes, false for terminals without food service. Used to determine available amenities for passengers during wait times.
+                        Restroom:
+                          type: boolean
+                          description: Indicator whether terminal has restroom facilities, as a boolean. E.g., true for terminals like Anacortes and Bainbridge Island with restrooms, false for terminals without restroom access. Used to determine passenger comfort amenities and basic facility availability.
+                      required:
+                        - TerminalID
+                        - TerminalSubjectID
+                        - RegionID
+                        - TerminalName
+                        - TerminalAbbrev
+                        - SortSeq
+                        - OverheadPassengerLoading
+                        - Elevator
+                        - WaitingRoom
+                        - FoodService
+                        - Restroom
+                      description: Base terminal information including identification, naming, regional association, and display ordering.
+                    - type: object
+                      properties:
+                        Bulletins:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              BulletinTitle:
+                                type: string
+                                nullable: true
+                                description: Title of the bulletin.
+                              BulletinText:
+                                type: string
+                                nullable: true
+                                description: HTML-formatted content of the bulletin.
+                              BulletinSortSeq:
+                                type: integer
+                                description: Display sort order for the bulletin; lower values appear first.
+                              BulletinLastUpdated:
+                                type: string
+                                nullable: true
+                                description: UTC datetime when the bulletin was last updated.
+                                format: date-time
+                              BulletinLastUpdatedSortable:
+                                type: string
+                                nullable: true
+                                description: Legacy sortable string representation of the bulletin update date.
+                                format: date-time
+                            required:
+                              - BulletinTitle
+                              - BulletinText
+                              - BulletinSortSeq
+                              - BulletinLastUpdated
+                              - BulletinLastUpdatedSortable
+                            description: Bulletin information including title, HTML content, sort order, and update date.
+                          description: Active bulletins and alerts associated with terminal, as an array of bulletin objects. E.g., array containing vehicle reservation notices for Anacortes terminal, empty array for terminals without active bulletins. Used to display important terminal information, service changes, and passenger notifications.
+                      required:
+                        - Bulletins
+                    - type: object
+                      properties:
+                        Latitude:
+                          type: number
+                          nullable: true
+                          description: Terminal latitude coordinate, in decimal degrees. E.g., 48.507351 for Anacortes terminal, 47.622339 for Bainbridge Island terminal, null when coordinate data is unavailable. Used for mapping, distance calculations, and geographic display.
+                        Longitude:
+                          type: number
+                          nullable: true
+                          description: Terminal longitude coordinate, in decimal degrees. E.g., -122.677 for Anacortes terminal, -122.509617 for Bainbridge Island terminal, null when coordinate data is unavailable. Used for mapping, distance calculations, and geographic display.
+                        AddressLineOne:
+                          type: string
+                          nullable: true
+                          description: Primary street address line for terminal location, as a street address. E.g., '2100 Ferry Terminal Road' for Anacortes terminal, '270 Olympic Drive SE' for Bainbridge Island terminal, null when address is unavailable. Used for navigation, mapping, and location identification.
+                        AddressLineTwo:
+                          type: string
+                          nullable: true
+                          description: Secondary address line for terminal location, as an address supplement. E.g., null for most terminals without suite or building numbers, present when additional address details are needed. Used for complete address formatting when available.
+                        City:
+                          type: string
+                          nullable: true
+                          description: City name where terminal is located, as a city name. E.g., 'Anacortes' for Anacortes terminal, 'Bainbridge Island' for Bainbridge Island terminal, null when city is unavailable. Used for location identification and address formatting.
+                        State:
+                          type: string
+                          nullable: true
+                          description: State abbreviation where terminal is located, as a state code. E.g., 'WA' for Washington state terminals, null when state is unavailable. Used for location identification and address formatting.
+                        ZipCode:
+                          type: string
+                          nullable: true
+                          description: Postal code for terminal location, as a zip code string. E.g., '98221' for Anacortes terminal, '98110' for Bainbridge Island terminal, null when zip code is unavailable. Used for location identification and address formatting.
+                        Country:
+                          type: string
+                          nullable: true
+                          description: Country name where terminal is located, as a country code. E.g., 'USA' for United States terminals, null when country is unavailable. Used for location identification and international address formatting.
+                        MapLink:
+                          type: string
+                          nullable: true
+                          description: URL link to external mapping service displaying terminal location, as a map URL. E.g., Google Maps link for Anacortes terminal, null when map link is unavailable. Used for providing direct navigation links to terminal location.
+                        Directions:
+                          type: string
+                          nullable: true
+                          description: Driving directions to terminal from major routes, as HTML-formatted text. E.g., directions from Interstate 5 to Anacortes terminal, null when directions are unavailable. Used for navigation assistance and route planning.
+                        DispGISZoomLoc:
+                          type: array
+                          nullable: true
+                          items:
+                            type: object
+                            properties:
+                              ZoomLevel:
+                                type: integer
+                                description: GIS zoom level for map display.
+                              Latitude:
+                                type: number
+                                nullable: true
+                                description: Latitude coordinate for this zoom level in decimal degrees.
+                              Longitude:
+                                type: number
+                                nullable: true
+                                description: Longitude coordinate for this zoom level in decimal degrees.
+                            required:
+                              - ZoomLevel
+                              - Latitude
+                              - Longitude
+                            description: GIS zoom level location information including zoom level and coordinates.
+                          description: GIS map display coordinates for terminal at various zoom levels, as an array of zoom-level coordinates. E.g., array with 18 zoom levels for Anacortes terminal, null when zoom-level data is unavailable. Used for optimized map rendering at different zoom levels.
+                      required:
+                        - Latitude
+                        - Longitude
+                        - AddressLineOne
+                        - AddressLineTwo
+                        - City
+                        - State
+                        - ZipCode
+                        - Country
+                        - MapLink
+                        - Directions
+                        - DispGISZoomLoc
+                    - type: object
+                      properties:
+                        DepartingSpaces:
+                          type: array
+                          nullable: true
+                          items:
+                            type: object
+                            properties:
+                              Departure:
+                                type: string
+                                description: Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.
+                                format: date-time
+                              IsCancelled:
+                                type: boolean
+                                description: Indicator whether departure is cancelled, as a boolean. E.g., false for active departures, true for cancelled departures. Used to determine if departure is operational.
+                              VesselID:
+                                type: integer
+                                description: Unique identifier for vessel planned to service departure, as an integer ID. E.g., '69' for Samish vessel, '38' for Yakima vessel, '17' for Kaleetan vessel. Used to identify which vessel operates departure.
+                              VesselName:
+                                type: string
+                                nullable: true
+                                description: Human-readable name of vessel planned to service departure, as a vessel name. E.g., 'Samish' for vessel 69, 'Yakima' for vessel 38, 'Kaleetan' for vessel 17, null when vessel name is unavailable. Provides vessel identification for display.
+                              MaxSpaceCount:
+                                type: integer
+                                description: Maximum vehicle capacity on vessel making departure, as an integer count. E.g., '141' for Samish vessel capacity, '139' for Yakima vessel capacity, '197' for Tacoma vessel capacity. Used to calculate space availability percentage.
+                              SpaceForArrivalTerminals:
+                                type: array
+                                nullable: true
+                                items:
+                                  type: object
+                                  properties:
+                                    TerminalID:
+                                      type: integer
+                                      description: Unique identifier for arrival terminal destination, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Used to identify destination terminal for space availability.
+                                    TerminalName:
+                                      type: string
+                                      nullable: true
+                                      description: Human-readable name of arrival terminal destination, as a terminal name. E.g., 'Anacortes -> Friday Harbor' for multi-destination sailing, 'Seattle' for single destination, null when terminal name is unavailable. Provides destination identification for display.
+                                    VesselID:
+                                      type: integer
+                                      description: Unique identifier for vessel planned to service departure, as an integer ID. E.g., '69' for Samish vessel, '38' for Yakima vessel, '17' for Kaleetan vessel. Used to identify which vessel operates departure.
+                                    VesselName:
+                                      type: string
+                                      nullable: true
+                                      description: Human-readable name of vessel planned to service departure, as a vessel name. E.g., 'Samish' for vessel 69, 'Yakima' for vessel 38, 'Kaleetan' for vessel 17, null when vessel name is unavailable. Provides vessel identification for display.
+                                    DisplayReservableSpace:
+                                      type: boolean
+                                      description: Indicator whether reservable space information should be displayed, as a boolean. E.g., true for routes supporting reservations, false for routes without reservations. Used to determine if reservation space data should be shown.
+                                    ReservableSpaceCount:
+                                      type: integer
+                                      nullable: true
+                                      description: Remaining reservable vehicle spaces available on vessel, as an integer count. E.g., '45' for 45 reservable spaces remaining, '36' for 36 reservable spaces, null when reservations are not supported or count is unavailable. Used for reservation availability display.
+                                    ReservableSpaceHexColor:
+                                      type: string
+                                      nullable: true
+                                      description: Hex color code representing reservable space availability status, as a hex color. E.g., '#FFFF00' for yellow (limited availability), '#888888' for gray (not available), null when color is unavailable. Used for visual space availability indicators.
+                                    DisplayDriveUpSpace:
+                                      type: boolean
+                                      description: Indicator whether drive-up space information should be displayed, as a boolean. E.g., true for routes with drive-up space tracking, false when drive-up space is not tracked. Used to determine if drive-up space data should be shown.
+                                    DriveUpSpaceCount:
+                                      type: integer
+                                      nullable: true
+                                      description: Remaining drive-up vehicle spaces available on vessel, as an integer count. E.g., '67' for 67 drive-up spaces remaining, '197' for 197 drive-up spaces, null when drive-up space is not tracked or count is unavailable. Used for drive-up availability display.
+                                    DriveUpSpaceHexColor:
+                                      type: string
+                                      nullable: true
+                                      description: Hex color code representing drive-up space availability status, as a hex color. E.g., '#00FF00' for green (good availability), '#FFFF00' for yellow (limited availability), null when color is unavailable. Used for visual space availability indicators.
+                                    MaxSpaceCount:
+                                      type: integer
+                                      description: Maximum vehicle capacity on vessel making departure, as an integer count. E.g., '141' for Samish vessel capacity, '139' for Yakima vessel capacity, '197' for Tacoma vessel capacity. Used to calculate space availability percentage.
+                                    ArrivalTerminalIDs:
+                                      type: array
+                                      nullable: true
+                                      items:
+                                        type: integer
+                                      description: Array of arrival terminal IDs associated with this space count set, as terminal ID integers. E.g., array containing terminal 10 for single destination, array containing terminals 13, 10 for multi-destination sailing, null when terminal IDs are unavailable. Used to identify all destinations served by this space count.
+                                  required:
+                                    - TerminalID
+                                    - TerminalName
+                                    - VesselID
+                                    - VesselName
+                                    - DisplayReservableSpace
+                                    - ReservableSpaceCount
+                                    - ReservableSpaceHexColor
+                                    - DisplayDriveUpSpace
+                                    - DriveUpSpaceCount
+                                    - DriveUpSpaceHexColor
+                                    - MaxSpaceCount
+                                    - ArrivalTerminalIDs
+                                  description: Represents space availability information for arrival terminal destination including terminal/vessel identification, reservable space count and color, drive-up space count and color, maximum capacity, and arrival terminal IDs. E.g., Friday Harbor destination with 67 drive-up spaces (green) and 141 maximum capacity on Samish vessel. Used for real-time space availability display.
+                                description: Array of space availability information for one or more arrival terminal destinations, as space for arrival terminal objects. E.g., array containing Friday Harbor destination with space counts, array containing multiple destinations for multi-destination sailing, null when space information is unavailable. Used for real-time space availability display by destination.
+                            required:
+                              - Departure
+                              - IsCancelled
+                              - VesselID
+                              - VesselName
+                              - MaxSpaceCount
+                              - SpaceForArrivalTerminals
+                            description: Represents departing space information including departure time, cancellation status, vessel details, maximum capacity, and space availability for arrival terminals. E.g., departure at 9:35 PM with Samish vessel (ID 69, capacity 141) and space information for Friday Harbor destination. Used for real-time departure space availability display.
+                          description: Most recent departure sailing space information from terminal, as an array of departing space objects. E.g., array containing vessel details, departure times, and space availability for recent sailings, null or empty when departure data is unavailable. Used for real-time sailing space tracking and capacity monitoring.
+                        IsNoFareCollected:
+                          type: boolean
+                          nullable: true
+                          description: Indicator whether terminal lacks fare collection capability, as a boolean. E.g., null for terminals like Anacortes and Bainbridge Island that collect fares, true for terminals without fare collection. Used to determine fare collection availability and terminal conditions data reliability.
+                        NoFareCollectedMsg:
+                          type: string
+                          nullable: true
+                          description: Message explaining how lack of fare collection affects terminal conditions data, as a notification message. E.g., null for terminals with fare collection, present when terminal cannot collect fares. Used to inform users about data limitations for terminals without fare collection.
+                      required:
+                        - IsNoFareCollected
+                        - NoFareCollectedMsg
+                    - type: object
+                      properties:
+                        ParkingInfo:
+                          type: string
+                          nullable: true
+                          description: Parking availability, rates, and policies for terminal, as HTML-formatted text. E.g., parking rates and payment options for Anacortes terminal, null when parking information is unavailable. Used for parking planning and cost estimation.
+                        ParkingShuttleInfo:
+                          type: string
+                          nullable: true
+                          description: Information about shuttle services connecting parking areas to terminal, as HTML-formatted text. E.g., null for terminals without parking shuttles, present when parking shuttles are available. Used for planning parking and terminal access.
+                        AirportInfo:
+                          type: string
+                          nullable: true
+                          description: Driving directions and travel time from airport to terminal, as HTML-formatted text. E.g., directions from Sea-Tac Airport to Anacortes terminal, null when airport information is unavailable. Used for airport-to-terminal route planning.
+                        AirportShuttleInfo:
+                          type: string
+                          nullable: true
+                          description: Information about shuttle services connecting airport to terminal, as HTML-formatted text. E.g., Bellair Airporter service information for Anacortes terminal, null when airport shuttles are unavailable. Used for airport-to-terminal transportation planning.
+                        MotorcycleInfo:
+                          type: string
+                          nullable: true
+                          description: Motorcycle staging, loading, and fare information for terminal, as HTML-formatted text. E.g., motorcycle loading procedures and staging areas for Anacortes terminal, null when motorcycle information is unavailable. Used for motorcycle rider planning and terminal procedures.
+                        TruckInfo:
+                          type: string
+                          nullable: true
+                          description: Truck requirements, oversized vehicle approval, and loading information for terminal, as HTML-formatted text. E.g., overweight vehicle travel approval requirements for Anacortes terminal, null when truck information is unavailable. Used for commercial vehicle planning and compliance.
+                        BikeInfo:
+                          type: string
+                          nullable: true
+                          description: Bicycle staging, loading procedures, and fare information for terminal, as HTML-formatted text. E.g., bicycle loading procedures and rack availability for Anacortes terminal, null when bicycle information is unavailable. Used for bicycle rider planning and terminal procedures.
+                        TrainInfo:
+                          type: string
+                          nullable: true
+                          description: Train service information connecting to terminal, as HTML-formatted text. E.g., null for terminals without train service, present when train connections are available. Used for multimodal transportation planning.
+                        TaxiInfo:
+                          type: string
+                          nullable: true
+                          description: Taxi service information for terminal, as HTML-formatted text. E.g., null for terminals without taxi information, present when taxi services are documented. Used for local transportation planning.
+                        HovInfo:
+                          type: string
+                          nullable: true
+                          description: Carpool and vanpool information including preferential loading requirements, as HTML-formatted text. E.g., carpool registration and loading procedures for Bainbridge Island terminal, null when HOV information is unavailable. Used for rideshare planning and preferential loading coordination.
+                        TransitLinks:
+                          type: array
+                          nullable: true
+                          items:
+                            type: object
+                            properties:
+                              LinkURL:
+                                type: string
+                                nullable: true
+                                description: URL to transit agency website or service page, as a transit URL. E.g., 'http://www.skagittransit.org/' for Skagit Transit, 'http://www.kitsaptransit.com/service/routed-buses' for Kitsap Transit, null when transit link is unavailable. Used for accessing transit agency information.
+                              LinkName:
+                                type: string
+                                nullable: true
+                                description: Human-readable name of transit agency, as a transit agency name. E.g., 'Skagit Transit' for Skagit Transit agency, 'Kitsap Transit' for Kitsap Transit agency, null when transit name is unavailable. Provides transit agency identification for display.
+                              SortSeq:
+                                type: integer
+                                nullable: true
+                                description: Preferred sort order for transit link display, as an integer. E.g., null when sort order is not specified. Lower values appear first when sorting transit links in ascending order. Used for transit link display ordering.
+                            required:
+                              - LinkURL
+                              - LinkName
+                              - SortSeq
+                            description: Represents transit link information including transit agency URL, name, and sort order. E.g., Skagit Transit link (http://www.skagittransit.org/). Used for displaying transit agency connections and links.
+                          description: Links to transit agencies providing service to terminal, as an array of transit link objects. E.g., array containing Skagit Transit link for Anacortes terminal, Kitsap Transit link for Bainbridge Island terminal, null or empty when no transit links are available. Used for multimodal transportation planning and transit connection information.
+                      required:
+                        - ParkingInfo
+                        - ParkingShuttleInfo
+                        - AirportInfo
+                        - AirportShuttleInfo
+                        - MotorcycleInfo
+                        - TruckInfo
+                        - BikeInfo
+                        - TrainInfo
+                        - TaxiInfo
+                        - HovInfo
+                        - TransitLinks
+                    - type: object
+                      properties:
+                        WaitTimes:
+                          type: array
+                          nullable: true
+                          items:
+                            type: object
+                            properties:
+                              RouteID:
+                                type: integer
+                                nullable: true
+                                description: Numeric ID of the route associated with the wait time.
+                              RouteName:
+                                type: string
+                                nullable: true
+                                description: Display name of the route associated with the wait time.
+                              WaitTimeNotes:
+                                type: string
+                                nullable: true
+                                description: Text notes detailing wait time conditions and tips for vehicles and passengers.
+                                format: date-time
+                              WaitTimeLastUpdated:
+                                type: string
+                                nullable: true
+                                description: UTC datetime when the wait time information was last updated.
+                                format: date-time
+                              WaitTimeIVRNotes:
+                                type: string
+                                nullable: true
+                                description: Wait time notes formatted for Interactive Voice Response systems.
+                                format: date-time
+                            required:
+                              - RouteID
+                              - RouteName
+                              - WaitTimeNotes
+                              - WaitTimeLastUpdated
+                              - WaitTimeIVRNotes
+                            description: Wait time information including route association, notes, IVR notes, and update date.
+                          description: Current wait time information and arrival recommendations for terminal, as an array of wait time objects. E.g., array containing vehicle reservation requirements and arrival time recommendations for Anacortes terminal, null when wait time data is unavailable. Used for trip planning and arrival time guidance.
+                      required:
+                        - WaitTimes
+                    - type: object
+                      properties:
+                        RealtimeIntroMsg:
+                          type: string
+                          nullable: true
+                          description: Introductory message explaining real-time terminal conditions data display, as HTML-formatted text. E.g., message about approximate vehicle spaces available in holding area for Anacortes terminal, null when intro message is unavailable. Used to provide context for real-time conditions data.
+                          format: date-time
+                        AdditionalInfo:
+                          type: string
+                          nullable: true
+                          description: Additional terminal information including hours, services, and general details, as HTML-formatted text. E.g., passenger booth hours and kiosk information for Anacortes terminal, null when additional information is unavailable. Used for comprehensive terminal information display.
+                        LostAndFoundInfo:
+                          type: string
+                          nullable: true
+                          description: Lost and found procedures, contact information, and retention policies for terminal, as HTML-formatted text. E.g., lost and found location and contact details for Anacortes terminal, null when lost and found information is unavailable. Used for lost item reporting and retrieval.
+                        SecurityInfo:
+                          type: string
+                          nullable: true
+                          description: Security plan information and safety policies for terminal, as HTML-formatted text. E.g., U.S. Coast Guard approved security plan information, null when security information is unavailable. Used for security awareness and compliance information.
+                        ConstructionInfo:
+                          type: string
+                          nullable: true
+                          description: Ongoing or planned construction activities affecting terminal, as HTML-formatted text. E.g., null for terminals without active construction, present when construction impacts terminal operations. Used for construction impact awareness and trip planning.
+                        FoodServiceInfo:
+                          type: string
+                          nullable: true
+                          description: Food service hours, locations, and availability for terminal, as HTML-formatted text. E.g., galley hours and cafe information for Anacortes terminal, null when food service information is unavailable. Used for meal planning and food service availability.
+                        AdaInfo:
+                          type: string
+                          nullable: true
+                          description: ADA accessibility features, elevator access, and accommodation information for terminal, as HTML-formatted text. E.g., overhead passenger ramp and elevator access information for Anacortes terminal, null when ADA information is unavailable. Used for accessibility planning and accommodation requests.
+                        FareDiscountInfo:
+                          type: string
+                          nullable: true
+                          description: Fare discount programs, eligibility requirements, and purchase information for terminal, as HTML-formatted text. E.g., senior and youth fare information for Anacortes terminal, null when fare discount information is unavailable. Used for fare planning and discount eligibility.
+                        TallySystemInfo:
+                          type: string
+                          nullable: true
+                          description: Tally system information for terminal operations, as HTML-formatted text. E.g., null for terminals without tally system documentation, present when tally system information is available. Used for operational information and system documentation.
+                        ChamberOfCommerce:
+                          type: object
+                          nullable: true
+                          properties:
+                            LinkURL:
+                              type: string
+                              nullable: true
+                              description: URL link to local chamber of commerce website, as a web URL. E.g., 'http://www.anacortes.org' for Anacortes Chamber of Commerce, null when chamber link is unavailable. Used for local business and visitor information.
+                            LinkName:
+                              type: string
+                              nullable: true
+                              description: Display name for local chamber of commerce, as a chamber name. E.g., 'Chamber of Commerce' for Anacortes, 'Bainbridge Island Chamber of Commerce' for Bainbridge Island, null when chamber name is unavailable. Used for display and identification.
+                            SortSeq:
+                              type: integer
+                              nullable: true
+                              description: Preferred display sort order for chamber of commerce link, as an integer sequence number. E.g., null for default sorting, numeric value when specific sort order is required. Used for controlling link display order.
+                          required:
+                            - LinkURL
+                            - LinkName
+                            - SortSeq
+                          description: Chamber of commerce information including link URL, name, and sort order for terminal, as a chamber object. E.g., object with Anacortes Chamber of Commerce link, null when chamber information is unavailable. Used for local business and visitor information.
+                        FacInfo:
+                          type: string
+                          nullable: true
+                          description: Facility advisory committee contact information for terminal, as HTML-formatted text. E.g., Ferry Advisory Committee contact information, null when facility information is unavailable. Used for community participation and feedback.
+                        ResourceStatus:
+                          type: string
+                          nullable: true
+                          description: Resource status information for terminal operations, as a status string. E.g., null for terminals without resource status documentation, present when resource status information is available. Used for operational status tracking.
+                        TypeDesc:
+                          type: string
+                          nullable: true
+                          description: Terminal type classification description, as a type string. E.g., 'Passenger and Car' for terminals like Anacortes and Bainbridge Island, null when type description is unavailable. Used for terminal classification and display.
+                        REALTIME_SHUTOFF_FLAG:
+                          type: boolean
+                          description: Indicator whether real-time conditions data is disabled for terminal, as a boolean. E.g., false for terminals with active real-time data, true when real-time data is shut off. Used to determine real-time data availability.
+                        REALTIME_SHUTOFF_MESSAGE:
+                          type: string
+                          nullable: true
+                          description: Message explaining why real-time conditions data is unavailable, as a status message. E.g., 'The Real-Time Conditions are unavailable due to technical difficulties' for terminals with shutoff flag true, null when real-time data is available. Used to inform users about real-time data status.
+                          format: date-time
+                        VisitorLinks:
+                          type: array
+                          nullable: true
+                          items:
+                            type: object
+                            properties:
+                              LinkURL:
+                                type: string
+                                nullable: true
+                                description: URL to transit agency website or service page, as a transit URL. E.g., 'http://www.skagittransit.org/' for Skagit Transit, 'http://www.kitsaptransit.com/service/routed-buses' for Kitsap Transit, null when transit link is unavailable. Used for accessing transit agency information.
+                              LinkName:
+                                type: string
+                                nullable: true
+                                description: Human-readable name of transit agency, as a transit agency name. E.g., 'Skagit Transit' for Skagit Transit agency, 'Kitsap Transit' for Kitsap Transit agency, null when transit name is unavailable. Provides transit agency identification for display.
+                              SortSeq:
+                                type: integer
+                                nullable: true
+                                description: Preferred sort order for transit link display, as an integer. E.g., null when sort order is not specified. Lower values appear first when sorting transit links in ascending order. Used for transit link display ordering.
+                            required:
+                              - LinkURL
+                              - LinkName
+                              - SortSeq
+                            description: Represents transit link information including transit agency URL, name, and sort order. E.g., Skagit Transit link (http://www.skagittransit.org/). Used for displaying transit agency connections and links.
+                          description: Links to visitor information and tourism resources for terminal area, as an array of visitor link objects. E.g., empty array for terminals without visitor links, array with tourism resources when available. Used for visitor information and local attractions.
+                      required:
+                        - RealtimeIntroMsg
+                        - AdditionalInfo
+                        - LostAndFoundInfo
+                        - SecurityInfo
+                        - ConstructionInfo
+                        - FoodServiceInfo
+                        - AdaInfo
+                        - FareDiscountInfo
+                        - TallySystemInfo
+                        - ChamberOfCommerce
+                        - FacInfo
+                        - ResourceStatus
+                        - TypeDesc
+                        - REALTIME_SHUTOFF_FLAG
+                        - REALTIME_SHUTOFF_MESSAGE
+                        - VisitorLinks
+                  description: Comprehensive terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2652,15 +3562,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalVerboseByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalVerboseOutput'
+                $ref: '#/components/schemas/FetchTerminalVerboseByTerminalIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2827,7 +3735,74 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: integer
+                      description: Numeric ID of the terminal.
+                    TerminalSubjectID:
+                      type: integer
+                      description: Numeric ID of the terminal in the WSF subject management system.
+                    RegionID:
+                      type: integer
+                      description: Numeric ID of the geographical region where the terminal is located.
+                    TerminalName:
+                      type: string
+                      nullable: true
+                      description: Display name of the terminal.
+                    TerminalAbbrev:
+                      type: string
+                      nullable: true
+                      description: Abbreviation code for the terminal.
+                    SortSeq:
+                      type: integer
+                      description: Display sort order; lower values appear first in lists.
+                    WaitTimes:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          RouteID:
+                            type: integer
+                            nullable: true
+                            description: Numeric ID of the route associated with the wait time.
+                          RouteName:
+                            type: string
+                            nullable: true
+                            description: Display name of the route associated with the wait time.
+                          WaitTimeNotes:
+                            type: string
+                            nullable: true
+                            description: Text notes detailing wait time conditions and tips for vehicles and passengers.
+                            format: date-time
+                          WaitTimeLastUpdated:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the wait time information was last updated.
+                            format: date-time
+                          WaitTimeIVRNotes:
+                            type: string
+                            nullable: true
+                            description: Wait time notes formatted for Interactive Voice Response systems.
+                            format: date-time
+                        required:
+                          - RouteID
+                          - RouteName
+                          - WaitTimeNotes
+                          - WaitTimeLastUpdated
+                          - WaitTimeIVRNotes
+                        description: Wait time information including route association, notes, IVR notes, and update date.
+                      description: Array of wait time information associated with the terminal.
+                  required:
+                    - TerminalID
+                    - TerminalSubjectID
+                    - RegionID
+                    - TerminalName
+                    - TerminalAbbrev
+                    - SortSeq
+                    - WaitTimes
+                  description: Terminal wait time information including terminal identification and wait time list.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2865,15 +3840,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+                $ref: '#/components/schemas/FetchTerminalWaitTimesByTerminalIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response

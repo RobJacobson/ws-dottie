@@ -77,7 +77,8 @@
           },
           "ReadingTime": {
             "type": "string",
-            "description": "UTC datetime when the weather reading was taken."
+            "description": "UTC datetime when the weather reading was taken.",
+            "format": "date-time"
           },
           "RelativeHumidity": {
             "type": "number",
@@ -195,7 +196,8 @@
                       },
                       "ReadingTime": {
                         "type": "string",
-                        "description": "UTC datetime when the weather reading was taken."
+                        "description": "UTC datetime when the weather reading was taken.",
+                        "format": "date-time"
                       },
                       "RelativeHumidity": {
                         "type": "number",
@@ -391,7 +393,8 @@
                       },
                       "ReadingTime": {
                         "type": "string",
-                        "description": "UTC datetime when the weather reading was taken."
+                        "description": "UTC datetime when the weather reading was taken.",
+                        "format": "date-time"
                       },
                       "RelativeHumidity": {
                         "type": "number",
@@ -537,7 +540,8 @@
                       },
                       "ReadingTime": {
                         "type": "string",
-                        "description": "UTC datetime when the weather reading was taken."
+                        "description": "UTC datetime when the weather reading was taken.",
+                        "format": "date-time"
                       },
                       "RelativeHumidity": {
                         "type": "number",

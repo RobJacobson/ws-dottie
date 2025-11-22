@@ -40,58 +40,6 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchBorderCrossingsOutput:
-      type: object
-      properties:
-        BorderCrossingLocation:
-          type: object
-          nullable: true
-          properties:
-            Description:
-              type: string
-              nullable: true
-              description: Human-readable description of the roadway location, such as interchange names or cross streets.
-            Direction:
-              type: string
-              nullable: true
-              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
-            Latitude:
-              type: number
-              description: Latitude of the roadway location in decimal degrees.
-            Longitude:
-              type: number
-              description: Longitude of the roadway location in decimal degrees.
-            MilePost:
-              type: number
-              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
-            RoadName:
-              type: string
-              nullable: true
-              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
-          required:
-            - Description
-            - Direction
-            - Latitude
-            - Longitude
-            - MilePost
-            - RoadName
-          description: Roadway location of the border crossing, including route, milepost, and coordinates, or null when location data is not provided for this lane.
-        CrossingName:
-          type: string
-          nullable: true
-          description: Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable.
-        Time:
-          type: string
-          description: UTC datetime when this border crossing wait time observation was recorded.
-        WaitTime:
-          type: integer
-          description: Current estimated wait time for this crossing in minutes; -1 when a wait time is not available.
-      required:
-        - BorderCrossingLocation
-        - CrossingName
-        - Time
-        - WaitTime
-      description: Border crossing wait-time record for a Washington crossing into Canada, including location, crossing code, observation time, and wait time in minutes.
   parameters: {}
 paths:
   /GetBorderCrossingsAsJson:
@@ -119,7 +67,58 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchBorderCrossingsOutput'
+                  type: object
+                  properties:
+                    BorderCrossingLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location of the border crossing, including route, milepost, and coordinates, or null when location data is not provided for this lane.
+                    CrossingName:
+                      type: string
+                      nullable: true
+                      description: Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable.
+                    Time:
+                      type: string
+                      description: UTC datetime when this border crossing wait time observation was recorded.
+                      format: date-time
+                    WaitTime:
+                      type: integer
+                      description: Current estimated wait time for this crossing in minutes; -1 when a wait time is not available.
+                  required:
+                    - BorderCrossingLocation
+                    - CrossingName
+                    - Time
+                    - WaitTime
+                  description: Border crossing wait-time record for a Washington crossing into Canada, including location, crossing code, observation time, and wait time in minutes.
               examples:
                 sampleResponse:
                   summary: Sample response

@@ -40,267 +40,11 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchActiveSeasonsOutput:
-      type: object
-      properties:
-        ScheduleID:
-          type: number
-          description: Numeric ID of the schedule season.
-        ScheduleName:
-          type: string
-          description: Display name of the schedule season.
-        ScheduleSeason:
-          anyOf:
-            - type: number
-              enum:
-                - 0
-            - type: number
-              enum:
-                - 1
-            - type: number
-              enum:
-                - 2
-            - type: number
-              enum:
-                - 3
-          description: 'Code indicating season: 0 = Spring, 1 = Summer, 2 = Fall, 3 = Winter.'
-        SchedulePDFUrl:
-          type: string
-          description: URL to printable schedule PDF document.
-        ScheduleStart:
-          type: string
-          description: UTC datetime when the schedule season becomes effective (typically 3:00 AM).
-        ScheduleEnd:
-          type: string
-          description: UTC datetime when the schedule season stops being effective (typically 2:59 AM next day).
-      required:
-        - ScheduleID
-        - ScheduleName
-        - ScheduleSeason
-        - SchedulePDFUrl
-        - ScheduleStart
-        - ScheduleEnd
-      description: Schedule season information including identifier, name, season code, PDF URL, and effective date range.
-    FetchSailingsByRouteIDOutput:
-      type: object
-      properties:
-        ScheduleID:
-          type: number
-          description: Numeric ID of the schedule season this sailing belongs to.
-        SchedRouteID:
-          type: number
-          description: Numeric ID of the scheduled route this sailing belongs to.
-        RouteID:
-          type: number
-          description: Numeric ID of the underlying route for sailing.
-        SailingID:
-          type: number
-          description: Numeric ID of the sailing.
-        SailingDescription:
-          type: string
-          nullable: true
-          description: Human-readable title describing sailing, or null if unavailable.
-        SailingNotes:
-          type: string
-          nullable: true
-          description: Informational text associated with sailing, or null if unavailable.
-        DisplayColNum:
-          type: number
-          description: Suggested number of columns for rendering departures on desktop webpage.
-        SailingDir:
-          anyOf:
-            - type: number
-              enum:
-                - 1
-            - type: number
-              enum:
-                - 2
-          description: 'Code indicating direction: 1 = Westbound, 2 = Eastbound.'
-        DayOpDescription:
-          type: string
-          nullable: true
-          description: Days of operation grouping for sailing, or null if unavailable.
-        DayOpUseForHoliday:
-          type: boolean
-          description: True if sailing should apply for holidays; otherwise false.
-        ActiveDateRanges:
-          type: array
-          nullable: true
-          items:
-            type: object
-            properties:
-              DateFrom:
-                type: string
-                description: UTC datetime when the sailing date range becomes active (typically 3:00 AM).
-              DateThru:
-                type: string
-                description: UTC datetime when the sailing date range stops being active (typically 2:59 AM next day).
-              EventID:
-                type: number
-                nullable: true
-                description: Numeric ID of the event associated with sailing date range, or null if none.
-              EventDescription:
-                type: string
-                nullable: true
-                description: Human-readable explanation of sailing date range, or null if unavailable.
-            required:
-              - DateFrom
-              - DateThru
-              - EventID
-              - EventDescription
-            description: Active date range for sailing including start/end dates, event ID, and description.
-          description: Array of date ranges detailing when sailing is active, or null if unavailable.
-        Journs:
-          type: array
-          nullable: true
-          items:
-            type: object
-            properties:
-              JourneyID:
-                type: number
-                description: Numeric ID of the journey.
-              ReservationInd:
-                type: boolean
-                description: True if journey contains reservable departures; otherwise false.
-              InternationalInd:
-                type: boolean
-                description: True if journey travels outside United States; otherwise false.
-              InterislandInd:
-                type: boolean
-                description: True if journey operates primarily between islands; otherwise false.
-              VesselID:
-                type: number
-                description: Numeric ID of the vessel planned to service journey.
-              VesselName:
-                type: string
-                nullable: true
-                description: Display name of the vessel, or null if unavailable.
-              VesselHandicapAccessible:
-                type: boolean
-                description: True if vessel is ADA accessible; otherwise false.
-              VesselPositionNum:
-                type: number
-                description: Position number representing vessel servicing all stops in journey.
-              TerminalTimes:
-                type: array
-                nullable: true
-                items:
-                  type: object
-                  properties:
-                    JourneyTerminalID:
-                      type: number
-                      description: Numeric ID of the terminal time within journey.
-                    TerminalID:
-                      type: number
-                      description: Numeric ID of the terminal.
-                    TerminalDescription:
-                      type: string
-                      nullable: true
-                      description: Display name of the terminal, or null if unavailable.
-                    TerminalBriefDescription:
-                      type: string
-                      nullable: true
-                      description: Brief name for terminal, or null if unavailable.
-                    Time:
-                      type: string
-                      nullable: true
-                      description: 'Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal.'
-                    DepArrIndicator:
-                      anyOf:
-                        - type: number
-                          enum:
-                            - 1
-                        - type: number
-                          enum:
-                            - 2
-                        - nullable: true
-                      description: 'Code indicating stop type: 1 = Departure, 2 = Arrival. Null if journey does not stop at terminal.'
-                    IsNA:
-                      type: boolean
-                      description: True if journey does not interact with this terminal (skips it); otherwise false.
-                    Annotations:
-                      type: array
-                      nullable: true
-                      items:
-                        type: object
-                        properties:
-                          AnnotationID:
-                            type: number
-                            description: Numeric ID of the annotation.
-                          AnnotationText:
-                            type: string
-                            nullable: true
-                            description: Human-readable annotation content, or null if unavailable.
-                          AnnotationIVRText:
-                            type: string
-                            nullable: true
-                            description: Annotation text formatted for Interactive Voice Response systems, or null if unavailable.
-                          AdjustedCrossingTime:
-                            type: number
-                            nullable: true
-                            description: Adjusted crossing time override in minutes, or null if no override.
-                          AnnotationImg:
-                            type: string
-                            nullable: true
-                            description: URL to image representing annotation, or null if unavailable.
-                          TypeDescription:
-                            type: string
-                            nullable: true
-                            description: Logical grouping category for annotation, or null if unavailable.
-                          SortSeq:
-                            type: number
-                            description: Display sort order; lower values appear first.
-                        required:
-                          - AnnotationID
-                          - AnnotationText
-                          - AnnotationIVRText
-                          - AdjustedCrossingTime
-                          - AnnotationImg
-                          - TypeDescription
-                          - SortSeq
-                        description: Annotation information including ID, text, IVR text, crossing time override, image URL, type, and sort order.
-                      description: Array of informational annotations associated with terminal time, or null if none.
-                  required:
-                    - JourneyTerminalID
-                    - TerminalID
-                    - TerminalDescription
-                    - TerminalBriefDescription
-                    - Time
-                    - DepArrIndicator
-                    - IsNA
-                    - Annotations
-                  description: Terminal time information within journey including terminal identification, time, indicator, skip flag, and annotations.
-                description: Array of terminal departures and arrivals made by same vessel, or null if unavailable.
-            required:
-              - JourneyID
-              - ReservationInd
-              - InternationalInd
-              - InterislandInd
-              - VesselID
-              - VesselName
-              - VesselHandicapAccessible
-              - VesselPositionNum
-              - TerminalTimes
-            description: Journey information including ID, indicators, vessel details, and terminal times.
-          description: Array of journeys representing vessel stops at terminals, or null if unavailable.
-      required:
-        - ScheduleID
-        - SchedRouteID
-        - RouteID
-        - SailingID
-        - SailingDescription
-        - SailingNotes
-        - DisplayColNum
-        - SailingDir
-        - DayOpDescription
-        - DayOpUseForHoliday
-        - ActiveDateRanges
-        - Journs
-      description: Sailing information including IDs, description, direction, days of operation, holiday flag, active date ranges, and journeys.
     FetchCacheFlushDateScheduleOutput:
       type: string
       description: UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.
-    FetchRouteDetailsByTripDateOutput:
+      format: date-time
+    FetchRouteDetailsByTripDateAndRouteIdOutput:
       type: object
       properties:
         RouteID:
@@ -333,6 +77,7 @@ components:
           type: string
           nullable: true
           description: Estimated crossing time in minutes as string, or null if unavailable.
+          format: date-time
         AdaNotes:
           type: string
           nullable: true
@@ -363,6 +108,7 @@ components:
                 type: string
                 nullable: true
                 description: UTC datetime when the alert was published.
+                format: date-time
               AlertDescription:
                 type: string
                 nullable: true
@@ -409,160 +155,6 @@ components:
         - SeasonalRouteNotes
         - Alerts
       description: Detailed route information including identification, flags, crossing time, notes, and alerts.
-    FetchRoutesByTripDateOutput:
-      type: object
-      properties:
-        RouteID:
-          type: number
-          description: Numeric ID of the route.
-        RouteAbbrev:
-          type: string
-          nullable: true
-          description: Route abbreviation code for compact identification.
-        Description:
-          type: string
-          nullable: true
-          description: Display name of the route.
-        RegionID:
-          type: number
-          description: Numeric ID of the WSF region associated with route.
-        ServiceDisruptions:
-          type: array
-          nullable: true
-          items:
-            type: object
-            properties:
-              BulletinID:
-                type: number
-                description: Numeric ID of the service disruption bulletin.
-              BulletinFlag:
-                type: boolean
-                description: True if alert is also used as bulletin; otherwise false.
-              PublishDate:
-                type: string
-                nullable: true
-                description: UTC datetime when the disruption alert was published.
-              DisruptionDescription:
-                type: string
-                description: Text description of the service disruption.
-            required:
-              - BulletinID
-              - BulletinFlag
-              - PublishDate
-              - DisruptionDescription
-            description: Service disruption information including bulletin ID, flag, publish date, and description.
-          description: Array of service disruption alerts currently affecting route, or null if unavailable.
-      required:
-        - RouteID
-        - RouteAbbrev
-        - Description
-        - RegionID
-        - ServiceDisruptions
-      description: Basic route information including identification, abbreviation, description, region, and service disruptions.
-    FetchRoutesHavingServiceDisruptionsByTripDateOutput:
-      type: object
-      properties:
-        BulletinID:
-          type: number
-          description: Numeric ID of the service disruption bulletin.
-        BulletinFlag:
-          type: boolean
-          description: True if alert is also used as bulletin; otherwise false.
-        PublishDate:
-          type: string
-          nullable: true
-          description: UTC datetime when the disruption alert was published.
-        DisruptionDescription:
-          type: string
-          description: Text description of the service disruption.
-      required:
-        - BulletinID
-        - BulletinFlag
-        - PublishDate
-        - DisruptionDescription
-      description: Service disruption information including bulletin ID, flag, publish date, and description.
-    FetchScheduleAlertsOutput:
-      type: object
-      properties:
-        BulletinID:
-          type: number
-          description: Numeric ID of the alert bulletin.
-        BulletinFlag:
-          type: boolean
-          description: True if alert includes bulletin-formatted text; otherwise false.
-        BulletinText:
-          type: string
-          nullable: true
-          description: HTML-formatted alert text for bulletin display.
-        CommunicationFlag:
-          type: boolean
-          description: True if alert includes communications announcement text; otherwise false.
-        CommunicationText:
-          type: string
-          nullable: true
-          description: Alert text formatted for internal communications.
-        RouteAlertFlag:
-          type: boolean
-          description: True if alert includes route announcement text; otherwise false.
-        RouteAlertText:
-          type: string
-          nullable: true
-          description: Compact route-specific alert text for route displays.
-        HomepageAlertText:
-          type: string
-          nullable: true
-          description: HTML-formatted alert text for homepage display.
-        PublishDate:
-          type: string
-          nullable: true
-          description: UTC datetime when the alert was published.
-        DisruptionDescription:
-          type: string
-          nullable: true
-          description: Service disruption description associated with alert.
-        AllRoutesFlag:
-          type: boolean
-          description: True if alert affects all routes system-wide; otherwise false.
-        SortSeq:
-          type: number
-          description: Display sort order; lower values appear first in lists.
-        AlertTypeID:
-          type: number
-          description: Numeric ID of the alert type category.
-        AlertType:
-          type: string
-          description: Display name of the alert type category.
-        AlertFullTitle:
-          type: string
-          description: Full title of the alert for display.
-        AffectedRouteIDs:
-          type: array
-          items:
-            type: number
-          description: Array of route IDs affected by this alert; empty if all routes.
-        IVRText:
-          type: string
-          nullable: true
-          description: Alert text formatted for Interactive Voice Response systems.
-      required:
-        - BulletinID
-        - BulletinFlag
-        - BulletinText
-        - CommunicationFlag
-        - CommunicationText
-        - RouteAlertFlag
-        - RouteAlertText
-        - HomepageAlertText
-        - PublishDate
-        - DisruptionDescription
-        - AllRoutesFlag
-        - SortSeq
-        - AlertTypeID
-        - AlertType
-        - AlertFullTitle
-        - AffectedRouteIDs
-        - IVRText
-      description: Detailed alert information with multiple text formats, publish date, alert type, and affected routes.
     FetchScheduleByTripDateAndRouteIdOutput:
       type: object
       properties:
@@ -593,9 +185,11 @@ components:
         ScheduleStart:
           type: string
           description: UTC datetime when the schedule season becomes effective.
+          format: date-time
         ScheduleEnd:
           type: string
           description: UTC datetime when the schedule season stops being effective.
+          format: date-time
         AllRoutes:
           type: array
           items:
@@ -612,6 +206,7 @@ components:
               DepartingTerminalName:
                 type: string
                 description: Display name of the departing terminal.
+                format: date-time
               ArrivingTerminalID:
                 type: number
                 description: Numeric ID of the arriving terminal.
@@ -634,10 +229,12 @@ components:
                     DepartingTime:
                       type: string
                       description: UTC datetime of the departure.
+                      format: date-time
                     ArrivingTime:
                       type: string
                       nullable: true
                       description: UTC datetime of the arrival.
+                      format: date-time
                     LoadingRule:
                       anyOf:
                         - type: number
@@ -710,705 +307,22 @@ components:
         - AllRoutes
         - TerminalCombos
       description: Complete schedule information including season details, routes, and terminal combination schedules with departure times.
-    FetchScheduledRoutesOutput:
-      type: object
-      properties:
-        ScheduleID:
-          type: number
-          description: Numeric ID of the schedule season.
-        SchedRouteID:
-          type: number
-          description: Numeric ID of the scheduled route.
-        ContingencyOnly:
-          type: boolean
-          description: True if this is a contingency-only route active only during periods in ContingencyAdj; otherwise false. For contingency routes, ContingencyAdj defines active periods. For regular routes, ContingencyAdj may define cancellation periods.
-        RouteID:
-          type: number
-          description: Numeric ID of the underlying route.
-        RouteAbbrev:
-          type: string
-          description: Abbreviation code for the route.
-        Description:
-          type: string
-          description: Display name of the scheduled route.
-        SeasonalRouteNotes:
-          type: string
-          nullable: true
-          description: HTML-formatted seasonal notes and special conditions.
-        RegionID:
-          type: number
-          description: Numeric ID of the WSF region for this route.
-        ServiceDisruptions:
-          type: array
-          items:
-            type: object
-            properties:
-              BulletinID:
-                type: number
-                description: Numeric ID of the service disruption bulletin.
-              BulletinFlag:
-                type: boolean
-                description: True if alert is also used as bulletin; otherwise false.
-              PublishDate:
-                type: string
-                nullable: true
-                description: UTC datetime when the disruption alert was published.
-              DisruptionDescription:
-                type: string
-                description: Text description of the service disruption.
-            required:
-              - BulletinID
-              - BulletinFlag
-              - PublishDate
-              - DisruptionDescription
-            description: Service disruption information affecting this scheduled route.
-          description: Array of service disruption alerts currently affecting this route.
-        ContingencyAdj:
-          type: array
-          items:
-            type: object
-            properties:
-              DateFrom:
-                type: string
-                description: UTC datetime when the contingency adjustment period starts.
-              DateThru:
-                type: string
-                description: UTC datetime when the contingency adjustment period ends.
-              EventID:
-                type: number
-                nullable: true
-                description: Numeric ID of the event prompting this adjustment.
-              EventDescription:
-                type: string
-                nullable: true
-                description: Description of the event that prompted this adjustment.
-              AdjType:
-                anyOf:
-                  - type: number
-                    enum:
-                      - 1
-                  - type: number
-                    enum:
-                      - 2
-                description: 'Code indicating adjustment type: 1 = Addition, 2 = Cancellation.'
-              ReplacedBySchedRouteID:
-                type: number
-                nullable: true
-                description: Numeric ID of the scheduled route replacing a cancelled route.
-            required:
-              - DateFrom
-              - DateThru
-              - EventID
-              - EventDescription
-              - AdjType
-              - ReplacedBySchedRouteID
-            description: Contingency adjustment defining service periods for contingency routes or cancellation periods for regular routes.
-          description: Array of contingency adjustments. For contingency routes, defines active periods. For regular routes, may define cancellation periods.
-      required:
-        - ScheduleID
-        - SchedRouteID
-        - ContingencyOnly
-        - RouteID
-        - RouteAbbrev
-        - Description
-        - SeasonalRouteNotes
-        - RegionID
-        - ServiceDisruptions
-        - ContingencyAdj
-      description: Scheduled route information including schedule and route IDs, contingency flag, route details, seasonal notes, region, service disruptions, and contingency adjustments.
     FetchScheduleValidDateRangeOutput:
       type: object
       properties:
         DateFrom:
           type: string
           description: UTC datetime when data becomes available (earliest valid trip date).
+          format: date-time
         DateThru:
           type: string
           description: UTC datetime when data stops being available (latest valid trip date).
+          format: date-time
       required:
         - DateFrom
         - DateThru
       description: Date range for which fares data is currently published and available.
-    FetchTerminalMatesScheduleOutput:
-      type: object
-      properties:
-        TerminalID:
-          type: number
-          description: Numeric ID of the terminal.
-        Description:
-          type: string
-          description: Display name of the terminal.
-      required:
-        - TerminalID
-        - Description
-      description: Terminal information with identifier and display name.
-    FetchTerminalsAndMatesOutput:
-      type: object
-      properties:
-        DepartingTerminalID:
-          type: number
-          description: Numeric ID of the departing terminal.
-        DepartingDescription:
-          type: string
-          description: Display name of the departing terminal.
-        ArrivingTerminalID:
-          type: number
-          description: Numeric ID of the arriving terminal.
-        ArrivingDescription:
-          type: string
-          description: Display name of the arriving terminal.
-      required:
-        - DepartingTerminalID
-        - DepartingDescription
-        - ArrivingTerminalID
-        - ArrivingDescription
-      description: Terminal pair representing a valid departure and arrival terminal combination for schedule queries.
-    FetchTimeAdjustmentsOutput:
-      type: object
-      properties:
-        ScheduleID:
-          type: number
-          description: Numeric ID of the schedule season.
-        SchedRouteID:
-          type: number
-          description: Numeric ID of the scheduled route.
-        RouteID:
-          type: number
-          description: Numeric ID of the underlying route.
-        RouteDescription:
-          type: string
-          nullable: true
-          description: Display name of the route.
-        RouteSortSeq:
-          type: number
-          description: Display sort order; lower values appear first.
-        SailingID:
-          type: number
-          description: Numeric ID of the sailing.
-        SailingDescription:
-          type: string
-          nullable: true
-          description: Display name of the sailing.
-        ActiveSailingDateRange:
-          type: object
-          nullable: true
-          properties:
-            DateFrom:
-              type: string
-              description: UTC datetime when the sailing date range begins.
-            DateThru:
-              type: string
-              description: UTC datetime when the sailing date range ends.
-            EventID:
-              type: number
-              nullable: true
-              description: Numeric ID of the event associated with the date range.
-            EventDescription:
-              type: string
-              nullable: true
-              description: Description of the event associated with the date range.
-          required:
-            - DateFrom
-            - DateThru
-            - EventID
-            - EventDescription
-          description: Active date range for the sailing.
-        SailingDir:
-          anyOf:
-            - type: number
-              enum:
-                - 1
-            - type: number
-              enum:
-                - 2
-          description: 'Sailing direction code: 1 = Westbound, 2 = Eastbound.'
-        JourneyID:
-          type: number
-          description: Numeric ID of the journey.
-        VesselID:
-          type: number
-          description: Numeric ID of the vessel.
-        VesselName:
-          type: string
-          nullable: true
-          description: Display name of the vessel.
-        VesselHandicapAccessible:
-          type: boolean
-          description: True if the vessel is ADA accessible; otherwise false.
-        VesselPositionNum:
-          type: number
-          description: Position number for vessel scheduling.
-        JourneyTerminalID:
-          type: number
-          description: Numeric ID of the terminal time within the journey.
-        TerminalID:
-          type: number
-          description: Numeric ID of the terminal.
-        TerminalDescription:
-          type: string
-          description: Display name of the terminal.
-        TerminalBriefDescription:
-          type: string
-          description: Abbreviated name of the terminal.
-        TimeToAdj:
-          type: string
-          description: 'UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion.'
-        AdjDateFrom:
-          type: string
-          description: UTC datetime when the adjustment period begins.
-        AdjDateThru:
-          type: string
-          description: UTC datetime when the adjustment period ends.
-        TidalAdj:
-          type: boolean
-          description: True if the adjustment is due to tidal conditions; otherwise false.
-        EventID:
-          type: number
-          nullable: true
-          description: Numeric ID of the event prompting the adjustment.
-        EventDescription:
-          type: string
-          nullable: true
-          description: Description of the event prompting the adjustment.
-        DepArrIndicator:
-          anyOf:
-            - type: number
-              enum:
-                - 1
-            - type: number
-              enum:
-                - 2
-          description: 'Indicator code: 1 = Departure, 2 = Arrival.'
-        AdjType:
-          anyOf:
-            - type: number
-              enum:
-                - 1
-            - type: number
-              enum:
-                - 2
-          description: 'Adjustment type code: 1 = Addition, 2 = Cancellation.'
-        Annotations:
-          type: array
-          items:
-            type: object
-            properties:
-              AnnotationID:
-                type: number
-                description: Numeric ID of the annotation.
-              AnnotationText:
-                type: string
-                nullable: true
-                description: Text content of the annotation.
-              AnnotationIVRText:
-                type: string
-                nullable: true
-                description: Annotation text formatted for IVR systems.
-              AdjustedCrossingTime:
-                type: number
-                nullable: true
-                description: Adjusted crossing time override in minutes.
-              AnnotationImg:
-                type: string
-                nullable: true
-                description: URL to image representing the annotation.
-              TypeDescription:
-                type: string
-                nullable: true
-                description: Category or type of the annotation.
-              SortSeq:
-                type: number
-                description: Display sort order; lower values appear first.
-            required:
-              - AnnotationID
-              - AnnotationText
-              - AnnotationIVRText
-              - AdjustedCrossingTime
-              - AnnotationImg
-              - TypeDescription
-              - SortSeq
-            description: Annotation information for the adjustment.
-          description: Array of annotations associated with the adjustment.
-      required:
-        - ScheduleID
-        - SchedRouteID
-        - RouteID
-        - RouteDescription
-        - RouteSortSeq
-        - SailingID
-        - SailingDescription
-        - ActiveSailingDateRange
-        - SailingDir
-        - JourneyID
-        - VesselID
-        - VesselName
-        - VesselHandicapAccessible
-        - VesselPositionNum
-        - JourneyTerminalID
-        - TerminalID
-        - TerminalDescription
-        - TerminalBriefDescription
-        - TimeToAdj
-        - AdjDateFrom
-        - AdjDateThru
-        - TidalAdj
-        - EventID
-        - EventDescription
-        - DepArrIndicator
-        - AdjType
-        - Annotations
-      description: Time adjustment representing modifications to scheduled sailing times, including additions, cancellations, and timing changes for specific dates.
-    FetchSailingsByRouteIDInputSchedRouteIDParam:
-      type: number
-      description: Numeric ID of the scheduled route.
-    FetchAllSailingsBySchedRouteIDInputSchedRouteIDParam:
-      type: number
-      description: Numeric ID of the scheduled route.
-    FetchRouteDetailsByTripDateInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-    FetchRouteDetailsByTripDateAndTerminalsInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-    FetchRouteDetailsByTripDateAndTerminalsInputDepartingTerminalIDParam:
-      type: number
-      description: Numeric ID of the departing terminal.
-    FetchRouteDetailsByTripDateAndTerminalsInputArrivingTerminalIDParam:
-      type: number
-      description: Numeric ID of the arriving terminal.
-    FetchRouteDetailsByTripDateAndRouteIdInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-    FetchRouteDetailsByTripDateAndRouteIdInputRouteIDParam:
-      type: number
-      description: Numeric ID of the route.
-    FetchRoutesByTripDateInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-    FetchRoutesByTripDateInputDepartingTerminalIDParam:
-      type: number
-      description: Numeric ID of the departing terminal. Optional.
-    FetchRoutesByTripDateInputArrivingTerminalIDParam:
-      type: number
-      description: Numeric ID of the arriving terminal. Optional.
-    FetchRoutesByTripDateAndTerminalsInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-    FetchRoutesByTripDateAndTerminalsInputDepartingTerminalIDParam:
-      type: number
-      description: Numeric ID of the departing terminal.
-    FetchRoutesByTripDateAndTerminalsInputArrivingTerminalIDParam:
-      type: number
-      description: Numeric ID of the arriving terminal.
-    FetchRoutesHavingServiceDisruptionsByTripDateInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
-    FetchScheduleByTripDateAndRouteIdInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
-    FetchScheduleByTripDateAndRouteIdInputRouteIDParam:
-      type: number
-      description: Numeric ID of the route.
-    FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
-    FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputDepartingTerminalIDParam:
-      type: number
-      description: Numeric ID of the departing terminal.
-    FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputArrivingTerminalIDParam:
-      type: number
-      description: Numeric ID of the arriving terminal.
-    FetchScheduledRoutesInputScheduleIDParam:
-      type: number
-      description: Numeric ID of the schedule season. Optional; if omitted, returns all scheduled routes across current and upcoming seasons.
-    FetchScheduledRoutesByIdInputScheduleIDParam:
-      type: number
-      description: Numeric ID of the schedule season. Optional; if omitted, returns all scheduled routes across current and upcoming seasons.
-    FetchScheduleTodayByRouteInputRouteIDParam:
-      type: number
-      description: Numeric ID of the route.
-    FetchScheduleTodayByRouteInputOnlyRemainingTimesParam:
-      type: boolean
-      description: True to show only remaining departures today; false to include all departures.
-    FetchScheduleTodayByTerminalsInputDepartingTerminalIDParam:
-      type: number
-      description: Numeric ID of the departing terminal.
-    FetchScheduleTodayByTerminalsInputArrivingTerminalIDParam:
-      type: number
-      description: Numeric ID of the arriving terminal.
-    FetchScheduleTodayByTerminalsInputOnlyRemainingTimesParam:
-      type: boolean
-      description: True to show only remaining departures today; false to include all departures.
-    FetchTerminalMatesScheduleInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
-    FetchTerminalMatesScheduleInputTerminalIDParam:
-      type: number
-      description: Numeric ID of the departing terminal.
-    FetchTerminalsInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
-    FetchTerminalsAndMatesInputTripDateParam:
-      type: string
-      description: Trip date for which to retrieve all terminal combinations, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter terminal combinations by trip date availability.
-    FetchTerminalsAndMatesByRouteInputTripDateParam:
-      type: string
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-    FetchTerminalsAndMatesByRouteInputRouteIDParam:
-      type: number
-      description: Numeric ID of the route.
-    FetchTimeAdjustmentsByRouteInputRouteIDParam:
-      type: number
-      description: Numeric ID of the route.
-    FetchTimeAdjustmentsBySchedRouteInputSchedRouteIDParam:
-      type: number
-      description: Numeric ID of the scheduled route.
-  parameters:
-    FetchSailingsByRouteIDInputSchedRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchSailingsByRouteIDInputSchedRouteIDParam'
-      required: true
-      description: Numeric ID of the scheduled route.
-      name: SchedRouteID
-      in: path
-    FetchAllSailingsBySchedRouteIDInputSchedRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchAllSailingsBySchedRouteIDInputSchedRouteIDParam'
-      required: true
-      description: Numeric ID of the scheduled route.
-      name: SchedRouteID
-      in: path
-    FetchRouteDetailsByTripDateInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchRouteDetailsByTripDateInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-      name: TripDate
-      in: path
-    FetchRouteDetailsByTripDateAndTerminalsInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchRouteDetailsByTripDateAndTerminalsInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-      name: TripDate
-      in: path
-    FetchRouteDetailsByTripDateAndTerminalsInputDepartingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchRouteDetailsByTripDateAndTerminalsInputDepartingTerminalIDParam'
-      required: true
-      description: Numeric ID of the departing terminal.
-      name: DepartingTerminalID
-      in: path
-    FetchRouteDetailsByTripDateAndTerminalsInputArrivingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchRouteDetailsByTripDateAndTerminalsInputArrivingTerminalIDParam'
-      required: true
-      description: Numeric ID of the arriving terminal.
-      name: ArrivingTerminalID
-      in: path
-    FetchRouteDetailsByTripDateAndRouteIdInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchRouteDetailsByTripDateAndRouteIdInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-      name: TripDate
-      in: path
-    FetchRouteDetailsByTripDateAndRouteIdInputRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchRouteDetailsByTripDateAndRouteIdInputRouteIDParam'
-      required: true
-      description: Numeric ID of the route.
-      name: RouteID
-      in: path
-    FetchRoutesByTripDateInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchRoutesByTripDateInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-      name: TripDate
-      in: path
-    FetchRoutesByTripDateInputDepartingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchRoutesByTripDateInputDepartingTerminalIDParam'
-      required: false
-      description: Numeric ID of the departing terminal. Optional.
-      name: DepartingTerminalID
-      in: query
-    FetchRoutesByTripDateInputArrivingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchRoutesByTripDateInputArrivingTerminalIDParam'
-      required: false
-      description: Numeric ID of the arriving terminal. Optional.
-      name: ArrivingTerminalID
-      in: query
-    FetchRoutesByTripDateAndTerminalsInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchRoutesByTripDateAndTerminalsInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-      name: TripDate
-      in: path
-    FetchRoutesByTripDateAndTerminalsInputDepartingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchRoutesByTripDateAndTerminalsInputDepartingTerminalIDParam'
-      required: true
-      description: Numeric ID of the departing terminal.
-      name: DepartingTerminalID
-      in: path
-    FetchRoutesByTripDateAndTerminalsInputArrivingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchRoutesByTripDateAndTerminalsInputArrivingTerminalIDParam'
-      required: true
-      description: Numeric ID of the arriving terminal.
-      name: ArrivingTerminalID
-      in: path
-    FetchRoutesHavingServiceDisruptionsByTripDateInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchRoutesHavingServiceDisruptionsByTripDateInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
-      name: TripDate
-      in: path
-    FetchScheduleByTripDateAndRouteIdInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleByTripDateAndRouteIdInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
-      name: TripDate
-      in: path
-    FetchScheduleByTripDateAndRouteIdInputRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleByTripDateAndRouteIdInputRouteIDParam'
-      required: true
-      description: Numeric ID of the route.
-      name: RouteID
-      in: path
-    FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
-      name: TripDate
-      in: path
-    FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputDepartingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputDepartingTerminalIDParam'
-      required: true
-      description: Numeric ID of the departing terminal.
-      name: DepartingTerminalID
-      in: path
-    FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputArrivingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputArrivingTerminalIDParam'
-      required: true
-      description: Numeric ID of the arriving terminal.
-      name: ArrivingTerminalID
-      in: path
-    FetchScheduledRoutesInputScheduleIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduledRoutesInputScheduleIDParam'
-      required: false
-      description: Numeric ID of the schedule season. Optional; if omitted, returns all scheduled routes across current and upcoming seasons.
-      name: ScheduleID
-      in: query
-    FetchScheduledRoutesByIdInputScheduleIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduledRoutesByIdInputScheduleIDParam'
-      required: true
-      description: Numeric ID of the schedule season. Optional; if omitted, returns all scheduled routes across current and upcoming seasons.
-      name: ScheduleID
-      in: path
-    FetchScheduleTodayByRouteInputRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleTodayByRouteInputRouteIDParam'
-      required: true
-      description: Numeric ID of the route.
-      name: RouteID
-      in: path
-    FetchScheduleTodayByRouteInputOnlyRemainingTimesParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleTodayByRouteInputOnlyRemainingTimesParam'
-      required: true
-      description: True to show only remaining departures today; false to include all departures.
-      name: OnlyRemainingTimes
-      in: path
-    FetchScheduleTodayByTerminalsInputDepartingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleTodayByTerminalsInputDepartingTerminalIDParam'
-      required: true
-      description: Numeric ID of the departing terminal.
-      name: DepartingTerminalID
-      in: path
-    FetchScheduleTodayByTerminalsInputArrivingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleTodayByTerminalsInputArrivingTerminalIDParam'
-      required: true
-      description: Numeric ID of the arriving terminal.
-      name: ArrivingTerminalID
-      in: path
-    FetchScheduleTodayByTerminalsInputOnlyRemainingTimesParam:
-      schema:
-        $ref: '#/components/schemas/FetchScheduleTodayByTerminalsInputOnlyRemainingTimesParam'
-      required: true
-      description: True to show only remaining departures today; false to include all departures.
-      name: OnlyRemainingTimes
-      in: path
-    FetchTerminalMatesScheduleInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalMatesScheduleInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
-      name: TripDate
-      in: path
-    FetchTerminalMatesScheduleInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalMatesScheduleInputTerminalIDParam'
-      required: true
-      description: Numeric ID of the departing terminal.
-      name: TerminalID
-      in: path
-    FetchTerminalsInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalsInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
-      name: TripDate
-      in: path
-    FetchTerminalsAndMatesInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalsAndMatesInputTripDateParam'
-      required: true
-      description: Trip date for which to retrieve all terminal combinations, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter terminal combinations by trip date availability.
-      name: TripDate
-      in: path
-    FetchTerminalsAndMatesByRouteInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalsAndMatesByRouteInputTripDateParam'
-      required: true
-      description: Trip date in YYYY-MM-DD format. Must be within valid date range from GetScheduleValidDateRange.
-      name: TripDate
-      in: path
-    FetchTerminalsAndMatesByRouteInputRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalsAndMatesByRouteInputRouteIDParam'
-      required: true
-      description: Numeric ID of the route.
-      name: RouteID
-      in: path
-    FetchTimeAdjustmentsByRouteInputRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTimeAdjustmentsByRouteInputRouteIDParam'
-      required: true
-      description: Numeric ID of the route.
-      name: RouteID
-      in: path
-    FetchTimeAdjustmentsBySchedRouteInputSchedRouteIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTimeAdjustmentsBySchedRouteInputSchedRouteIDParam'
-      required: true
-      description: Numeric ID of the scheduled route.
-      name: SchedRouteID
-      in: path
+  parameters: {}
 paths:
   /activeseasons:
     get:
@@ -1435,7 +349,48 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchActiveSeasonsOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season.
+                    ScheduleName:
+                      type: string
+                      description: Display name of the schedule season.
+                    ScheduleSeason:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 0
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                        - type: number
+                          enum:
+                            - 3
+                      description: 'Code indicating season: 0 = Spring, 1 = Summer, 2 = Fall, 3 = Winter.'
+                    SchedulePDFUrl:
+                      type: string
+                      description: URL to printable schedule PDF document.
+                    ScheduleStart:
+                      type: string
+                      description: UTC datetime when the schedule season becomes effective (typically 3:00 AM).
+                      format: date-time
+                    ScheduleEnd:
+                      type: string
+                      description: UTC datetime when the schedule season stops being effective (typically 2:59 AM next day).
+                      format: date-time
+                  required:
+                    - ScheduleID
+                    - ScheduleName
+                    - ScheduleSeason
+                    - SchedulePDFUrl
+                    - ScheduleStart
+                    - ScheduleEnd
+                  description: Schedule season information including identifier, name, season code, PDF URL, and effective date range.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1467,8 +422,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchSailingsByRouteIDInputSchedRouteIDParam'
       responses:
         '200':
           description: Success
@@ -1477,7 +430,224 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchSailingsByRouteIDOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season this sailing belongs to.
+                    SchedRouteID:
+                      type: number
+                      description: Numeric ID of the scheduled route this sailing belongs to.
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the underlying route for sailing.
+                    SailingID:
+                      type: number
+                      description: Numeric ID of the sailing.
+                    SailingDescription:
+                      type: string
+                      nullable: true
+                      description: Human-readable title describing sailing, or null if unavailable.
+                    SailingNotes:
+                      type: string
+                      nullable: true
+                      description: Informational text associated with sailing, or null if unavailable.
+                    DisplayColNum:
+                      type: number
+                      description: Suggested number of columns for rendering departures on desktop webpage.
+                    SailingDir:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Code indicating direction: 1 = Westbound, 2 = Eastbound.'
+                    DayOpDescription:
+                      type: string
+                      nullable: true
+                      description: Days of operation grouping for sailing, or null if unavailable.
+                    DayOpUseForHoliday:
+                      type: boolean
+                      description: True if sailing should apply for holidays; otherwise false.
+                    ActiveDateRanges:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          DateFrom:
+                            type: string
+                            description: UTC datetime when the sailing date range becomes active (typically 3:00 AM).
+                            format: date-time
+                          DateThru:
+                            type: string
+                            description: UTC datetime when the sailing date range stops being active (typically 2:59 AM next day).
+                            format: date-time
+                          EventID:
+                            type: number
+                            nullable: true
+                            description: Numeric ID of the event associated with sailing date range, or null if none.
+                          EventDescription:
+                            type: string
+                            nullable: true
+                            description: Human-readable explanation of sailing date range, or null if unavailable.
+                        required:
+                          - DateFrom
+                          - DateThru
+                          - EventID
+                          - EventDescription
+                        description: Active date range for sailing including start/end dates, event ID, and description.
+                      description: Array of date ranges detailing when sailing is active, or null if unavailable.
+                    Journs:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          JourneyID:
+                            type: number
+                            description: Numeric ID of the journey.
+                          ReservationInd:
+                            type: boolean
+                            description: True if journey contains reservable departures; otherwise false.
+                          InternationalInd:
+                            type: boolean
+                            description: True if journey travels outside United States; otherwise false.
+                          InterislandInd:
+                            type: boolean
+                            description: True if journey operates primarily between islands; otherwise false.
+                          VesselID:
+                            type: number
+                            description: Numeric ID of the vessel planned to service journey.
+                          VesselName:
+                            type: string
+                            nullable: true
+                            description: Display name of the vessel, or null if unavailable.
+                          VesselHandicapAccessible:
+                            type: boolean
+                            description: True if vessel is ADA accessible; otherwise false.
+                          VesselPositionNum:
+                            type: number
+                            description: Position number representing vessel servicing all stops in journey.
+                          TerminalTimes:
+                            type: array
+                            nullable: true
+                            items:
+                              type: object
+                              properties:
+                                JourneyTerminalID:
+                                  type: number
+                                  description: Numeric ID of the terminal time within journey.
+                                TerminalID:
+                                  type: number
+                                  description: Numeric ID of the terminal.
+                                TerminalDescription:
+                                  type: string
+                                  nullable: true
+                                  description: Display name of the terminal, or null if unavailable.
+                                TerminalBriefDescription:
+                                  type: string
+                                  nullable: true
+                                  description: Brief name for terminal, or null if unavailable.
+                                Time:
+                                  type: string
+                                  nullable: true
+                                  description: 'Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal.'
+                                  format: date-time
+                                DepArrIndicator:
+                                  anyOf:
+                                    - type: number
+                                      enum:
+                                        - 1
+                                    - type: number
+                                      enum:
+                                        - 2
+                                    - nullable: true
+                                  description: 'Code indicating stop type: 1 = Departure, 2 = Arrival. Null if journey does not stop at terminal.'
+                                IsNA:
+                                  type: boolean
+                                  description: True if journey does not interact with this terminal (skips it); otherwise false.
+                                Annotations:
+                                  type: array
+                                  nullable: true
+                                  items:
+                                    type: object
+                                    properties:
+                                      AnnotationID:
+                                        type: number
+                                        description: Numeric ID of the annotation.
+                                      AnnotationText:
+                                        type: string
+                                        nullable: true
+                                        description: Human-readable annotation content, or null if unavailable.
+                                      AnnotationIVRText:
+                                        type: string
+                                        nullable: true
+                                        description: Annotation text formatted for Interactive Voice Response systems, or null if unavailable.
+                                      AdjustedCrossingTime:
+                                        type: number
+                                        nullable: true
+                                        description: Adjusted crossing time override in minutes, or null if no override.
+                                      AnnotationImg:
+                                        type: string
+                                        nullable: true
+                                        description: URL to image representing annotation, or null if unavailable.
+                                      TypeDescription:
+                                        type: string
+                                        nullable: true
+                                        description: Logical grouping category for annotation, or null if unavailable.
+                                      SortSeq:
+                                        type: number
+                                        description: Display sort order; lower values appear first.
+                                    required:
+                                      - AnnotationID
+                                      - AnnotationText
+                                      - AnnotationIVRText
+                                      - AdjustedCrossingTime
+                                      - AnnotationImg
+                                      - TypeDescription
+                                      - SortSeq
+                                    description: Annotation information including ID, text, IVR text, crossing time override, image URL, type, and sort order.
+                                  description: Array of informational annotations associated with terminal time, or null if none.
+                              required:
+                                - JourneyTerminalID
+                                - TerminalID
+                                - TerminalDescription
+                                - TerminalBriefDescription
+                                - Time
+                                - DepArrIndicator
+                                - IsNA
+                                - Annotations
+                              description: Terminal time information within journey including terminal identification, time, indicator, skip flag, and annotations.
+                            description: Array of terminal departures and arrivals made by same vessel, or null if unavailable.
+                        required:
+                          - JourneyID
+                          - ReservationInd
+                          - InternationalInd
+                          - InterislandInd
+                          - VesselID
+                          - VesselName
+                          - VesselHandicapAccessible
+                          - VesselPositionNum
+                          - TerminalTimes
+                        description: Journey information including ID, indicators, vessel details, and terminal times.
+                      description: Array of journeys representing vessel stops at terminals, or null if unavailable.
+                  required:
+                    - ScheduleID
+                    - SchedRouteID
+                    - RouteID
+                    - SailingID
+                    - SailingDescription
+                    - SailingNotes
+                    - DisplayColNum
+                    - SailingDir
+                    - DayOpDescription
+                    - DayOpUseForHoliday
+                    - ActiveDateRanges
+                    - Journs
+                  description: Sailing information including IDs, description, direction, days of operation, holiday flag, active date ranges, and journeys.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2961,8 +2131,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchAllSailingsBySchedRouteIDInputSchedRouteIDParam'
       responses:
         '200':
           description: Success
@@ -2971,7 +2139,224 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchSailingsByRouteIDOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season this sailing belongs to.
+                    SchedRouteID:
+                      type: number
+                      description: Numeric ID of the scheduled route this sailing belongs to.
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the underlying route for sailing.
+                    SailingID:
+                      type: number
+                      description: Numeric ID of the sailing.
+                    SailingDescription:
+                      type: string
+                      nullable: true
+                      description: Human-readable title describing sailing, or null if unavailable.
+                    SailingNotes:
+                      type: string
+                      nullable: true
+                      description: Informational text associated with sailing, or null if unavailable.
+                    DisplayColNum:
+                      type: number
+                      description: Suggested number of columns for rendering departures on desktop webpage.
+                    SailingDir:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Code indicating direction: 1 = Westbound, 2 = Eastbound.'
+                    DayOpDescription:
+                      type: string
+                      nullable: true
+                      description: Days of operation grouping for sailing, or null if unavailable.
+                    DayOpUseForHoliday:
+                      type: boolean
+                      description: True if sailing should apply for holidays; otherwise false.
+                    ActiveDateRanges:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          DateFrom:
+                            type: string
+                            description: UTC datetime when the sailing date range becomes active (typically 3:00 AM).
+                            format: date-time
+                          DateThru:
+                            type: string
+                            description: UTC datetime when the sailing date range stops being active (typically 2:59 AM next day).
+                            format: date-time
+                          EventID:
+                            type: number
+                            nullable: true
+                            description: Numeric ID of the event associated with sailing date range, or null if none.
+                          EventDescription:
+                            type: string
+                            nullable: true
+                            description: Human-readable explanation of sailing date range, or null if unavailable.
+                        required:
+                          - DateFrom
+                          - DateThru
+                          - EventID
+                          - EventDescription
+                        description: Active date range for sailing including start/end dates, event ID, and description.
+                      description: Array of date ranges detailing when sailing is active, or null if unavailable.
+                    Journs:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          JourneyID:
+                            type: number
+                            description: Numeric ID of the journey.
+                          ReservationInd:
+                            type: boolean
+                            description: True if journey contains reservable departures; otherwise false.
+                          InternationalInd:
+                            type: boolean
+                            description: True if journey travels outside United States; otherwise false.
+                          InterislandInd:
+                            type: boolean
+                            description: True if journey operates primarily between islands; otherwise false.
+                          VesselID:
+                            type: number
+                            description: Numeric ID of the vessel planned to service journey.
+                          VesselName:
+                            type: string
+                            nullable: true
+                            description: Display name of the vessel, or null if unavailable.
+                          VesselHandicapAccessible:
+                            type: boolean
+                            description: True if vessel is ADA accessible; otherwise false.
+                          VesselPositionNum:
+                            type: number
+                            description: Position number representing vessel servicing all stops in journey.
+                          TerminalTimes:
+                            type: array
+                            nullable: true
+                            items:
+                              type: object
+                              properties:
+                                JourneyTerminalID:
+                                  type: number
+                                  description: Numeric ID of the terminal time within journey.
+                                TerminalID:
+                                  type: number
+                                  description: Numeric ID of the terminal.
+                                TerminalDescription:
+                                  type: string
+                                  nullable: true
+                                  description: Display name of the terminal, or null if unavailable.
+                                TerminalBriefDescription:
+                                  type: string
+                                  nullable: true
+                                  description: Brief name for terminal, or null if unavailable.
+                                Time:
+                                  type: string
+                                  nullable: true
+                                  description: 'Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal.'
+                                  format: date-time
+                                DepArrIndicator:
+                                  anyOf:
+                                    - type: number
+                                      enum:
+                                        - 1
+                                    - type: number
+                                      enum:
+                                        - 2
+                                    - nullable: true
+                                  description: 'Code indicating stop type: 1 = Departure, 2 = Arrival. Null if journey does not stop at terminal.'
+                                IsNA:
+                                  type: boolean
+                                  description: True if journey does not interact with this terminal (skips it); otherwise false.
+                                Annotations:
+                                  type: array
+                                  nullable: true
+                                  items:
+                                    type: object
+                                    properties:
+                                      AnnotationID:
+                                        type: number
+                                        description: Numeric ID of the annotation.
+                                      AnnotationText:
+                                        type: string
+                                        nullable: true
+                                        description: Human-readable annotation content, or null if unavailable.
+                                      AnnotationIVRText:
+                                        type: string
+                                        nullable: true
+                                        description: Annotation text formatted for Interactive Voice Response systems, or null if unavailable.
+                                      AdjustedCrossingTime:
+                                        type: number
+                                        nullable: true
+                                        description: Adjusted crossing time override in minutes, or null if no override.
+                                      AnnotationImg:
+                                        type: string
+                                        nullable: true
+                                        description: URL to image representing annotation, or null if unavailable.
+                                      TypeDescription:
+                                        type: string
+                                        nullable: true
+                                        description: Logical grouping category for annotation, or null if unavailable.
+                                      SortSeq:
+                                        type: number
+                                        description: Display sort order; lower values appear first.
+                                    required:
+                                      - AnnotationID
+                                      - AnnotationText
+                                      - AnnotationIVRText
+                                      - AdjustedCrossingTime
+                                      - AnnotationImg
+                                      - TypeDescription
+                                      - SortSeq
+                                    description: Annotation information including ID, text, IVR text, crossing time override, image URL, type, and sort order.
+                                  description: Array of informational annotations associated with terminal time, or null if none.
+                              required:
+                                - JourneyTerminalID
+                                - TerminalID
+                                - TerminalDescription
+                                - TerminalBriefDescription
+                                - Time
+                                - DepArrIndicator
+                                - IsNA
+                                - Annotations
+                              description: Terminal time information within journey including terminal identification, time, indicator, skip flag, and annotations.
+                            description: Array of terminal departures and arrivals made by same vessel, or null if unavailable.
+                        required:
+                          - JourneyID
+                          - ReservationInd
+                          - InternationalInd
+                          - InterislandInd
+                          - VesselID
+                          - VesselName
+                          - VesselHandicapAccessible
+                          - VesselPositionNum
+                          - TerminalTimes
+                        description: Journey information including ID, indicators, vessel details, and terminal times.
+                      description: Array of journeys representing vessel stops at terminals, or null if unavailable.
+                  required:
+                    - ScheduleID
+                    - SchedRouteID
+                    - RouteID
+                    - SailingID
+                    - SailingDescription
+                    - SailingNotes
+                    - DisplayColNum
+                    - SailingDir
+                    - DayOpDescription
+                    - DayOpUseForHoliday
+                    - ActiveDateRanges
+                    - Journs
+                  description: Sailing information including IDs, description, direction, days of operation, holiday flag, active date ranges, and journeys.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4547,8 +3932,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchRouteDetailsByTripDateInputTripDateParam'
       responses:
         '200':
           description: Success
@@ -4557,7 +3940,116 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchRouteDetailsByTripDateOutput'
+                  type: object
+                  properties:
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the route.
+                    RouteAbbrev:
+                      type: string
+                      nullable: true
+                      description: Route abbreviation code for compact identification.
+                    Description:
+                      type: string
+                      nullable: true
+                      description: Display name of the route.
+                    RegionID:
+                      type: number
+                      description: Numeric ID of the WSF region associated with route.
+                    VesselWatchID:
+                      type: number
+                      description: Numeric ID used to group routes for VesselWatch system.
+                    ReservationFlag:
+                      type: boolean
+                      description: True if route supports advance vehicle reservations; otherwise false.
+                    InternationalFlag:
+                      type: boolean
+                      description: True if route operates outside United States; otherwise false.
+                    PassengerOnlyFlag:
+                      type: boolean
+                      description: True if route services only passengers without vehicles; otherwise false.
+                    CrossingTime:
+                      type: string
+                      nullable: true
+                      description: Estimated crossing time in minutes as string, or null if unavailable.
+                      format: date-time
+                    AdaNotes:
+                      type: string
+                      nullable: true
+                      description: ADA accessibility information in HTML format, or null if unavailable.
+                    GeneralRouteNotes:
+                      type: string
+                      nullable: true
+                      description: Miscellaneous route information in HTML format, or null if unavailable.
+                    SeasonalRouteNotes:
+                      type: string
+                      nullable: true
+                      description: Route notes specific to schedule season in HTML format, or null if unavailable.
+                    Alerts:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          BulletinID:
+                            type: number
+                            description: Numeric ID of the alert bulletin.
+                          BulletinFlag:
+                            type: boolean
+                            description: True if alert is also used as bulletin; otherwise false.
+                          CommunicationFlag:
+                            type: boolean
+                            description: True if alert is also used as communications announcement; otherwise false.
+                          PublishDate:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the alert was published.
+                            format: date-time
+                          AlertDescription:
+                            type: string
+                            nullable: true
+                            description: Brief route announcement text, or null if unavailable.
+                          DisruptionDescription:
+                            type: string
+                            nullable: true
+                            description: Service disruption text associated with alert, or null if not disruption-specific.
+                          AlertFullTitle:
+                            type: string
+                            description: Full title of the alert.
+                          AlertFullText:
+                            type: string
+                            nullable: true
+                            description: Full HTML-formatted alert text, or null if unavailable.
+                          IVRText:
+                            type: string
+                            nullable: true
+                            description: Alert text formatted for Interactive Voice Response systems, or null if unavailable.
+                        required:
+                          - BulletinID
+                          - BulletinFlag
+                          - CommunicationFlag
+                          - PublishDate
+                          - AlertDescription
+                          - DisruptionDescription
+                          - AlertFullTitle
+                          - AlertFullText
+                          - IVRText
+                        description: Alert information including bulletin ID, flags, publish date, descriptions, and IVR text.
+                      description: Array of alerts associated with route.
+                  required:
+                    - RouteID
+                    - RouteAbbrev
+                    - Description
+                    - RegionID
+                    - VesselWatchID
+                    - ReservationFlag
+                    - InternationalFlag
+                    - PassengerOnlyFlag
+                    - CrossingTime
+                    - AdaNotes
+                    - GeneralRouteNotes
+                    - SeasonalRouteNotes
+                    - Alerts
+                  description: Detailed route information including identification, flags, crossing time, notes, and alerts.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4610,10 +4102,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchRouteDetailsByTripDateAndTerminalsInputTripDateParam'
-        - $ref: '#/components/parameters/FetchRouteDetailsByTripDateAndTerminalsInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FetchRouteDetailsByTripDateAndTerminalsInputArrivingTerminalIDParam'
       responses:
         '200':
           description: Success
@@ -4622,7 +4110,116 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchRouteDetailsByTripDateOutput'
+                  type: object
+                  properties:
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the route.
+                    RouteAbbrev:
+                      type: string
+                      nullable: true
+                      description: Route abbreviation code for compact identification.
+                    Description:
+                      type: string
+                      nullable: true
+                      description: Display name of the route.
+                    RegionID:
+                      type: number
+                      description: Numeric ID of the WSF region associated with route.
+                    VesselWatchID:
+                      type: number
+                      description: Numeric ID used to group routes for VesselWatch system.
+                    ReservationFlag:
+                      type: boolean
+                      description: True if route supports advance vehicle reservations; otherwise false.
+                    InternationalFlag:
+                      type: boolean
+                      description: True if route operates outside United States; otherwise false.
+                    PassengerOnlyFlag:
+                      type: boolean
+                      description: True if route services only passengers without vehicles; otherwise false.
+                    CrossingTime:
+                      type: string
+                      nullable: true
+                      description: Estimated crossing time in minutes as string, or null if unavailable.
+                      format: date-time
+                    AdaNotes:
+                      type: string
+                      nullable: true
+                      description: ADA accessibility information in HTML format, or null if unavailable.
+                    GeneralRouteNotes:
+                      type: string
+                      nullable: true
+                      description: Miscellaneous route information in HTML format, or null if unavailable.
+                    SeasonalRouteNotes:
+                      type: string
+                      nullable: true
+                      description: Route notes specific to schedule season in HTML format, or null if unavailable.
+                    Alerts:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          BulletinID:
+                            type: number
+                            description: Numeric ID of the alert bulletin.
+                          BulletinFlag:
+                            type: boolean
+                            description: True if alert is also used as bulletin; otherwise false.
+                          CommunicationFlag:
+                            type: boolean
+                            description: True if alert is also used as communications announcement; otherwise false.
+                          PublishDate:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the alert was published.
+                            format: date-time
+                          AlertDescription:
+                            type: string
+                            nullable: true
+                            description: Brief route announcement text, or null if unavailable.
+                          DisruptionDescription:
+                            type: string
+                            nullable: true
+                            description: Service disruption text associated with alert, or null if not disruption-specific.
+                          AlertFullTitle:
+                            type: string
+                            description: Full title of the alert.
+                          AlertFullText:
+                            type: string
+                            nullable: true
+                            description: Full HTML-formatted alert text, or null if unavailable.
+                          IVRText:
+                            type: string
+                            nullable: true
+                            description: Alert text formatted for Interactive Voice Response systems, or null if unavailable.
+                        required:
+                          - BulletinID
+                          - BulletinFlag
+                          - CommunicationFlag
+                          - PublishDate
+                          - AlertDescription
+                          - DisruptionDescription
+                          - AlertFullTitle
+                          - AlertFullText
+                          - IVRText
+                        description: Alert information including bulletin ID, flags, publish date, descriptions, and IVR text.
+                      description: Array of alerts associated with route.
+                  required:
+                    - RouteID
+                    - RouteAbbrev
+                    - Description
+                    - RegionID
+                    - VesselWatchID
+                    - ReservationFlag
+                    - InternationalFlag
+                    - PassengerOnlyFlag
+                    - CrossingTime
+                    - AdaNotes
+                    - GeneralRouteNotes
+                    - SeasonalRouteNotes
+                    - Alerts
+                  description: Detailed route information including identification, flags, crossing time, notes, and alerts.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4674,16 +4271,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchRouteDetailsByTripDateAndRouteIdInputTripDateParam'
-        - $ref: '#/components/parameters/FetchRouteDetailsByTripDateAndRouteIdInputRouteIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchRouteDetailsByTripDateOutput'
+                $ref: '#/components/schemas/FetchRouteDetailsByTripDateAndRouteIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4724,10 +4318,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchRoutesByTripDateInputTripDateParam'
-        - $ref: '#/components/parameters/FetchRoutesByTripDateInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FetchRoutesByTripDateInputArrivingTerminalIDParam'
       responses:
         '200':
           description: Success
@@ -4736,7 +4326,56 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchRoutesByTripDateOutput'
+                  type: object
+                  properties:
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the route.
+                    RouteAbbrev:
+                      type: string
+                      nullable: true
+                      description: Route abbreviation code for compact identification.
+                    Description:
+                      type: string
+                      nullable: true
+                      description: Display name of the route.
+                    RegionID:
+                      type: number
+                      description: Numeric ID of the WSF region associated with route.
+                    ServiceDisruptions:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          BulletinID:
+                            type: number
+                            description: Numeric ID of the service disruption bulletin.
+                          BulletinFlag:
+                            type: boolean
+                            description: True if alert is also used as bulletin; otherwise false.
+                          PublishDate:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the disruption alert was published.
+                            format: date-time
+                          DisruptionDescription:
+                            type: string
+                            description: Text description of the service disruption.
+                        required:
+                          - BulletinID
+                          - BulletinFlag
+                          - PublishDate
+                          - DisruptionDescription
+                        description: Service disruption information including bulletin ID, flag, publish date, and description.
+                      description: Array of service disruption alerts currently affecting route, or null if unavailable.
+                  required:
+                    - RouteID
+                    - RouteAbbrev
+                    - Description
+                    - RegionID
+                    - ServiceDisruptions
+                  description: Basic route information including identification, abbreviation, description, region, and service disruptions.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4769,10 +4408,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchRoutesByTripDateAndTerminalsInputTripDateParam'
-        - $ref: '#/components/parameters/FetchRoutesByTripDateAndTerminalsInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FetchRoutesByTripDateAndTerminalsInputArrivingTerminalIDParam'
       responses:
         '200':
           description: Success
@@ -4781,7 +4416,56 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchRoutesByTripDateOutput'
+                  type: object
+                  properties:
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the route.
+                    RouteAbbrev:
+                      type: string
+                      nullable: true
+                      description: Route abbreviation code for compact identification.
+                    Description:
+                      type: string
+                      nullable: true
+                      description: Display name of the route.
+                    RegionID:
+                      type: number
+                      description: Numeric ID of the WSF region associated with route.
+                    ServiceDisruptions:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          BulletinID:
+                            type: number
+                            description: Numeric ID of the service disruption bulletin.
+                          BulletinFlag:
+                            type: boolean
+                            description: True if alert is also used as bulletin; otherwise false.
+                          PublishDate:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the disruption alert was published.
+                            format: date-time
+                          DisruptionDescription:
+                            type: string
+                            description: Text description of the service disruption.
+                        required:
+                          - BulletinID
+                          - BulletinFlag
+                          - PublishDate
+                          - DisruptionDescription
+                        description: Service disruption information including bulletin ID, flag, publish date, and description.
+                      description: Array of service disruption alerts currently affecting route, or null if unavailable.
+                  required:
+                    - RouteID
+                    - RouteAbbrev
+                    - Description
+                    - RegionID
+                    - ServiceDisruptions
+                  description: Basic route information including identification, abbreviation, description, region, and service disruptions.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4812,8 +4496,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchRoutesHavingServiceDisruptionsByTripDateInputTripDateParam'
       responses:
         '200':
           description: Success
@@ -4822,7 +4504,28 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchRoutesHavingServiceDisruptionsByTripDateOutput'
+                  type: object
+                  properties:
+                    BulletinID:
+                      type: number
+                      description: Numeric ID of the service disruption bulletin.
+                    BulletinFlag:
+                      type: boolean
+                      description: True if alert is also used as bulletin; otherwise false.
+                    PublishDate:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the disruption alert was published.
+                      format: date-time
+                    DisruptionDescription:
+                      type: string
+                      description: Text description of the service disruption.
+                  required:
+                    - BulletinID
+                    - BulletinFlag
+                    - PublishDate
+                    - DisruptionDescription
+                  description: Service disruption information including bulletin ID, flag, publish date, and description.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4853,7 +4556,88 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchScheduleAlertsOutput'
+                  type: object
+                  properties:
+                    BulletinID:
+                      type: number
+                      description: Numeric ID of the alert bulletin.
+                    BulletinFlag:
+                      type: boolean
+                      description: True if alert includes bulletin-formatted text; otherwise false.
+                    BulletinText:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted alert text for bulletin display.
+                    CommunicationFlag:
+                      type: boolean
+                      description: True if alert includes communications announcement text; otherwise false.
+                    CommunicationText:
+                      type: string
+                      nullable: true
+                      description: Alert text formatted for internal communications.
+                    RouteAlertFlag:
+                      type: boolean
+                      description: True if alert includes route announcement text; otherwise false.
+                    RouteAlertText:
+                      type: string
+                      nullable: true
+                      description: Compact route-specific alert text for route displays.
+                    HomepageAlertText:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted alert text for homepage display.
+                    PublishDate:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert was published.
+                      format: date-time
+                    DisruptionDescription:
+                      type: string
+                      nullable: true
+                      description: Service disruption description associated with alert.
+                    AllRoutesFlag:
+                      type: boolean
+                      description: True if alert affects all routes system-wide; otherwise false.
+                    SortSeq:
+                      type: number
+                      description: Display sort order; lower values appear first in lists.
+                    AlertTypeID:
+                      type: number
+                      description: Numeric ID of the alert type category.
+                    AlertType:
+                      type: string
+                      description: Display name of the alert type category.
+                    AlertFullTitle:
+                      type: string
+                      description: Full title of the alert for display.
+                    AffectedRouteIDs:
+                      type: array
+                      items:
+                        type: number
+                      description: Array of route IDs affected by this alert; empty if all routes.
+                    IVRText:
+                      type: string
+                      nullable: true
+                      description: Alert text formatted for Interactive Voice Response systems.
+                  required:
+                    - BulletinID
+                    - BulletinFlag
+                    - BulletinText
+                    - CommunicationFlag
+                    - CommunicationText
+                    - RouteAlertFlag
+                    - RouteAlertText
+                    - HomepageAlertText
+                    - PublishDate
+                    - DisruptionDescription
+                    - AllRoutesFlag
+                    - SortSeq
+                    - AlertTypeID
+                    - AlertType
+                    - AlertFullTitle
+                    - AffectedRouteIDs
+                    - IVRText
+                  description: Detailed alert information with multiple text formats, publish date, alert type, and affected routes.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -4901,9 +4685,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchScheduleByTripDateAndRouteIdInputTripDateParam'
-        - $ref: '#/components/parameters/FetchScheduleByTripDateAndRouteIdInputRouteIDParam'
       responses:
         '200':
           description: Success
@@ -6336,10 +6117,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputTripDateParam'
-        - $ref: '#/components/parameters/FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputArrivingTerminalIDParam'
       responses:
         '200':
           description: Success
@@ -6466,8 +6243,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchScheduledRoutesInputScheduleIDParam'
       responses:
         '200':
           description: Success
@@ -6476,7 +6251,114 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchScheduledRoutesOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season.
+                    SchedRouteID:
+                      type: number
+                      description: Numeric ID of the scheduled route.
+                    ContingencyOnly:
+                      type: boolean
+                      description: True if this is a contingency-only route active only during periods in ContingencyAdj; otherwise false. For contingency routes, ContingencyAdj defines active periods. For regular routes, ContingencyAdj may define cancellation periods.
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the underlying route.
+                    RouteAbbrev:
+                      type: string
+                      description: Abbreviation code for the route.
+                    Description:
+                      type: string
+                      description: Display name of the scheduled route.
+                    SeasonalRouteNotes:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted seasonal notes and special conditions.
+                    RegionID:
+                      type: number
+                      description: Numeric ID of the WSF region for this route.
+                    ServiceDisruptions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          BulletinID:
+                            type: number
+                            description: Numeric ID of the service disruption bulletin.
+                          BulletinFlag:
+                            type: boolean
+                            description: True if alert is also used as bulletin; otherwise false.
+                          PublishDate:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the disruption alert was published.
+                            format: date-time
+                          DisruptionDescription:
+                            type: string
+                            description: Text description of the service disruption.
+                        required:
+                          - BulletinID
+                          - BulletinFlag
+                          - PublishDate
+                          - DisruptionDescription
+                        description: Service disruption information affecting this scheduled route.
+                      description: Array of service disruption alerts currently affecting this route.
+                    ContingencyAdj:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          DateFrom:
+                            type: string
+                            description: UTC datetime when the contingency adjustment period starts.
+                            format: date-time
+                          DateThru:
+                            type: string
+                            description: UTC datetime when the contingency adjustment period ends.
+                            format: date-time
+                          EventID:
+                            type: number
+                            nullable: true
+                            description: Numeric ID of the event prompting this adjustment.
+                          EventDescription:
+                            type: string
+                            nullable: true
+                            description: Description of the event that prompted this adjustment.
+                          AdjType:
+                            anyOf:
+                              - type: number
+                                enum:
+                                  - 1
+                              - type: number
+                                enum:
+                                  - 2
+                            description: 'Code indicating adjustment type: 1 = Addition, 2 = Cancellation.'
+                          ReplacedBySchedRouteID:
+                            type: number
+                            nullable: true
+                            description: Numeric ID of the scheduled route replacing a cancelled route.
+                        required:
+                          - DateFrom
+                          - DateThru
+                          - EventID
+                          - EventDescription
+                          - AdjType
+                          - ReplacedBySchedRouteID
+                        description: Contingency adjustment defining service periods for contingency routes or cancellation periods for regular routes.
+                      description: Array of contingency adjustments. For contingency routes, defines active periods. For regular routes, may define cancellation periods.
+                  required:
+                    - ScheduleID
+                    - SchedRouteID
+                    - ContingencyOnly
+                    - RouteID
+                    - RouteAbbrev
+                    - Description
+                    - SeasonalRouteNotes
+                    - RegionID
+                    - ServiceDisruptions
+                    - ContingencyAdj
+                  description: Scheduled route information including schedule and route IDs, contingency flag, route details, seasonal notes, region, service disruptions, and contingency adjustments.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -6512,8 +6394,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchScheduledRoutesByIdInputScheduleIDParam'
       responses:
         '200':
           description: Success
@@ -6522,7 +6402,114 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchScheduledRoutesOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season.
+                    SchedRouteID:
+                      type: number
+                      description: Numeric ID of the scheduled route.
+                    ContingencyOnly:
+                      type: boolean
+                      description: True if this is a contingency-only route active only during periods in ContingencyAdj; otherwise false. For contingency routes, ContingencyAdj defines active periods. For regular routes, ContingencyAdj may define cancellation periods.
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the underlying route.
+                    RouteAbbrev:
+                      type: string
+                      description: Abbreviation code for the route.
+                    Description:
+                      type: string
+                      description: Display name of the scheduled route.
+                    SeasonalRouteNotes:
+                      type: string
+                      nullable: true
+                      description: HTML-formatted seasonal notes and special conditions.
+                    RegionID:
+                      type: number
+                      description: Numeric ID of the WSF region for this route.
+                    ServiceDisruptions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          BulletinID:
+                            type: number
+                            description: Numeric ID of the service disruption bulletin.
+                          BulletinFlag:
+                            type: boolean
+                            description: True if alert is also used as bulletin; otherwise false.
+                          PublishDate:
+                            type: string
+                            nullable: true
+                            description: UTC datetime when the disruption alert was published.
+                            format: date-time
+                          DisruptionDescription:
+                            type: string
+                            description: Text description of the service disruption.
+                        required:
+                          - BulletinID
+                          - BulletinFlag
+                          - PublishDate
+                          - DisruptionDescription
+                        description: Service disruption information affecting this scheduled route.
+                      description: Array of service disruption alerts currently affecting this route.
+                    ContingencyAdj:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          DateFrom:
+                            type: string
+                            description: UTC datetime when the contingency adjustment period starts.
+                            format: date-time
+                          DateThru:
+                            type: string
+                            description: UTC datetime when the contingency adjustment period ends.
+                            format: date-time
+                          EventID:
+                            type: number
+                            nullable: true
+                            description: Numeric ID of the event prompting this adjustment.
+                          EventDescription:
+                            type: string
+                            nullable: true
+                            description: Description of the event that prompted this adjustment.
+                          AdjType:
+                            anyOf:
+                              - type: number
+                                enum:
+                                  - 1
+                              - type: number
+                                enum:
+                                  - 2
+                            description: 'Code indicating adjustment type: 1 = Addition, 2 = Cancellation.'
+                          ReplacedBySchedRouteID:
+                            type: number
+                            nullable: true
+                            description: Numeric ID of the scheduled route replacing a cancelled route.
+                        required:
+                          - DateFrom
+                          - DateThru
+                          - EventID
+                          - EventDescription
+                          - AdjType
+                          - ReplacedBySchedRouteID
+                        description: Contingency adjustment defining service periods for contingency routes or cancellation periods for regular routes.
+                      description: Array of contingency adjustments. For contingency routes, defines active periods. For regular routes, may define cancellation periods.
+                  required:
+                    - ScheduleID
+                    - SchedRouteID
+                    - ContingencyOnly
+                    - RouteID
+                    - RouteAbbrev
+                    - Description
+                    - SeasonalRouteNotes
+                    - RegionID
+                    - ServiceDisruptions
+                    - ContingencyAdj
+                  description: Scheduled route information including schedule and route IDs, contingency flag, route details, seasonal notes, region, service disruptions, and contingency adjustments.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -6559,9 +6546,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchScheduleTodayByRouteInputRouteIDParam'
-        - $ref: '#/components/parameters/FetchScheduleTodayByRouteInputOnlyRemainingTimesParam'
       responses:
         '200':
           description: Success
@@ -8142,10 +8126,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchScheduleTodayByTerminalsInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FetchScheduleTodayByTerminalsInputArrivingTerminalIDParam'
-        - $ref: '#/components/parameters/FetchScheduleTodayByTerminalsInputOnlyRemainingTimesParam'
       responses:
         '200':
           description: Success
@@ -8307,9 +8287,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalMatesScheduleInputTripDateParam'
-        - $ref: '#/components/parameters/FetchTerminalMatesScheduleInputTerminalIDParam'
       responses:
         '200':
           description: Success
@@ -8318,7 +8295,19 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalMatesScheduleOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: number
+                      description: Numeric ID of the terminal.
+                    Description:
+                      type: string
+                      description: Display name of the terminal.
+                  required:
+                    - TerminalID
+                    - Description
+                  description: Terminal information with identifier and display name.
+                description: Array of terminal records.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -8346,8 +8335,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalsInputTripDateParam'
       responses:
         '200':
           description: Success
@@ -8356,7 +8343,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalMatesScheduleOutput'
+                  type: object
+                  properties:
+                    TerminalID:
+                      type: number
+                      description: Numeric ID of the terminal.
+                    Description:
+                      type: string
+                      description: Display name of the terminal.
+                  required:
+                    - TerminalID
+                    - Description
+                  description: Terminal information with identifier and display name.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -8384,8 +8382,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalsAndMatesInputTripDateParam'
       responses:
         '200':
           description: Success
@@ -8394,7 +8390,27 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalsAndMatesOutput'
+                  type: object
+                  properties:
+                    DepartingTerminalID:
+                      type: number
+                      description: Numeric ID of the departing terminal.
+                    DepartingDescription:
+                      type: string
+                      description: Display name of the departing terminal.
+                      format: date-time
+                    ArrivingTerminalID:
+                      type: number
+                      description: Numeric ID of the arriving terminal.
+                    ArrivingDescription:
+                      type: string
+                      description: Display name of the arriving terminal.
+                  required:
+                    - DepartingTerminalID
+                    - DepartingDescription
+                    - ArrivingTerminalID
+                    - ArrivingDescription
+                  description: Terminal pair representing a valid departure and arrival terminal combination for schedule queries.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -8425,9 +8441,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalsAndMatesByRouteInputTripDateParam'
-        - $ref: '#/components/parameters/FetchTerminalsAndMatesByRouteInputRouteIDParam'
       responses:
         '200':
           description: Success
@@ -8436,7 +8449,27 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalsAndMatesOutput'
+                  type: object
+                  properties:
+                    DepartingTerminalID:
+                      type: number
+                      description: Numeric ID of the departing terminal.
+                    DepartingDescription:
+                      type: string
+                      description: Display name of the departing terminal.
+                      format: date-time
+                    ArrivingTerminalID:
+                      type: number
+                      description: Numeric ID of the arriving terminal.
+                    ArrivingDescription:
+                      type: string
+                      description: Display name of the arriving terminal.
+                  required:
+                    - DepartingTerminalID
+                    - DepartingDescription
+                    - ArrivingTerminalID
+                    - ArrivingDescription
+                  description: Terminal pair representing a valid departure and arrival terminal combination for schedule queries.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -8471,7 +8504,205 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTimeAdjustmentsOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season.
+                    SchedRouteID:
+                      type: number
+                      description: Numeric ID of the scheduled route.
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the underlying route.
+                    RouteDescription:
+                      type: string
+                      nullable: true
+                      description: Display name of the route.
+                    RouteSortSeq:
+                      type: number
+                      description: Display sort order; lower values appear first.
+                    SailingID:
+                      type: number
+                      description: Numeric ID of the sailing.
+                    SailingDescription:
+                      type: string
+                      nullable: true
+                      description: Display name of the sailing.
+                    ActiveSailingDateRange:
+                      type: object
+                      nullable: true
+                      properties:
+                        DateFrom:
+                          type: string
+                          description: UTC datetime when the sailing date range begins.
+                          format: date-time
+                        DateThru:
+                          type: string
+                          description: UTC datetime when the sailing date range ends.
+                          format: date-time
+                        EventID:
+                          type: number
+                          nullable: true
+                          description: Numeric ID of the event associated with the date range.
+                        EventDescription:
+                          type: string
+                          nullable: true
+                          description: Description of the event associated with the date range.
+                      required:
+                        - DateFrom
+                        - DateThru
+                        - EventID
+                        - EventDescription
+                      description: Active date range for the sailing.
+                    SailingDir:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Sailing direction code: 1 = Westbound, 2 = Eastbound.'
+                    JourneyID:
+                      type: number
+                      description: Numeric ID of the journey.
+                    VesselID:
+                      type: number
+                      description: Numeric ID of the vessel.
+                    VesselName:
+                      type: string
+                      nullable: true
+                      description: Display name of the vessel.
+                    VesselHandicapAccessible:
+                      type: boolean
+                      description: True if the vessel is ADA accessible; otherwise false.
+                    VesselPositionNum:
+                      type: number
+                      description: Position number for vessel scheduling.
+                    JourneyTerminalID:
+                      type: number
+                      description: Numeric ID of the terminal time within the journey.
+                    TerminalID:
+                      type: number
+                      description: Numeric ID of the terminal.
+                    TerminalDescription:
+                      type: string
+                      description: Display name of the terminal.
+                    TerminalBriefDescription:
+                      type: string
+                      description: Abbreviated name of the terminal.
+                    TimeToAdj:
+                      type: string
+                      description: 'UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion.'
+                      format: date-time
+                    AdjDateFrom:
+                      type: string
+                      description: UTC datetime when the adjustment period begins.
+                      format: date-time
+                    AdjDateThru:
+                      type: string
+                      description: UTC datetime when the adjustment period ends.
+                      format: date-time
+                    TidalAdj:
+                      type: boolean
+                      description: True if the adjustment is due to tidal conditions; otherwise false.
+                    EventID:
+                      type: number
+                      nullable: true
+                      description: Numeric ID of the event prompting the adjustment.
+                    EventDescription:
+                      type: string
+                      nullable: true
+                      description: Description of the event prompting the adjustment.
+                    DepArrIndicator:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Indicator code: 1 = Departure, 2 = Arrival.'
+                    AdjType:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Adjustment type code: 1 = Addition, 2 = Cancellation.'
+                    Annotations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          AnnotationID:
+                            type: number
+                            description: Numeric ID of the annotation.
+                          AnnotationText:
+                            type: string
+                            nullable: true
+                            description: Text content of the annotation.
+                          AnnotationIVRText:
+                            type: string
+                            nullable: true
+                            description: Annotation text formatted for IVR systems.
+                          AdjustedCrossingTime:
+                            type: number
+                            nullable: true
+                            description: Adjusted crossing time override in minutes.
+                          AnnotationImg:
+                            type: string
+                            nullable: true
+                            description: URL to image representing the annotation.
+                          TypeDescription:
+                            type: string
+                            nullable: true
+                            description: Category or type of the annotation.
+                          SortSeq:
+                            type: number
+                            description: Display sort order; lower values appear first.
+                        required:
+                          - AnnotationID
+                          - AnnotationText
+                          - AnnotationIVRText
+                          - AdjustedCrossingTime
+                          - AnnotationImg
+                          - TypeDescription
+                          - SortSeq
+                        description: Annotation information for the adjustment.
+                      description: Array of annotations associated with the adjustment.
+                  required:
+                    - ScheduleID
+                    - SchedRouteID
+                    - RouteID
+                    - RouteDescription
+                    - RouteSortSeq
+                    - SailingID
+                    - SailingDescription
+                    - ActiveSailingDateRange
+                    - SailingDir
+                    - JourneyID
+                    - VesselID
+                    - VesselName
+                    - VesselHandicapAccessible
+                    - VesselPositionNum
+                    - JourneyTerminalID
+                    - TerminalID
+                    - TerminalDescription
+                    - TerminalBriefDescription
+                    - TimeToAdj
+                    - AdjDateFrom
+                    - AdjDateThru
+                    - TidalAdj
+                    - EventID
+                    - EventDescription
+                    - DepArrIndicator
+                    - AdjType
+                    - Annotations
+                  description: Time adjustment representing modifications to scheduled sailing times, including additions, cancellations, and timing changes for specific dates.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -8528,8 +8759,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTimeAdjustmentsByRouteInputRouteIDParam'
       responses:
         '200':
           description: Success
@@ -8538,7 +8767,205 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTimeAdjustmentsOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season.
+                    SchedRouteID:
+                      type: number
+                      description: Numeric ID of the scheduled route.
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the underlying route.
+                    RouteDescription:
+                      type: string
+                      nullable: true
+                      description: Display name of the route.
+                    RouteSortSeq:
+                      type: number
+                      description: Display sort order; lower values appear first.
+                    SailingID:
+                      type: number
+                      description: Numeric ID of the sailing.
+                    SailingDescription:
+                      type: string
+                      nullable: true
+                      description: Display name of the sailing.
+                    ActiveSailingDateRange:
+                      type: object
+                      nullable: true
+                      properties:
+                        DateFrom:
+                          type: string
+                          description: UTC datetime when the sailing date range begins.
+                          format: date-time
+                        DateThru:
+                          type: string
+                          description: UTC datetime when the sailing date range ends.
+                          format: date-time
+                        EventID:
+                          type: number
+                          nullable: true
+                          description: Numeric ID of the event associated with the date range.
+                        EventDescription:
+                          type: string
+                          nullable: true
+                          description: Description of the event associated with the date range.
+                      required:
+                        - DateFrom
+                        - DateThru
+                        - EventID
+                        - EventDescription
+                      description: Active date range for the sailing.
+                    SailingDir:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Sailing direction code: 1 = Westbound, 2 = Eastbound.'
+                    JourneyID:
+                      type: number
+                      description: Numeric ID of the journey.
+                    VesselID:
+                      type: number
+                      description: Numeric ID of the vessel.
+                    VesselName:
+                      type: string
+                      nullable: true
+                      description: Display name of the vessel.
+                    VesselHandicapAccessible:
+                      type: boolean
+                      description: True if the vessel is ADA accessible; otherwise false.
+                    VesselPositionNum:
+                      type: number
+                      description: Position number for vessel scheduling.
+                    JourneyTerminalID:
+                      type: number
+                      description: Numeric ID of the terminal time within the journey.
+                    TerminalID:
+                      type: number
+                      description: Numeric ID of the terminal.
+                    TerminalDescription:
+                      type: string
+                      description: Display name of the terminal.
+                    TerminalBriefDescription:
+                      type: string
+                      description: Abbreviated name of the terminal.
+                    TimeToAdj:
+                      type: string
+                      description: 'UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion.'
+                      format: date-time
+                    AdjDateFrom:
+                      type: string
+                      description: UTC datetime when the adjustment period begins.
+                      format: date-time
+                    AdjDateThru:
+                      type: string
+                      description: UTC datetime when the adjustment period ends.
+                      format: date-time
+                    TidalAdj:
+                      type: boolean
+                      description: True if the adjustment is due to tidal conditions; otherwise false.
+                    EventID:
+                      type: number
+                      nullable: true
+                      description: Numeric ID of the event prompting the adjustment.
+                    EventDescription:
+                      type: string
+                      nullable: true
+                      description: Description of the event prompting the adjustment.
+                    DepArrIndicator:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Indicator code: 1 = Departure, 2 = Arrival.'
+                    AdjType:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Adjustment type code: 1 = Addition, 2 = Cancellation.'
+                    Annotations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          AnnotationID:
+                            type: number
+                            description: Numeric ID of the annotation.
+                          AnnotationText:
+                            type: string
+                            nullable: true
+                            description: Text content of the annotation.
+                          AnnotationIVRText:
+                            type: string
+                            nullable: true
+                            description: Annotation text formatted for IVR systems.
+                          AdjustedCrossingTime:
+                            type: number
+                            nullable: true
+                            description: Adjusted crossing time override in minutes.
+                          AnnotationImg:
+                            type: string
+                            nullable: true
+                            description: URL to image representing the annotation.
+                          TypeDescription:
+                            type: string
+                            nullable: true
+                            description: Category or type of the annotation.
+                          SortSeq:
+                            type: number
+                            description: Display sort order; lower values appear first.
+                        required:
+                          - AnnotationID
+                          - AnnotationText
+                          - AnnotationIVRText
+                          - AdjustedCrossingTime
+                          - AnnotationImg
+                          - TypeDescription
+                          - SortSeq
+                        description: Annotation information for the adjustment.
+                      description: Array of annotations associated with the adjustment.
+                  required:
+                    - ScheduleID
+                    - SchedRouteID
+                    - RouteID
+                    - RouteDescription
+                    - RouteSortSeq
+                    - SailingID
+                    - SailingDescription
+                    - ActiveSailingDateRange
+                    - SailingDir
+                    - JourneyID
+                    - VesselID
+                    - VesselName
+                    - VesselHandicapAccessible
+                    - VesselPositionNum
+                    - JourneyTerminalID
+                    - TerminalID
+                    - TerminalDescription
+                    - TerminalBriefDescription
+                    - TimeToAdj
+                    - AdjDateFrom
+                    - AdjDateThru
+                    - TidalAdj
+                    - EventID
+                    - EventDescription
+                    - DepArrIndicator
+                    - AdjType
+                    - Annotations
+                  description: Time adjustment representing modifications to scheduled sailing times, including additions, cancellations, and timing changes for specific dates.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -8564,8 +8991,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTimeAdjustmentsBySchedRouteInputSchedRouteIDParam'
       responses:
         '200':
           description: Success
@@ -8574,7 +8999,205 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTimeAdjustmentsOutput'
+                  type: object
+                  properties:
+                    ScheduleID:
+                      type: number
+                      description: Numeric ID of the schedule season.
+                    SchedRouteID:
+                      type: number
+                      description: Numeric ID of the scheduled route.
+                    RouteID:
+                      type: number
+                      description: Numeric ID of the underlying route.
+                    RouteDescription:
+                      type: string
+                      nullable: true
+                      description: Display name of the route.
+                    RouteSortSeq:
+                      type: number
+                      description: Display sort order; lower values appear first.
+                    SailingID:
+                      type: number
+                      description: Numeric ID of the sailing.
+                    SailingDescription:
+                      type: string
+                      nullable: true
+                      description: Display name of the sailing.
+                    ActiveSailingDateRange:
+                      type: object
+                      nullable: true
+                      properties:
+                        DateFrom:
+                          type: string
+                          description: UTC datetime when the sailing date range begins.
+                          format: date-time
+                        DateThru:
+                          type: string
+                          description: UTC datetime when the sailing date range ends.
+                          format: date-time
+                        EventID:
+                          type: number
+                          nullable: true
+                          description: Numeric ID of the event associated with the date range.
+                        EventDescription:
+                          type: string
+                          nullable: true
+                          description: Description of the event associated with the date range.
+                      required:
+                        - DateFrom
+                        - DateThru
+                        - EventID
+                        - EventDescription
+                      description: Active date range for the sailing.
+                    SailingDir:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Sailing direction code: 1 = Westbound, 2 = Eastbound.'
+                    JourneyID:
+                      type: number
+                      description: Numeric ID of the journey.
+                    VesselID:
+                      type: number
+                      description: Numeric ID of the vessel.
+                    VesselName:
+                      type: string
+                      nullable: true
+                      description: Display name of the vessel.
+                    VesselHandicapAccessible:
+                      type: boolean
+                      description: True if the vessel is ADA accessible; otherwise false.
+                    VesselPositionNum:
+                      type: number
+                      description: Position number for vessel scheduling.
+                    JourneyTerminalID:
+                      type: number
+                      description: Numeric ID of the terminal time within the journey.
+                    TerminalID:
+                      type: number
+                      description: Numeric ID of the terminal.
+                    TerminalDescription:
+                      type: string
+                      description: Display name of the terminal.
+                    TerminalBriefDescription:
+                      type: string
+                      description: Abbreviated name of the terminal.
+                    TimeToAdj:
+                      type: string
+                      description: 'UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion.'
+                      format: date-time
+                    AdjDateFrom:
+                      type: string
+                      description: UTC datetime when the adjustment period begins.
+                      format: date-time
+                    AdjDateThru:
+                      type: string
+                      description: UTC datetime when the adjustment period ends.
+                      format: date-time
+                    TidalAdj:
+                      type: boolean
+                      description: True if the adjustment is due to tidal conditions; otherwise false.
+                    EventID:
+                      type: number
+                      nullable: true
+                      description: Numeric ID of the event prompting the adjustment.
+                    EventDescription:
+                      type: string
+                      nullable: true
+                      description: Description of the event prompting the adjustment.
+                    DepArrIndicator:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Indicator code: 1 = Departure, 2 = Arrival.'
+                    AdjType:
+                      anyOf:
+                        - type: number
+                          enum:
+                            - 1
+                        - type: number
+                          enum:
+                            - 2
+                      description: 'Adjustment type code: 1 = Addition, 2 = Cancellation.'
+                    Annotations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          AnnotationID:
+                            type: number
+                            description: Numeric ID of the annotation.
+                          AnnotationText:
+                            type: string
+                            nullable: true
+                            description: Text content of the annotation.
+                          AnnotationIVRText:
+                            type: string
+                            nullable: true
+                            description: Annotation text formatted for IVR systems.
+                          AdjustedCrossingTime:
+                            type: number
+                            nullable: true
+                            description: Adjusted crossing time override in minutes.
+                          AnnotationImg:
+                            type: string
+                            nullable: true
+                            description: URL to image representing the annotation.
+                          TypeDescription:
+                            type: string
+                            nullable: true
+                            description: Category or type of the annotation.
+                          SortSeq:
+                            type: number
+                            description: Display sort order; lower values appear first.
+                        required:
+                          - AnnotationID
+                          - AnnotationText
+                          - AnnotationIVRText
+                          - AdjustedCrossingTime
+                          - AnnotationImg
+                          - TypeDescription
+                          - SortSeq
+                        description: Annotation information for the adjustment.
+                      description: Array of annotations associated with the adjustment.
+                  required:
+                    - ScheduleID
+                    - SchedRouteID
+                    - RouteID
+                    - RouteDescription
+                    - RouteSortSeq
+                    - SailingID
+                    - SailingDescription
+                    - ActiveSailingDateRange
+                    - SailingDir
+                    - JourneyID
+                    - VesselID
+                    - VesselName
+                    - VesselHandicapAccessible
+                    - VesselPositionNum
+                    - JourneyTerminalID
+                    - TerminalID
+                    - TerminalDescription
+                    - TerminalBriefDescription
+                    - TimeToAdj
+                    - AdjDateFrom
+                    - AdjDateThru
+                    - TidalAdj
+                    - EventID
+                    - EventDescription
+                    - DepArrIndicator
+                    - AdjType
+                    - Annotations
+                  description: Time adjustment representing modifications to scheduled sailing times, including additions, cancellations, and timing changes for specific dates.
               examples:
                 sampleResponse:
                   summary: Sample response

@@ -156,7 +156,8 @@
           },
           "Time": {
             "type": "string",
-            "description": "UTC datetime when the traffic flow reading was taken."
+            "description": "UTC datetime when the traffic flow reading was taken.",
+            "format": "date-time"
           }
         },
         "required": [
@@ -295,7 +296,8 @@
                       },
                       "Time": {
                         "type": "string",
-                        "description": "UTC datetime when the traffic flow reading was taken."
+                        "description": "UTC datetime when the traffic flow reading was taken.",
+                        "format": "date-time"
                       }
                     },
                     "required": [

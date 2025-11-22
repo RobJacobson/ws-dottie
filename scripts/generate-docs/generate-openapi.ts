@@ -671,8 +671,108 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
     };
   });
 
+  /**
+   * Post-process OpenAPI document to add format: date-time to date fields
+   *
+   * Recursively walks through the OpenAPI document and adds format: date-time
+   * to string fields that represent dates/times. Identifies date fields by:
+   * - Descriptions containing specific date/time patterns (UTC datetime, when, etc.)
+   * - Field names in parent context containing date/time keywords
+   *
+   * Note: OpenAPI correctly documents dates as `type: string` with `format: date-time`
+   * because OpenAPI describes the HTTP API contract (what comes over the wire as JSON).
+   * JSON has no native Date type - dates are transmitted as strings. The ws-dottie
+   * library converts these strings to JavaScript Date objects client-side via
+   * convertDotNetDates(), but the OpenAPI spec correctly reflects the wire format.
+   *
+   * @param obj - The OpenAPI document or schema object to process
+   * @param parentKey - The key name in the parent object (for context)
+   * @returns The processed object with date-time formats added
+   */
+  const addDateTimeFormats = (
+    obj: unknown,
+    parentKey?: string
+  ): unknown => {
+    if (obj === null || obj === undefined) {
+      return obj;
+    }
+
+    if (typeof obj !== "object") {
+      return obj;
+    }
+
+    if (Array.isArray(obj)) {
+      return obj.map((item) => addDateTimeFormats(item, parentKey));
+    }
+
+    const record = obj as Record<string, unknown>;
+
+    // Check if this is a schema object with type: string and no format
+    if (record.type === "string" && !record.format) {
+      const schema = record as {
+        type?: string;
+        format?: string;
+        description?: string;
+        [key: string]: unknown;
+      };
+
+      // Check description for specific date/time patterns
+      const description = (schema.description || "").toLowerCase();
+      const hasDateTimeDescription =
+        description.includes("utc datetime") ||
+        description.includes("datetime when") ||
+        description.includes("when this") ||
+        description.includes("when the") ||
+        description.includes("date when") ||
+        description.includes("time when") ||
+        description.includes("timestamp") ||
+        (description.includes("date") &&
+          (description.includes("effective") ||
+            description.includes("expires") ||
+            description.includes("posted") ||
+            description.includes("updated")));
+
+      // Check parent key name for date/time keywords
+      const keyName = (parentKey || "").toLowerCase();
+      const hasDateTimeKeyName =
+        keyName.includes("time") ||
+        keyName.includes("date") ||
+        keyName.includes("updated") ||
+        keyName.includes("depart") ||
+        keyName.includes("arrival") ||
+        keyName.includes("effective") ||
+        keyName.includes("expires") ||
+        keyName.includes("posted") ||
+        keyName.includes("timestamp") ||
+        keyName.includes("lastupdated");
+
+      // Add format: date-time if this appears to be a date field
+      if (hasDateTimeDescription || hasDateTimeKeyName) {
+        return {
+          ...schema,
+          format: "date-time",
+        };
+      }
+    }
+
+    // Recursively process all properties
+    const processed: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(record)) {
+      // Skip $ref to avoid infinite loops
+      if (key === "$ref") {
+        processed[key] = value;
+      } else {
+        processed[key] = addDateTimeFormats(value, key);
+      }
+    }
+
+    return processed;
+  };
+
+  const processedDoc = addDateTimeFormats(openApiDoc);
+
   return {
-    ...openApiDoc,
+    ...processedDoc,
     tags,
   };
 };

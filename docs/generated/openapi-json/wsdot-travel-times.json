@@ -165,7 +165,8 @@
           },
           "TimeUpdated": {
             "type": "string",
-            "description": "UTC datetime when the travel time data was last updated."
+            "description": "UTC datetime when the travel time data was last updated.",
+            "format": "date-time"
           },
           "TravelTimeID": {
             "type": "number",
@@ -320,7 +321,8 @@
                       },
                       "TimeUpdated": {
                         "type": "string",
-                        "description": "UTC datetime when the travel time data was last updated."
+                        "description": "UTC datetime when the travel time data was last updated.",
+                        "format": "date-time"
                       },
                       "TravelTimeID": {
                         "type": "number",

@@ -83,7 +83,8 @@
                     "properties": {
                       "APILastUpdate": {
                         "type": "string",
-                        "description": "UTC datetime when the bridge clearance record was last updated."
+                        "description": "UTC datetime when the bridge clearance record was last updated.",
+                        "format": "date-time"
                       },
                       "BridgeNumber": {
                         "type": "string",
@@ -126,7 +127,8 @@
                       },
                       "RouteDate": {
                         "type": "string",
-                        "description": "UTC datetime when the route information was established or last updated."
+                        "description": "UTC datetime when the route information was established or last updated.",
+                        "format": "date-time"
                       },
                       "SRMP": {
                         "type": "number",
@@ -250,7 +252,8 @@
                     "properties": {
                       "APILastUpdate": {
                         "type": "string",
-                        "description": "UTC datetime when the bridge clearance record was last updated."
+                        "description": "UTC datetime when the bridge clearance record was last updated.",
+                        "format": "date-time"
                       },
                       "BridgeNumber": {
                         "type": "string",
@@ -293,7 +296,8 @@
                       },
                       "RouteDate": {
                         "type": "string",
-                        "description": "UTC datetime when the route information was established or last updated."
+                        "description": "UTC datetime when the route information was established or last updated.",
+                        "format": "date-time"
                       },
                       "SRMP": {
                         "type": "number",

@@ -103,15 +103,18 @@
                       },
                       "DateEffective": {
                         "type": "string",
-                        "description": "UTC datetime when the commercial vehicle restriction becomes effective."
+                        "description": "UTC datetime when the commercial vehicle restriction becomes effective.",
+                        "format": "date-time"
                       },
                       "DateExpires": {
                         "type": "string",
-                        "description": "UTC datetime when the commercial vehicle restriction expires."
+                        "description": "UTC datetime when the commercial vehicle restriction expires.",
+                        "format": "date-time"
                       },
                       "DatePosted": {
                         "type": "string",
-                        "description": "UTC datetime when the commercial vehicle restriction was first posted."
+                        "description": "UTC datetime when the commercial vehicle restriction was first posted.",
+                        "format": "date-time"
                       },
                       "EndRoadwayLocation": {
                         "type": "object",
@@ -429,15 +432,18 @@
                       },
                       "DateEffective": {
                         "type": "string",
-                        "description": "UTC datetime when the commercial vehicle restriction becomes effective."
+                        "description": "UTC datetime when the commercial vehicle restriction becomes effective.",
+                        "format": "date-time"
                       },
                       "DateExpires": {
                         "type": "string",
-                        "description": "UTC datetime when the commercial vehicle restriction expires."
+                        "description": "UTC datetime when the commercial vehicle restriction expires.",
+                        "format": "date-time"
                       },
                       "DatePosted": {
                         "type": "string",
-                        "description": "UTC datetime when the commercial vehicle restriction was first posted."
+                        "description": "UTC datetime when the commercial vehicle restriction was first posted.",
+                        "format": "date-time"
                       },
                       "EndRoadwayLocation": {
                         "type": "object",

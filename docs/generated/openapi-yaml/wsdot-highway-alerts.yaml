@@ -40,7 +40,7 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchAlertsOutput:
+    FetchAlertByIdOutput:
       type: object
       properties:
         AlertID:
@@ -87,6 +87,7 @@ components:
           type: string
           nullable: true
           description: UTC datetime when the alert impact is estimated to end, or null when end time is not estimated or alert is ongoing.
+          format: date-time
         EventCategory:
           type: string
           nullable: true
@@ -107,6 +108,7 @@ components:
           type: string
           nullable: true
           description: UTC datetime when the alert was last modified or updated.
+          format: date-time
         Priority:
           type: string
           nullable: true
@@ -152,6 +154,7 @@ components:
           type: string
           nullable: true
           description: UTC datetime when the alert impact on traffic began.
+          format: date-time
       required:
         - AlertID
         - County
@@ -167,114 +170,7 @@ components:
         - StartRoadwayLocation
         - StartTime
       description: Highway alert with identification, event category, priority, location data, timestamps, and descriptions for traffic incidents and road conditions.
-    FetchMapAreasOutput:
-      type: object
-      properties:
-        MapArea:
-          type: string
-          nullable: true
-          description: Map area identifier code for geographic filtering, or null when unavailable.
-        MapAreaDescription:
-          type: string
-          nullable: true
-          description: Display name of the map area, or null when unavailable.
-      required:
-        - MapArea
-        - MapAreaDescription
-      description: Geographic map area with identifier code and display name for filtering highway alerts by region.
-    FetchEventCategoriesOutput:
-      type: string
-    SearchAlertsInputStateRouteParam:
-      type: string
-      description: State route identifier as three-digit number, or undefined to include all routes.
-    SearchAlertsInputRegionParam:
-      type: integer
-      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest, or undefined to include all regions.'
-    SearchAlertsInputSearchTimeStartParam:
-      type: string
-      description: UTC datetime when the search time range begins, in ISO format, or undefined for no start limit.
-    SearchAlertsInputSearchTimeEndParam:
-      type: string
-      description: UTC datetime when the search time range ends, in ISO format, or undefined for no end limit.
-    SearchAlertsInputStartingMilepostParam:
-      type: number
-      description: Starting milepost value for range filtering, or undefined for no start limit.
-    SearchAlertsInputEndingMilepostParam:
-      type: number
-      description: Ending milepost value for range filtering, or undefined for no end limit.
-    FetchAlertsByRegionIdInputRegionIDParam:
-      type: number
-      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest.'
-    FetchAlertsByMapAreaInputMapAreaParam:
-      type: string
-      description: Map area identifier code for geographic filtering.
-    FetchAlertByIdInputAlertIDParam:
-      type: number
-      description: Numeric ID of the highway alert.
-  parameters:
-    SearchAlertsInputStateRouteParam:
-      schema:
-        $ref: '#/components/schemas/SearchAlertsInputStateRouteParam'
-      required: true
-      description: State route identifier as three-digit number, or undefined to include all routes.
-      name: StateRoute
-      in: path
-    SearchAlertsInputRegionParam:
-      schema:
-        $ref: '#/components/schemas/SearchAlertsInputRegionParam'
-      required: true
-      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest, or undefined to include all regions.'
-      name: Region
-      in: path
-    SearchAlertsInputSearchTimeStartParam:
-      schema:
-        $ref: '#/components/schemas/SearchAlertsInputSearchTimeStartParam'
-      required: true
-      description: UTC datetime when the search time range begins, in ISO format, or undefined for no start limit.
-      name: SearchTimeStart
-      in: path
-    SearchAlertsInputSearchTimeEndParam:
-      schema:
-        $ref: '#/components/schemas/SearchAlertsInputSearchTimeEndParam'
-      required: true
-      description: UTC datetime when the search time range ends, in ISO format, or undefined for no end limit.
-      name: SearchTimeEnd
-      in: path
-    SearchAlertsInputStartingMilepostParam:
-      schema:
-        $ref: '#/components/schemas/SearchAlertsInputStartingMilepostParam'
-      required: true
-      description: Starting milepost value for range filtering, or undefined for no start limit.
-      name: StartingMilepost
-      in: path
-    SearchAlertsInputEndingMilepostParam:
-      schema:
-        $ref: '#/components/schemas/SearchAlertsInputEndingMilepostParam'
-      required: true
-      description: Ending milepost value for range filtering, or undefined for no end limit.
-      name: EndingMilepost
-      in: path
-    FetchAlertsByRegionIdInputRegionIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchAlertsByRegionIdInputRegionIDParam'
-      required: true
-      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest.'
-      name: RegionID
-      in: path
-    FetchAlertsByMapAreaInputMapAreaParam:
-      schema:
-        $ref: '#/components/schemas/FetchAlertsByMapAreaInputMapAreaParam'
-      required: true
-      description: Map area identifier code for geographic filtering.
-      name: MapArea
-      in: path
-    FetchAlertByIdInputAlertIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchAlertByIdInputAlertIDParam'
-      required: true
-      description: Numeric ID of the highway alert.
-      name: AlertID
-      in: path
+  parameters: {}
 paths:
   /getAlertsAsJson:
     get:
@@ -301,7 +197,135 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchAlertsOutput'
+                  type: object
+                  properties:
+                    AlertID:
+                      type: integer
+                      description: Numeric ID of the highway alert.
+                    County:
+                      type: string
+                      nullable: true
+                      description: County name for countywide alerts, or null when alert is route-specific.
+                    EndRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert ends, or null when alert is point-specific or end location is unavailable.
+                    EndTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact is estimated to end, or null when end time is not estimated or alert is ongoing.
+                      format: date-time
+                    EventCategory:
+                      type: string
+                      nullable: true
+                      description: Category classification for the alert event type, or null when category is unavailable.
+                    EventStatus:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating alert status: ''Open'' = active, ''Closed'' = resolved, or null when status is unavailable.'
+                    ExtendedDescription:
+                      type: string
+                      nullable: true
+                      description: Additional detailed information about the alert, or null when extended description is unavailable.
+                    HeadlineDescription:
+                      type: string
+                      nullable: true
+                      description: Primary description of the alert issue, or null when headline is unavailable.
+                    LastUpdatedTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert was last modified or updated.
+                      format: date-time
+                    Priority:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating traffic impact priority: ''Highest'' = severe, ''High'' = significant, ''Medium'' = moderate, ''Low'' = minimal, or null when priority is unavailable.'
+                    Region:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating WSDOT region: ''EA'' = Eastern, ''NC'' = North Central, ''NW'' = Northwest, ''OL'' = Olympic, ''SC'' = South Central, ''SW'' = Southwest, or null when region is unavailable.'
+                    StartRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert begins, or null when alert is point-specific or start location is unavailable.
+                    StartTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact on traffic began.
+                      format: date-time
+                  required:
+                    - AlertID
+                    - County
+                    - EndRoadwayLocation
+                    - EndTime
+                    - EventCategory
+                    - EventStatus
+                    - ExtendedDescription
+                    - HeadlineDescription
+                    - LastUpdatedTime
+                    - Priority
+                    - Region
+                    - StartRoadwayLocation
+                    - StartTime
+                  description: Highway alert with identification, event category, priority, location data, timestamps, and descriptions for traffic incidents and road conditions.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -356,13 +380,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/SearchAlertsInputStateRouteParam'
-        - $ref: '#/components/parameters/SearchAlertsInputRegionParam'
-        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeStartParam'
-        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeEndParam'
-        - $ref: '#/components/parameters/SearchAlertsInputStartingMilepostParam'
-        - $ref: '#/components/parameters/SearchAlertsInputEndingMilepostParam'
       responses:
         '200':
           description: Success
@@ -371,7 +388,135 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchAlertsOutput'
+                  type: object
+                  properties:
+                    AlertID:
+                      type: integer
+                      description: Numeric ID of the highway alert.
+                    County:
+                      type: string
+                      nullable: true
+                      description: County name for countywide alerts, or null when alert is route-specific.
+                    EndRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert ends, or null when alert is point-specific or end location is unavailable.
+                    EndTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact is estimated to end, or null when end time is not estimated or alert is ongoing.
+                      format: date-time
+                    EventCategory:
+                      type: string
+                      nullable: true
+                      description: Category classification for the alert event type, or null when category is unavailable.
+                    EventStatus:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating alert status: ''Open'' = active, ''Closed'' = resolved, or null when status is unavailable.'
+                    ExtendedDescription:
+                      type: string
+                      nullable: true
+                      description: Additional detailed information about the alert, or null when extended description is unavailable.
+                    HeadlineDescription:
+                      type: string
+                      nullable: true
+                      description: Primary description of the alert issue, or null when headline is unavailable.
+                    LastUpdatedTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert was last modified or updated.
+                      format: date-time
+                    Priority:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating traffic impact priority: ''Highest'' = severe, ''High'' = significant, ''Medium'' = moderate, ''Low'' = minimal, or null when priority is unavailable.'
+                    Region:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating WSDOT region: ''EA'' = Eastern, ''NC'' = North Central, ''NW'' = Northwest, ''OL'' = Olympic, ''SC'' = South Central, ''SW'' = Southwest, or null when region is unavailable.'
+                    StartRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert begins, or null when alert is point-specific or start location is unavailable.
+                    StartTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact on traffic began.
+                      format: date-time
+                  required:
+                    - AlertID
+                    - County
+                    - EndRoadwayLocation
+                    - EndTime
+                    - EventCategory
+                    - EventStatus
+                    - ExtendedDescription
+                    - HeadlineDescription
+                    - LastUpdatedTime
+                    - Priority
+                    - Region
+                    - StartRoadwayLocation
+                    - StartTime
+                  description: Highway alert with identification, event category, priority, location data, timestamps, and descriptions for traffic incidents and road conditions.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -422,8 +567,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchAlertsByRegionIdInputRegionIDParam'
       responses:
         '200':
           description: Success
@@ -432,7 +575,135 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchAlertsOutput'
+                  type: object
+                  properties:
+                    AlertID:
+                      type: integer
+                      description: Numeric ID of the highway alert.
+                    County:
+                      type: string
+                      nullable: true
+                      description: County name for countywide alerts, or null when alert is route-specific.
+                    EndRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert ends, or null when alert is point-specific or end location is unavailable.
+                    EndTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact is estimated to end, or null when end time is not estimated or alert is ongoing.
+                      format: date-time
+                    EventCategory:
+                      type: string
+                      nullable: true
+                      description: Category classification for the alert event type, or null when category is unavailable.
+                    EventStatus:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating alert status: ''Open'' = active, ''Closed'' = resolved, or null when status is unavailable.'
+                    ExtendedDescription:
+                      type: string
+                      nullable: true
+                      description: Additional detailed information about the alert, or null when extended description is unavailable.
+                    HeadlineDescription:
+                      type: string
+                      nullable: true
+                      description: Primary description of the alert issue, or null when headline is unavailable.
+                    LastUpdatedTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert was last modified or updated.
+                      format: date-time
+                    Priority:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating traffic impact priority: ''Highest'' = severe, ''High'' = significant, ''Medium'' = moderate, ''Low'' = minimal, or null when priority is unavailable.'
+                    Region:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating WSDOT region: ''EA'' = Eastern, ''NC'' = North Central, ''NW'' = Northwest, ''OL'' = Olympic, ''SC'' = South Central, ''SW'' = Southwest, or null when region is unavailable.'
+                    StartRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert begins, or null when alert is point-specific or start location is unavailable.
+                    StartTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact on traffic began.
+                      format: date-time
+                  required:
+                    - AlertID
+                    - County
+                    - EndRoadwayLocation
+                    - EndTime
+                    - EventCategory
+                    - EventStatus
+                    - ExtendedDescription
+                    - HeadlineDescription
+                    - LastUpdatedTime
+                    - Priority
+                    - Region
+                    - StartRoadwayLocation
+                    - StartTime
+                  description: Highway alert with identification, event category, priority, location data, timestamps, and descriptions for traffic incidents and road conditions.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -458,8 +729,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchAlertsByMapAreaInputMapAreaParam'
       responses:
         '200':
           description: Success
@@ -468,7 +737,135 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchAlertsOutput'
+                  type: object
+                  properties:
+                    AlertID:
+                      type: integer
+                      description: Numeric ID of the highway alert.
+                    County:
+                      type: string
+                      nullable: true
+                      description: County name for countywide alerts, or null when alert is route-specific.
+                    EndRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert ends, or null when alert is point-specific or end location is unavailable.
+                    EndTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact is estimated to end, or null when end time is not estimated or alert is ongoing.
+                      format: date-time
+                    EventCategory:
+                      type: string
+                      nullable: true
+                      description: Category classification for the alert event type, or null when category is unavailable.
+                    EventStatus:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating alert status: ''Open'' = active, ''Closed'' = resolved, or null when status is unavailable.'
+                    ExtendedDescription:
+                      type: string
+                      nullable: true
+                      description: Additional detailed information about the alert, or null when extended description is unavailable.
+                    HeadlineDescription:
+                      type: string
+                      nullable: true
+                      description: Primary description of the alert issue, or null when headline is unavailable.
+                    LastUpdatedTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert was last modified or updated.
+                      format: date-time
+                    Priority:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating traffic impact priority: ''Highest'' = severe, ''High'' = significant, ''Medium'' = moderate, ''Low'' = minimal, or null when priority is unavailable.'
+                    Region:
+                      type: string
+                      nullable: true
+                      description: 'Code indicating WSDOT region: ''EA'' = Eastern, ''NC'' = North Central, ''NW'' = Northwest, ''OL'' = Olympic, ''SC'' = South Central, ''SW'' = Southwest, or null when region is unavailable.'
+                    StartRoadwayLocation:
+                      type: object
+                      nullable: true
+                      properties:
+                        Description:
+                          type: string
+                          nullable: true
+                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+                        Direction:
+                          type: string
+                          nullable: true
+                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+                        Latitude:
+                          type: number
+                          description: Latitude of the roadway location in decimal degrees.
+                        Longitude:
+                          type: number
+                          description: Longitude of the roadway location in decimal degrees.
+                        MilePost:
+                          type: number
+                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+                        RoadName:
+                          type: string
+                          nullable: true
+                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+                      required:
+                        - Description
+                        - Direction
+                        - Latitude
+                        - Longitude
+                        - MilePost
+                        - RoadName
+                      description: Roadway location where the alert begins, or null when alert is point-specific or start location is unavailable.
+                    StartTime:
+                      type: string
+                      nullable: true
+                      description: UTC datetime when the alert impact on traffic began.
+                      format: date-time
+                  required:
+                    - AlertID
+                    - County
+                    - EndRoadwayLocation
+                    - EndTime
+                    - EventCategory
+                    - EventStatus
+                    - ExtendedDescription
+                    - HeadlineDescription
+                    - LastUpdatedTime
+                    - Priority
+                    - Region
+                    - StartRoadwayLocation
+                    - StartTime
+                  description: Highway alert with identification, event category, priority, location data, timestamps, and descriptions for traffic incidents and road conditions.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -519,15 +916,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchAlertByIdInputAlertIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchAlertsOutput'
+                $ref: '#/components/schemas/FetchAlertByIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -583,7 +978,20 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchMapAreasOutput'
+                  type: object
+                  properties:
+                    MapArea:
+                      type: string
+                      nullable: true
+                      description: Map area identifier code for geographic filtering, or null when unavailable.
+                    MapAreaDescription:
+                      type: string
+                      nullable: true
+                      description: Display name of the map area, or null when unavailable.
+                  required:
+                    - MapArea
+                    - MapAreaDescription
+                  description: Geographic map area with identifier code and display name for filtering highway alerts by region.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -616,7 +1024,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchEventCategoriesOutput'
+                  type: string
               examples:
                 sampleResponse:
                   summary: Sample response

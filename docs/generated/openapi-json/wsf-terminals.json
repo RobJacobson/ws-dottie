@@ -56,7 +56,8 @@
       },
       "FetchCacheFlushDateTerminalsOutput": {
         "type": "string",
-        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."
+        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.",
+        "format": "date-time"
       },
       "FetchTerminalBasicsByTerminalIdOutput": {
         "type": "object",
@@ -174,12 +175,14 @@
                 "BulletinLastUpdated": {
                   "type": "string",
                   "nullable": true,
-                  "description": "UTC datetime when the bulletin was last updated."
+                  "description": "UTC datetime when the bulletin was last updated.",
+                  "format": "date-time"
                 },
                 "BulletinLastUpdatedSortable": {
                   "type": "string",
                   "nullable": true,
-                  "description": "Legacy sortable string representation of the bulletin update date."
+                  "description": "Legacy sortable string representation of the bulletin update date.",
+                  "format": "date-time"
                 }
               },
               "required": [
@@ -373,7 +376,8 @@
               "properties": {
                 "Departure": {
                   "type": "string",
-                  "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing."
+                  "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.",
+                  "format": "date-time"
                 },
                 "IsCancelled": {
                   "type": "boolean",
@@ -735,12 +739,14 @@
                     "BulletinLastUpdated": {
                       "type": "string",
                       "nullable": true,
-                      "description": "UTC datetime when the bulletin was last updated."
+                      "description": "UTC datetime when the bulletin was last updated.",
+                      "format": "date-time"
                     },
                     "BulletinLastUpdatedSortable": {
                       "type": "string",
                       "nullable": true,
-                      "description": "Legacy sortable string representation of the bulletin update date."
+                      "description": "Legacy sortable string representation of the bulletin update date.",
+                      "format": "date-time"
                     }
                   },
                   "required": [
@@ -868,7 +874,8 @@
                   "properties": {
                     "Departure": {
                       "type": "string",
-                      "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing."
+                      "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.",
+                      "format": "date-time"
                     },
                     "IsCancelled": {
                       "type": "boolean",
@@ -1120,17 +1127,20 @@
                     "WaitTimeNotes": {
                       "type": "string",
                       "nullable": true,
-                      "description": "Text notes detailing wait time conditions and tips for vehicles and passengers."
+                      "description": "Text notes detailing wait time conditions and tips for vehicles and passengers.",
+                      "format": "date-time"
                     },
                     "WaitTimeLastUpdated": {
                       "type": "string",
                       "nullable": true,
-                      "description": "UTC datetime when the wait time information was last updated."
+                      "description": "UTC datetime when the wait time information was last updated.",
+                      "format": "date-time"
                     },
                     "WaitTimeIVRNotes": {
                       "type": "string",
                       "nullable": true,
-                      "description": "Wait time notes formatted for Interactive Voice Response systems."
+                      "description": "Wait time notes formatted for Interactive Voice Response systems.",
+                      "format": "date-time"
                     }
                   },
                   "required": [
@@ -1155,7 +1165,8 @@
               "RealtimeIntroMsg": {
                 "type": "string",
                 "nullable": true,
-                "description": "Introductory message explaining real-time terminal conditions data display, as HTML-formatted text. E.g., message about approximate vehicle spaces available in holding area for Anacortes terminal, null when intro message is unavailable. Used to provide context for real-time conditions data."
+                "description": "Introductory message explaining real-time terminal conditions data display, as HTML-formatted text. E.g., message about approximate vehicle spaces available in holding area for Anacortes terminal, null when intro message is unavailable. Used to provide context for real-time conditions data.",
+                "format": "date-time"
               },
               "AdditionalInfo": {
                 "type": "string",
@@ -1246,7 +1257,8 @@
               "REALTIME_SHUTOFF_MESSAGE": {
                 "type": "string",
                 "nullable": true,
-                "description": "Message explaining why real-time conditions data is unavailable, as a status message. E.g., 'The Real-Time Conditions are unavailable due to technical difficulties' for terminals with shutoff flag true, null when real-time data is available. Used to inform users about real-time data status."
+                "description": "Message explaining why real-time conditions data is unavailable, as a status message. E.g., 'The Real-Time Conditions are unavailable due to technical difficulties' for terminals with shutoff flag true, null when real-time data is available. Used to inform users about real-time data status.",
+                "format": "date-time"
               },
               "VisitorLinks": {
                 "type": "array",
@@ -1350,17 +1362,20 @@
                 "WaitTimeNotes": {
                   "type": "string",
                   "nullable": true,
-                  "description": "Text notes detailing wait time conditions and tips for vehicles and passengers."
+                  "description": "Text notes detailing wait time conditions and tips for vehicles and passengers.",
+                  "format": "date-time"
                 },
                 "WaitTimeLastUpdated": {
                   "type": "string",
                   "nullable": true,
-                  "description": "UTC datetime when the wait time information was last updated."
+                  "description": "UTC datetime when the wait time information was last updated.",
+                  "format": "date-time"
                 },
                 "WaitTimeIVRNotes": {
                   "type": "string",
                   "nullable": true,
-                  "description": "Wait time notes formatted for Interactive Voice Response systems."
+                  "description": "Wait time notes formatted for Interactive Voice Response systems.",
+                  "format": "date-time"
                 }
               },
               "required": [
@@ -1654,12 +1669,14 @@
                             "BulletinLastUpdated": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the bulletin was last updated."
+                              "description": "UTC datetime when the bulletin was last updated.",
+                              "format": "date-time"
                             },
                             "BulletinLastUpdatedSortable": {
                               "type": "string",
                               "nullable": true,
-                              "description": "Legacy sortable string representation of the bulletin update date."
+                              "description": "Legacy sortable string representation of the bulletin update date.",
+                              "format": "date-time"
                             }
                           },
                           "required": [
@@ -2235,7 +2252,8 @@
                           "properties": {
                             "Departure": {
                               "type": "string",
-                              "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing."
+                              "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.",
+                              "format": "date-time"
                             },
                             "IsCancelled": {
                               "type": "boolean",
@@ -3760,12 +3778,14 @@
                                 "BulletinLastUpdated": {
                                   "type": "string",
                                   "nullable": true,
-                                  "description": "UTC datetime when the bulletin was last updated."
+                                  "description": "UTC datetime when the bulletin was last updated.",
+                                  "format": "date-time"
                                 },
                                 "BulletinLastUpdatedSortable": {
                                   "type": "string",
                                   "nullable": true,
-                                  "description": "Legacy sortable string representation of the bulletin update date."
+                                  "description": "Legacy sortable string representation of the bulletin update date.",
+                                  "format": "date-time"
                                 }
                               },
                               "required": [
@@ -3893,7 +3913,8 @@
                               "properties": {
                                 "Departure": {
                                   "type": "string",
-                                  "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing."
+                                  "description": "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing.",
+                                  "format": "date-time"
                                 },
                                 "IsCancelled": {
                                   "type": "boolean",
@@ -4145,17 +4166,20 @@
                                 "WaitTimeNotes": {
                                   "type": "string",
                                   "nullable": true,
-                                  "description": "Text notes detailing wait time conditions and tips for vehicles and passengers."
+                                  "description": "Text notes detailing wait time conditions and tips for vehicles and passengers.",
+                                  "format": "date-time"
                                 },
                                 "WaitTimeLastUpdated": {
                                   "type": "string",
                                   "nullable": true,
-                                  "description": "UTC datetime when the wait time information was last updated."
+                                  "description": "UTC datetime when the wait time information was last updated.",
+                                  "format": "date-time"
                                 },
                                 "WaitTimeIVRNotes": {
                                   "type": "string",
                                   "nullable": true,
-                                  "description": "Wait time notes formatted for Interactive Voice Response systems."
+                                  "description": "Wait time notes formatted for Interactive Voice Response systems.",
+                                  "format": "date-time"
                                 }
                               },
                               "required": [
@@ -4180,7 +4204,8 @@
                           "RealtimeIntroMsg": {
                             "type": "string",
                             "nullable": true,
-                            "description": "Introductory message explaining real-time terminal conditions data display, as HTML-formatted text. E.g., message about approximate vehicle spaces available in holding area for Anacortes terminal, null when intro message is unavailable. Used to provide context for real-time conditions data."
+                            "description": "Introductory message explaining real-time terminal conditions data display, as HTML-formatted text. E.g., message about approximate vehicle spaces available in holding area for Anacortes terminal, null when intro message is unavailable. Used to provide context for real-time conditions data.",
+                            "format": "date-time"
                           },
                           "AdditionalInfo": {
                             "type": "string",
@@ -4271,7 +4296,8 @@
                           "REALTIME_SHUTOFF_MESSAGE": {
                             "type": "string",
                             "nullable": true,
-                            "description": "Message explaining why real-time conditions data is unavailable, as a status message. E.g., 'The Real-Time Conditions are unavailable due to technical difficulties' for terminals with shutoff flag true, null when real-time data is available. Used to inform users about real-time data status."
+                            "description": "Message explaining why real-time conditions data is unavailable, as a status message. E.g., 'The Real-Time Conditions are unavailable due to technical difficulties' for terminals with shutoff flag true, null when real-time data is available. Used to inform users about real-time data status.",
+                            "format": "date-time"
                           },
                           "VisitorLinks": {
                             "type": "array",
@@ -4806,17 +4832,20 @@
                             "WaitTimeNotes": {
                               "type": "string",
                               "nullable": true,
-                              "description": "Text notes detailing wait time conditions and tips for vehicles and passengers."
+                              "description": "Text notes detailing wait time conditions and tips for vehicles and passengers.",
+                              "format": "date-time"
                             },
                             "WaitTimeLastUpdated": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the wait time information was last updated."
+                              "description": "UTC datetime when the wait time information was last updated.",
+                              "format": "date-time"
                             },
                             "WaitTimeIVRNotes": {
                               "type": "string",
                               "nullable": true,
-                              "description": "Wait time notes formatted for Interactive Voice Response systems."
+                              "description": "Wait time notes formatted for Interactive Voice Response systems.",
+                              "format": "date-time"
                             }
                           },
                           "required": [

@@ -59,7 +59,8 @@
         "properties": {
           "LastUpdated": {
             "type": "string",
-            "description": "UTC datetime when toll trip rates were last updated."
+            "description": "UTC datetime when toll trip rates were last updated.",
+            "format": "date-time"
           },
           "Trips": {
             "type": "array",
@@ -74,7 +75,8 @@
                 },
                 "MessageUpdateTime": {
                   "type": "string",
-                  "description": "UTC datetime when toll rate message was last updated."
+                  "description": "UTC datetime when toll rate message was last updated.",
+                  "format": "date-time"
                 },
                 "Toll": {
                   "type": "number",
@@ -113,7 +115,8 @@
         "properties": {
           "TimeStamp": {
             "type": "string",
-            "description": "UTC datetime when version was created or last updated."
+            "description": "UTC datetime when version was created or last updated.",
+            "format": "date-time"
           },
           "Version": {
             "type": "integer",
@@ -213,7 +216,8 @@
                       },
                       "TimeUpdated": {
                         "type": "string",
-                        "description": "UTC datetime when toll rate was last updated."
+                        "description": "UTC datetime when toll rate was last updated.",
+                        "format": "date-time"
                       }
                     },
                     "required": [
@@ -339,7 +343,8 @@
                       },
                       "ModifiedDate": {
                         "type": "string",
-                        "description": "UTC datetime when trip route information was last modified."
+                        "description": "UTC datetime when trip route information was last modified.",
+                        "format": "date-time"
                       }
                     },
                     "required": [
@@ -841,7 +846,8 @@
                     "properties": {
                       "LastUpdated": {
                         "type": "string",
-                        "description": "UTC datetime when toll trip rates were last updated."
+                        "description": "UTC datetime when toll trip rates were last updated.",
+                        "format": "date-time"
                       },
                       "Trips": {
                         "type": "array",
@@ -856,7 +862,8 @@
                             },
                             "MessageUpdateTime": {
                               "type": "string",
-                              "description": "UTC datetime when toll rate message was last updated."
+                              "description": "UTC datetime when toll rate message was last updated.",
+                              "format": "date-time"
                             },
                             "Toll": {
                               "type": "number",

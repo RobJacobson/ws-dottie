@@ -40,7 +40,7 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchWeatherInformationOutput:
+    FetchWeatherInformationByStationIdOutput:
       type: object
       properties:
         BarometricPressure:
@@ -60,6 +60,7 @@ components:
         ReadingTime:
           type: string
           description: UTC datetime when the weather reading was taken.
+          format: date-time
         RelativeHumidity:
           type: number
           nullable: true
@@ -116,59 +117,7 @@ components:
         - WindGustSpeedInMPH
         - WindSpeedInMPH
       description: Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation.
-    FetchWeatherInformationByStationIdInputStationIDParam:
-      type: integer
-      description: Numeric ID of the weather station.
-    FetchCurrentWeatherForStationsInputStationListParam:
-      type: string
-      description: Comma-separated list of weather station IDs.
-    SearchWeatherInformationInputStationIDParam:
-      type: integer
-      description: Numeric ID of the weather station.
-    SearchWeatherInformationInputSearchStartTimeParam:
-      type: string
-      format: date-time
-      description: UTC datetime when the search time range begins (ISO-8601 format).
-    SearchWeatherInformationInputSearchEndTimeParam:
-      type: string
-      format: date-time
-      description: UTC datetime when the search time range ends (ISO-8601 format).
-  parameters:
-    FetchWeatherInformationByStationIdInputStationIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchWeatherInformationByStationIdInputStationIDParam'
-      required: true
-      description: Numeric ID of the weather station.
-      name: StationID
-      in: path
-    FetchCurrentWeatherForStationsInputStationListParam:
-      schema:
-        $ref: '#/components/schemas/FetchCurrentWeatherForStationsInputStationListParam'
-      required: true
-      description: Comma-separated list of weather station IDs.
-      name: StationList
-      in: path
-    SearchWeatherInformationInputStationIDParam:
-      schema:
-        $ref: '#/components/schemas/SearchWeatherInformationInputStationIDParam'
-      required: true
-      description: Numeric ID of the weather station.
-      name: StationID
-      in: path
-    SearchWeatherInformationInputSearchStartTimeParam:
-      schema:
-        $ref: '#/components/schemas/SearchWeatherInformationInputSearchStartTimeParam'
-      required: true
-      description: UTC datetime when the search time range begins (ISO-8601 format).
-      name: SearchStartTime
-      in: path
-    SearchWeatherInformationInputSearchEndTimeParam:
-      schema:
-        $ref: '#/components/schemas/SearchWeatherInformationInputSearchEndTimeParam'
-      required: true
-      description: UTC datetime when the search time range ends (ISO-8601 format).
-      name: SearchEndTime
-      in: path
+  parameters: {}
 paths:
   /GetCurrentWeatherInformationAsJson:
     get:
@@ -195,7 +144,82 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchWeatherInformationOutput'
+                  type: object
+                  properties:
+                    BarometricPressure:
+                      type: number
+                      nullable: true
+                      description: Atmospheric pressure in millibars (not adjusted for elevation).
+                    Latitude:
+                      type: number
+                      description: Latitude of the weather station in decimal degrees.
+                    Longitude:
+                      type: number
+                      description: Longitude of the weather station in decimal degrees.
+                    PrecipitationInInches:
+                      type: number
+                      nullable: true
+                      description: Precipitation amount in inches.
+                    ReadingTime:
+                      type: string
+                      description: UTC datetime when the weather reading was taken.
+                      format: date-time
+                    RelativeHumidity:
+                      type: number
+                      nullable: true
+                      description: Relative humidity as a percentage (0-100).
+                    SkyCoverage:
+                      type: string
+                      nullable: true
+                      description: Sky coverage condition code.
+                    StationID:
+                      type: integer
+                      description: Numeric ID of the weather station.
+                    StationName:
+                      type: string
+                      nullable: true
+                      description: Display name of the weather station.
+                    TemperatureInFahrenheit:
+                      type: number
+                      nullable: true
+                      description: Current air temperature in degrees Fahrenheit.
+                    Visibility:
+                      type: integer
+                      nullable: true
+                      description: Average visibility distance in meters (computed every 3 minutes).
+                    WindDirection:
+                      type: number
+                      nullable: true
+                      description: Wind direction in degrees clockwise from north (0-359).
+                    WindDirectionCardinal:
+                      type: string
+                      nullable: true
+                      description: Wind direction in cardinal format (e.g., 'N', 'S', 'WSW').
+                    WindGustSpeedInMPH:
+                      type: number
+                      nullable: true
+                      description: Maximum wind gust speed in miles per hour.
+                    WindSpeedInMPH:
+                      type: number
+                      nullable: true
+                      description: Average wind speed in miles per hour.
+                  required:
+                    - BarometricPressure
+                    - Latitude
+                    - Longitude
+                    - PrecipitationInInches
+                    - ReadingTime
+                    - RelativeHumidity
+                    - SkyCoverage
+                    - StationID
+                    - StationName
+                    - TemperatureInFahrenheit
+                    - Visibility
+                    - WindDirection
+                    - WindDirectionCardinal
+                    - WindGustSpeedInMPH
+                    - WindSpeedInMPH
+                  description: Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -236,15 +260,13 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchWeatherInformationByStationIdInputStationIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchWeatherInformationOutput'
+                $ref: '#/components/schemas/FetchWeatherInformationByStationIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -285,8 +307,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchCurrentWeatherForStationsInputStationListParam'
       responses:
         '200':
           description: Success
@@ -295,7 +315,82 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchWeatherInformationOutput'
+                  type: object
+                  properties:
+                    BarometricPressure:
+                      type: number
+                      nullable: true
+                      description: Atmospheric pressure in millibars (not adjusted for elevation).
+                    Latitude:
+                      type: number
+                      description: Latitude of the weather station in decimal degrees.
+                    Longitude:
+                      type: number
+                      description: Longitude of the weather station in decimal degrees.
+                    PrecipitationInInches:
+                      type: number
+                      nullable: true
+                      description: Precipitation amount in inches.
+                    ReadingTime:
+                      type: string
+                      description: UTC datetime when the weather reading was taken.
+                      format: date-time
+                    RelativeHumidity:
+                      type: number
+                      nullable: true
+                      description: Relative humidity as a percentage (0-100).
+                    SkyCoverage:
+                      type: string
+                      nullable: true
+                      description: Sky coverage condition code.
+                    StationID:
+                      type: integer
+                      description: Numeric ID of the weather station.
+                    StationName:
+                      type: string
+                      nullable: true
+                      description: Display name of the weather station.
+                    TemperatureInFahrenheit:
+                      type: number
+                      nullable: true
+                      description: Current air temperature in degrees Fahrenheit.
+                    Visibility:
+                      type: integer
+                      nullable: true
+                      description: Average visibility distance in meters (computed every 3 minutes).
+                    WindDirection:
+                      type: number
+                      nullable: true
+                      description: Wind direction in degrees clockwise from north (0-359).
+                    WindDirectionCardinal:
+                      type: string
+                      nullable: true
+                      description: Wind direction in cardinal format (e.g., 'N', 'S', 'WSW').
+                    WindGustSpeedInMPH:
+                      type: number
+                      nullable: true
+                      description: Maximum wind gust speed in miles per hour.
+                    WindSpeedInMPH:
+                      type: number
+                      nullable: true
+                      description: Average wind speed in miles per hour.
+                  required:
+                    - BarometricPressure
+                    - Latitude
+                    - Longitude
+                    - PrecipitationInInches
+                    - ReadingTime
+                    - RelativeHumidity
+                    - SkyCoverage
+                    - StationID
+                    - StationName
+                    - TemperatureInFahrenheit
+                    - Visibility
+                    - WindDirection
+                    - WindDirectionCardinal
+                    - WindGustSpeedInMPH
+                    - WindSpeedInMPH
+                  description: Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -338,10 +433,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/SearchWeatherInformationInputStationIDParam'
-        - $ref: '#/components/parameters/SearchWeatherInformationInputSearchStartTimeParam'
-        - $ref: '#/components/parameters/SearchWeatherInformationInputSearchEndTimeParam'
       responses:
         '200':
           description: Success
@@ -350,7 +441,82 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchWeatherInformationOutput'
+                  type: object
+                  properties:
+                    BarometricPressure:
+                      type: number
+                      nullable: true
+                      description: Atmospheric pressure in millibars (not adjusted for elevation).
+                    Latitude:
+                      type: number
+                      description: Latitude of the weather station in decimal degrees.
+                    Longitude:
+                      type: number
+                      description: Longitude of the weather station in decimal degrees.
+                    PrecipitationInInches:
+                      type: number
+                      nullable: true
+                      description: Precipitation amount in inches.
+                    ReadingTime:
+                      type: string
+                      description: UTC datetime when the weather reading was taken.
+                      format: date-time
+                    RelativeHumidity:
+                      type: number
+                      nullable: true
+                      description: Relative humidity as a percentage (0-100).
+                    SkyCoverage:
+                      type: string
+                      nullable: true
+                      description: Sky coverage condition code.
+                    StationID:
+                      type: integer
+                      description: Numeric ID of the weather station.
+                    StationName:
+                      type: string
+                      nullable: true
+                      description: Display name of the weather station.
+                    TemperatureInFahrenheit:
+                      type: number
+                      nullable: true
+                      description: Current air temperature in degrees Fahrenheit.
+                    Visibility:
+                      type: integer
+                      nullable: true
+                      description: Average visibility distance in meters (computed every 3 minutes).
+                    WindDirection:
+                      type: number
+                      nullable: true
+                      description: Wind direction in degrees clockwise from north (0-359).
+                    WindDirectionCardinal:
+                      type: string
+                      nullable: true
+                      description: Wind direction in cardinal format (e.g., 'N', 'S', 'WSW').
+                    WindGustSpeedInMPH:
+                      type: number
+                      nullable: true
+                      description: Maximum wind gust speed in miles per hour.
+                    WindSpeedInMPH:
+                      type: number
+                      nullable: true
+                      description: Average wind speed in miles per hour.
+                  required:
+                    - BarometricPressure
+                    - Latitude
+                    - Longitude
+                    - PrecipitationInInches
+                    - ReadingTime
+                    - RelativeHumidity
+                    - SkyCoverage
+                    - StationID
+                    - StationName
+                    - TemperatureInFahrenheit
+                    - Visibility
+                    - WindDirection
+                    - WindDirectionCardinal
+                    - WindGustSpeedInMPH
+                    - WindSpeedInMPH
+                  description: Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation.
               examples:
                 sampleResponse:
                   summary: Sample response

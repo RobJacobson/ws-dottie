@@ -76,7 +76,8 @@
           },
           "DateUpdated": {
             "type": "string",
-            "description": "UTC datetime when the pass condition data was last updated."
+            "description": "UTC datetime when the pass condition data was last updated.",
+            "format": "date-time"
           },
           "TemperatureInFahrenheit": {
             "type": "integer",
@@ -207,7 +208,8 @@
                       },
                       "DateUpdated": {
                         "type": "string",
-                        "description": "UTC datetime when the pass condition data was last updated."
+                        "description": "UTC datetime when the pass condition data was last updated.",
+                        "format": "date-time"
                       },
                       "TemperatureInFahrenheit": {
                         "type": "integer",

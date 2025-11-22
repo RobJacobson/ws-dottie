@@ -56,7 +56,8 @@
       },
       "FetchCacheFlushDateScheduleOutput": {
         "type": "string",
-        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."
+        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.",
+        "format": "date-time"
       },
       "FetchRouteDetailsByTripDateAndRouteIdOutput": {
         "type": "object",
@@ -98,7 +99,8 @@
           "CrossingTime": {
             "type": "string",
             "nullable": true,
-            "description": "Estimated crossing time in minutes as string, or null if unavailable."
+            "description": "Estimated crossing time in minutes as string, or null if unavailable.",
+            "format": "date-time"
           },
           "AdaNotes": {
             "type": "string",
@@ -135,7 +137,8 @@
                 "PublishDate": {
                   "type": "string",
                   "nullable": true,
-                  "description": "UTC datetime when the alert was published."
+                  "description": "UTC datetime when the alert was published.",
+                  "format": "date-time"
                 },
                 "AlertDescription": {
                   "type": "string",
@@ -241,11 +244,13 @@
           },
           "ScheduleStart": {
             "type": "string",
-            "description": "UTC datetime when the schedule season becomes effective."
+            "description": "UTC datetime when the schedule season becomes effective.",
+            "format": "date-time"
           },
           "ScheduleEnd": {
             "type": "string",
-            "description": "UTC datetime when the schedule season stops being effective."
+            "description": "UTC datetime when the schedule season stops being effective.",
+            "format": "date-time"
           },
           "AllRoutes": {
             "type": "array",
@@ -265,7 +270,8 @@
                 },
                 "DepartingTerminalName": {
                   "type": "string",
-                  "description": "Display name of the departing terminal."
+                  "description": "Display name of the departing terminal.",
+                  "format": "date-time"
                 },
                 "ArrivingTerminalID": {
                   "type": "number",
@@ -293,12 +299,14 @@
                     "properties": {
                       "DepartingTime": {
                         "type": "string",
-                        "description": "UTC datetime of the departure."
+                        "description": "UTC datetime of the departure.",
+                        "format": "date-time"
                       },
                       "ArrivingTime": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime of the arrival."
+                        "description": "UTC datetime of the arrival.",
+                        "format": "date-time"
                       },
                       "LoadingRule": {
                         "anyOf": [
@@ -409,11 +417,13 @@
         "properties": {
           "DateFrom": {
             "type": "string",
-            "description": "UTC datetime when data becomes available (earliest valid trip date)."
+            "description": "UTC datetime when data becomes available (earliest valid trip date).",
+            "format": "date-time"
           },
           "DateThru": {
             "type": "string",
-            "description": "UTC datetime when data stops being available (latest valid trip date)."
+            "description": "UTC datetime when data stops being available (latest valid trip date).",
+            "format": "date-time"
           }
         },
         "required": [
@@ -492,11 +502,13 @@
                       },
                       "ScheduleStart": {
                         "type": "string",
-                        "description": "UTC datetime when the schedule season becomes effective (typically 3:00 AM)."
+                        "description": "UTC datetime when the schedule season becomes effective (typically 3:00 AM).",
+                        "format": "date-time"
                       },
                       "ScheduleEnd": {
                         "type": "string",
-                        "description": "UTC datetime when the schedule season stops being effective (typically 2:59 AM next day)."
+                        "description": "UTC datetime when the schedule season stops being effective (typically 2:59 AM next day).",
+                        "format": "date-time"
                       }
                     },
                     "required": [
@@ -619,11 +631,13 @@
                           "properties": {
                             "DateFrom": {
                               "type": "string",
-                              "description": "UTC datetime when the sailing date range becomes active (typically 3:00 AM)."
+                              "description": "UTC datetime when the sailing date range becomes active (typically 3:00 AM).",
+                              "format": "date-time"
                             },
                             "DateThru": {
                               "type": "string",
-                              "description": "UTC datetime when the sailing date range stops being active (typically 2:59 AM next day)."
+                              "description": "UTC datetime when the sailing date range stops being active (typically 2:59 AM next day).",
+                              "format": "date-time"
                             },
                             "EventID": {
                               "type": "number",
@@ -712,7 +726,8 @@
                                   "Time": {
                                     "type": "string",
                                     "nullable": true,
-                                    "description": "Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal."
+                                    "description": "Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal.",
+                                    "format": "date-time"
                                   },
                                   "DepArrIndicator": {
                                     "anyOf": [
@@ -2821,11 +2836,13 @@
                           "properties": {
                             "DateFrom": {
                               "type": "string",
-                              "description": "UTC datetime when the sailing date range becomes active (typically 3:00 AM)."
+                              "description": "UTC datetime when the sailing date range becomes active (typically 3:00 AM).",
+                              "format": "date-time"
                             },
                             "DateThru": {
                               "type": "string",
-                              "description": "UTC datetime when the sailing date range stops being active (typically 2:59 AM next day)."
+                              "description": "UTC datetime when the sailing date range stops being active (typically 2:59 AM next day).",
+                              "format": "date-time"
                             },
                             "EventID": {
                               "type": "number",
@@ -2914,7 +2931,8 @@
                                   "Time": {
                                     "type": "string",
                                     "nullable": true,
-                                    "description": "Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal."
+                                    "description": "Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal.",
+                                    "format": "date-time"
                                   },
                                   "DepArrIndicator": {
                                     "anyOf": [
@@ -5112,7 +5130,8 @@
                       "CrossingTime": {
                         "type": "string",
                         "nullable": true,
-                        "description": "Estimated crossing time in minutes as string, or null if unavailable."
+                        "description": "Estimated crossing time in minutes as string, or null if unavailable.",
+                        "format": "date-time"
                       },
                       "AdaNotes": {
                         "type": "string",
@@ -5149,7 +5168,8 @@
                             "PublishDate": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the alert was published."
+                              "description": "UTC datetime when the alert was published.",
+                              "format": "date-time"
                             },
                             "AlertDescription": {
                               "type": "string",
@@ -5311,7 +5331,8 @@
                       "CrossingTime": {
                         "type": "string",
                         "nullable": true,
-                        "description": "Estimated crossing time in minutes as string, or null if unavailable."
+                        "description": "Estimated crossing time in minutes as string, or null if unavailable.",
+                        "format": "date-time"
                       },
                       "AdaNotes": {
                         "type": "string",
@@ -5348,7 +5369,8 @@
                             "PublishDate": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the alert was published."
+                              "description": "UTC datetime when the alert was published.",
+                              "format": "date-time"
                             },
                             "AlertDescription": {
                               "type": "string",
@@ -5556,7 +5578,8 @@
                             "PublishDate": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the disruption alert was published."
+                              "description": "UTC datetime when the disruption alert was published.",
+                              "format": "date-time"
                             },
                             "DisruptionDescription": {
                               "type": "string",
@@ -5663,7 +5686,8 @@
                             "PublishDate": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the disruption alert was published."
+                              "description": "UTC datetime when the disruption alert was published.",
+                              "format": "date-time"
                             },
                             "DisruptionDescription": {
                               "type": "string",
@@ -5746,7 +5770,8 @@
                       "PublishDate": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime when the disruption alert was published."
+                        "description": "UTC datetime when the disruption alert was published.",
+                        "format": "date-time"
                       },
                       "DisruptionDescription": {
                         "type": "string",
@@ -5837,7 +5862,8 @@
                       "PublishDate": {
                         "type": "string",
                         "nullable": true,
-                        "description": "UTC datetime when the alert was published."
+                        "description": "UTC datetime when the alert was published.",
+                        "format": "date-time"
                       },
                       "DisruptionDescription": {
                         "type": "string",
@@ -8066,7 +8092,8 @@
                             "PublishDate": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the disruption alert was published."
+                              "description": "UTC datetime when the disruption alert was published.",
+                              "format": "date-time"
                             },
                             "DisruptionDescription": {
                               "type": "string",
@@ -8090,11 +8117,13 @@
                           "properties": {
                             "DateFrom": {
                               "type": "string",
-                              "description": "UTC datetime when the contingency adjustment period starts."
+                              "description": "UTC datetime when the contingency adjustment period starts.",
+                              "format": "date-time"
                             },
                             "DateThru": {
                               "type": "string",
-                              "description": "UTC datetime when the contingency adjustment period ends."
+                              "description": "UTC datetime when the contingency adjustment period ends.",
+                              "format": "date-time"
                             },
                             "EventID": {
                               "type": "number",
@@ -8255,7 +8284,8 @@
                             "PublishDate": {
                               "type": "string",
                               "nullable": true,
-                              "description": "UTC datetime when the disruption alert was published."
+                              "description": "UTC datetime when the disruption alert was published.",
+                              "format": "date-time"
                             },
                             "DisruptionDescription": {
                               "type": "string",
@@ -8279,11 +8309,13 @@
                           "properties": {
                             "DateFrom": {
                               "type": "string",
-                              "description": "UTC datetime when the contingency adjustment period starts."
+                              "description": "UTC datetime when the contingency adjustment period starts.",
+                              "format": "date-time"
                             },
                             "DateThru": {
                               "type": "string",
-                              "description": "UTC datetime when the contingency adjustment period ends."
+                              "description": "UTC datetime when the contingency adjustment period ends.",
+                              "format": "date-time"
                             },
                             "EventID": {
                               "type": "number",
@@ -10809,7 +10841,8 @@
                       },
                       "DepartingDescription": {
                         "type": "string",
-                        "description": "Display name of the departing terminal."
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
                       },
                       "ArrivingTerminalID": {
                         "type": "number",
@@ -10878,7 +10911,8 @@
                       },
                       "DepartingDescription": {
                         "type": "string",
-                        "description": "Display name of the departing terminal."
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
                       },
                       "ArrivingTerminalID": {
                         "type": "number",
@@ -10977,11 +11011,13 @@
                         "properties": {
                           "DateFrom": {
                             "type": "string",
-                            "description": "UTC datetime when the sailing date range begins."
+                            "description": "UTC datetime when the sailing date range begins.",
+                            "format": "date-time"
                           },
                           "DateThru": {
                             "type": "string",
-                            "description": "UTC datetime when the sailing date range ends."
+                            "description": "UTC datetime when the sailing date range ends.",
+                            "format": "date-time"
                           },
                           "EventID": {
                             "type": "number",
@@ -11058,15 +11094,18 @@
                       },
                       "TimeToAdj": {
                         "type": "string",
-                        "description": "UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion."
+                        "description": "UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion.",
+                        "format": "date-time"
                       },
                       "AdjDateFrom": {
                         "type": "string",
-                        "description": "UTC datetime when the adjustment period begins."
+                        "description": "UTC datetime when the adjustment period begins.",
+                        "format": "date-time"
                       },
                       "AdjDateThru": {
                         "type": "string",
-                        "description": "UTC datetime when the adjustment period ends."
+                        "description": "UTC datetime when the adjustment period ends.",
+                        "format": "date-time"
                       },
                       "TidalAdj": {
                         "type": "boolean",
@@ -11308,11 +11347,13 @@
                         "properties": {
                           "DateFrom": {
                             "type": "string",
-                            "description": "UTC datetime when the sailing date range begins."
+                            "description": "UTC datetime when the sailing date range begins.",
+                            "format": "date-time"
                           },
                           "DateThru": {
                             "type": "string",
-                            "description": "UTC datetime when the sailing date range ends."
+                            "description": "UTC datetime when the sailing date range ends.",
+                            "format": "date-time"
                           },
                           "EventID": {
                             "type": "number",
@@ -11389,15 +11430,18 @@
                       },
                       "TimeToAdj": {
                         "type": "string",
-                        "description": "UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion."
+                        "description": "UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion.",
+                        "format": "date-time"
                       },
                       "AdjDateFrom": {
                         "type": "string",
-                        "description": "UTC datetime when the adjustment period begins."
+                        "description": "UTC datetime when the adjustment period begins.",
+                        "format": "date-time"
                       },
                       "AdjDateThru": {
                         "type": "string",
-                        "description": "UTC datetime when the adjustment period ends."
+                        "description": "UTC datetime when the adjustment period ends.",
+                        "format": "date-time"
                       },
                       "TidalAdj": {
                         "type": "boolean",
@@ -11604,11 +11648,13 @@
                         "properties": {
                           "DateFrom": {
                             "type": "string",
-                            "description": "UTC datetime when the sailing date range begins."
+                            "description": "UTC datetime when the sailing date range begins.",
+                            "format": "date-time"
                           },
                           "DateThru": {
                             "type": "string",
-                            "description": "UTC datetime when the sailing date range ends."
+                            "description": "UTC datetime when the sailing date range ends.",
+                            "format": "date-time"
                           },
                           "EventID": {
                             "type": "number",
@@ -11685,15 +11731,18 @@
                       },
                       "TimeToAdj": {
                         "type": "string",
-                        "description": "UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion."
+                        "description": "UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion.",
+                        "format": "date-time"
                       },
                       "AdjDateFrom": {
                         "type": "string",
-                        "description": "UTC datetime when the adjustment period begins."
+                        "description": "UTC datetime when the adjustment period begins.",
+                        "format": "date-time"
                       },
                       "AdjDateThru": {
                         "type": "string",
-                        "description": "UTC datetime when the adjustment period ends."
+                        "description": "UTC datetime when the adjustment period ends.",
+                        "format": "date-time"
                       },
                       "TidalAdj": {
                         "type": "boolean",

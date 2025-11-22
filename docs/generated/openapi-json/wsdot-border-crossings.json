@@ -130,7 +130,8 @@
                       },
                       "Time": {
                         "type": "string",
-                        "description": "UTC datetime when this border crossing wait time observation was recorded."
+                        "description": "UTC datetime when this border crossing wait time observation was recorded.",
+                        "format": "date-time"
                       },
                       "WaitTime": {
                         "type": "integer",
