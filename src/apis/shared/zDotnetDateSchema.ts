@@ -1,42 +1,25 @@
 /**
  * @fileoverview .NET Date Validation for TanStack Query
  *
- * This module provides Zod schema validation for .NET date formats,
- * including the specialized "/Date(timestamp)/" format used by .NET
- * APIs. It handles validation and transformation to JavaScript Date objects.
+ * This module provides Zod schema validation for JavaScript Date objects
+ * that have been preprocessed from .NET date formats. All .NET date strings
+ * are converted to JavaScript Date objects by convertDotNetDates() before
+ * reaching Zod validation, ensuring a unified transformation path.
  */
 
-import { wsdotDateTimeToJSDate } from "@/shared/utils/dateUtils";
 import { z } from "@/shared/zod";
 
 /**
- * .NET date validation and transformation schema
+ * Date validation schema for preprocessed dates
  *
- * This Zod schema handles .NET's "/Date(timestamp)/" format only.
- * It validates the input format and transforms it to a JavaScript Date object.
+ * This Zod schema validates JavaScript Date objects. All .NET date strings
+ * (format: "/Date(timestamp)/") are automatically converted to Date objects
+ * by convertDotNetDates() before validation, so this schema simply ensures
+ * the value is a valid Date object.
+ *
+ * @returns Zod schema that validates Date objects
  */
 export const zDotnetDate = () =>
-  z
-    .string()
-    .refine((value) => isDotnetDateString(value), {
-      message: "Invalid date format. Expected .NET /Date(timestamp)/ format",
-    })
-    .transform((val) => {
-      const date = wsdotDateTimeToJSDate(val.replace(/\\\//g, "/"));
-      if (!date) throw new Error(`Failed to parse .NET date: ${val}`);
-      return date;
-    });
-
-/**
- * Type guard for .NET date format
- *
- * This function checks if a string matches the .NET "/Date(timestamp)/"
- * format, including escaped versions that may appear in JSON responses.
- *
- * @param value - The string to check
- * @returns True if the string matches .NET date format
- */
-const isDotnetDateString = (value: string): boolean =>
-  value.length >= 19 &&
-  (value.startsWith("/Date(") || value.startsWith("\\/Date(")) &&
-  (value.endsWith(")/") || value.endsWith(")\\/"));
+  z.date().refine((date) => !Number.isNaN(date.getTime()), {
+    message: "Invalid date object",
+  });

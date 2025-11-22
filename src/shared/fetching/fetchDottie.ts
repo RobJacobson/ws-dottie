@@ -63,6 +63,10 @@ export const fetchDottie = async <TInput = never, TOutput = unknown>({
     // Get raw data using specified fetch strategy
     const rawData = await fetchCore(endpoint, params, logMode, fetchMode);
 
+    // Always preprocess dates from .NET format to JS Date objects first
+    // This ensures all date transformations follow the same unified path
+    const preprocessedData = convertDotNetDates(rawData);
+
     // Handle validation and transformation based on strategy
     if (validate) {
       if (!endpoint.outputSchema) {
@@ -71,12 +75,11 @@ export const fetchDottie = async <TInput = never, TOutput = unknown>({
             `Use the full build or import schemas from the /schemas subpath.`
         );
       }
-      // Zod validation handles .NET date conversion internally
-      // Skip convertDotNetDates to prevent double conversion
-      return endpoint.outputSchema.parse(rawData);
+      // Zod validation now expects JS Date objects (preprocessed above)
+      return endpoint.outputSchema.parse(preprocessedData);
     } else {
-      // No validation - apply .NET date conversion manually and return raw data
-      return convertDotNetDates(rawData) as TOutput;
+      // No validation - return preprocessed data with dates converted
+      return preprocessedData as TOutput;
     }
   } catch (error) {
     // Re-throw ApiErrors as-is, wrap other errors (including ZodErrors) in ApiError
