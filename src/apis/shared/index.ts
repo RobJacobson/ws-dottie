@@ -15,4 +15,3 @@ export {
   type RoadwayLocation,
   roadwayLocationSchema,
 } from "./roadwayLocationSchema";
-export { zIsoDateString } from "./zIsoDateStringSchema";

@@ -1,4 +1,3 @@
-import { zIsoDateString } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -22,7 +21,7 @@ export const weatherReadingSchema = z
       .number()
       .int()
       .describe("Elevation of the weather station above sea level in meters."),
-    ReadingTime: zIsoDateString()
+    ReadingTime: z.date()
       .nullable()
       .describe(
         "UTC datetime when the comprehensive weather reading was taken (ISO-8601 format)."
