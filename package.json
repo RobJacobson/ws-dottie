@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npm run docs:openapi:json && tsup",
     "dev": "tsup --watch",
-    "test": "node scripts/testRunner.js",
+    "test": "vitest --config tests/e2e/vitest.config.ts --run",
     "test:direct": "vitest --config tests/vitest.config.ts --run",
     "test:openapi": "node scripts/test-openapi-exports.js",
     "tests": "node scripts/run-api-tests.js",
