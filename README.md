@@ -940,15 +940,16 @@ fetch-dottie fetchVesselLocationsByVesselId '{"VesselID": 18}' --pretty
 
 ## 📚 Documentation
 
-- **[Documentation Home](./docs/)** - Complete documentation with getting started guides and API reference
-- **[Getting Started](./docs/getting-started/)** - New to WS-Dottie? Start here
+- **[Documentation Home](./docs/INDEX.md)** - Complete documentation index with getting started guides and API reference
+- **[Getting Started](./docs/getting-started.md)** - New to WS-Dottie? Start here
 - **[API Guide](./docs/guides/api-guide.md)** - High-level API overview and use cases
-- **[Interactive Documentation](./docs/api-reference/redoc/)** - Browse APIs with live examples
+- **[Interactive Documentation](./docs/api-reference/)** - Browse APIs with live examples
 
 ### 🔗 Detailed API Documentation
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
-- **[OpenAPI Specifications](./docs/generated/openapi/)** - API specifications in YAML format
-- **[HTML Documentation](./docs/api-reference/redoc/)** - Interactive HTML documentation with examples
+- **[OpenAPI Specifications](./docs/generated/openapi-json/)** - API specifications in JSON format
+- **[OpenAPI Specifications (YAML)](./docs/generated/openapi-yaml/)** - API specifications in YAML format
+- **[HTML Documentation](./docs/api-reference/)** - Interactive HTML documentation with examples
 
 Our documentation is automatically generated from API definitions, ensuring it stays synchronized with the latest code changes.
 
