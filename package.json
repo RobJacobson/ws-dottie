@@ -1,6 +1,6 @@
 {
   "name": "ws-dottie",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Your friendly TypeScript companion for Washington State transportation APIs - WSDOT and WSF data with smart caching and React Query integration",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
