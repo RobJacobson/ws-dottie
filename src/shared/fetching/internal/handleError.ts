@@ -8,7 +8,6 @@
  */
 
 import type { ZodError } from "zod";
-import { z } from "zod";
 
 /**
  * Context information for error reporting
