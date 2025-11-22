@@ -2,7 +2,7 @@
 
 This guide covers how to fetch data using WS-Dottie's basic fetch functionality, including different options for fetching and validating data.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🚀 Quick Start
 

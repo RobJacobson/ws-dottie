@@ -2,7 +2,7 @@
 
 This guide explains WS-Dottie's validation system, how to use it effectively, and when to enable or disable it for optimal performance.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🛡️ Overview of Validation System
 
@@ -275,7 +275,7 @@ const vessels = await fetchVesselLocations({
 ---
 
 ### Previous Page
-[← Previous](../getting-started.md)
+[← Previous](../../getting-started.md)
 
 ### Next Page
 [Next → Error Handling Guide](./error-handling.md)

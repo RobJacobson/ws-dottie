@@ -2,7 +2,7 @@
 
 This document provides a comprehensive overview of WS-Dottie's architecture, explaining how different components of the codebase work together to provide a unified interface for accessing Washington State transportation data.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](./getting-started.md) • [API Guide](./api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../INDEX.md) • [Getting Started](../getting-started.md) • [API Guide](./api-guide.md)
 
 ## 🏗️ System Overview
 

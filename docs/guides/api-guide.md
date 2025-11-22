@@ -2,7 +2,7 @@
 
 This guide provides a high-level overview of all WS-Dottie APIs, their use cases, and how they work together to build comprehensive transportation applications.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started/getting-started.md) • [Architecture](./architecture.md)
+> **📚 Documentation Navigation**: [Documentation Index](../INDEX.md) • [Getting Started](../getting-started.md) • [Architecture](./architecture.md)
 
 ## 🗺️ API Overview
 
@@ -625,8 +625,9 @@ function MonitoringDashboard() {
 ## 🔗 Detailed Documentation
 
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
-- **[OpenAPI Specifications](../../openapi/)** - API specifications in YAML format
-- **[HTML Documentation](../../redoc/)** - Interactive HTML documentation
+- **[OpenAPI Specifications (JSON)](../generated/openapi-json/)** - API specifications in JSON format
+- **[OpenAPI Specifications (YAML)](../generated/openapi-yaml/)** - API specifications in YAML format
+- **[HTML Documentation](../api-reference/)** - Interactive HTML documentation
 
 ## 📚 Next Steps
 

@@ -2,7 +2,7 @@
 
 This guide covers all weather-related APIs in WS-Dottie, providing comprehensive access to Washington State weather information, road conditions, and mountain pass status.
 
-> **📚 Documentation Navigation**: [../../README.md](../../README.md) • [Getting Started](../../getting-started/getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🌤️ Overview
 
@@ -547,7 +547,7 @@ For detailed endpoint documentation, interactive examples, and schema definition
 
 ## 📚 Next Steps
 
-- **[React Integration Guide](../guides/react-integration.md)** - React patterns with TanStack Query
-- **[Node.js Integration Guide](../guides/nodejs-integration.md)** - Server-side usage patterns
-- **[Caching Reference](../reference/caching.md)** - Performance optimization strategies
-- **[Error Handling Reference](../reference/error-handling.md)** - Error recovery patterns
+- **[TanStack Query Guide](../advanced/tanstack-query.md)** - React patterns with TanStack Query
+- **[Fetching Data Guide](../advanced/fetching-data.md)** - Server-side and client-side usage patterns
+- **[Performance Guide](../advanced/performance-guide.md)** - Performance optimization strategies
+- **[Error Handling Guide](../advanced/error-handling.md)** - Error recovery patterns

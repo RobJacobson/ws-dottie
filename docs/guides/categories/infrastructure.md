@@ -2,7 +2,7 @@
 
 This guide covers all infrastructure-related APIs in WS-Dottie, providing comprehensive access to Washington State transportation infrastructure information.
 
-> **📚 Documentation Navigation**: [../../README.md](../../README.md) • [Getting Started](../../getting-started/getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🏗️ Overview
 
@@ -32,14 +32,16 @@ The WSDOT Border Crossings API provides real-time information about border cross
   - **Input**: No parameters required
   - **Output**: Array of border crossing information
   - **Key Fields**:
-    - `BorderCrossingID`: Unique crossing identifier
-    - `CrossingName`: Human-readable crossing name
-    - `CrossingType`: Type of crossing (Passenger, Commercial, NEXUS)
-    - `Direction`: Direction of crossing (Northbound, Southbound)
-    - `WaitTime`: Current wait time in minutes
-    - `LanesOpen`: Number of lanes currently open
-    - `LanesTotal`: Total number of lanes
-    - `LastUpdated`: Timestamp of last update
+    - `BorderCrossingLocation`: Roadway location information (route, milepost, coordinates, direction), or null
+      - `Direction`: Traffic direction (N, S, B, NB, SB), or null
+      - `RoadName`: Highway designation (e.g., '005' for I-5), or null
+      - `Description`: Human-readable location description, or null
+      - `Latitude`: Latitude in decimal degrees
+      - `Longitude`: Longitude in decimal degrees
+      - `MilePost`: Milepost marker along the highway
+    - `CrossingName`: Display code for the border crossing or lane (e.g., I5, I5Nexus, SR543TrucksFast), or null
+    - `Time`: UTC datetime when the wait time observation was recorded (Date object)
+    - `WaitTime`: Current estimated wait time in minutes (-1 if unavailable)
 
 ### Common Use Cases
 
@@ -48,18 +50,32 @@ The WSDOT Border Crossings API provides real-time information about border cross
 import { useBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 function BorderCrossingMonitor() {
-  const { data: crossings, isLoading, error } = useBorderCrossings();
+  const { data: crossings, isLoading, error } = useBorderCrossings({
+    fetchMode: 'native',
+    validate: false,
+  });
   
-  // Group crossings by type
-  const passengerCrossings = crossings?.filter(c => c.CrossingType === 'Passenger');
-  const commercialCrossings = crossings?.filter(c => c.CrossingType === 'Commercial');
-  const nexusCrossings = crossings?.filter(c => c.CrossingType === 'NEXUS');
+  // Group crossings by CrossingName prefix
+  // Note: The API doesn't provide CrossingType, so we'll filter by CrossingName patterns
+  const passengerCrossings = crossings?.filter(c => 
+    c.CrossingName && !c.CrossingName.includes('Truck')
+  );
+  const commercialCrossings = crossings?.filter(c => 
+    c.CrossingName && c.CrossingName.includes('Truck')
+  );
+  const nexusCrossings = crossings?.filter(c => 
+    c.CrossingName && c.CrossingName.includes('Nexus')
+  );
   
-  // Find optimal crossing for each type
+  // Find optimal crossing for each type (lowest wait time)
   const findOptimalCrossing = (crossings) => {
-    return crossings?.reduce((best, current) => 
-      (best.WaitTime < current.WaitTime) ? best : current
-    , crossings[0]);
+    if (!crossings || crossings.length === 0) return null;
+    return crossings.reduce((best, current) => {
+      // Skip crossings with invalid wait times
+      if (current.WaitTime < 0) return best;
+      if (best.WaitTime < 0) return current;
+      return (best.WaitTime < current.WaitTime) ? best : current;
+    }, crossings[0]);
   };
   
   const optimalPassenger = findOptimalCrossing(passengerCrossings);
@@ -75,57 +91,82 @@ function BorderCrossingMonitor() {
       <div className="crossing-summary">
         <div className="crossing-type">
           <h2>Passenger Crossings</h2>
-          <p>Optimal: {optimalPassenger?.CrossingName} ({optimalPassenger?.WaitTime} min)</p>
+          {optimalPassenger ? (
+            <p>Optimal: {optimalPassenger.CrossingName} ({optimalPassenger.WaitTime >= 0 ? `${optimalPassenger.WaitTime} min` : 'N/A'})</p>
+          ) : (
+            <p>No passenger crossings available</p>
+          )}
         </div>
         <div className="crossing-type">
           <h2>Commercial Crossings</h2>
-          <p>Optimal: {optimalCommercial?.CrossingName} ({optimalCommercial?.WaitTime} min)</p>
+          {optimalCommercial ? (
+            <p>Optimal: {optimalCommercial.CrossingName} ({optimalCommercial.WaitTime >= 0 ? `${optimalCommercial.WaitTime} min` : 'N/A'})</p>
+          ) : (
+            <p>No commercial crossings available</p>
+          )}
         </div>
         <div className="crossing-type">
           <h2>NEXUS Crossings</h2>
-          <p>Optimal: {optimalNexus?.CrossingName} ({optimalNexus?.WaitTime} min)</p>
+          {optimalNexus ? (
+            <p>Optimal: {optimalNexus.CrossingName} ({optimalNexus.WaitTime >= 0 ? `${optimalNexus.WaitTime} min` : 'N/A'})</p>
+          ) : (
+            <p>No NEXUS crossings available</p>
+          )}
         </div>
       </div>
       
       <div className="crossing-sections">
         <div className="crossing-section">
           <h2>Passenger Crossings</h2>
-          {passengerCrossings?.map(crossing => (
-            <div key={crossing.BorderCrossingID} className={`crossing-item ${crossing === optimalPassenger ? 'optimal' : ''}`}>
-              <h3>{crossing.CrossingName}</h3>
-              <p>Direction: {crossing.Direction}</p>
-              <p>Current Wait: {crossing.WaitTime} minutes</p>
-              <p>Lanes Open: {crossing.LanesOpen}/{crossing.LanesTotal}</p>
-              <p>Last Updated: {new Date(crossing.LastUpdated).toLocaleString()}</p>
+          {passengerCrossings?.map((crossing, index) => (
+            <div key={crossing.CrossingName || index} className={`crossing-item ${crossing === optimalPassenger ? 'optimal' : ''}`}>
+              <h3>{crossing.CrossingName || 'Unknown Crossing'}</h3>
+              {crossing.BorderCrossingLocation?.Direction && (
+                <p>Direction: {crossing.BorderCrossingLocation.Direction}</p>
+              )}
+              {crossing.BorderCrossingLocation?.RoadName && (
+                <p>Route: {crossing.BorderCrossingLocation.RoadName}</p>
+              )}
+              <p>Current Wait: {crossing.WaitTime >= 0 ? `${crossing.WaitTime} minutes` : 'Not available'}</p>
+              {/* Time is already a Date object (converted from .NET format) */}
+              <p>Last Updated: {crossing.Time.toLocaleString()}</p>
             </div>
           ))}
         </div>
         
         <div className="crossing-section">
           <h2>Commercial Crossings</h2>
-          {commercialCrossings?.map(crossing => (
-            <div key={crossing.BorderCrossingID} className={`crossing-item ${crossing === optimalCommercial ? 'optimal' : ''}`}>
-              <h3>{crossing.CrossingName}</h3>
-              <p>Direction: {crossing.Direction}</p>
-              <p>Current Wait: {crossing.WaitTime} minutes</p>
-              <p>Lanes Open: {crossing.LanesOpen}/{crossing.LanesTotal}</p>
-              <p>Last Updated: {new Date(crossing.LastUpdated).toLocaleString()}</p>
+          {commercialCrossings?.map((crossing, index) => (
+            <div key={crossing.CrossingName || index} className={`crossing-item ${crossing === optimalCommercial ? 'optimal' : ''}`}>
+              <h3>{crossing.CrossingName || 'Unknown Crossing'}</h3>
+              {crossing.BorderCrossingLocation?.Direction && (
+                <p>Direction: {crossing.BorderCrossingLocation.Direction}</p>
+              )}
+              {crossing.BorderCrossingLocation?.RoadName && (
+                <p>Route: {crossing.BorderCrossingLocation.RoadName}</p>
+              )}
+              <p>Current Wait: {crossing.WaitTime >= 0 ? `${crossing.WaitTime} minutes` : 'Not available'}</p>
+              {/* Time is already a Date object (converted from .NET format) */}
+              <p>Last Updated: {crossing.Time.toLocaleString()}</p>
             </div>
           ))}
         </div>
         
-        <div className="crossing-section">
-          <h2>NEXUS Crossings</h2>
-          {nexusCrossings?.map(crossing => (
-            <div key={crossing.BorderCrossingID} className={`crossing-item ${crossing === optimalNexus ? 'optimal' : ''}`}>
-              <h3>{crossing.CrossingName}</h3>
-              <p>Direction: {crossing.Direction}</p>
-              <p>Current Wait: {crossing.WaitTime} minutes</p>
-              <p>Lanes Open: {crossing.LanesOpen}/{crossing.LanesTotal}</p>
-              <p>Last Updated: {new Date(crossing.LastUpdated).toLocaleString()}</p>
-            </div>
-          ))}
-        </div>
+        {nexusCrossings && nexusCrossings.length > 0 && (
+          <div className="crossing-section">
+            <h2>NEXUS Crossings</h2>
+            {nexusCrossings.map((crossing, index) => (
+              <div key={crossing.CrossingName || index} className={`crossing-item ${crossing === optimalNexus ? 'optimal' : ''}`}>
+                <h3>{crossing.CrossingName || 'Unknown Crossing'}</h3>
+                {crossing.BorderCrossingLocation?.Direction && (
+                  <p>Direction: {crossing.BorderCrossingLocation.Direction}</p>
+                )}
+                <p>Current Wait: {crossing.WaitTime >= 0 ? `${crossing.WaitTime} minutes` : 'Not available'}</p>
+                <p>Last Updated: {crossing.Time.toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -137,20 +178,35 @@ function BorderCrossingMonitor() {
 import { useBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 function BorderCrossingRoutePlanner() {
-  const { data: crossings, isLoading, error } = useBorderCrossings();
+  const { data: crossings, isLoading, error } = useBorderCrossings({
+    fetchMode: 'native',
+    validate: false,
+  });
   const [selectedCrossing, setSelectedCrossing] = useState(null);
   const [vehicleType, setVehicleType] = useState('Passenger');
   
-  // Filter crossings by vehicle type
-  const filteredCrossings = crossings?.filter(c => c.CrossingType === vehicleType) || [];
+  // Filter crossings by vehicle type based on CrossingName patterns
+  // Note: The API doesn't provide CrossingType, so we'll filter by CrossingName
+  const filteredCrossings = crossings?.filter(c => {
+    if (!c.CrossingName) return false;
+    if (vehicleType === 'Passenger') return !c.CrossingName.includes('Truck');
+    if (vehicleType === 'Commercial') return c.CrossingName.includes('Truck');
+    if (vehicleType === 'NEXUS') return c.CrossingName.includes('Nexus');
+    return true;
+  }) || [];
   
-  // Find optimal crossing based on wait times
-  const optimalCrossing = filteredCrossings?.reduce((best, current) => 
-    (best.WaitTime < current.WaitTime) ? best : current
-  , filteredCrossings[0]);
+  // Find optimal crossing based on wait times (excluding invalid wait times)
+  const optimalCrossing = filteredCrossings.length > 0
+    ? filteredCrossings.reduce((best, current) => {
+        if (current.WaitTime < 0) return best;
+        if (best.WaitTime < 0) return current;
+        return (best.WaitTime < current.WaitTime) ? best : current;
+      }, filteredCrossings[0])
+    : null;
   
   // Calculate estimated crossing time including wait
   const calculateTotalTime = (crossing, baseTime = 30) => {
+    if (crossing.WaitTime < 0) return baseTime; // Unknown wait time
     return baseTime + crossing.WaitTime;
   };
   
@@ -177,30 +233,39 @@ function BorderCrossingRoutePlanner() {
       
       <div className="crossing-recommendation">
         <h2>Recommended Crossing</h2>
-        {optimalCrossing && (
+        {optimalCrossing ? (
           <div className="optimal-crossing">
-            <h3>{optimalCrossing.CrossingName}</h3>
-            <p>Direction: {optimalCrossing.Direction}</p>
-            <p>Current Wait: {optimalCrossing.WaitTime} minutes</p>
-            <p>Lanes Open: {optimalCrossing.LanesOpen}/{optimalCrossing.LanesTotal}</p>
+            <h3>{optimalCrossing.CrossingName || 'Unknown Crossing'}</h3>
+            {optimalCrossing.BorderCrossingLocation?.Direction && (
+              <p>Direction: {optimalCrossing.BorderCrossingLocation.Direction}</p>
+            )}
+            {optimalCrossing.BorderCrossingLocation?.RoadName && (
+              <p>Route: {optimalCrossing.BorderCrossingLocation.RoadName}</p>
+            )}
+            <p>Current Wait: {optimalCrossing.WaitTime >= 0 ? `${optimalCrossing.WaitTime} minutes` : 'Not available'}</p>
             <p>Estimated Total Time: {calculateTotalTime(optimalCrossing)} minutes</p>
+            <p>Last Updated: {optimalCrossing.Time.toLocaleString()}</p>
           </div>
+        ) : (
+          <p>No crossings available for selected vehicle type</p>
         )}
       </div>
       
       <div className="crossing-list">
         <h2>All Crossings</h2>
-        {filteredCrossings?.map(crossing => (
+        {filteredCrossings.map((crossing, index) => (
           <div 
-            key={crossing.BorderCrossingID} 
-            className={`crossing-option ${selectedCrossing?.BorderCrossingID === crossing.BorderCrossingID ? 'selected' : ''}`}
+            key={crossing.CrossingName || index} 
+            className={`crossing-option ${selectedCrossing?.CrossingName === crossing.CrossingName ? 'selected' : ''}`}
             onClick={() => setSelectedCrossing(crossing)}
           >
-            <h3>{crossing.CrossingName}</h3>
-            <p>Direction: {crossing.Direction}</p>
-            <p>Current Wait: {crossing.WaitTime} minutes</p>
-            <p>Lanes Open: {crossing.LanesOpen}/{crossing.LanesTotal}</p>
+            <h3>{crossing.CrossingName || 'Unknown Crossing'}</h3>
+            {crossing.BorderCrossingLocation?.Direction && (
+              <p>Direction: {crossing.BorderCrossingLocation.Direction}</p>
+            )}
+            <p>Current Wait: {crossing.WaitTime >= 0 ? `${crossing.WaitTime} minutes` : 'Not available'}</p>
             <p>Estimated Total Time: {calculateTotalTime(crossing)} minutes</p>
+            <p>Last Updated: {crossing.Time.toLocaleString()}</p>
           </div>
         ))}
       </div>
@@ -793,7 +858,7 @@ For detailed endpoint documentation, interactive examples, and schema definition
 
 ## 📚 Next Steps
 
-- **[React Integration Guide](../guides/react-integration.md)** - React patterns with TanStack Query
-- **[Node.js Integration Guide](../guides/nodejs-integration.md)** - Server-side usage patterns
-- **[Caching Reference](../reference/caching.md)** - Performance optimization strategies
-- **[Error Handling Reference](../reference/error-handling.md)** - Error recovery patterns
+- **[TanStack Query Guide](../advanced/tanstack-query.md)** - React patterns with TanStack Query
+- **[Fetching Data Guide](../advanced/fetching-data.md)** - Server-side and client-side usage patterns
+- **[Performance Guide](../advanced/performance-guide.md)** - Performance optimization strategies
+- **[Error Handling Guide](../advanced/error-handling.md)** - Error recovery patterns
