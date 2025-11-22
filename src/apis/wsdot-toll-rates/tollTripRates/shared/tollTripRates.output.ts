@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 import { tollTripRateBaseSchema } from "../../shared/tollTripBaseSchema";
 
@@ -20,7 +19,7 @@ export type TripRate = z.infer<typeof tripRateSchema>;
  */
 export const tollTripsRatesSchema = z
   .object({
-    LastUpdated: zDotnetDate().describe(
+    LastUpdated: z.date().describe(
       "UTC datetime when toll trip rates were last updated."
     ),
     Trips: z

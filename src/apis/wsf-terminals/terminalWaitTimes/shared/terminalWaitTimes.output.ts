@@ -5,7 +5,6 @@
  * Terminals API endpoints.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 import { terminalBaseSchema } from "../../shared/terminalBaseSchema";
 
@@ -31,7 +30,7 @@ export const waitTimeSchema = z
       .describe(
         "Text notes detailing wait time conditions and tips for vehicles and passengers."
       ),
-    WaitTimeLastUpdated: zDotnetDate()
+    WaitTimeLastUpdated: z.date()
       .nullable()
       .describe(
         "UTC datetime when the wait time information was last updated."

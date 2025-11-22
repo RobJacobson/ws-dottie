@@ -5,7 +5,6 @@
  * Terminals API endpoints.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 import { terminalBaseSchema } from "../../shared/terminalBaseSchema";
 
@@ -104,7 +103,7 @@ export type SpaceForArrivalTerminal = z.infer<
  */
 export const departingSpaceSchema = z
   .object({
-    Departure: zDotnetDate().describe(
+    Departure: z.date().describe(
       "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T21:35:00.000Z' for departure at 9:35 PM on November 2, 2025. Used for departure schedule display and space availability timing."
     ),
     IsCancelled: z

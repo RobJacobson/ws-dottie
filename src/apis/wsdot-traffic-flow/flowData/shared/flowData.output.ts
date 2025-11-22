@@ -5,7 +5,7 @@
  * Traffic Flow API, which provides real-time traffic flow data for the entire state.
  */
 
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { roadwayLocationSchema } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -41,7 +41,7 @@ export const flowDataSchema = z
       .describe(
         "Station identifier code combining route, direction, and milepost."
       ),
-    Time: zDotnetDate().describe(
+    Time: z.date().describe(
       "UTC datetime when the traffic flow reading was taken."
     ),
   })

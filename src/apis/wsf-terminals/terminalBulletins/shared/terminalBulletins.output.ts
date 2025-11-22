@@ -5,7 +5,6 @@
  * Terminals API endpoints.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 import { terminalBaseSchema } from "../../shared/terminalBaseSchema";
 
@@ -27,7 +26,7 @@ export const bulletinSchema = z
       .describe(
         "Display sort order for the bulletin; lower values appear first."
       ),
-    BulletinLastUpdated: zDotnetDate()
+    BulletinLastUpdated: z.date()
       .nullable()
       .describe("UTC datetime when the bulletin was last updated."),
     BulletinLastUpdatedSortable: z

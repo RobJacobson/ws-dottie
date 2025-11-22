@@ -1,4 +1,4 @@
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { roadwayLocationSchema } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 export const cvRestrictionSchema = z
@@ -23,13 +23,13 @@ export const cvRestrictionSchema = z
       .number()
       .nullable()
       .describe("Maximum axle weight for CL-8 classification in pounds."),
-    DateEffective: zDotnetDate().describe(
+    DateEffective: z.date().describe(
       "UTC datetime when the commercial vehicle restriction becomes effective."
     ),
-    DateExpires: zDotnetDate().describe(
+    DateExpires: z.date().describe(
       "UTC datetime when the commercial vehicle restriction expires."
     ),
-    DatePosted: zDotnetDate().describe(
+    DatePosted: z.date().describe(
       "UTC datetime when the commercial vehicle restriction was first posted."
     ),
     EndRoadwayLocation: roadwayLocationSchema

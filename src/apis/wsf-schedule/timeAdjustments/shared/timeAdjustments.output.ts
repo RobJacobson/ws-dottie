@@ -5,7 +5,6 @@
  * Schedule API time adjustment operations.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -30,10 +29,10 @@ export const timeAdjustmentSchema = z
       .describe("Display name of the sailing."),
     ActiveSailingDateRange: z
       .object({
-        DateFrom: zDotnetDate().describe(
+        DateFrom: z.date().describe(
           "UTC datetime when the sailing date range begins."
         ),
-        DateThru: zDotnetDate().describe(
+        DateThru: z.date().describe(
           "UTC datetime when the sailing date range ends."
         ),
         EventID: z
@@ -67,13 +66,13 @@ export const timeAdjustmentSchema = z
     TerminalBriefDescription: z
       .string()
       .describe("Abbreviated name of the terminal."),
-    TimeToAdj: zDotnetDate().describe(
+    TimeToAdj: z.date().describe(
       "UTC datetime of the departure or arrival time being adjusted. Note: date portion is placeholder; use time portion."
     ),
-    AdjDateFrom: zDotnetDate().describe(
+    AdjDateFrom: z.date().describe(
       "UTC datetime when the adjustment period begins."
     ),
-    AdjDateThru: zDotnetDate().describe(
+    AdjDateThru: z.date().describe(
       "UTC datetime when the adjustment period ends."
     ),
     TidalAdj: z

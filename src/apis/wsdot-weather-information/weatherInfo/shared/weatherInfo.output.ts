@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -24,7 +23,7 @@ export const weatherInfoSchema = z
       .number()
       .nullable()
       .describe("Precipitation amount in inches."),
-    ReadingTime: zDotnetDate().describe(
+    ReadingTime: z.date().describe(
       "UTC datetime when the weather reading was taken."
     ),
     RelativeHumidity: z

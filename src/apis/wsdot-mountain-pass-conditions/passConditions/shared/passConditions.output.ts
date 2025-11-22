@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 export const travelRestrictionSchema = z
@@ -35,7 +34,7 @@ export const passConditionSchema = z
     Longitude: z
       .number()
       .describe("Longitude of the mountain pass in decimal degrees."),
-    DateUpdated: zDotnetDate().describe(
+    DateUpdated: z.date().describe(
       "UTC datetime when the pass condition data was last updated."
     ),
     TemperatureInFahrenheit: z

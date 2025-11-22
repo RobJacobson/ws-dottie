@@ -5,7 +5,6 @@
  * Schedule API route operations.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -40,7 +39,7 @@ export const serviceDisruptionSchema = z
     BulletinFlag: z
       .boolean()
       .describe("True if alert is also used as bulletin; otherwise false."),
-    PublishDate: zDotnetDate()
+    PublishDate: z.date()
       .nullable()
       .describe("UTC datetime when the disruption alert was published."),
     DisruptionDescription: z
@@ -97,7 +96,7 @@ export const routeAlertSchema = z
       .describe(
         "True if alert is also used as communications announcement; otherwise false."
       ),
-    PublishDate: zDotnetDate()
+    PublishDate: z.date()
       .nullable()
       .describe("UTC datetime when the alert was published."),
     AlertDescription: z
