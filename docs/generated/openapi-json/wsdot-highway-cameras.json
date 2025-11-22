@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "SearchHighwayCamerasByRouteAndMilepostOutput": {
+      "FetchHighwayCameraByCameraIdOutput": {
         "type": "object",
         "properties": {
           "CameraID": {
@@ -175,77 +175,9 @@
           "Title"
         ],
         "description": "Highway camera information including location data, image URLs, status, ownership, and display metadata."
-      },
-      "SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam": {
-        "type": "string",
-        "description": "State route identifier for filtering cameras (e.g., 'I-5', 'I-90')."
-      },
-      "SearchHighwayCamerasByRouteAndMilepostInputRegionParam": {
-        "type": "string",
-        "description": "WSDOT region code for filtering cameras by geographic region."
-      },
-      "SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam": {
-        "type": "number",
-        "nullable": true,
-        "description": "Starting milepost value for milepost range filtering."
-      },
-      "SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam": {
-        "type": "number",
-        "nullable": true,
-        "description": "Ending milepost value for milepost range filtering."
-      },
-      "FetchHighwayCameraByCameraIdInputCameraIDParam": {
-        "type": "number",
-        "description": "Numeric ID of the camera."
       }
     },
-    "parameters": {
-      "SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam": {
-        "schema": {
-          "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam"
-        },
-        "required": false,
-        "description": "State route identifier for filtering cameras (e.g., 'I-5', 'I-90').",
-        "name": "StateRoute",
-        "in": "query"
-      },
-      "SearchHighwayCamerasByRouteAndMilepostInputRegionParam": {
-        "schema": {
-          "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputRegionParam"
-        },
-        "required": false,
-        "description": "WSDOT region code for filtering cameras by geographic region.",
-        "name": "Region",
-        "in": "query"
-      },
-      "SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam": {
-        "schema": {
-          "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam"
-        },
-        "required": false,
-        "description": "Starting milepost value for milepost range filtering.",
-        "name": "StartingMilepost",
-        "in": "query"
-      },
-      "SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam": {
-        "schema": {
-          "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam"
-        },
-        "required": false,
-        "description": "Ending milepost value for milepost range filtering.",
-        "name": "EndingMilepost",
-        "in": "query"
-      },
-      "FetchHighwayCameraByCameraIdInputCameraIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchHighwayCameraByCameraIdInputCameraIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the camera.",
-        "name": "CameraID",
-        "in": "path"
-      }
-    }
+    "parameters": {}
   },
   "paths": {
     "/searchCamerasAsJson": {
@@ -261,20 +193,6 @@
             "source": "import { searchHighwayCamerasByRouteAndMilepost } from 'ws-dottie/wsdot-highway-cameras/core';\n\nconst data = await searchHighwayCamerasByRouteAndMilepost({\n  params: {\n    \"StateRoute\": \"I-5\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputRegionParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -283,7 +201,126 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostOutput"
+                    "type": "object",
+                    "properties": {
+                      "CameraID": {
+                        "type": "number",
+                        "description": "Numeric ID of the camera."
+                      },
+                      "CameraLocation": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "Description": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Human-readable description of the roadway location, such as interchange names or cross streets."
+                          },
+                          "Direction": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."
+                          },
+                          "Latitude": {
+                            "type": "number",
+                            "description": "Latitude of the roadway location in decimal degrees."
+                          },
+                          "Longitude": {
+                            "type": "number",
+                            "description": "Longitude of the roadway location in decimal degrees."
+                          },
+                          "MilePost": {
+                            "type": "number",
+                            "description": "Milepost marker along the highway corridor, with 0 indicating route terminus."
+                          },
+                          "RoadName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Highway or route designation code, such as '005' for I-5 or '090' for I-90."
+                          }
+                        },
+                        "required": [
+                          "Description",
+                          "Direction",
+                          "Latitude",
+                          "Longitude",
+                          "MilePost",
+                          "RoadName"
+                        ],
+                        "description": "Roadway location information for camera placement, including route and milepost."
+                      },
+                      "CameraOwner": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Organization or agency that owns the camera."
+                      },
+                      "Description": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Short descriptive text about the camera's purpose or location."
+                      },
+                      "DisplayLatitude": {
+                        "type": "number",
+                        "description": "Latitude of the camera display position in decimal degrees."
+                      },
+                      "DisplayLongitude": {
+                        "type": "number",
+                        "description": "Longitude of the camera display position in decimal degrees."
+                      },
+                      "ImageHeight": {
+                        "type": "number",
+                        "description": "Pixel height of the camera image."
+                      },
+                      "ImageURL": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "URL where the camera image is stored and accessible."
+                      },
+                      "ImageWidth": {
+                        "type": "number",
+                        "description": "Pixel width of the camera image."
+                      },
+                      "IsActive": {
+                        "type": "boolean",
+                        "description": "True if the camera is currently active and being updated; otherwise false."
+                      },
+                      "OwnerURL": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Website URL for the camera owner organization."
+                      },
+                      "Region": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "WSDOT region code that owns the camera."
+                      },
+                      "SortOrder": {
+                        "type": "number",
+                        "description": "Display sort order; lower values appear first when sorting cameras by location."
+                      },
+                      "Title": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the camera."
+                      }
+                    },
+                    "required": [
+                      "CameraID",
+                      "CameraLocation",
+                      "CameraOwner",
+                      "Description",
+                      "DisplayLatitude",
+                      "DisplayLongitude",
+                      "ImageHeight",
+                      "ImageURL",
+                      "ImageWidth",
+                      "IsActive",
+                      "OwnerURL",
+                      "Region",
+                      "SortOrder",
+                      "Title"
+                    ],
+                    "description": "Highway camera information including location data, image URLs, status, ownership, and display metadata."
                   }
                 },
                 "examples": {
@@ -336,18 +373,13 @@
             "source": "import { fetchHighwayCameraByCameraId } from 'ws-dottie/wsdot-highway-cameras/core';\n\nconst data = await fetchHighwayCameraByCameraId({\n  params: {\n    \"CameraID\": 9818\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchHighwayCameraByCameraIdInputCameraIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostOutput"
+                  "$ref": "#/components/schemas/FetchHighwayCameraByCameraIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -405,7 +437,126 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SearchHighwayCamerasByRouteAndMilepostOutput"
+                    "type": "object",
+                    "properties": {
+                      "CameraID": {
+                        "type": "number",
+                        "description": "Numeric ID of the camera."
+                      },
+                      "CameraLocation": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "Description": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Human-readable description of the roadway location, such as interchange names or cross streets."
+                          },
+                          "Direction": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."
+                          },
+                          "Latitude": {
+                            "type": "number",
+                            "description": "Latitude of the roadway location in decimal degrees."
+                          },
+                          "Longitude": {
+                            "type": "number",
+                            "description": "Longitude of the roadway location in decimal degrees."
+                          },
+                          "MilePost": {
+                            "type": "number",
+                            "description": "Milepost marker along the highway corridor, with 0 indicating route terminus."
+                          },
+                          "RoadName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Highway or route designation code, such as '005' for I-5 or '090' for I-90."
+                          }
+                        },
+                        "required": [
+                          "Description",
+                          "Direction",
+                          "Latitude",
+                          "Longitude",
+                          "MilePost",
+                          "RoadName"
+                        ],
+                        "description": "Roadway location information for camera placement, including route and milepost."
+                      },
+                      "CameraOwner": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Organization or agency that owns the camera."
+                      },
+                      "Description": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Short descriptive text about the camera's purpose or location."
+                      },
+                      "DisplayLatitude": {
+                        "type": "number",
+                        "description": "Latitude of the camera display position in decimal degrees."
+                      },
+                      "DisplayLongitude": {
+                        "type": "number",
+                        "description": "Longitude of the camera display position in decimal degrees."
+                      },
+                      "ImageHeight": {
+                        "type": "number",
+                        "description": "Pixel height of the camera image."
+                      },
+                      "ImageURL": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "URL where the camera image is stored and accessible."
+                      },
+                      "ImageWidth": {
+                        "type": "number",
+                        "description": "Pixel width of the camera image."
+                      },
+                      "IsActive": {
+                        "type": "boolean",
+                        "description": "True if the camera is currently active and being updated; otherwise false."
+                      },
+                      "OwnerURL": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Website URL for the camera owner organization."
+                      },
+                      "Region": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "WSDOT region code that owns the camera."
+                      },
+                      "SortOrder": {
+                        "type": "number",
+                        "description": "Display sort order; lower values appear first when sorting cameras by location."
+                      },
+                      "Title": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the camera."
+                      }
+                    },
+                    "required": [
+                      "CameraID",
+                      "CameraLocation",
+                      "CameraOwner",
+                      "Description",
+                      "DisplayLatitude",
+                      "DisplayLongitude",
+                      "ImageHeight",
+                      "ImageURL",
+                      "ImageWidth",
+                      "IsActive",
+                      "OwnerURL",
+                      "Region",
+                      "SortOrder",
+                      "Title"
+                    ],
+                    "description": "Highway camera information including location data, image URLs, status, ownership, and display metadata."
                   }
                 },
                 "examples": {

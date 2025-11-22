@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -64,7 +63,7 @@ export const tollTripRateBaseSchema = z
       .describe(
         "Toll rate message or display text (e.g., 'FREE', '$4.95'). Empty string when unavailable."
       ),
-    MessageUpdateTime: zDotnetDate().describe(
+    MessageUpdateTime: z.date().describe(
       "UTC datetime when toll rate message was last updated."
     ),
     Toll: z.number().describe("Toll amount for trip in dollars."),

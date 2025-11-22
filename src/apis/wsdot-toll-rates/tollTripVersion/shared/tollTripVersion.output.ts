@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -8,10 +7,11 @@ import { z } from "@/shared/zod";
  */
 export const tollTripVersionSchema = z
   .object({
-    TimeStamp: zDotnetDate().describe(
+    TimeStamp: z.date().describe(
       "UTC datetime when version was created or last updated."
     ),
     Version: z
+      .number()
       .int()
       .describe(
         "Version number for toll trip rates data. Increments when trip rates data is updated."

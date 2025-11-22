@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 import { tollTripBaseSchema } from "../../shared/tollTripBaseSchema";
 
@@ -15,7 +14,7 @@ export const tollTripInfoSchema = tollTripBaseSchema
       .describe(
         "Encoded route geometry data for mapping. Empty string or null when geometry is unavailable."
       ),
-    ModifiedDate: zDotnetDate().describe(
+    ModifiedDate: z.date().describe(
       "UTC datetime when trip route information was last modified."
     ),
   })

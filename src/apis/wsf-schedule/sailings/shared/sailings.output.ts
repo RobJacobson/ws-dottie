@@ -5,7 +5,6 @@
  * Schedule API sailing operations.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -13,10 +12,10 @@ import { z } from "@/shared/zod";
  */
 export const activeDateRangeSchema = z
   .object({
-    DateFrom: zDotnetDate().describe(
+    DateFrom: z.date().describe(
       "UTC datetime when the sailing date range becomes active (typically 3:00 AM)."
     ),
-    DateThru: zDotnetDate().describe(
+    DateThru: z.date().describe(
       "UTC datetime when the sailing date range stops being active (typically 2:59 AM next day)."
     ),
     EventID: z
@@ -117,7 +116,7 @@ export const terminalTimeSchema = z
       .string()
       .nullable()
       .describe("Brief name for terminal, or null if unavailable."),
-    Time: zDotnetDate()
+    Time: z.date()
       .nullable()
       .describe(
         "Departure or arrival time at terminal in UTC. Note: Date portion (1900-01-01) is placeholder, use time portion only. Null if journey does not stop at terminal."

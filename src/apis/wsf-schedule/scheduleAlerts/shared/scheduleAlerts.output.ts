@@ -5,7 +5,6 @@
  * Schedule API schedule alert operations.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -45,7 +44,7 @@ export const alertDetailSchema = z
       .string()
       .nullable()
       .describe("HTML-formatted alert text for homepage display."),
-    PublishDate: zDotnetDate()
+    PublishDate: z.date()
       .nullable()
       .describe("UTC datetime when the alert was published."),
     DisruptionDescription: z

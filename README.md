@@ -16,7 +16,7 @@
 ## Table of Contents
 
 - [Why WS-Dottie is Special](#why-ws-dottie-is-special)
-- [Zod-powered validation](#zod-powered-validation-zod-4)
+- [Zod-powered validation](#zod-powered-validation-zod-3)
 - [What You Can Build](#-what-you-can-build)
 - [Quick Start](#-quick-start)
   - [Get Your Free API Key](#1-get-your-free-api-key)
@@ -82,9 +82,9 @@ Meet Dottie — your comprehensive TypeScript companion for fetching real-time W
 
 **🌐 Environment Agnostic**: Same code works in React apps, Node.js servers, and command-line tools. Automatic CORS handling with JSONP support for browsers.
 
-### Zod‑powered validation (Zod 4)
+### Zod‑powered validation (Zod 3)
 
-WS‑Dottie uses Zod 4 schemas for **optional** runtime validation and type inference across all APIs. Validation is **disabled by default** (`validate: false`) for optimal performance, but you can enable it when you need extra safety.
+WS‑Dottie uses Zod 3 schemas for **optional** runtime validation and type inference across all APIs. Validation is **disabled by default** (`validate: false`) for optimal performance, but you can enable it when you need extra safety.
 
 - **With validation** (`validate: true`): Strong runtime type safety, early detection of API changes, and safe data transformations
 - **Without validation** (`validate: false` - default): Faster performance, smaller bundles, and still type-safe with TypeScript
@@ -494,6 +494,33 @@ const allEndpoints = Object.values(apis).flatMap(api =>
   api.endpointGroups.flatMap(group => group.endpoints)
 );
 ```
+
+### Endpoint Registry
+
+WS-Dottie also exports a centralized endpoint registry that provides two complementary views of all endpoints:
+
+**`endpointsFlat`** - A flat array of all endpoints, ideal for iteration and searching:
+
+```javascript
+import { endpointsFlat } from 'ws-dottie/apis';
+
+// Find an endpoint by function name
+const endpoint = endpointsFlat.find(ep => ep.functionName === 'vesselBasics');
+
+// Filter by API
+const wsfEndpoints = endpointsFlat.filter(ep => ep.api.name.startsWith('wsf-'));
+```
+
+**`endpointsByApi`** - A nested structure organized by API → Group → Function, useful for direct hierarchical access:
+
+```javascript
+import { endpointsByApi } from 'ws-dottie/apis';
+
+// Direct access to a specific endpoint
+const vesselEndpoint = endpointsByApi['wsf-vessels']['vesselBasics']['vesselBasics'];
+```
+
+The registry is automatically generated from the API graph and includes complete endpoint metadata (schemas, cache strategies, URLs, etc.). It's used internally by the CLI, E2E tests, and documentation generation tools.
 
 ## 🖥️ Command Line Interface
 
@@ -913,15 +940,16 @@ fetch-dottie fetchVesselLocationsByVesselId '{"VesselID": 18}' --pretty
 
 ## 📚 Documentation
 
-- **[Documentation Home](./docs/)** - Complete documentation with getting started guides and API reference
-- **[Getting Started](./docs/getting-started/)** - New to WS-Dottie? Start here
+- **[Documentation Home](./docs/INDEX.md)** - Complete documentation index with getting started guides and API reference
+- **[Getting Started](./docs/getting-started.md)** - New to WS-Dottie? Start here
 - **[API Guide](./docs/guides/api-guide.md)** - High-level API overview and use cases
-- **[Interactive Documentation](./docs/api-reference/redoc/)** - Browse APIs with live examples
+- **[Interactive Documentation](./docs/api-reference/)** - Browse APIs with live examples
 
 ### 🔗 Detailed API Documentation
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
-- **[OpenAPI Specifications](./docs/generated/openapi/)** - API specifications in YAML format
-- **[HTML Documentation](./docs/api-reference/redoc/)** - Interactive HTML documentation with examples
+- **[OpenAPI Specifications](./docs/generated/openapi-json/)** - API specifications in JSON format
+- **[OpenAPI Specifications (YAML)](./docs/generated/openapi-yaml/)** - API specifications in YAML format
+- **[HTML Documentation](./docs/api-reference/)** - Interactive HTML documentation with examples
 
 Our documentation is automatically generated from API definitions, ensuring it stays synchronized with the latest code changes.
 

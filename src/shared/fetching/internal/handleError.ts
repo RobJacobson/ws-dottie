@@ -8,7 +8,6 @@
  */
 
 import type { ZodError } from "zod";
-import { z } from "zod";
 
 /**
  * Context information for error reporting
@@ -102,7 +101,12 @@ const extractErrorInfo = (
 ): { message: string; status?: number } => {
   if (error instanceof Error && error.name === "ZodError") {
     const zodError = error as ZodError;
-    const prettyError = z.prettifyError(zodError);
+    // Format Zod v3 errors by creating a readable message from issues
+    const errorMessages = zodError.issues.map((issue) => {
+      const path = issue.path.length > 0 ? issue.path.join(".") : "root";
+      return `${path}: ${issue.message}`;
+    });
+    const prettyError = errorMessages.join("\n");
     return { message: `Validation failed:\n${prettyError}` };
   }
 

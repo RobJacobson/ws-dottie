@@ -2,7 +2,7 @@
 
 This guide covers error handling patterns and recovery strategies for WS-Dottie applications.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🚨 Error Types
 

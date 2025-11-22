@@ -1,4 +1,4 @@
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { roadwayLocationSchema } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -20,10 +20,13 @@ export const borderCrossingSchema = z
       .describe(
         "Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable."
       ),
-    Time: zDotnetDate().describe(
-      "UTC datetime when this border crossing wait time observation was recorded."
-    ),
+    Time: z
+      .date()
+      .describe(
+        "UTC datetime when this border crossing wait time observation was recorded."
+      ),
     WaitTime: z
+      .number()
       .int()
       .describe(
         "Current estimated wait time for this crossing in minutes; -1 when a wait time is not available."

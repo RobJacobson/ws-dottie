@@ -7,7 +7,7 @@ import { terminalComboGroup } from "./terminalCombo/shared/terminalCombo.endpoin
 import { terminalsGroup } from "./terminals/shared/terminals.endpoints";
 import { validDateRangeGroup } from "./validDateRange/shared/validDateRange.endpoints";
 
-export const wsfFaresApi: ApiDefinition = {
+export const wsfFares: ApiDefinition = {
   api: wsfFaresApiMeta,
   endpointGroups: [
     cacheFlushDateFaresGroup,

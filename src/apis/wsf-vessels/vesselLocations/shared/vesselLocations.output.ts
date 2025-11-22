@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 export const vesselLocationSchema = z
@@ -57,17 +56,17 @@ export const vesselLocationSchema = z
       .describe(
         "True if vessel is currently docked at terminal; otherwise false."
       ),
-    LeftDock: zDotnetDate()
+    LeftDock: z.date()
       .nullable()
       .describe("UTC datetime when vessel last departed from dock."),
-    Eta: zDotnetDate()
+    Eta: z.date()
       .nullable()
       .describe("UTC datetime of estimated arrival at destination terminal."),
     EtaBasis: z
       .string()
       .nullable()
       .describe("Description of ETA calculation method."),
-    ScheduledDeparture: zDotnetDate()
+    ScheduledDeparture: z.date()
       .nullable()
       .describe("UTC datetime of scheduled departure from origin terminal."),
     OpRouteAbbrev: z
@@ -88,7 +87,7 @@ export const vesselLocationSchema = z
     ManagedBy: z
       .union([z.literal(1), z.literal(2)])
       .describe("Code indicating management owner: 1 = WSF, 2 = KCM."),
-    TimeStamp: zDotnetDate().describe(
+    TimeStamp: z.date().describe(
       "UTC datetime when vessel location data was last updated."
     ),
     VesselWatchShutID: z

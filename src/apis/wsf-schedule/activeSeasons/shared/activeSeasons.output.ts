@@ -5,7 +5,6 @@
  * Schedule API active seasons operations.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -25,10 +24,10 @@ export const scheduleBaseSchema = z
     SchedulePDFUrl: z
       .string()
       .describe("URL to printable schedule PDF document."),
-    ScheduleStart: zDotnetDate().describe(
+    ScheduleStart: z.date().describe(
       "UTC datetime when the schedule season becomes effective (typically 3:00 AM)."
     ),
-    ScheduleEnd: zDotnetDate().describe(
+    ScheduleEnd: z.date().describe(
       "UTC datetime when the schedule season stops being effective (typically 2:59 AM next day)."
     ),
   })

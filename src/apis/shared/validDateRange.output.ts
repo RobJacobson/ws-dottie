@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -6,12 +5,16 @@ import { z } from "@/shared/zod";
  */
 export const validDateRangeSchema = z
   .object({
-    DateFrom: zDotnetDate().describe(
-      "UTC datetime when data becomes available (earliest valid trip date)."
-    ),
-    DateThru: zDotnetDate().describe(
-      "UTC datetime when data stops being available (latest valid trip date)."
-    ),
+    DateFrom: z
+      .date()
+      .describe(
+        "UTC datetime when data becomes available (earliest valid trip date)."
+      ),
+    DateThru: z
+      .date()
+      .describe(
+        "UTC datetime when data stops being available (latest valid trip date)."
+      ),
   })
   .describe(
     "Date range for which fares data is currently published and available."

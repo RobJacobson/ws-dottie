@@ -40,137 +40,13 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchTollRatesOutput:
-      type: object
-      properties:
-        EndLatitude:
-          type: number
-          description: Latitude of trip end point in decimal degrees.
-        EndLocationName:
-          type: string
-          nullable: true
-          description: Display name of trip end location (e.g., 'SR 516', 'SR 18').
-        EndLongitude:
-          type: number
-          description: Longitude of trip end point in decimal degrees.
-        EndMilepost:
-          type: number
-          description: Milepost marker for trip end point.
-        StartLatitude:
-          type: number
-          description: Latitude of trip start point in decimal degrees.
-        StartLocationName:
-          type: string
-          nullable: true
-          description: Display name of trip start location (e.g., 'I-405', 'S 180th St').
-        StartLongitude:
-          type: number
-          description: Longitude of trip start point in decimal degrees.
-        StartMilepost:
-          type: number
-          description: Milepost marker for trip start point.
-        TravelDirection:
-          type: string
-          nullable: true
-          description: Direction of travel code (e.g., 'S' for southbound, 'N' for northbound).
-        TripName:
-          type: string
-          nullable: true
-          description: Unique identifier for toll trip route (e.g., 'Tmptp02565', '099tp03268').
-        CurrentToll:
-          type: integer
-          description: Current toll amount in cents. May be negative when toll is unavailable. May not match sign display due to timing differences.
-        CurrentMessage:
-          type: string
-          nullable: true
-          description: Message displayed on toll sign instead of toll amount. Null when toll amount is displayed, empty string when no message is shown.
-        StateRoute:
-          type: string
-          nullable: true
-          description: State route identifier where toll applies (e.g., '099' for SR-99, '405' for I-405).
-        TimeUpdated:
-          type: string
-          description: UTC datetime when toll rate was last updated.
-      required:
-        - EndLatitude
-        - EndLocationName
-        - EndLongitude
-        - EndMilepost
-        - StartLatitude
-        - StartLocationName
-        - StartLongitude
-        - StartMilepost
-        - TravelDirection
-        - TripName
-        - CurrentToll
-        - CurrentMessage
-        - StateRoute
-        - TimeUpdated
-      description: Current toll rate information for a single HOV toll lane trip, including pricing and location data.
-    FetchTollTripInfoOutput:
-      type: object
-      properties:
-        EndLatitude:
-          type: number
-          description: Latitude of trip end point in decimal degrees.
-        EndLocationName:
-          type: string
-          nullable: true
-          description: Display name of trip end location (e.g., 'SR 516', 'SR 18').
-        EndLongitude:
-          type: number
-          description: Longitude of trip end point in decimal degrees.
-        EndMilepost:
-          type: number
-          description: Milepost marker for trip end point.
-        StartLatitude:
-          type: number
-          description: Latitude of trip start point in decimal degrees.
-        StartLocationName:
-          type: string
-          nullable: true
-          description: Display name of trip start location (e.g., 'I-405', 'S 180th St').
-        StartLongitude:
-          type: number
-          description: Longitude of trip start point in decimal degrees.
-        StartMilepost:
-          type: number
-          description: Milepost marker for trip start point.
-        TravelDirection:
-          type: string
-          nullable: true
-          description: Direction of travel code (e.g., 'S' for southbound, 'N' for northbound).
-        TripName:
-          type: string
-          nullable: true
-          description: Unique identifier for toll trip route (e.g., 'Tmptp02565', '099tp03268').
-        Geometry:
-          type: string
-          nullable: true
-          description: Encoded route geometry data for mapping. Empty string or null when geometry is unavailable.
-        ModifiedDate:
-          type: string
-          description: UTC datetime when trip route information was last modified.
-      required:
-        - EndLatitude
-        - EndLocationName
-        - EndLongitude
-        - EndMilepost
-        - StartLatitude
-        - StartLocationName
-        - StartLongitude
-        - StartMilepost
-        - TravelDirection
-        - TripName
-        - Geometry
-        - ModifiedDate
-      description: Trip route information for a single toll trip, including locations, coordinates, and optional geometry.
     FetchTollTripRatesOutput:
       type: object
       properties:
         LastUpdated:
           type: string
           description: UTC datetime when toll trip rates were last updated.
+          format: date-time
         Trips:
           type: array
           nullable: true
@@ -184,6 +60,7 @@ components:
               MessageUpdateTime:
                 type: string
                 description: UTC datetime when toll rate message was last updated.
+                format: date-time
               Toll:
                 type: number
                 description: Toll amount for trip in dollars.
@@ -212,6 +89,7 @@ components:
         TimeStamp:
           type: string
           description: UTC datetime when version was created or last updated.
+          format: date-time
         Version:
           type: integer
           description: Version number for toll trip rates data. Increments when trip rates data is updated.
@@ -219,37 +97,7 @@ components:
         - TimeStamp
         - Version
       description: Version information for toll trip rates data including version number and timestamp.
-    FetchTripRatesByDateInputFromDateParam:
-      type: string
-      description: Start date for historical query in YYYY-MM-DD format.
-    FetchTripRatesByDateInputToDateParam:
-      type: string
-      description: End date for historical query in YYYY-MM-DD format.
-    FetchTripRatesByVersionInputVersionParam:
-      type: integer
-      description: Version number for toll trip rates data.
-  parameters:
-    FetchTripRatesByDateInputFromDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTripRatesByDateInputFromDateParam'
-      required: true
-      description: Start date for historical query in YYYY-MM-DD format.
-      name: FromDate
-      in: path
-    FetchTripRatesByDateInputToDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTripRatesByDateInputToDateParam'
-      required: true
-      description: End date for historical query in YYYY-MM-DD format.
-      name: ToDate
-      in: path
-    FetchTripRatesByVersionInputVersionParam:
-      schema:
-        $ref: '#/components/schemas/FetchTripRatesByVersionInputVersionParam'
-      required: true
-      description: Version number for toll trip rates data.
-      name: Version
-      in: path
+  parameters: {}
 paths:
   /getTollRatesAsJson:
     get:
@@ -276,7 +124,73 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTollRatesOutput'
+                  type: object
+                  properties:
+                    EndLatitude:
+                      type: number
+                      description: Latitude of trip end point in decimal degrees.
+                    EndLocationName:
+                      type: string
+                      nullable: true
+                      description: Display name of trip end location (e.g., 'SR 516', 'SR 18').
+                    EndLongitude:
+                      type: number
+                      description: Longitude of trip end point in decimal degrees.
+                    EndMilepost:
+                      type: number
+                      description: Milepost marker for trip end point.
+                    StartLatitude:
+                      type: number
+                      description: Latitude of trip start point in decimal degrees.
+                    StartLocationName:
+                      type: string
+                      nullable: true
+                      description: Display name of trip start location (e.g., 'I-405', 'S 180th St').
+                    StartLongitude:
+                      type: number
+                      description: Longitude of trip start point in decimal degrees.
+                    StartMilepost:
+                      type: number
+                      description: Milepost marker for trip start point.
+                    TravelDirection:
+                      type: string
+                      nullable: true
+                      description: Direction of travel code (e.g., 'S' for southbound, 'N' for northbound).
+                    TripName:
+                      type: string
+                      nullable: true
+                      description: Unique identifier for toll trip route (e.g., 'Tmptp02565', '099tp03268').
+                    CurrentToll:
+                      type: integer
+                      description: Current toll amount in cents. May be negative when toll is unavailable. May not match sign display due to timing differences.
+                    CurrentMessage:
+                      type: string
+                      nullable: true
+                      description: Message displayed on toll sign instead of toll amount. Null when toll amount is displayed, empty string when no message is shown.
+                    StateRoute:
+                      type: string
+                      nullable: true
+                      description: State route identifier where toll applies (e.g., '099' for SR-99, '405' for I-405).
+                    TimeUpdated:
+                      type: string
+                      description: UTC datetime when toll rate was last updated.
+                      format: date-time
+                  required:
+                    - EndLatitude
+                    - EndLocationName
+                    - EndLongitude
+                    - EndMilepost
+                    - StartLatitude
+                    - StartLocationName
+                    - StartLongitude
+                    - StartMilepost
+                    - TravelDirection
+                    - TripName
+                    - CurrentToll
+                    - CurrentMessage
+                    - StateRoute
+                    - TimeUpdated
+                  description: Current toll rate information for a single HOV toll lane trip, including pricing and location data.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -321,7 +235,64 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTollTripInfoOutput'
+                  type: object
+                  properties:
+                    EndLatitude:
+                      type: number
+                      description: Latitude of trip end point in decimal degrees.
+                    EndLocationName:
+                      type: string
+                      nullable: true
+                      description: Display name of trip end location (e.g., 'SR 516', 'SR 18').
+                    EndLongitude:
+                      type: number
+                      description: Longitude of trip end point in decimal degrees.
+                    EndMilepost:
+                      type: number
+                      description: Milepost marker for trip end point.
+                    StartLatitude:
+                      type: number
+                      description: Latitude of trip start point in decimal degrees.
+                    StartLocationName:
+                      type: string
+                      nullable: true
+                      description: Display name of trip start location (e.g., 'I-405', 'S 180th St').
+                    StartLongitude:
+                      type: number
+                      description: Longitude of trip start point in decimal degrees.
+                    StartMilepost:
+                      type: number
+                      description: Milepost marker for trip start point.
+                    TravelDirection:
+                      type: string
+                      nullable: true
+                      description: Direction of travel code (e.g., 'S' for southbound, 'N' for northbound).
+                    TripName:
+                      type: string
+                      nullable: true
+                      description: Unique identifier for toll trip route (e.g., 'Tmptp02565', '099tp03268').
+                    Geometry:
+                      type: string
+                      nullable: true
+                      description: Encoded route geometry data for mapping. Empty string or null when geometry is unavailable.
+                    ModifiedDate:
+                      type: string
+                      description: UTC datetime when trip route information was last modified.
+                      format: date-time
+                  required:
+                    - EndLatitude
+                    - EndLocationName
+                    - EndLongitude
+                    - EndMilepost
+                    - StartLatitude
+                    - StartLocationName
+                    - StartLongitude
+                    - StartMilepost
+                    - TravelDirection
+                    - TripName
+                    - Geometry
+                    - ModifiedDate
+                  description: Trip route information for a single toll trip, including locations, coordinates, and optional geometry.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -644,17 +615,14 @@ paths:
 
             const data = await fetchTripRatesByDate({
               params: {
-                "FromDate": "2025-11-20",
-                "ToDate": "2025-11-21"
+                "FromDate": "2025-11-21",
+                "ToDate": "2025-11-22"
               },
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTripRatesByDateInputFromDateParam'
-        - $ref: '#/components/parameters/FetchTripRatesByDateInputToDateParam'
       responses:
         '200':
           description: Success
@@ -663,7 +631,48 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTollTripRatesOutput'
+                  type: object
+                  properties:
+                    LastUpdated:
+                      type: string
+                      description: UTC datetime when toll trip rates were last updated.
+                      format: date-time
+                    Trips:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          Message:
+                            type: string
+                            nullable: true
+                            description: Toll rate message or display text (e.g., 'FREE', '$4.95'). Empty string when unavailable.
+                          MessageUpdateTime:
+                            type: string
+                            description: UTC datetime when toll rate message was last updated.
+                            format: date-time
+                          Toll:
+                            type: number
+                            description: Toll amount for trip in dollars.
+                          TripName:
+                            type: string
+                            nullable: true
+                            description: Unique identifier for toll trip route (e.g., '405tp02752', '520tp00422', '099tp03060').
+                        required:
+                          - Message
+                          - MessageUpdateTime
+                          - Toll
+                          - TripName
+                        description: Toll rate information for a single trip including toll amount, message, and update timestamp.
+                      description: Array of trip rate information for all toll trips. Null when trip rates are unavailable.
+                    Version:
+                      type: integer
+                      description: Version number of toll trips data. Increments when trip rates data is updated.
+                  required:
+                    - LastUpdated
+                    - Trips
+                    - Version
+                  description: Container for toll trip rates including update timestamp, array of trip rates, and version number.
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -952,8 +961,6 @@ paths:
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTripRatesByVersionInputVersionParam'
       responses:
         '200':
           description: Success

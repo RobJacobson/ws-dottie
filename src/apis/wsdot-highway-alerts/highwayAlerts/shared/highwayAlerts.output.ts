@@ -1,4 +1,4 @@
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { roadwayLocationSchema } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
  */
 export const alertSchema = z
   .object({
-    AlertID: z.int().describe("Numeric ID of the highway alert."),
+    AlertID: z.number().int().describe("Numeric ID of the highway alert."),
     County: z
       .string()
       .nullable()
@@ -20,7 +20,7 @@ export const alertSchema = z
       .describe(
         "Roadway location where the alert ends, or null when alert is point-specific or end location is unavailable."
       ),
-    EndTime: zDotnetDate()
+    EndTime: z.date()
       .nullable()
       .describe(
         "UTC datetime when the alert impact is estimated to end, or null when end time is not estimated or alert is ongoing."
@@ -49,7 +49,7 @@ export const alertSchema = z
       .describe(
         "Primary description of the alert issue, or null when headline is unavailable."
       ),
-    LastUpdatedTime: zDotnetDate()
+    LastUpdatedTime: z.date()
       .nullable()
       .describe("UTC datetime when the alert was last modified or updated."),
     Priority: z
@@ -69,7 +69,7 @@ export const alertSchema = z
       .describe(
         "Roadway location where the alert begins, or null when alert is point-specific or start location is unavailable."
       ),
-    StartTime: zDotnetDate()
+    StartTime: z.date()
       .nullable()
       .describe("UTC datetime when the alert impact on traffic began."),
   })

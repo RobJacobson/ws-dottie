@@ -7,7 +7,6 @@
 
 import type { z as zod } from "zod";
 import { z } from "@/shared/zod";
-import { zDotnetDate } from "./zDotnetDateSchema";
 
 /**
  * Shared input schema for cache flush date endpoints
@@ -26,7 +25,8 @@ export type CacheFlushDateInput = zod.infer<typeof cacheFlushDateInputSchema>;
  * Returns an optional UTC datetime indicating when static endpoint data was
  * last updated. Used for cache invalidation purposes.
  */
-export const cacheFlushDateOutputSchema = zDotnetDate()
+export const cacheFlushDateOutputSchema = z
+  .date()
   .optional()
   .describe(
     "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."

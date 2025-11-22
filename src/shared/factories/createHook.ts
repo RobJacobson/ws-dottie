@@ -6,8 +6,8 @@
  */
 
 import { useQuery } from "@tanstack/react-query";
+import type { CacheStrategy } from "@/apis/types";
 import { useCacheFlushDate, useInvalidateOnFlushChange } from "@/shared/cache";
-import type { CacheStrategy } from "@/shared/types";
 import { cacheStrategies } from "./strategies";
 import type {
   FetchFunctionParams,

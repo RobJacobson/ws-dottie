@@ -2,7 +2,7 @@
 
 This document provides a comprehensive overview of WS-Dottie's architecture, explaining how different components of the codebase work together to provide a unified interface for accessing Washington State transportation data.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](./getting-started.md) • [API Guide](./api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../INDEX.md) • [Getting Started](../getting-started.md) • [API Guide](./api-guide.md)
 
 ## 🏗️ System Overview
 
@@ -269,7 +269,7 @@ The endpoint registry provides a centralized, automatically-discovered list of a
 
 #### Automatic Discovery
 
-The registry (`src/shared/endpointRegistry.ts`) automatically discovers endpoints by iterating through the API graph:
+The registry (`src/apis/endpoints.ts`) automatically discovers endpoints by iterating through the API graph:
 
 ```
 apis (from src/apis/shared/apis.ts)
@@ -288,35 +288,66 @@ The registry creates a flat array of complete `Endpoint` objects, each containin
 The registry ensures proper initialization order by importing Zod OpenAPI initialization FIRST, before any API modules are imported. This guarantees that all Zod schemas have the `.openapi()` method available when the registry is constructed.
 
 ```typescript
-// endpointRegistry.ts
+// endpoints.ts
 import "@/shared/zod";  // Initialize Zod OpenAPI FIRST
-import { apis } from "@/apis/shared/apis";
+import { apis } from "@/apis";
 // ... rest of registry code
+```
+
+#### Exports
+
+The registry is exported from `src/apis/index.ts` and provides two complementary exports:
+
+**1. `endpointsFlat` - Flat Array**
+
+A flat array of all endpoints from all APIs, ideal for iteration, searching, and filtering operations. This is the primary export used by most consumers.
+
+```typescript
+import { endpointsFlat } from '@/apis';
+
+// Iterate over all endpoints
+endpointsFlat.forEach(endpoint => {
+  console.log(`${endpoint.id}: ${endpoint.endpoint}`);
+});
+
+// Search for endpoints by function name
+const vesselBasics = endpointsFlat.find(
+  ep => ep.functionName === 'vesselBasics'
+);
+
+// Filter endpoints by API
+const wsfEndpoints = endpointsFlat.filter(
+  ep => ep.api.name.startsWith('wsf-')
+);
+```
+
+**2. `endpointsByApi` - Nested Structure**
+
+A three-level nested structure organized by API name, then endpoint group, then function name. Useful for direct access when you know the full hierarchy.
+
+```typescript
+import { endpointsByApi } from '@/apis';
+
+// Direct access to a specific endpoint
+const vesselEndpoint = endpointsByApi['wsf-vessels']['vesselBasics']['vesselBasics'];
+
+// Iterate through a specific API's groups
+Object.entries(endpointsByApi['wsf-vessels']).forEach(([groupName, endpoints]) => {
+  console.log(`Group: ${groupName}`);
+  Object.keys(endpoints).forEach(functionName => {
+    console.log(`  ${functionName}`);
+  });
+});
 ```
 
 #### Usage
 
-The registry is exported from `src/shared/endpointRegistry.ts` and provides:
-
-```typescript
-import { endpoints, apis } from '@/shared/endpointRegistry';
-
-// Flat array of all endpoints
-endpoints.forEach(endpoint => {
-  console.log(`${endpoint.id}: ${endpoint.endpoint}`);
-});
-
-// Access the full API graph
-Object.values(apis).forEach(api => {
-  console.log(`API: ${api.api.name}`);
-  console.log(`Groups: ${api.endpointGroups.length}`);
-});
-```
-
 The registry is primarily used by:
-- **CLI tool** - Discovers all available endpoints for command execution
-- **E2E tests** - Provides endpoint metadata for test generation
-- **Documentation generation** - Iterates through endpoints to generate OpenAPI specs
+- **CLI tool** - Uses `endpointsFlat` to discover all available endpoints for command execution
+- **E2E tests** - Uses `endpointsFlat` to find endpoints by ID for test generation
+- **Documentation generation** - Uses `endpointsFlat` to iterate through endpoints and generate OpenAPI specs
+
+For most use cases, `endpointsFlat` is recommended. Use `endpointsByApi` when you need direct hierarchical access or want to organize endpoints by their API/group structure.
 
 ### 5. API Graph Export
 

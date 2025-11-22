@@ -5,7 +5,6 @@
  * Schedule API scheduled routes operations.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -13,10 +12,10 @@ import { z } from "@/shared/zod";
  */
 export const contingencyAdjSchema = z
   .object({
-    DateFrom: zDotnetDate().describe(
+    DateFrom: z.date().describe(
       "UTC datetime when the contingency adjustment period starts."
     ),
-    DateThru: zDotnetDate().describe(
+    DateThru: z.date().describe(
       "UTC datetime when the contingency adjustment period ends."
     ),
     EventID: z
@@ -88,7 +87,7 @@ export const schedRouteSchema = z
               .describe(
                 "True if alert is also used as bulletin; otherwise false."
               ),
-            PublishDate: zDotnetDate()
+            PublishDate: z.date()
               .nullable()
               .describe(
                 "UTC datetime when the disruption alert was published."

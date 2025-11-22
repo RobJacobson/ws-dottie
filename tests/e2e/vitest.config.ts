@@ -25,7 +25,21 @@ export default defineConfig({
       hooks: "list",
       sequencer: AlphabeticalSequencer, // Run tests in alphabetical order by filename
     },
-    include: ["tests/e2e/**/*.test.{ts,js}"],
+    include: [
+      process.env.API_FILTER || process.env.FUNCTION_FILTER
+        ? `tests/e2e/api/${
+            process.env.API_FILTER // If API_FILTER is set
+              ? `${process.env.API_FILTER}` // Start with the API name
+              : "*" // Otherwise, wildcard for API name
+          }${
+            process.env.FUNCTION_FILTER // If FUNCTION_FILTER is set
+              ? `--${process.env.FUNCTION_FILTER}` // Append --functionName
+              : process.env.API_FILTER // If only API_FILTER is set, append wildcard for function part
+                ? "*"
+                : ""
+          }.test.{ts,js}`
+        : "tests/e2e/**/*.test.{ts,js}", // Default to all tests
+    ],
   },
   resolve: {
     alias: {

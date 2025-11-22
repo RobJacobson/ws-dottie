@@ -53,237 +53,6 @@
           "RoadName"
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
-      },
-      "FetchWeatherReadingsOutput": {
-        "type": "object",
-        "properties": {
-          "StationId": {
-            "type": "string",
-            "description": "National Weather Service assigned station identifier code."
-          },
-          "StationName": {
-            "type": "string",
-            "description": "Display name of the weather station."
-          },
-          "Latitude": {
-            "type": "number",
-            "description": "Latitude of the weather station in decimal degrees."
-          },
-          "Longitude": {
-            "type": "number",
-            "description": "Longitude of the weather station in decimal degrees."
-          },
-          "Elevation": {
-            "type": "integer",
-            "description": "Elevation of the weather station above sea level in meters."
-          },
-          "ReadingTime": {
-            "type": "string",
-            "nullable": true,
-            "description": "UTC datetime when the comprehensive weather reading was taken (ISO-8601 format)."
-          },
-          "AirTemperature": {
-            "type": "number",
-            "nullable": true,
-            "description": "Current air temperature in degrees Celsius."
-          },
-          "RelativeHumidty": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Relative humidity as a percentage (0-100)."
-          },
-          "AverageWindSpeed": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Average wind speed during evaluation cycle in kilometers per hour."
-          },
-          "AverageWindDirection": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Average wind direction in degrees clockwise from north (0-359)."
-          },
-          "WindGust": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Maximum wind gust speed during evaluation cycle in kilometers per hour."
-          },
-          "Visibility": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Average visibility distance in meters (computed every 3 minutes)."
-          },
-          "PrecipitationIntensity": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Precipitation intensity derived from precipitation rate (intensity units)."
-          },
-          "PrecipitationType": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Code indicating precipitation type: 0 = none, 1 = rain, 2 = snow."
-          },
-          "PrecipitationPast1Hour": {
-            "type": "number",
-            "nullable": true,
-            "description": "Precipitation amount (liquid equivalent) for previous 1 hour in millimeters."
-          },
-          "PrecipitationPast3Hours": {
-            "type": "number",
-            "nullable": true,
-            "description": "Precipitation amount (liquid equivalent) for previous 3 hours in millimeters."
-          },
-          "PrecipitationPast6Hours": {
-            "type": "number",
-            "nullable": true,
-            "description": "Precipitation amount (liquid equivalent) for previous 6 hours in millimeters."
-          },
-          "PrecipitationPast12Hours": {
-            "type": "number",
-            "nullable": true,
-            "description": "Precipitation amount (liquid equivalent) for previous 12 hours in millimeters."
-          },
-          "PrecipitationPast24Hours": {
-            "type": "number",
-            "nullable": true,
-            "description": "Precipitation amount (liquid equivalent) for previous 24 hours in millimeters."
-          },
-          "PrecipitationAccumulation": {
-            "type": "number",
-            "nullable": true,
-            "description": "Precipitation amount (liquid equivalent) from midnight GMT to current time in millimeters."
-          },
-          "BarometricPressure": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Atmospheric pressure in millibars (not adjusted for elevation)."
-          },
-          "SnowDepth": {
-            "type": "integer",
-            "nullable": true,
-            "description": "Snow depth on representative areas excluding highway pavement in centimeters."
-          },
-          "SurfaceMeasurements": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "object",
-              "properties": {
-                "SensorId": {
-                  "type": "integer",
-                  "description": "Numeric ID of the surface sensor."
-                },
-                "SurfaceTemperature": {
-                  "type": "number",
-                  "nullable": true,
-                  "description": "Current pavement surface temperature in degrees Celsius."
-                },
-                "RoadFreezingTemperature": {
-                  "type": "number",
-                  "nullable": true,
-                  "description": "Freezing point of moisture on pavement based on chemical treatment in degrees Celsius."
-                },
-                "RoadSurfaceCondition": {
-                  "type": "number",
-                  "nullable": true,
-                  "description": "Code indicating road surface condition: 101 = Dry, 102 = Wet, 103 = Moist, 104 = Ice, 105 = Snow."
-                }
-              },
-              "required": [
-                "SensorId",
-                "SurfaceTemperature",
-                "RoadFreezingTemperature",
-                "RoadSurfaceCondition"
-              ]
-            },
-            "description": "Array of surface sensor measurements including pavement temperature, freezing temperature, and condition codes."
-          },
-          "SubSurfaceMeasurements": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "object",
-              "properties": {
-                "SensorId": {
-                  "type": "integer",
-                  "description": "Numeric ID of the subsurface sensor."
-                },
-                "SubSurfaceTemperature": {
-                  "type": "number",
-                  "nullable": true,
-                  "description": "Temperature from sensor embedded 12-18 inches below road pavement in degrees Celsius."
-                }
-              },
-              "required": [
-                "SensorId",
-                "SubSurfaceTemperature"
-              ]
-            },
-            "description": "Array of subsurface sensor measurements including ground temperature from sensors embedded below pavement."
-          }
-        },
-        "required": [
-          "StationId",
-          "StationName",
-          "Latitude",
-          "Longitude",
-          "Elevation",
-          "ReadingTime",
-          "AirTemperature",
-          "RelativeHumidty",
-          "AverageWindSpeed",
-          "AverageWindDirection",
-          "WindGust",
-          "Visibility",
-          "PrecipitationIntensity",
-          "PrecipitationType",
-          "PrecipitationPast1Hour",
-          "PrecipitationPast3Hours",
-          "PrecipitationPast6Hours",
-          "PrecipitationPast12Hours",
-          "PrecipitationPast24Hours",
-          "PrecipitationAccumulation",
-          "BarometricPressure",
-          "SnowDepth",
-          "SurfaceMeasurements",
-          "SubSurfaceMeasurements"
-        ],
-        "description": "Comprehensive weather reading from a WSDOT weather station, including atmospheric conditions, precipitation across multiple time periods, and surface/subsurface sensor measurements."
-      },
-      "FetchSurfaceMeasurementsOutput": {
-        "type": "object",
-        "properties": {
-          "SensorId": {
-            "type": "number",
-            "description": "Numeric ID of the surface sensor."
-          },
-          "SurfaceTemperature": {
-            "type": "number",
-            "description": "Current pavement surface temperature in degrees Celsius."
-          },
-          "RoadFreezingTemperature": {
-            "type": "number",
-            "description": "Freezing point of moisture on pavement based on chemical treatment in degrees Celsius."
-          },
-          "RoadSurfaceCondition": {
-            "type": "number",
-            "description": "Code indicating road surface condition: 101 = Dry, 102 = Wet, 103 = Moist, 104 = Ice, 105 = Snow, 108 = Unknown/Other."
-          }
-        },
-        "description": "Surface sensor measurements including pavement temperature, road freezing temperature, and surface condition code from sensors embedded in or mounted on road surfaces."
-      },
-      "FetchSubSurfaceMeasurementsOutput": {
-        "type": "object",
-        "properties": {
-          "SensorId": {
-            "type": "number",
-            "description": "Numeric ID of the subsurface sensor."
-          },
-          "SubSurfaceTemperature": {
-            "type": "number",
-            "description": "Temperature from sensor embedded 12-18 inches below road pavement in degrees Celsius."
-          }
-        },
-        "description": "Subsurface sensor measurements including ground temperature from sensors embedded below road pavement."
       }
     },
     "parameters": {}
@@ -310,7 +79,200 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchWeatherReadingsOutput"
+                    "type": "object",
+                    "properties": {
+                      "StationId": {
+                        "type": "string",
+                        "description": "National Weather Service assigned station identifier code."
+                      },
+                      "StationName": {
+                        "type": "string",
+                        "description": "Display name of the weather station."
+                      },
+                      "Latitude": {
+                        "type": "number",
+                        "description": "Latitude of the weather station in decimal degrees."
+                      },
+                      "Longitude": {
+                        "type": "number",
+                        "description": "Longitude of the weather station in decimal degrees."
+                      },
+                      "Elevation": {
+                        "type": "integer",
+                        "description": "Elevation of the weather station above sea level in meters."
+                      },
+                      "ReadingTime": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime when the comprehensive weather reading was taken (ISO-8601 format).",
+                        "format": "date-time"
+                      },
+                      "AirTemperature": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Current air temperature in degrees Celsius."
+                      },
+                      "RelativeHumidty": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Relative humidity as a percentage (0-100)."
+                      },
+                      "AverageWindSpeed": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Average wind speed during evaluation cycle in kilometers per hour."
+                      },
+                      "AverageWindDirection": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Average wind direction in degrees clockwise from north (0-359)."
+                      },
+                      "WindGust": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Maximum wind gust speed during evaluation cycle in kilometers per hour."
+                      },
+                      "Visibility": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Average visibility distance in meters (computed every 3 minutes)."
+                      },
+                      "PrecipitationIntensity": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Precipitation intensity derived from precipitation rate (intensity units)."
+                      },
+                      "PrecipitationType": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Code indicating precipitation type: 0 = none, 1 = rain, 2 = snow."
+                      },
+                      "PrecipitationPast1Hour": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount (liquid equivalent) for previous 1 hour in millimeters."
+                      },
+                      "PrecipitationPast3Hours": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount (liquid equivalent) for previous 3 hours in millimeters."
+                      },
+                      "PrecipitationPast6Hours": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount (liquid equivalent) for previous 6 hours in millimeters."
+                      },
+                      "PrecipitationPast12Hours": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount (liquid equivalent) for previous 12 hours in millimeters."
+                      },
+                      "PrecipitationPast24Hours": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount (liquid equivalent) for previous 24 hours in millimeters."
+                      },
+                      "PrecipitationAccumulation": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount (liquid equivalent) from midnight GMT to current time in millimeters."
+                      },
+                      "BarometricPressure": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Atmospheric pressure in millibars (not adjusted for elevation)."
+                      },
+                      "SnowDepth": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Snow depth on representative areas excluding highway pavement in centimeters."
+                      },
+                      "SurfaceMeasurements": {
+                        "type": "array",
+                        "nullable": true,
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "SensorId": {
+                              "type": "integer",
+                              "description": "Numeric ID of the surface sensor."
+                            },
+                            "SurfaceTemperature": {
+                              "type": "number",
+                              "nullable": true,
+                              "description": "Current pavement surface temperature in degrees Celsius."
+                            },
+                            "RoadFreezingTemperature": {
+                              "type": "number",
+                              "nullable": true,
+                              "description": "Freezing point of moisture on pavement based on chemical treatment in degrees Celsius."
+                            },
+                            "RoadSurfaceCondition": {
+                              "type": "number",
+                              "nullable": true,
+                              "description": "Code indicating road surface condition: 101 = Dry, 102 = Wet, 103 = Moist, 104 = Ice, 105 = Snow."
+                            }
+                          },
+                          "required": [
+                            "SensorId",
+                            "SurfaceTemperature",
+                            "RoadFreezingTemperature",
+                            "RoadSurfaceCondition"
+                          ]
+                        },
+                        "description": "Array of surface sensor measurements including pavement temperature, freezing temperature, and condition codes."
+                      },
+                      "SubSurfaceMeasurements": {
+                        "type": "array",
+                        "nullable": true,
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "SensorId": {
+                              "type": "integer",
+                              "description": "Numeric ID of the subsurface sensor."
+                            },
+                            "SubSurfaceTemperature": {
+                              "type": "number",
+                              "nullable": true,
+                              "description": "Temperature from sensor embedded 12-18 inches below road pavement in degrees Celsius."
+                            }
+                          },
+                          "required": [
+                            "SensorId",
+                            "SubSurfaceTemperature"
+                          ]
+                        },
+                        "description": "Array of subsurface sensor measurements including ground temperature from sensors embedded below pavement."
+                      }
+                    },
+                    "required": [
+                      "StationId",
+                      "StationName",
+                      "Latitude",
+                      "Longitude",
+                      "Elevation",
+                      "ReadingTime",
+                      "AirTemperature",
+                      "RelativeHumidty",
+                      "AverageWindSpeed",
+                      "AverageWindDirection",
+                      "WindGust",
+                      "Visibility",
+                      "PrecipitationIntensity",
+                      "PrecipitationType",
+                      "PrecipitationPast1Hour",
+                      "PrecipitationPast3Hours",
+                      "PrecipitationPast6Hours",
+                      "PrecipitationPast12Hours",
+                      "PrecipitationPast24Hours",
+                      "PrecipitationAccumulation",
+                      "BarometricPressure",
+                      "SnowDepth",
+                      "SurfaceMeasurements",
+                      "SubSurfaceMeasurements"
+                    ],
+                    "description": "Comprehensive weather reading from a WSDOT weather station, including atmospheric conditions, precipitation across multiple time periods, and surface/subsurface sensor measurements."
                   }
                 },
                 "examples": {
@@ -392,7 +354,26 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchSurfaceMeasurementsOutput"
+                    "type": "object",
+                    "properties": {
+                      "SensorId": {
+                        "type": "number",
+                        "description": "Numeric ID of the surface sensor."
+                      },
+                      "SurfaceTemperature": {
+                        "type": "number",
+                        "description": "Current pavement surface temperature in degrees Celsius."
+                      },
+                      "RoadFreezingTemperature": {
+                        "type": "number",
+                        "description": "Freezing point of moisture on pavement based on chemical treatment in degrees Celsius."
+                      },
+                      "RoadSurfaceCondition": {
+                        "type": "number",
+                        "description": "Code indicating road surface condition: 101 = Dry, 102 = Wet, 103 = Moist, 104 = Ice, 105 = Snow, 108 = Unknown/Other."
+                      }
+                    },
+                    "description": "Surface sensor measurements including pavement temperature, road freezing temperature, and surface condition code from sensors embedded in or mounted on road surfaces."
                   }
                 },
                 "examples": {
@@ -431,7 +412,18 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchSubSurfaceMeasurementsOutput"
+                    "type": "object",
+                    "properties": {
+                      "SensorId": {
+                        "type": "number",
+                        "description": "Numeric ID of the subsurface sensor."
+                      },
+                      "SubSurfaceTemperature": {
+                        "type": "number",
+                        "description": "Temperature from sensor embedded 12-18 inches below road pavement in degrees Celsius."
+                      }
+                    },
+                    "description": "Subsurface sensor measurements including ground temperature from sensors embedded below road pavement."
                   }
                 },
                 "examples": {

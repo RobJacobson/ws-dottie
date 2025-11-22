@@ -6,7 +6,7 @@
  * in Seattle, Tacoma, and Snoqualmie Pass areas.
  */
 
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { roadwayLocationSchema } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -43,7 +43,7 @@ export const travelTimeRouteSchema = z
     StartPoint: roadwayLocationSchema
       .nullable()
       .describe("Roadway location where the travel time route begins."),
-    TimeUpdated: zDotnetDate().describe(
+    TimeUpdated: z.date().describe(
       "UTC datetime when the travel time data was last updated."
     ),
     TravelTimeID: z.number().describe("Numeric ID of the travel time route."),

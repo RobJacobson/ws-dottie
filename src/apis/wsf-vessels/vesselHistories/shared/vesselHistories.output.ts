@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 export const vesselHistorySchema = z
@@ -13,16 +12,16 @@ export const vesselHistorySchema = z
       .string()
       .nullable()
       .describe("Display name of the arriving terminal."),
-    ScheduledDepart: zDotnetDate()
+    ScheduledDepart: z.date()
       .nullable()
       .describe("UTC datetime of scheduled departure from origin terminal."),
-    ActualDepart: zDotnetDate()
+    ActualDepart: z.date()
       .nullable()
       .describe("UTC datetime of actual departure from origin terminal."),
-    EstArrival: zDotnetDate()
+    EstArrival: z.date()
       .nullable()
       .describe("UTC datetime of estimated arrival at destination terminal."),
-    Date: zDotnetDate()
+    Date: z.date()
       .nullable()
       .describe(
         "UTC datetime indicating the calendar date when this voyage occurred."

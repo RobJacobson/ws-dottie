@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
+import type { Endpoint, EndpointParams, EndpointResponse } from "@/apis/types";
 import { fetchDottie } from "@/shared/fetching";
-import type { Endpoint } from "@/shared/types";
 
 // TODO: Define the whitelist of endpoints that are allowed to return any kind of data
 // For now, we'll implement the data validation logic, and the whitelist can be defined later
@@ -14,7 +14,7 @@ const ENDPOINT_WHITELIST: string[] = [
  * Checks if an endpoint is in the predefined whitelist
  */
 const isEndpointWhitelisted = (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): boolean => {
   const endpointKey = `${endpoint.api}.${endpoint.functionName}`;
   return ENDPOINT_WHITELIST.includes(endpointKey);
@@ -54,7 +54,7 @@ const hasMeaningfulData = (data: unknown): boolean => {
  * Validates that either (a) the endpoint is whitelisted or (b) the data is meaningful
  */
 export const createRealDataWithValidationTest = (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ) => {
   it(`It should fetch real data with validation from ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     const result = await fetchDottie({
@@ -82,7 +82,7 @@ export const createRealDataWithValidationTest = (
  * Validates that either (a) the endpoint is whitelisted or (b) the data is meaningful
  */
 export const createRealDataWithoutValidationTest = (
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ) => {
   it(`It should fetch real data without validation from ${endpoint.api.name}.${endpoint.functionName}`, async () => {
     const result = await fetchDottie({

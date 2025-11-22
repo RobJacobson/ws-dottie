@@ -7,6 +7,17 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.5.1] - 2025-11-22
+
+- Improvements
+  - **Zod Version Compatibility**: Downgraded from Zod v4 to Zod v3 for compatibility with TypeScript MCP SDK
+  - **Date Schema Simplification**: Simplified date handling by removing custom `zDotnetDate` and `zIsoDateString` schemas in favor of native `z.date()` with preprocessed date conversion
+  - **Date Conversion Refactoring**: Unified date preprocessing to convert .NET datetime strings to JavaScript Date objects before schema validation, reducing complexity across all API schemas
+
+- Docs
+  - **Documentation Updates**: Updated README and documentation to reflect Zod v3 usage and simplified date handling approach
+  - **OpenAPI Documentation**: Regenerated OpenAPI specifications and documentation with updated schemas
+
 ## [1.5.0] - 2025-11-20
 
 - Features

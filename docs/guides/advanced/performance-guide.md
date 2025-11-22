@@ -2,7 +2,7 @@
 
 This guide helps you optimize the performance of your WS-Dottie applications, from bundle size to runtime efficiency.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🚀 Performance Overview
 

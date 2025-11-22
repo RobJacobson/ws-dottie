@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 import { tollTripBaseSchema } from "../../shared/tollTripBaseSchema";
 
@@ -10,6 +9,7 @@ import { tollTripBaseSchema } from "../../shared/tollTripBaseSchema";
 export const tollRateSchema = tollTripBaseSchema
   .extend({
     CurrentToll: z
+      .number()
       .int()
       .describe(
         "Current toll amount in cents. May be negative when toll is unavailable. May not match sign display due to timing differences."
@@ -26,7 +26,7 @@ export const tollRateSchema = tollTripBaseSchema
       .describe(
         "State route identifier where toll applies (e.g., '099' for SR-99, '405' for I-405)."
       ),
-    TimeUpdated: zDotnetDate().describe(
+    TimeUpdated: z.date().describe(
       "UTC datetime when toll rate was last updated."
     ),
   })

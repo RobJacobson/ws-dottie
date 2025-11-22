@@ -1,9 +1,8 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 export const bridgeClearanceSchema = z
   .object({
-    APILastUpdate: zDotnetDate().describe(
+    APILastUpdate: z.date().describe(
       "UTC datetime when the bridge clearance record was last updated."
     ),
     BridgeNumber: z
@@ -42,7 +41,7 @@ export const bridgeClearanceSchema = z
     Longitude: z
       .number()
       .describe("Bridge GPS longitude coordinate in decimal degrees."),
-    RouteDate: zDotnetDate().describe(
+    RouteDate: z.date().describe(
       "UTC datetime when the route information was established or last updated."
     ),
     SRMP: z

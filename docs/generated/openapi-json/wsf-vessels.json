@@ -56,9 +56,10 @@
       },
       "FetchCacheFlushDateVesselsOutput": {
         "type": "string",
-        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."
+        "description": "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.",
+        "format": "date-time"
       },
-      "FetchVesselAccommodationsOutput": {
+      "FetchVesselAccommodationsByVesselIdOutput": {
         "type": "object",
         "properties": {
           "VesselID": {
@@ -185,7 +186,7 @@
         ],
         "description": "Vessel accommodation information including amenities, accessibility features, and passenger facilities."
       },
-      "FetchVesselBasicsOutput": {
+      "FetchVesselBasicsByVesselIdOutput": {
         "type": "object",
         "properties": {
           "VesselID": {
@@ -297,62 +298,7 @@
         ],
         "description": "Basic vessel information including identification, operational status, and ownership."
       },
-      "FetchVesselHistoriesOutput": {
-        "type": "object",
-        "properties": {
-          "VesselId": {
-            "type": "integer",
-            "description": "Numeric ID of the vessel."
-          },
-          "Vessel": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the vessel."
-          },
-          "Departing": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the departing terminal."
-          },
-          "Arriving": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the arriving terminal."
-          },
-          "ScheduledDepart": {
-            "type": "string",
-            "nullable": true,
-            "description": "UTC datetime of scheduled departure from origin terminal."
-          },
-          "ActualDepart": {
-            "type": "string",
-            "nullable": true,
-            "description": "UTC datetime of actual departure from origin terminal."
-          },
-          "EstArrival": {
-            "type": "string",
-            "nullable": true,
-            "description": "UTC datetime of estimated arrival at destination terminal."
-          },
-          "Date": {
-            "type": "string",
-            "nullable": true,
-            "description": "UTC datetime indicating the calendar date when this voyage occurred."
-          }
-        },
-        "required": [
-          "VesselId",
-          "Vessel",
-          "Departing",
-          "Arriving",
-          "ScheduledDepart",
-          "ActualDepart",
-          "EstArrival",
-          "Date"
-        ],
-        "description": "Historical vessel voyage record including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times."
-      },
-      "FetchVesselLocationsOutput": {
+      "FetchVesselLocationsByVesselIdOutput": {
         "type": "object",
         "properties": {
           "VesselID": {
@@ -376,12 +322,14 @@
           "DepartingTerminalName": {
             "type": "string",
             "nullable": true,
-            "description": "Display name of the departing terminal."
+            "description": "Display name of the departing terminal.",
+            "format": "date-time"
           },
           "DepartingTerminalAbbrev": {
             "type": "string",
             "nullable": true,
-            "description": "Abbreviation code of the departing terminal."
+            "description": "Abbreviation code of the departing terminal.",
+            "format": "date-time"
           },
           "ArrivingTerminalID": {
             "type": "integer",
@@ -425,12 +373,14 @@
           "LeftDock": {
             "type": "string",
             "nullable": true,
-            "description": "UTC datetime when vessel last departed from dock."
+            "description": "UTC datetime when vessel last departed from dock.",
+            "format": "date-time"
           },
           "Eta": {
             "type": "string",
             "nullable": true,
-            "description": "UTC datetime of estimated arrival at destination terminal."
+            "description": "UTC datetime of estimated arrival at destination terminal.",
+            "format": "date-time"
           },
           "EtaBasis": {
             "type": "string",
@@ -440,7 +390,8 @@
           "ScheduledDeparture": {
             "type": "string",
             "nullable": true,
-            "description": "UTC datetime of scheduled departure from origin terminal."
+            "description": "UTC datetime of scheduled departure from origin terminal.",
+            "format": "date-time"
           },
           "OpRouteAbbrev": {
             "type": "array",
@@ -478,7 +429,8 @@
           },
           "TimeStamp": {
             "type": "string",
-            "description": "UTC datetime when vessel location data was last updated."
+            "description": "UTC datetime when vessel location data was last updated.",
+            "format": "date-time"
           },
           "VesselWatchShutID": {
             "type": "integer",
@@ -538,7 +490,7 @@
         ],
         "description": "Real-time vessel location data including GPS coordinates, terminal assignments, speed, heading, and ETA information."
       },
-      "FetchVesselStatsOutput": {
+      "FetchVesselStatsByVesselIdOutput": {
         "type": "object",
         "properties": {
           "VesselID": {
@@ -747,7 +699,7 @@
         ],
         "description": "Vessel technical specifications including dimensions, capacity, speed, propulsion, and build details."
       },
-      "FetchVesselsVerboseOutput": {
+      "FetchVesselsVerboseByVesselIdOutput": {
         "allOf": [
           {
             "type": "object",
@@ -1199,114 +1151,9 @@
           }
         ],
         "description": "Complete vessel information combining identification, operational status, accommodations, and technical specifications in a single schema."
-      },
-      "FetchVesselAccommodationsByVesselIdInputVesselIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the vessel."
-      },
-      "FetchVesselBasicsByVesselIdInputVesselIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the vessel."
-      },
-      "FetchVesselHistoriesByVesselNameAndDateRangeInputVesselNameParam": {
-        "type": "string",
-        "description": "Display name of the vessel."
-      },
-      "FetchVesselHistoriesByVesselNameAndDateRangeInputDateStartParam": {
-        "type": "string",
-        "description": "Start date for history query in YYYY-MM-DD format."
-      },
-      "FetchVesselHistoriesByVesselNameAndDateRangeInputDateEndParam": {
-        "type": "string",
-        "description": "End date for history query in YYYY-MM-DD format."
-      },
-      "FetchVesselLocationsByVesselIdInputVesselIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the vessel."
-      },
-      "FetchVesselStatsByVesselIdInputVesselIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the vessel."
-      },
-      "FetchVesselsVerboseByVesselIdInputVesselIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the vessel."
       }
     },
-    "parameters": {
-      "FetchVesselAccommodationsByVesselIdInputVesselIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselAccommodationsByVesselIdInputVesselIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the vessel.",
-        "name": "VesselID",
-        "in": "path"
-      },
-      "FetchVesselBasicsByVesselIdInputVesselIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselBasicsByVesselIdInputVesselIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the vessel.",
-        "name": "VesselID",
-        "in": "path"
-      },
-      "FetchVesselHistoriesByVesselNameAndDateRangeInputVesselNameParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselHistoriesByVesselNameAndDateRangeInputVesselNameParam"
-        },
-        "required": true,
-        "description": "Display name of the vessel.",
-        "name": "VesselName",
-        "in": "path"
-      },
-      "FetchVesselHistoriesByVesselNameAndDateRangeInputDateStartParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselHistoriesByVesselNameAndDateRangeInputDateStartParam"
-        },
-        "required": true,
-        "description": "Start date for history query in YYYY-MM-DD format.",
-        "name": "DateStart",
-        "in": "path"
-      },
-      "FetchVesselHistoriesByVesselNameAndDateRangeInputDateEndParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselHistoriesByVesselNameAndDateRangeInputDateEndParam"
-        },
-        "required": true,
-        "description": "End date for history query in YYYY-MM-DD format.",
-        "name": "DateEnd",
-        "in": "path"
-      },
-      "FetchVesselLocationsByVesselIdInputVesselIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselLocationsByVesselIdInputVesselIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the vessel.",
-        "name": "VesselID",
-        "in": "path"
-      },
-      "FetchVesselStatsByVesselIdInputVesselIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselStatsByVesselIdInputVesselIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the vessel.",
-        "name": "VesselID",
-        "in": "path"
-      },
-      "FetchVesselsVerboseByVesselIdInputVesselIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchVesselsVerboseByVesselIdInputVesselIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the vessel.",
-        "name": "VesselID",
-        "in": "path"
-      }
-    }
+    "parameters": {}
   },
   "paths": {
     "/cacheflushdate": {
@@ -1364,7 +1211,131 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchVesselAccommodationsOutput"
+                    "type": "object",
+                    "properties": {
+                      "VesselID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the vessel."
+                      },
+                      "VesselSubjectID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the WSF subject for this vessel."
+                      },
+                      "VesselName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the vessel."
+                      },
+                      "VesselAbbrev": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Abbreviation code of the vessel."
+                      },
+                      "Class": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "ClassID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the vessel class."
+                          },
+                          "ClassSubjectID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the WSF subject for this vessel class."
+                          },
+                          "ClassName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Display name of the vessel class."
+                          },
+                          "SortSeq": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Display sort order; lower values appear first in lists."
+                          },
+                          "DrawingImg": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to detailed vessel class drawing image."
+                          },
+                          "SilhouetteImg": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to small silhouette image of vessel class."
+                          },
+                          "PublicDisplayName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Public-facing display name of the vessel class."
+                          }
+                        },
+                        "required": [
+                          "ClassID",
+                          "ClassSubjectID",
+                          "ClassName",
+                          "SortSeq",
+                          "DrawingImg",
+                          "SilhouetteImg",
+                          "PublicDisplayName"
+                        ],
+                        "description": "Vessel class information grouping similar vessels in the fleet."
+                      },
+                      "CarDeckRestroom": {
+                        "type": "boolean",
+                        "description": "True if ADA-accessible restroom is available on car deck; otherwise false."
+                      },
+                      "CarDeckShelter": {
+                        "type": "boolean",
+                        "description": "True if ADA-accessible shelter is available on car deck; otherwise false."
+                      },
+                      "Elevator": {
+                        "type": "boolean",
+                        "description": "True if elevator is available for passenger deck access; otherwise false."
+                      },
+                      "ADAAccessible": {
+                        "type": "boolean",
+                        "description": "True if vessel meets ADA accessibility standards; otherwise false."
+                      },
+                      "MainCabinGalley": {
+                        "type": "boolean",
+                        "description": "True if food service galley is available in main passenger cabin; otherwise false."
+                      },
+                      "MainCabinRestroom": {
+                        "type": "boolean",
+                        "description": "True if restroom is available in main passenger cabin; otherwise false."
+                      },
+                      "PublicWifi": {
+                        "type": "boolean",
+                        "description": "True if public WiFi is available on vessel; otherwise false."
+                      },
+                      "ADAInfo": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Detailed ADA accessibility information for passengers with disabilities."
+                      },
+                      "AdditionalInfo": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Additional accommodation notes not covered by standard boolean flags."
+                      }
+                    },
+                    "required": [
+                      "VesselID",
+                      "VesselSubjectID",
+                      "VesselName",
+                      "VesselAbbrev",
+                      "Class",
+                      "CarDeckRestroom",
+                      "CarDeckShelter",
+                      "Elevator",
+                      "ADAAccessible",
+                      "MainCabinGalley",
+                      "MainCabinRestroom",
+                      "PublicWifi",
+                      "ADAInfo",
+                      "AdditionalInfo"
+                    ],
+                    "description": "Vessel accommodation information including amenities, accessibility features, and passenger facilities."
                   }
                 },
                 "examples": {
@@ -1418,18 +1389,13 @@
             "source": "import { fetchVesselAccommodationsByVesselId } from 'ws-dottie/wsf-vessels/core';\n\nconst data = await fetchVesselAccommodationsByVesselId({\n  params: {\n    \"VesselID\": 65\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchVesselAccommodationsByVesselIdInputVesselIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchVesselAccommodationsOutput"
+                  "$ref": "#/components/schemas/FetchVesselAccommodationsByVesselIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -1488,7 +1454,116 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchVesselBasicsOutput"
+                    "type": "object",
+                    "properties": {
+                      "VesselID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the vessel."
+                      },
+                      "VesselSubjectID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the WSF subject for this vessel."
+                      },
+                      "VesselName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the vessel."
+                      },
+                      "VesselAbbrev": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Abbreviation code of the vessel."
+                      },
+                      "Class": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "ClassID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the vessel class."
+                          },
+                          "ClassSubjectID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the WSF subject for this vessel class."
+                          },
+                          "ClassName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Display name of the vessel class."
+                          },
+                          "SortSeq": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Display sort order; lower values appear first in lists."
+                          },
+                          "DrawingImg": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to detailed vessel class drawing image."
+                          },
+                          "SilhouetteImg": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to small silhouette image of vessel class."
+                          },
+                          "PublicDisplayName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Public-facing display name of the vessel class."
+                          }
+                        },
+                        "required": [
+                          "ClassID",
+                          "ClassSubjectID",
+                          "ClassName",
+                          "SortSeq",
+                          "DrawingImg",
+                          "SilhouetteImg",
+                          "PublicDisplayName"
+                        ],
+                        "description": "Vessel class information grouping similar vessels in the fleet."
+                      },
+                      "Status": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              2
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              3
+                            ]
+                          },
+                          {
+                            "nullable": true
+                          }
+                        ],
+                        "description": "Code indicating operational status: 1 = In Service, 2 = Maintenance, 3 = Out of Service."
+                      },
+                      "OwnedByWSF": {
+                        "type": "boolean",
+                        "description": "True if vessel is owned by WSF; otherwise false."
+                      }
+                    },
+                    "required": [
+                      "VesselID",
+                      "VesselSubjectID",
+                      "VesselName",
+                      "VesselAbbrev",
+                      "Class",
+                      "Status",
+                      "OwnedByWSF"
+                    ],
+                    "description": "Basic vessel information including identification, operational status, and ownership."
                   }
                 },
                 "examples": {
@@ -1535,18 +1610,13 @@
             "source": "import { fetchVesselBasicsByVesselId } from 'ws-dottie/wsf-vessels/core';\n\nconst data = await fetchVesselBasicsByVesselId({\n  params: {\n    \"VesselID\": 74\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchVesselBasicsByVesselIdInputVesselIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchVesselBasicsOutput"
+                  "$ref": "#/components/schemas/FetchVesselBasicsByVesselIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -1598,7 +1668,64 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchVesselHistoriesOutput"
+                    "type": "object",
+                    "properties": {
+                      "VesselId": {
+                        "type": "integer",
+                        "description": "Numeric ID of the vessel."
+                      },
+                      "Vessel": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the vessel."
+                      },
+                      "Departing": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
+                      },
+                      "Arriving": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the arriving terminal."
+                      },
+                      "ScheduledDepart": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of scheduled departure from origin terminal.",
+                        "format": "date-time"
+                      },
+                      "ActualDepart": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of actual departure from origin terminal.",
+                        "format": "date-time"
+                      },
+                      "EstArrival": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of estimated arrival at destination terminal.",
+                        "format": "date-time"
+                      },
+                      "Date": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime indicating the calendar date when this voyage occurred.",
+                        "format": "date-time"
+                      }
+                    },
+                    "required": [
+                      "VesselId",
+                      "Vessel",
+                      "Departing",
+                      "Arriving",
+                      "ScheduledDepart",
+                      "ActualDepart",
+                      "EstArrival",
+                      "Date"
+                    ],
+                    "description": "Historical vessel voyage record including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times."
                   }
                 },
                 "examples": {
@@ -1638,17 +1765,6 @@
             "source": "import { fetchVesselHistoriesByVesselNameAndDateRange } from 'ws-dottie/wsf-vessels/core';\n\nconst data = await fetchVesselHistoriesByVesselNameAndDateRange({\n  params: {\n    \"VesselName\": \"Tacoma\",\n    \"DateStart\": \"2025-09-01\",\n    \"DateEnd\": \"2025-10-01\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchVesselHistoriesByVesselNameAndDateRangeInputVesselNameParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchVesselHistoriesByVesselNameAndDateRangeInputDateStartParam"
-          },
-          {
-            "$ref": "#/components/parameters/FetchVesselHistoriesByVesselNameAndDateRangeInputDateEndParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -1657,7 +1773,64 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchVesselHistoriesOutput"
+                    "type": "object",
+                    "properties": {
+                      "VesselId": {
+                        "type": "integer",
+                        "description": "Numeric ID of the vessel."
+                      },
+                      "Vessel": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the vessel."
+                      },
+                      "Departing": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
+                      },
+                      "Arriving": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the arriving terminal."
+                      },
+                      "ScheduledDepart": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of scheduled departure from origin terminal.",
+                        "format": "date-time"
+                      },
+                      "ActualDepart": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of actual departure from origin terminal.",
+                        "format": "date-time"
+                      },
+                      "EstArrival": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of estimated arrival at destination terminal.",
+                        "format": "date-time"
+                      },
+                      "Date": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime indicating the calendar date when this voyage occurred.",
+                        "format": "date-time"
+                      }
+                    },
+                    "required": [
+                      "VesselId",
+                      "Vessel",
+                      "Departing",
+                      "Arriving",
+                      "ScheduledDepart",
+                      "ActualDepart",
+                      "EstArrival",
+                      "Date"
+                    ],
+                    "description": "Historical vessel voyage record including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times."
                   }
                 },
                 "examples": {
@@ -1705,7 +1878,196 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchVesselLocationsOutput"
+                    "type": "object",
+                    "properties": {
+                      "VesselID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the vessel."
+                      },
+                      "VesselName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the vessel."
+                      },
+                      "Mmsi": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Maritime Mobile Service Identity number for AIS tracking."
+                      },
+                      "DepartingTerminalID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the departing terminal."
+                      },
+                      "DepartingTerminalName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the departing terminal.",
+                        "format": "date-time"
+                      },
+                      "DepartingTerminalAbbrev": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Abbreviation code of the departing terminal.",
+                        "format": "date-time"
+                      },
+                      "ArrivingTerminalID": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Numeric ID of the arriving terminal."
+                      },
+                      "ArrivingTerminalName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the arriving terminal."
+                      },
+                      "ArrivingTerminalAbbrev": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Abbreviation code of the arriving terminal."
+                      },
+                      "Latitude": {
+                        "type": "number",
+                        "description": "Vessel GPS latitude coordinate in decimal degrees."
+                      },
+                      "Longitude": {
+                        "type": "number",
+                        "description": "Vessel GPS longitude coordinate in decimal degrees."
+                      },
+                      "Speed": {
+                        "type": "number",
+                        "description": "Vessel speed over ground in knots."
+                      },
+                      "Heading": {
+                        "type": "number",
+                        "description": "Vessel heading direction in degrees clockwise from north (0-359)."
+                      },
+                      "InService": {
+                        "type": "boolean",
+                        "description": "True if vessel is available for passenger operations; otherwise false."
+                      },
+                      "AtDock": {
+                        "type": "boolean",
+                        "description": "True if vessel is currently docked at terminal; otherwise false."
+                      },
+                      "LeftDock": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime when vessel last departed from dock.",
+                        "format": "date-time"
+                      },
+                      "Eta": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of estimated arrival at destination terminal.",
+                        "format": "date-time"
+                      },
+                      "EtaBasis": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Description of ETA calculation method."
+                      },
+                      "ScheduledDeparture": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "UTC datetime of scheduled departure from origin terminal.",
+                        "format": "date-time"
+                      },
+                      "OpRouteAbbrev": {
+                        "type": "array",
+                        "nullable": true,
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Array of abbreviated route names currently serviced by vessel."
+                      },
+                      "VesselPositionNum": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Vessel position number for route scheduling."
+                      },
+                      "SortSeq": {
+                        "type": "integer",
+                        "description": "Display sort order; lower values appear first in lists."
+                      },
+                      "ManagedBy": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              2
+                            ]
+                          }
+                        ],
+                        "description": "Code indicating management owner: 1 = WSF, 2 = KCM."
+                      },
+                      "TimeStamp": {
+                        "type": "string",
+                        "description": "UTC datetime when vessel location data was last updated.",
+                        "format": "date-time"
+                      },
+                      "VesselWatchShutID": {
+                        "type": "integer",
+                        "description": "Numeric ID indicating VesselWatch shutdown status condition."
+                      },
+                      "VesselWatchShutMsg": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "User-facing message for VesselWatch shutdown status."
+                      },
+                      "VesselWatchShutFlag": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Code indicating whether VesselWatch shutdown conditions are active."
+                      },
+                      "VesselWatchStatus": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Code indicating current operational state of VesselWatch tracking system."
+                      },
+                      "VesselWatchMsg": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "User-facing message about VesselWatch system status."
+                      }
+                    },
+                    "required": [
+                      "VesselID",
+                      "VesselName",
+                      "Mmsi",
+                      "DepartingTerminalID",
+                      "DepartingTerminalName",
+                      "DepartingTerminalAbbrev",
+                      "ArrivingTerminalID",
+                      "ArrivingTerminalName",
+                      "ArrivingTerminalAbbrev",
+                      "Latitude",
+                      "Longitude",
+                      "Speed",
+                      "Heading",
+                      "InService",
+                      "AtDock",
+                      "LeftDock",
+                      "Eta",
+                      "EtaBasis",
+                      "ScheduledDeparture",
+                      "OpRouteAbbrev",
+                      "VesselPositionNum",
+                      "SortSeq",
+                      "ManagedBy",
+                      "TimeStamp",
+                      "VesselWatchShutID",
+                      "VesselWatchShutMsg",
+                      "VesselWatchShutFlag",
+                      "VesselWatchStatus",
+                      "VesselWatchMsg"
+                    ],
+                    "description": "Real-time vessel location data including GPS coordinates, terminal assignments, speed, heading, and ETA information."
                   }
                 },
                 "examples": {
@@ -1768,18 +2130,13 @@
             "source": "import { fetchVesselLocationsByVesselId } from 'ws-dottie/wsf-vessels/core';\n\nconst data = await fetchVesselLocationsByVesselId({\n  params: {\n    \"VesselID\": 18\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchVesselLocationsByVesselIdInputVesselIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchVesselLocationsOutput"
+                  "$ref": "#/components/schemas/FetchVesselLocationsByVesselIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -1845,7 +2202,213 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchVesselStatsOutput"
+                    "type": "object",
+                    "properties": {
+                      "VesselID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the vessel."
+                      },
+                      "VesselSubjectID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the WSF subject for this vessel."
+                      },
+                      "VesselName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the vessel."
+                      },
+                      "VesselAbbrev": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Abbreviation code of the vessel."
+                      },
+                      "Class": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "ClassID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the vessel class."
+                          },
+                          "ClassSubjectID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the WSF subject for this vessel class."
+                          },
+                          "ClassName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Display name of the vessel class."
+                          },
+                          "SortSeq": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Display sort order; lower values appear first in lists."
+                          },
+                          "DrawingImg": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to detailed vessel class drawing image."
+                          },
+                          "SilhouetteImg": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to small silhouette image of vessel class."
+                          },
+                          "PublicDisplayName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Public-facing display name of the vessel class."
+                          }
+                        },
+                        "required": [
+                          "ClassID",
+                          "ClassSubjectID",
+                          "ClassName",
+                          "SortSeq",
+                          "DrawingImg",
+                          "SilhouetteImg",
+                          "PublicDisplayName"
+                        ],
+                        "description": "Vessel class information grouping similar vessels in the fleet."
+                      },
+                      "VesselNameDesc": {
+                        "type": "string",
+                        "description": "Cultural and historical context for vessel name origin."
+                      },
+                      "VesselHistory": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Operational history and milestones for the vessel."
+                      },
+                      "Beam": {
+                        "type": "string",
+                        "description": "Vessel beam width in feet and inches."
+                      },
+                      "CityBuilt": {
+                        "type": "string",
+                        "description": "City where vessel was constructed."
+                      },
+                      "SpeedInKnots": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Maximum operational speed in knots."
+                      },
+                      "Draft": {
+                        "type": "string",
+                        "description": "Vessel draft depth in feet and inches."
+                      },
+                      "EngineCount": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Total number of propulsion engines aboard vessel."
+                      },
+                      "Horsepower": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Total engine horsepower output."
+                      },
+                      "Length": {
+                        "type": "string",
+                        "description": "Vessel overall length in feet and inches."
+                      },
+                      "MaxPassengerCount": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Maximum passenger capacity."
+                      },
+                      "PassengerOnly": {
+                        "type": "boolean",
+                        "description": "True if vessel carries only passengers; otherwise false."
+                      },
+                      "FastFerry": {
+                        "type": "boolean",
+                        "description": "True if vessel is classified as a fast ferry; otherwise false."
+                      },
+                      "PropulsionInfo": {
+                        "type": "string",
+                        "description": "Engine propulsion type and fuel technology."
+                      },
+                      "TallDeckClearance": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Tall deck vertical clearance height in inches."
+                      },
+                      "RegDeckSpace": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Maximum regular deck vehicle capacity including tall deck spaces."
+                      },
+                      "TallDeckSpace": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Tall deck vehicle capacity."
+                      },
+                      "Tonnage": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Vessel gross tonnage."
+                      },
+                      "Displacement": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Vessel displacement weight in long tons."
+                      },
+                      "YearBuilt": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Vessel construction year."
+                      },
+                      "YearRebuilt": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Vessel major rebuild year."
+                      },
+                      "VesselDrawingImg": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "URL to detailed vessel drawing image."
+                      },
+                      "SolasCertified": {
+                        "type": "boolean",
+                        "description": "True if vessel meets SOLAS international safety standards; otherwise false."
+                      },
+                      "MaxPassengerCountForInternational": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Maximum passenger capacity for international routes."
+                      }
+                    },
+                    "required": [
+                      "VesselID",
+                      "VesselSubjectID",
+                      "VesselName",
+                      "VesselAbbrev",
+                      "Class",
+                      "VesselNameDesc",
+                      "VesselHistory",
+                      "Beam",
+                      "CityBuilt",
+                      "SpeedInKnots",
+                      "Draft",
+                      "EngineCount",
+                      "Horsepower",
+                      "Length",
+                      "MaxPassengerCount",
+                      "PassengerOnly",
+                      "FastFerry",
+                      "PropulsionInfo",
+                      "TallDeckClearance",
+                      "RegDeckSpace",
+                      "TallDeckSpace",
+                      "Tonnage",
+                      "Displacement",
+                      "YearBuilt",
+                      "YearRebuilt",
+                      "VesselDrawingImg",
+                      "SolasCertified",
+                      "MaxPassengerCountForInternational"
+                    ],
+                    "description": "Vessel technical specifications including dimensions, capacity, speed, propulsion, and build details."
                   }
                 },
                 "examples": {
@@ -1913,18 +2476,13 @@
             "source": "import { fetchVesselStatsByVesselId } from 'ws-dottie/wsf-vessels/core';\n\nconst data = await fetchVesselStatsByVesselId({\n  params: {\n    \"VesselID\": 32\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchVesselStatsByVesselIdInputVesselIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchVesselStatsOutput"
+                  "$ref": "#/components/schemas/FetchVesselStatsByVesselIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -1997,7 +2555,457 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchVesselsVerboseOutput"
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "VesselID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the vessel."
+                          },
+                          "VesselSubjectID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the WSF subject for this vessel."
+                          },
+                          "VesselName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Display name of the vessel."
+                          },
+                          "VesselAbbrev": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Abbreviation code of the vessel."
+                          },
+                          "Class": {
+                            "type": "object",
+                            "nullable": true,
+                            "properties": {
+                              "ClassID": {
+                                "type": "integer",
+                                "description": "Numeric ID of the vessel class."
+                              },
+                              "ClassSubjectID": {
+                                "type": "integer",
+                                "description": "Numeric ID of the WSF subject for this vessel class."
+                              },
+                              "ClassName": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Display name of the vessel class."
+                              },
+                              "SortSeq": {
+                                "type": "integer",
+                                "nullable": true,
+                                "description": "Display sort order; lower values appear first in lists."
+                              },
+                              "DrawingImg": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "URL to detailed vessel class drawing image."
+                              },
+                              "SilhouetteImg": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "URL to small silhouette image of vessel class."
+                              },
+                              "PublicDisplayName": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Public-facing display name of the vessel class."
+                              }
+                            },
+                            "required": [
+                              "ClassID",
+                              "ClassSubjectID",
+                              "ClassName",
+                              "SortSeq",
+                              "DrawingImg",
+                              "SilhouetteImg",
+                              "PublicDisplayName"
+                            ],
+                            "description": "Vessel class information grouping similar vessels in the fleet."
+                          },
+                          "Status": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "enum": [
+                                  1
+                                ]
+                              },
+                              {
+                                "type": "number",
+                                "enum": [
+                                  2
+                                ]
+                              },
+                              {
+                                "type": "number",
+                                "enum": [
+                                  3
+                                ]
+                              },
+                              {
+                                "nullable": true
+                              }
+                            ],
+                            "description": "Code indicating operational status: 1 = In Service, 2 = Maintenance, 3 = Out of Service."
+                          },
+                          "OwnedByWSF": {
+                            "type": "boolean",
+                            "description": "True if vessel is owned by WSF; otherwise false."
+                          }
+                        },
+                        "required": [
+                          "VesselID",
+                          "VesselSubjectID",
+                          "VesselName",
+                          "VesselAbbrev",
+                          "Class",
+                          "Status",
+                          "OwnedByWSF"
+                        ],
+                        "description": "Basic vessel information including identification, operational status, and ownership."
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "VesselID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the vessel."
+                          },
+                          "VesselSubjectID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the WSF subject for this vessel."
+                          },
+                          "VesselName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Display name of the vessel."
+                          },
+                          "VesselAbbrev": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Abbreviation code of the vessel."
+                          },
+                          "Class": {
+                            "type": "object",
+                            "nullable": true,
+                            "properties": {
+                              "ClassID": {
+                                "type": "integer",
+                                "description": "Numeric ID of the vessel class."
+                              },
+                              "ClassSubjectID": {
+                                "type": "integer",
+                                "description": "Numeric ID of the WSF subject for this vessel class."
+                              },
+                              "ClassName": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Display name of the vessel class."
+                              },
+                              "SortSeq": {
+                                "type": "integer",
+                                "nullable": true,
+                                "description": "Display sort order; lower values appear first in lists."
+                              },
+                              "DrawingImg": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "URL to detailed vessel class drawing image."
+                              },
+                              "SilhouetteImg": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "URL to small silhouette image of vessel class."
+                              },
+                              "PublicDisplayName": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Public-facing display name of the vessel class."
+                              }
+                            },
+                            "required": [
+                              "ClassID",
+                              "ClassSubjectID",
+                              "ClassName",
+                              "SortSeq",
+                              "DrawingImg",
+                              "SilhouetteImg",
+                              "PublicDisplayName"
+                            ],
+                            "description": "Vessel class information grouping similar vessels in the fleet."
+                          },
+                          "CarDeckRestroom": {
+                            "type": "boolean",
+                            "description": "True if ADA-accessible restroom is available on car deck; otherwise false."
+                          },
+                          "CarDeckShelter": {
+                            "type": "boolean",
+                            "description": "True if ADA-accessible shelter is available on car deck; otherwise false."
+                          },
+                          "Elevator": {
+                            "type": "boolean",
+                            "description": "True if elevator is available for passenger deck access; otherwise false."
+                          },
+                          "ADAAccessible": {
+                            "type": "boolean",
+                            "description": "True if vessel meets ADA accessibility standards; otherwise false."
+                          },
+                          "MainCabinGalley": {
+                            "type": "boolean",
+                            "description": "True if food service galley is available in main passenger cabin; otherwise false."
+                          },
+                          "MainCabinRestroom": {
+                            "type": "boolean",
+                            "description": "True if restroom is available in main passenger cabin; otherwise false."
+                          },
+                          "PublicWifi": {
+                            "type": "boolean",
+                            "description": "True if public WiFi is available on vessel; otherwise false."
+                          },
+                          "ADAInfo": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Detailed ADA accessibility information for passengers with disabilities."
+                          },
+                          "AdditionalInfo": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Additional accommodation notes not covered by standard boolean flags."
+                          }
+                        },
+                        "required": [
+                          "VesselID",
+                          "VesselSubjectID",
+                          "VesselName",
+                          "VesselAbbrev",
+                          "Class",
+                          "CarDeckRestroom",
+                          "CarDeckShelter",
+                          "Elevator",
+                          "ADAAccessible",
+                          "MainCabinGalley",
+                          "MainCabinRestroom",
+                          "PublicWifi",
+                          "ADAInfo",
+                          "AdditionalInfo"
+                        ],
+                        "description": "Vessel accommodation information including amenities, accessibility features, and passenger facilities."
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "VesselID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the vessel."
+                          },
+                          "VesselSubjectID": {
+                            "type": "integer",
+                            "description": "Numeric ID of the WSF subject for this vessel."
+                          },
+                          "VesselName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Display name of the vessel."
+                          },
+                          "VesselAbbrev": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Abbreviation code of the vessel."
+                          },
+                          "Class": {
+                            "type": "object",
+                            "nullable": true,
+                            "properties": {
+                              "ClassID": {
+                                "type": "integer",
+                                "description": "Numeric ID of the vessel class."
+                              },
+                              "ClassSubjectID": {
+                                "type": "integer",
+                                "description": "Numeric ID of the WSF subject for this vessel class."
+                              },
+                              "ClassName": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Display name of the vessel class."
+                              },
+                              "SortSeq": {
+                                "type": "integer",
+                                "nullable": true,
+                                "description": "Display sort order; lower values appear first in lists."
+                              },
+                              "DrawingImg": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "URL to detailed vessel class drawing image."
+                              },
+                              "SilhouetteImg": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "URL to small silhouette image of vessel class."
+                              },
+                              "PublicDisplayName": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Public-facing display name of the vessel class."
+                              }
+                            },
+                            "required": [
+                              "ClassID",
+                              "ClassSubjectID",
+                              "ClassName",
+                              "SortSeq",
+                              "DrawingImg",
+                              "SilhouetteImg",
+                              "PublicDisplayName"
+                            ],
+                            "description": "Vessel class information grouping similar vessels in the fleet."
+                          },
+                          "VesselNameDesc": {
+                            "type": "string",
+                            "description": "Cultural and historical context for vessel name origin."
+                          },
+                          "VesselHistory": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Operational history and milestones for the vessel."
+                          },
+                          "Beam": {
+                            "type": "string",
+                            "description": "Vessel beam width in feet and inches."
+                          },
+                          "CityBuilt": {
+                            "type": "string",
+                            "description": "City where vessel was constructed."
+                          },
+                          "SpeedInKnots": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Maximum operational speed in knots."
+                          },
+                          "Draft": {
+                            "type": "string",
+                            "description": "Vessel draft depth in feet and inches."
+                          },
+                          "EngineCount": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Total number of propulsion engines aboard vessel."
+                          },
+                          "Horsepower": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Total engine horsepower output."
+                          },
+                          "Length": {
+                            "type": "string",
+                            "description": "Vessel overall length in feet and inches."
+                          },
+                          "MaxPassengerCount": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Maximum passenger capacity."
+                          },
+                          "PassengerOnly": {
+                            "type": "boolean",
+                            "description": "True if vessel carries only passengers; otherwise false."
+                          },
+                          "FastFerry": {
+                            "type": "boolean",
+                            "description": "True if vessel is classified as a fast ferry; otherwise false."
+                          },
+                          "PropulsionInfo": {
+                            "type": "string",
+                            "description": "Engine propulsion type and fuel technology."
+                          },
+                          "TallDeckClearance": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Tall deck vertical clearance height in inches."
+                          },
+                          "RegDeckSpace": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Maximum regular deck vehicle capacity including tall deck spaces."
+                          },
+                          "TallDeckSpace": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Tall deck vehicle capacity."
+                          },
+                          "Tonnage": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Vessel gross tonnage."
+                          },
+                          "Displacement": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Vessel displacement weight in long tons."
+                          },
+                          "YearBuilt": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Vessel construction year."
+                          },
+                          "YearRebuilt": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Vessel major rebuild year."
+                          },
+                          "VesselDrawingImg": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to detailed vessel drawing image."
+                          },
+                          "SolasCertified": {
+                            "type": "boolean",
+                            "description": "True if vessel meets SOLAS international safety standards; otherwise false."
+                          },
+                          "MaxPassengerCountForInternational": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Maximum passenger capacity for international routes."
+                          }
+                        },
+                        "required": [
+                          "VesselID",
+                          "VesselSubjectID",
+                          "VesselName",
+                          "VesselAbbrev",
+                          "Class",
+                          "VesselNameDesc",
+                          "VesselHistory",
+                          "Beam",
+                          "CityBuilt",
+                          "SpeedInKnots",
+                          "Draft",
+                          "EngineCount",
+                          "Horsepower",
+                          "Length",
+                          "MaxPassengerCount",
+                          "PassengerOnly",
+                          "FastFerry",
+                          "PropulsionInfo",
+                          "TallDeckClearance",
+                          "RegDeckSpace",
+                          "TallDeckSpace",
+                          "Tonnage",
+                          "Displacement",
+                          "YearBuilt",
+                          "YearRebuilt",
+                          "VesselDrawingImg",
+                          "SolasCertified",
+                          "MaxPassengerCountForInternational"
+                        ],
+                        "description": "Vessel technical specifications including dimensions, capacity, speed, propulsion, and build details."
+                      }
+                    ],
+                    "description": "Complete vessel information combining identification, operational status, accommodations, and technical specifications in a single schema."
                   }
                 },
                 "examples": {
@@ -2076,18 +3084,13 @@
             "source": "import { fetchVesselsVerboseByVesselId } from 'ws-dottie/wsf-vessels/core';\n\nconst data = await fetchVesselsVerboseByVesselId({\n  params: {\n    \"VesselID\": 68\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchVesselsVerboseByVesselIdInputVesselIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchVesselsVerboseOutput"
+                  "$ref": "#/components/schemas/FetchVesselsVerboseByVesselIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {

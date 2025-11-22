@@ -2,7 +2,7 @@
 
 This guide will help you get up and running with WS-Dottie to access Washington State transportation data.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Architecture](../guides/architecture.md) • [API Guide](../guides/api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](./INDEX.md) • [Architecture](./guides/architecture.md) • [API Guide](./guides/api-guide.md)
 
 ## 🚀 Quick Start
 
@@ -193,7 +193,7 @@ import {
 import type { VesselLocation } from 'ws-dottie/wsf-vessels';
 ```
 
-See the [Import Patterns section in README.md](../../README.md#5-import-patterns) for detailed guidance on choosing the right pattern.
+See the [Import Patterns section in README.md](../README.md#5-import-patterns) for detailed guidance on choosing the right pattern.
 
 ### 5. Start Using WS-Dottie
 
@@ -249,20 +249,21 @@ async function getTransportationData() {
 - `validate?: boolean` (default: `false`) - Enable Zod schema validation
 - `logMode?: 'none' | 'info' | 'debug'` (default: `'none'`) - Logging verbosity level
 
-For production, consider disabling validation for better performance. For development, enable validation to catch issues early. See [Production vs Development](../../README.md#-production-vs-development) for more guidance.
+For production, consider disabling validation for better performance. For development, enable validation to catch issues early. See [Production vs Development](../README.md#-production-vs-development) for more guidance.
 
 ## 📚 Next Steps
 
-- **[Fetching Data Guide](./guides/fetching-data.md)** - Detailed fetch-dottie usage patterns
-- **[TanStack Query Guide](./guides/tanstack-query.md)** - React integration with TanStack Query
-- **[CLI Usage Guide](./guides/cli-usage.md)** - Command-line interface and debugging
-- **[Architecture](./architecture.md)** - System architecture and design principles
-- **[API Guide](./api-guide.md)** - High-level API overview and use cases
-- **[Category Documentation](./categories/)** - Detailed information by use case
+- **[Fetching Data Guide](./guides/advanced/fetching-data.md)** - Detailed fetch-dottie usage patterns
+- **[TanStack Query Guide](./guides/advanced/tanstack-query.md)** - React integration with TanStack Query
+- **[CLI Usage Guide](./guides/advanced/cli-usage.md)** - Command-line interface and debugging
+- **[Architecture](./guides/architecture.md)** - System architecture and design principles
+- **[API Guide](./guides/api-guide.md)** - High-level API overview and use cases
+- **[Category Documentation](./guides/categories/)** - Detailed information by use case
 
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
-- **[OpenAPI Specifications](../../openapi/)** - API specifications in YAML format
-- **[HTML Documentation](../../redoc/)** - Interactive HTML documentation
+- **[OpenAPI Specifications (JSON)](./generated/openapi-json/)** - API specifications in JSON format
+- **[OpenAPI Specifications (YAML)](./generated/openapi-yaml/)** - API specifications in YAML format
+- **[HTML Documentation](./api-reference/)** - Interactive HTML documentation
 
 ## 🚀 Building Your First App: Ferry Tracker Tutorial
 
@@ -500,13 +501,16 @@ function FerryMap({ vessels }) {
 
 ### Next Steps
 
-- [Fetching Data Guide](./guides/fetching-data.md) - Detailed fetch-dottie usage patterns
-- [TanStack Query Guide](./guides/tanstack-query.md) - React integration with TanStack Query
-- [CLI Usage Guide](./guides/cli-usage.md) - Command-line interface and debugging
-- [Architecture](./architecture.md) - System architecture and design principles
-- [API Guide](./api-guide.md) - High-level API overview and use cases
-- [Category Documentation](./categories/) - Detailed information by use case
+- [Fetching Data Guide](./guides/advanced/fetching-data.md) - Detailed fetch-dottie usage patterns
+- [TanStack Query Guide](./guides/advanced/tanstack-query.md) - React integration with TanStack Query
+- [CLI Usage Guide](./guides/advanced/cli-usage.md) - Command-line interface and debugging
+- [Architecture](./guides/architecture.md) - System architecture and design principles
+- [API Guide](./guides/api-guide.md) - High-level API overview and use cases
+- [Category Documentation](./guides/categories/) - Detailed information by use case
 
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
-- **[OpenAPI Specifications](../../openapi/)** - API specifications in YAML format
-- **[HTML Documentation](../../redoc/)** - Interactive HTML documentation
+- **[OpenAPI Specifications (JSON)](./generated/openapi-json/)** - API specifications in JSON format
+- **[OpenAPI Specifications (YAML)](./generated/openapi-yaml/)** - API specifications in YAML format
+- **[HTML Documentation](./api-reference/)** - Interactive HTML documentation
+
+

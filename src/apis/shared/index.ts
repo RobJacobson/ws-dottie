@@ -15,5 +15,3 @@ export {
   type RoadwayLocation,
   roadwayLocationSchema,
 } from "./roadwayLocationSchema";
-export { zDotnetDate } from "./zDotnetDateSchema";
-export { zIsoDateString } from "./zIsoDateStringSchema";

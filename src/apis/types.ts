@@ -7,7 +7,89 @@
  */
 
 import type { z } from "zod";
-import type { CacheStrategy } from "@/shared/types";
+
+// ============================================================================
+// CACHE STRATEGY TYPES
+// ============================================================================
+
+/**
+ * Cache strategies for different data update frequencies
+ *
+ * These strategies define how frequently data should be refreshed based on
+ * nature of transportation data. Each strategy includes appropriate
+ * stale time, garbage collection time, and refetch intervals.
+ */
+export type CacheStrategy =
+  | "REALTIME" // Real-time data (5-second updates) - traffic conditions, alerts
+  | "FREQUENT" // Frequently updated data (5-minute updates) - schedules, delays
+  | "MODERATE" // Moderately updated data (hourly updates) - weather, conditions
+  | "STATIC"; // Static data (daily updates) - terminals, vessels, routes
+
+// ============================================================================
+// ENDPOINT TYPES
+// ============================================================================
+
+/**
+ * Type representing endpoint input parameters
+ *
+ * All endpoint inputs are plain objects with string keys, typically
+ * containing query parameters, path parameters, or request body data.
+ * This type provides semantic meaning over the generic Record<string, unknown>.
+ */
+export type EndpointParams = Record<string, unknown>;
+
+/**
+ * Type representing endpoint response data
+ *
+ * Endpoint responses are JSON-serializable values that can be objects,
+ * arrays, primitives, or null. Using `unknown` ensures type safety by
+ * requiring explicit type narrowing when accessing response data.
+ */
+export type EndpointResponse = unknown;
+
+/**
+ * Minimal endpoint interface for fetching operations
+ *
+ * Contains only the fields necessary for making API requests,
+ * excluding housekeeping metadata used elsewhere in the system.
+ */
+export interface FetchEndpoint<I, O> {
+  /** Complete URL template with domain for building requests */
+  urlTemplate: string;
+  /** Endpoint path for logging and error messages */
+  endpoint: string;
+  /** Zod schema for input validation (optional - excluded in lite builds) */
+  inputSchema?: z.ZodSchema<I>;
+  /** Zod schema for output validation (optional - excluded in lite builds) */
+  outputSchema?: z.ZodType<O, z.ZodTypeDef, any>;
+}
+
+/**
+ * Runtime endpoint interface with computed properties
+ *
+ * This interface defines the structure for runtime endpoint objects that are
+ * created from endpoint configurations. It includes all necessary information
+ * for validation, caching, and URL generation.
+ *
+ * Extends FetchEndpoint with additional housekeeping metadata used by hooks,
+ * documentation, and other system components.
+ */
+export interface Endpoint<I, O> extends FetchEndpoint<I, O> {
+  /** API configuration */
+  api: ApiMeta;
+  /** Endpoint group metadata */
+  group: EndpointGroupMeta;
+  /** Optional sample parameters for testing */
+  sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
+  /** Cache strategy */
+  cacheStrategy: CacheStrategy;
+  /** Function name */
+  functionName: string;
+  /** Computed unique identifier in format "api:function" for backward compatibility */
+  id: string;
+  /** One-sentence description of what this specific endpoint does */
+  endpointDescription: string;
+}
 
 /**
  * API definition structure for endpoint files
@@ -50,7 +132,7 @@ export interface EndpointGroupMeta {
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
   /** Array of endpoint metadata for this group */
-  endpoints: EndpointMeta<unknown, unknown>[];
+  endpoints: EndpointMeta<EndpointParams, EndpointResponse>[];
 }
 
 /**
@@ -72,7 +154,7 @@ export type EndpointMeta<I, O> = {
   /** Zod schema for input validation */
   inputSchema: z.ZodSchema<I>;
   /** Zod schema for output validation */
-  outputSchema: z.ZodSchema<O>;
+  outputSchema: z.ZodType<O, z.ZodTypeDef, any>;
   /** Optional sample parameters for testing - can be static or async function */
   sampleParams: Partial<I> | (() => Promise<Partial<I>>);
   /** One-sentence description of what this specific endpoint does */
@@ -120,18 +202,3 @@ export interface ResourceDocumentation {
    */
   businessContext?: string;
 }
-
-// ============================================================================
-// RE-EXPORTS FOR CONVENIENCE
-// ============================================================================
-
-/**
- * Re-export commonly used factory types for convenience.
- *
- * This allows endpoint files to import all types from one central location
- * (@/apis/types) instead of importing from multiple modules.
- */
-export type {
-  FetchFunctionParams,
-  QueryHookOptions,
-} from "@/shared/factories/types";

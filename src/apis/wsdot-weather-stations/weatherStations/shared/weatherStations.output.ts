@@ -13,7 +13,7 @@ export const weatherStationSchema = z
     Longitude: z
       .number()
       .describe("Longitude of the weather station in decimal degrees."),
-    StationCode: z.int().describe("Numeric ID of the weather station."),
+    StationCode: z.number().int().describe("Numeric ID of the weather station."),
     StationName: z
       .string()
       .nullable()

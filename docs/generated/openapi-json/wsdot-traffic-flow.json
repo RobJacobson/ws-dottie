@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchTrafficFlowsOutput": {
+      "FetchTrafficFlowByIdOutput": {
         "type": "object",
         "properties": {
           "FlowDataID": {
@@ -156,7 +156,8 @@
           },
           "Time": {
             "type": "string",
-            "description": "UTC datetime when the traffic flow reading was taken."
+            "description": "UTC datetime when the traffic flow reading was taken.",
+            "format": "date-time"
           }
         },
         "required": [
@@ -168,23 +169,9 @@
           "Time"
         ],
         "description": "Real-time traffic flow data from a sensor station, including flow condition, location, region, and measurement timestamp."
-      },
-      "FetchTrafficFlowByIdInputFlowDataIDParam": {
-        "type": "number",
-        "description": "Numeric ID of the traffic flow station."
       }
     },
-    "parameters": {
-      "FetchTrafficFlowByIdInputFlowDataIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTrafficFlowByIdInputFlowDataIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the traffic flow station.",
-        "name": "FlowDataID",
-        "in": "path"
-      }
-    }
+    "parameters": {}
   },
   "paths": {
     "/getTrafficFlowsAsJson": {
@@ -208,7 +195,120 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchTrafficFlowsOutput"
+                    "type": "object",
+                    "properties": {
+                      "FlowDataID": {
+                        "type": "number",
+                        "description": "Numeric ID of the traffic flow station."
+                      },
+                      "FlowReadingValue": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "enum": [
+                              0
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              2
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              3
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              4
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              5
+                            ]
+                          }
+                        ],
+                        "description": "Code indicating traffic flow condition: 0 = Unknown, 1 = WideOpen, 2 = Moderate, 3 = Heavy, 4 = StopAndGo, 5 = NoData."
+                      },
+                      "FlowStationLocation": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "Description": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Human-readable description of the roadway location, such as interchange names or cross streets."
+                          },
+                          "Direction": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."
+                          },
+                          "Latitude": {
+                            "type": "number",
+                            "description": "Latitude of the roadway location in decimal degrees."
+                          },
+                          "Longitude": {
+                            "type": "number",
+                            "description": "Longitude of the roadway location in decimal degrees."
+                          },
+                          "MilePost": {
+                            "type": "number",
+                            "description": "Milepost marker along the highway corridor, with 0 indicating route terminus."
+                          },
+                          "RoadName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Highway or route designation code, such as '005' for I-5 or '090' for I-90."
+                          }
+                        },
+                        "required": [
+                          "Description",
+                          "Direction",
+                          "Latitude",
+                          "Longitude",
+                          "MilePost",
+                          "RoadName"
+                        ],
+                        "description": "Roadway location information for the traffic flow station."
+                      },
+                      "Region": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "WSDOT region that maintains the traffic flow station."
+                      },
+                      "StationName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Station identifier code combining route, direction, and milepost."
+                      },
+                      "Time": {
+                        "type": "string",
+                        "description": "UTC datetime when the traffic flow reading was taken.",
+                        "format": "date-time"
+                      }
+                    },
+                    "required": [
+                      "FlowDataID",
+                      "FlowReadingValue",
+                      "FlowStationLocation",
+                      "Region",
+                      "StationName",
+                      "Time"
+                    ],
+                    "description": "Real-time traffic flow data from a sensor station, including flow condition, location, region, and measurement timestamp."
                   }
                 },
                 "examples": {
@@ -253,18 +353,13 @@
             "source": "import { fetchTrafficFlowById } from 'ws-dottie/wsdot-traffic-flow/core';\n\nconst data = await fetchTrafficFlowById({\n  params: {\n    \"FlowDataID\": 2482\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchTrafficFlowByIdInputFlowDataIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchTrafficFlowsOutput"
+                  "$ref": "#/components/schemas/FetchTrafficFlowByIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {

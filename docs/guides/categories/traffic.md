@@ -2,7 +2,7 @@
 
 This guide covers all traffic-related APIs in WS-Dottie, providing comprehensive access to Washington State highway conditions, incidents, and traffic flow data.
 
-> **📚 Documentation Navigation**: [../../README.md](../../README.md) • [Getting Started](../../getting-started/getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🚗 Overview
 
@@ -36,14 +36,16 @@ The WSDOT Border Crossings API provides real-time information about border cross
   - **Input**: No parameters required
   - **Output**: Array of border crossing information
   - **Key Fields**:
-    - `BorderCrossingID`: Unique crossing identifier
-    - `CrossingName`: Human-readable crossing name
-    - `CrossingType`: Type of crossing (Passenger, Commercial, NEXUS)
-    - `Direction`: Direction of crossing (Northbound, Southbound)
-    - `WaitTime`: Current wait time in minutes
-    - `LanesOpen`: Number of lanes currently open
-    - `LanesTotal`: Total number of lanes
-    - `LastUpdated`: Timestamp of last update
+    - `BorderCrossingLocation`: Roadway location information (route, milepost, coordinates, direction), or null
+      - `Direction`: Traffic direction (N, S, B, NB, SB), or null
+      - `RoadName`: Highway designation (e.g., '005' for I-5), or null
+      - `Description`: Human-readable location description, or null
+      - `Latitude`: Latitude in decimal degrees
+      - `Longitude`: Longitude in decimal degrees
+      - `MilePost`: Milepost marker along the highway
+    - `CrossingName`: Display code for the border crossing or lane (e.g., I5, I5Nexus, SR543TrucksFast), or null
+    - `Time`: UTC datetime when the wait time observation was recorded (Date object)
+    - `WaitTime`: Current estimated wait time in minutes (-1 if unavailable)
 
 ### Common Use Cases
 
@@ -52,12 +54,22 @@ The WSDOT Border Crossings API provides real-time information about border cross
 import { useBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 function BorderCrossingMonitor() {
-  const { data: crossings, isLoading, error } = useBorderCrossings();
+  const { data: crossings, isLoading, error } = useBorderCrossings({
+    fetchMode: 'native',
+    validate: false,
+  });
   
-  // Group crossings by type
-  const passengerCrossings = crossings?.filter(c => c.CrossingType === 'Passenger');
-  const commercialCrossings = crossings?.filter(c => c.CrossingType === 'Commercial');
-  const nexusCrossings = crossings?.filter(c => c.CrossingType === 'NEXUS');
+  // Group crossings by CrossingName prefix or RoadName if available
+  // Note: The API doesn't provide CrossingType, so we'll filter by CrossingName patterns
+  const passengerCrossings = crossings?.filter(c => 
+    c.CrossingName && !c.CrossingName.includes('Truck')
+  );
+  const commercialCrossings = crossings?.filter(c => 
+    c.CrossingName && c.CrossingName.includes('Truck')
+  );
+  const nexusCrossings = crossings?.filter(c => 
+    c.CrossingName && c.CrossingName.includes('Nexus')
+  );
   
   return (
     <div>
@@ -68,29 +80,55 @@ function BorderCrossingMonitor() {
       <div className="crossing-sections">
         <div className="crossing-section">
           <h2>Passenger Crossings</h2>
-          {passengerCrossings?.map(crossing => (
-            <div key={crossing.BorderCrossingID} className="crossing-item">
-              <h3>{crossing.CrossingName}</h3>
-              <p>Direction: {crossing.Direction}</p>
-              <p>Current Wait: {crossing.WaitTime} minutes</p>
-              <p>Lanes Open: {crossing.LanesOpen}/{crossing.LanesTotal}</p>
-              <p>Last Updated: {new Date(crossing.LastUpdated).toLocaleString()}</p>
+          {passengerCrossings?.map((crossing, index) => (
+            <div key={crossing.CrossingName || index} className="crossing-item">
+              <h3>{crossing.CrossingName || 'Unknown Crossing'}</h3>
+              {crossing.BorderCrossingLocation?.Direction && (
+                <p>Direction: {crossing.BorderCrossingLocation.Direction}</p>
+              )}
+              {crossing.BorderCrossingLocation?.RoadName && (
+                <p>Route: {crossing.BorderCrossingLocation.RoadName}</p>
+              )}
+              <p>Current Wait: {crossing.WaitTime >= 0 ? `${crossing.WaitTime} minutes` : 'Not available'}</p>
+              {/* Time is already a Date object (converted from .NET format) */}
+              <p>Last Updated: {crossing.Time.toLocaleString()}</p>
             </div>
           ))}
         </div>
         
         <div className="crossing-section">
           <h2>Commercial Crossings</h2>
-          {commercialCrossings?.map(crossing => (
-            <div key={crossing.BorderCrossingID} className="crossing-item">
-              <h3>{crossing.CrossingName}</h3>
-              <p>Direction: {crossing.Direction}</p>
-              <p>Current Wait: {crossing.WaitTime} minutes</p>
-              <p>Lanes Open: {crossing.LanesOpen}/{crossing.LanesTotal}</p>
-              <p>Last Updated: {new Date(crossing.LastUpdated).toLocaleString()}</p>
+          {commercialCrossings?.map((crossing, index) => (
+            <div key={crossing.CrossingName || index} className="crossing-item">
+              <h3>{crossing.CrossingName || 'Unknown Crossing'}</h3>
+              {crossing.BorderCrossingLocation?.Direction && (
+                <p>Direction: {crossing.BorderCrossingLocation.Direction}</p>
+              )}
+              {crossing.BorderCrossingLocation?.RoadName && (
+                <p>Route: {crossing.BorderCrossingLocation.RoadName}</p>
+              )}
+              <p>Current Wait: {crossing.WaitTime >= 0 ? `${crossing.WaitTime} minutes` : 'Not available'}</p>
+              {/* Time is already a Date object (converted from .NET format) */}
+              <p>Last Updated: {crossing.Time.toLocaleString()}</p>
             </div>
           ))}
         </div>
+        
+        {nexusCrossings && nexusCrossings.length > 0 && (
+          <div className="crossing-section">
+            <h2>NEXUS Crossings</h2>
+            {nexusCrossings.map((crossing, index) => (
+              <div key={crossing.CrossingName || index} className="crossing-item">
+                <h3>{crossing.CrossingName || 'Unknown Crossing'}</h3>
+                {crossing.BorderCrossingLocation?.Direction && (
+                  <p>Direction: {crossing.BorderCrossingLocation.Direction}</p>
+                )}
+                <p>Current Wait: {crossing.WaitTime >= 0 ? `${crossing.WaitTime} minutes` : 'Not available'}</p>
+                <p>Last Updated: {crossing.Time.toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -1015,7 +1053,7 @@ For detailed endpoint documentation, interactive examples, and schema definition
 
 ## 📚 Next Steps
 
-- **[React Integration Guide](../guides/react-integration.md)** - React patterns with TanStack Query
-- **[Node.js Integration Guide](../guides/nodejs-integration.md)** - Server-side usage patterns
-- **[Caching Reference](../reference/caching.md)** - Performance optimization strategies
-- **[Error Handling Reference](../reference/error-handling.md)** - Error recovery patterns
+- **[TanStack Query Guide](../advanced/tanstack-query.md)** - React patterns with TanStack Query
+- **[Fetching Data Guide](../advanced/fetching-data.md)** - Server-side and client-side usage patterns
+- **[Performance Guide](../advanced/performance-guide.md)** - Performance optimization strategies
+- **[Error Handling Guide](../advanced/error-handling.md)** - Error recovery patterns

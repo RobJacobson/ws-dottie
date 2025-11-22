@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchWeatherInformationOutput": {
+      "FetchWeatherInformationByStationIdOutput": {
         "type": "object",
         "properties": {
           "BarometricPressure": {
@@ -77,7 +77,8 @@
           },
           "ReadingTime": {
             "type": "string",
-            "description": "UTC datetime when the weather reading was taken."
+            "description": "UTC datetime when the weather reading was taken.",
+            "format": "date-time"
           },
           "RelativeHumidity": {
             "type": "number",
@@ -147,77 +148,9 @@
           "WindSpeedInMPH"
         ],
         "description": "Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation."
-      },
-      "FetchWeatherInformationByStationIdInputStationIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the weather station."
-      },
-      "FetchCurrentWeatherForStationsInputStationListParam": {
-        "type": "string",
-        "description": "Comma-separated list of weather station IDs."
-      },
-      "SearchWeatherInformationInputStationIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the weather station."
-      },
-      "SearchWeatherInformationInputSearchStartTimeParam": {
-        "type": "string",
-        "format": "date-time",
-        "description": "UTC datetime when the search time range begins (ISO-8601 format)."
-      },
-      "SearchWeatherInformationInputSearchEndTimeParam": {
-        "type": "string",
-        "format": "date-time",
-        "description": "UTC datetime when the search time range ends (ISO-8601 format)."
       }
     },
-    "parameters": {
-      "FetchWeatherInformationByStationIdInputStationIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchWeatherInformationByStationIdInputStationIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the weather station.",
-        "name": "StationID",
-        "in": "path"
-      },
-      "FetchCurrentWeatherForStationsInputStationListParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchCurrentWeatherForStationsInputStationListParam"
-        },
-        "required": true,
-        "description": "Comma-separated list of weather station IDs.",
-        "name": "StationList",
-        "in": "path"
-      },
-      "SearchWeatherInformationInputStationIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/SearchWeatherInformationInputStationIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the weather station.",
-        "name": "StationID",
-        "in": "path"
-      },
-      "SearchWeatherInformationInputSearchStartTimeParam": {
-        "schema": {
-          "$ref": "#/components/schemas/SearchWeatherInformationInputSearchStartTimeParam"
-        },
-        "required": true,
-        "description": "UTC datetime when the search time range begins (ISO-8601 format).",
-        "name": "SearchStartTime",
-        "in": "path"
-      },
-      "SearchWeatherInformationInputSearchEndTimeParam": {
-        "schema": {
-          "$ref": "#/components/schemas/SearchWeatherInformationInputSearchEndTimeParam"
-        },
-        "required": true,
-        "description": "UTC datetime when the search time range ends (ISO-8601 format).",
-        "name": "SearchEndTime",
-        "in": "path"
-      }
-    }
+    "parameters": {}
   },
   "paths": {
     "/GetCurrentWeatherInformationAsJson": {
@@ -241,7 +174,99 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchWeatherInformationOutput"
+                    "type": "object",
+                    "properties": {
+                      "BarometricPressure": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Atmospheric pressure in millibars (not adjusted for elevation)."
+                      },
+                      "Latitude": {
+                        "type": "number",
+                        "description": "Latitude of the weather station in decimal degrees."
+                      },
+                      "Longitude": {
+                        "type": "number",
+                        "description": "Longitude of the weather station in decimal degrees."
+                      },
+                      "PrecipitationInInches": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount in inches."
+                      },
+                      "ReadingTime": {
+                        "type": "string",
+                        "description": "UTC datetime when the weather reading was taken.",
+                        "format": "date-time"
+                      },
+                      "RelativeHumidity": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Relative humidity as a percentage (0-100)."
+                      },
+                      "SkyCoverage": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Sky coverage condition code."
+                      },
+                      "StationID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the weather station."
+                      },
+                      "StationName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the weather station."
+                      },
+                      "TemperatureInFahrenheit": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Current air temperature in degrees Fahrenheit."
+                      },
+                      "Visibility": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Average visibility distance in meters (computed every 3 minutes)."
+                      },
+                      "WindDirection": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Wind direction in degrees clockwise from north (0-359)."
+                      },
+                      "WindDirectionCardinal": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Wind direction in cardinal format (e.g., 'N', 'S', 'WSW')."
+                      },
+                      "WindGustSpeedInMPH": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Maximum wind gust speed in miles per hour."
+                      },
+                      "WindSpeedInMPH": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Average wind speed in miles per hour."
+                      }
+                    },
+                    "required": [
+                      "BarometricPressure",
+                      "Latitude",
+                      "Longitude",
+                      "PrecipitationInInches",
+                      "ReadingTime",
+                      "RelativeHumidity",
+                      "SkyCoverage",
+                      "StationID",
+                      "StationName",
+                      "TemperatureInFahrenheit",
+                      "Visibility",
+                      "WindDirection",
+                      "WindDirectionCardinal",
+                      "WindGustSpeedInMPH",
+                      "WindSpeedInMPH"
+                    ],
+                    "description": "Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation."
                   }
                 },
                 "examples": {
@@ -288,18 +313,13 @@
             "source": "import { fetchWeatherInformationByStationId } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchWeatherInformationByStationId({\n  params: {\n    \"StationID\": 1909\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchWeatherInformationByStationIdInputStationIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchWeatherInformationOutput"
+                  "$ref": "#/components/schemas/FetchWeatherInformationByStationIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
@@ -343,11 +363,6 @@
             "source": "import { fetchCurrentWeatherForStations } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchCurrentWeatherForStations({\n  params: {\n    \"StationList\": \"1909,1966,1970\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchCurrentWeatherForStationsInputStationListParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -356,7 +371,99 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchWeatherInformationOutput"
+                    "type": "object",
+                    "properties": {
+                      "BarometricPressure": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Atmospheric pressure in millibars (not adjusted for elevation)."
+                      },
+                      "Latitude": {
+                        "type": "number",
+                        "description": "Latitude of the weather station in decimal degrees."
+                      },
+                      "Longitude": {
+                        "type": "number",
+                        "description": "Longitude of the weather station in decimal degrees."
+                      },
+                      "PrecipitationInInches": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount in inches."
+                      },
+                      "ReadingTime": {
+                        "type": "string",
+                        "description": "UTC datetime when the weather reading was taken.",
+                        "format": "date-time"
+                      },
+                      "RelativeHumidity": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Relative humidity as a percentage (0-100)."
+                      },
+                      "SkyCoverage": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Sky coverage condition code."
+                      },
+                      "StationID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the weather station."
+                      },
+                      "StationName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the weather station."
+                      },
+                      "TemperatureInFahrenheit": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Current air temperature in degrees Fahrenheit."
+                      },
+                      "Visibility": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Average visibility distance in meters (computed every 3 minutes)."
+                      },
+                      "WindDirection": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Wind direction in degrees clockwise from north (0-359)."
+                      },
+                      "WindDirectionCardinal": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Wind direction in cardinal format (e.g., 'N', 'S', 'WSW')."
+                      },
+                      "WindGustSpeedInMPH": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Maximum wind gust speed in miles per hour."
+                      },
+                      "WindSpeedInMPH": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Average wind speed in miles per hour."
+                      }
+                    },
+                    "required": [
+                      "BarometricPressure",
+                      "Latitude",
+                      "Longitude",
+                      "PrecipitationInInches",
+                      "ReadingTime",
+                      "RelativeHumidity",
+                      "SkyCoverage",
+                      "StationID",
+                      "StationName",
+                      "TemperatureInFahrenheit",
+                      "Visibility",
+                      "WindDirection",
+                      "WindDirectionCardinal",
+                      "WindGustSpeedInMPH",
+                      "WindSpeedInMPH"
+                    ],
+                    "description": "Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation."
                   }
                 },
                 "examples": {
@@ -400,18 +507,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2025-11-20T00:00:00.000Z\",\n    \"SearchEndTime\": \"2025-11-21T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/SearchWeatherInformationInputStationIDParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchWeatherInformationInputSearchStartTimeParam"
-          },
-          {
-            "$ref": "#/components/parameters/SearchWeatherInformationInputSearchEndTimeParam"
+            "source": "import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2025-11-21T00:00:00.000Z\",\n    \"SearchEndTime\": \"2025-11-22T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "responses": {
@@ -422,7 +518,99 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchWeatherInformationOutput"
+                    "type": "object",
+                    "properties": {
+                      "BarometricPressure": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Atmospheric pressure in millibars (not adjusted for elevation)."
+                      },
+                      "Latitude": {
+                        "type": "number",
+                        "description": "Latitude of the weather station in decimal degrees."
+                      },
+                      "Longitude": {
+                        "type": "number",
+                        "description": "Longitude of the weather station in decimal degrees."
+                      },
+                      "PrecipitationInInches": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Precipitation amount in inches."
+                      },
+                      "ReadingTime": {
+                        "type": "string",
+                        "description": "UTC datetime when the weather reading was taken.",
+                        "format": "date-time"
+                      },
+                      "RelativeHumidity": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Relative humidity as a percentage (0-100)."
+                      },
+                      "SkyCoverage": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Sky coverage condition code."
+                      },
+                      "StationID": {
+                        "type": "integer",
+                        "description": "Numeric ID of the weather station."
+                      },
+                      "StationName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the weather station."
+                      },
+                      "TemperatureInFahrenheit": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Current air temperature in degrees Fahrenheit."
+                      },
+                      "Visibility": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Average visibility distance in meters (computed every 3 minutes)."
+                      },
+                      "WindDirection": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Wind direction in degrees clockwise from north (0-359)."
+                      },
+                      "WindDirectionCardinal": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Wind direction in cardinal format (e.g., 'N', 'S', 'WSW')."
+                      },
+                      "WindGustSpeedInMPH": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Maximum wind gust speed in miles per hour."
+                      },
+                      "WindSpeedInMPH": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "Average wind speed in miles per hour."
+                      }
+                    },
+                    "required": [
+                      "BarometricPressure",
+                      "Latitude",
+                      "Longitude",
+                      "PrecipitationInInches",
+                      "ReadingTime",
+                      "RelativeHumidity",
+                      "SkyCoverage",
+                      "StationID",
+                      "StationName",
+                      "TemperatureInFahrenheit",
+                      "Visibility",
+                      "WindDirection",
+                      "WindDirectionCardinal",
+                      "WindGustSpeedInMPH",
+                      "WindSpeedInMPH"
+                    ],
+                    "description": "Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation."
                   }
                 },
                 "examples": {

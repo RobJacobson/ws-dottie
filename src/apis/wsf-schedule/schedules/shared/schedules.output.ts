@@ -5,7 +5,6 @@
  * Schedule API schedule operations.
  */
 
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -37,10 +36,10 @@ export const terminalComboSchema = z
       .array(
         z
           .object({
-            DepartingTime: zDotnetDate().describe(
+            DepartingTime: z.date().describe(
               "UTC datetime of the departure."
             ),
-            ArrivingTime: zDotnetDate()
+            ArrivingTime: z.date()
               .nullable()
               .describe("UTC datetime of the arrival."),
             LoadingRule: z
@@ -114,10 +113,10 @@ export const scheduleSchema = z
         "Code indicating season: 0 = Spring, 1 = Summer, 2 = Fall, 3 = Winter."
       ),
     SchedulePDFUrl: z.string().describe("URL to the schedule PDF document."),
-    ScheduleStart: zDotnetDate().describe(
+    ScheduleStart: z.date().describe(
       "UTC datetime when the schedule season becomes effective."
     ),
-    ScheduleEnd: zDotnetDate().describe(
+    ScheduleEnd: z.date().describe(
       "UTC datetime when the schedule season stops being effective."
     ),
     AllRoutes: z

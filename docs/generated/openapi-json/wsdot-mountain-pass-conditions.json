@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchMountainPassConditionsOutput": {
+      "FetchMountainPassConditionByIdOutput": {
         "type": "object",
         "properties": {
           "MountainPassId": {
@@ -76,7 +76,8 @@
           },
           "DateUpdated": {
             "type": "string",
-            "description": "UTC datetime when the pass condition data was last updated."
+            "description": "UTC datetime when the pass condition data was last updated.",
+            "format": "date-time"
           },
           "TemperatureInFahrenheit": {
             "type": "integer",
@@ -160,23 +161,9 @@
           "RestrictionTwo"
         ],
         "description": "Real-time mountain pass condition information including weather, road surface conditions, temperature, elevation, travel restrictions by direction, and advisory status."
-      },
-      "FetchMountainPassConditionByIdInputPassConditionIDParam": {
-        "type": "integer",
-        "description": "Numeric ID of the mountain pass."
       }
     },
-    "parameters": {
-      "FetchMountainPassConditionByIdInputPassConditionIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchMountainPassConditionByIdInputPassConditionIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the mountain pass.",
-        "name": "PassConditionID",
-        "in": "path"
-      }
-    }
+    "parameters": {}
   },
   "paths": {
     "/getMountainPassConditionsAsJson": {
@@ -200,7 +187,112 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchMountainPassConditionsOutput"
+                    "type": "object",
+                    "properties": {
+                      "MountainPassId": {
+                        "type": "integer",
+                        "description": "Numeric ID of the mountain pass."
+                      },
+                      "MountainPassName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the mountain pass."
+                      },
+                      "Latitude": {
+                        "type": "number",
+                        "description": "Latitude of the mountain pass in decimal degrees."
+                      },
+                      "Longitude": {
+                        "type": "number",
+                        "description": "Longitude of the mountain pass in decimal degrees."
+                      },
+                      "DateUpdated": {
+                        "type": "string",
+                        "description": "UTC datetime when the pass condition data was last updated.",
+                        "format": "date-time"
+                      },
+                      "TemperatureInFahrenheit": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Current temperature at the mountain pass in degrees Fahrenheit."
+                      },
+                      "ElevationInFeet": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Elevation of the mountain pass above sea level in feet."
+                      },
+                      "WeatherCondition": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Current weather conditions at the mountain pass."
+                      },
+                      "RoadCondition": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Current roadway surface conditions at the mountain pass."
+                      },
+                      "TravelAdvisoryActive": {
+                        "type": "boolean",
+                        "description": "True if a travel advisory is currently active for the pass; otherwise false."
+                      },
+                      "RestrictionOne": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "RestrictionText": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Text description of travel restrictions for this direction, such as 'No restrictions', 'Closed for the season', or chain requirements."
+                          },
+                          "TravelDirection": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Direction of travel for which this restriction applies, such as 'Eastbound', 'Westbound', 'Northbound', or 'Southbound'."
+                          }
+                        },
+                        "required": [
+                          "RestrictionText",
+                          "TravelDirection"
+                        ],
+                        "description": "Travel restriction information for the primary direction of the pass."
+                      },
+                      "RestrictionTwo": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "RestrictionText": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Text description of travel restrictions for this direction, such as 'No restrictions', 'Closed for the season', or chain requirements."
+                          },
+                          "TravelDirection": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Direction of travel for which this restriction applies, such as 'Eastbound', 'Westbound', 'Northbound', or 'Southbound'."
+                          }
+                        },
+                        "required": [
+                          "RestrictionText",
+                          "TravelDirection"
+                        ],
+                        "description": "Travel restriction information for the secondary direction of the pass."
+                      }
+                    },
+                    "required": [
+                      "MountainPassId",
+                      "MountainPassName",
+                      "Latitude",
+                      "Longitude",
+                      "DateUpdated",
+                      "TemperatureInFahrenheit",
+                      "ElevationInFeet",
+                      "WeatherCondition",
+                      "RoadCondition",
+                      "TravelAdvisoryActive",
+                      "RestrictionOne",
+                      "RestrictionTwo"
+                    ],
+                    "description": "Real-time mountain pass condition information including weather, road surface conditions, temperature, elevation, travel restrictions by direction, and advisory status."
                   }
                 },
                 "examples": {
@@ -250,18 +342,13 @@
             "source": "import { fetchMountainPassConditionById } from 'ws-dottie/wsdot-mountain-pass-conditions/core';\n\nconst data = await fetchMountainPassConditionById({\n  params: {\n    \"PassConditionID\": 12\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchMountainPassConditionByIdInputPassConditionIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchMountainPassConditionsOutput"
+                  "$ref": "#/components/schemas/FetchMountainPassConditionByIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {

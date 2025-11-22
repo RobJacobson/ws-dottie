@@ -16,11 +16,15 @@ import {
   OpenApiGeneratorV3,
 } from "@asteasolutions/zod-to-openapi";
 import yaml from "js-yaml";
+import { apis, endpointsFlat } from "../../src/apis/index.ts";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
-import type { ApiDefinition } from "../../src/apis/types.ts";
-import { apis, endpoints } from "../../src/shared/endpointRegistry.ts";
-import type { Endpoint } from "../../src/shared/types.ts";
+import type {
+  ApiDefinition,
+  Endpoint,
+  EndpointParams,
+  EndpointResponse,
+} from "../../src/apis/types.ts";
 import { z } from "../../src/shared/zod.ts";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -132,7 +136,7 @@ const formatSampleData = (
  */
 const findEndpointGroup = (
   api: ApiDefinition,
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): string => {
   // Try to match endpoint to a group by checking function name patterns
   // This is a heuristic approach - we match based on common naming patterns
@@ -161,7 +165,7 @@ const findEndpointGroup = (
 const fetchAndSaveSampleData = async (
   api: ApiDefinition,
   functionName: string,
-  _endpoint: Endpoint<unknown, unknown>
+  _endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): Promise<{
   data: unknown;
   isTruncated: boolean;
@@ -213,7 +217,7 @@ const fetchAndSaveSampleData = async (
 const generateCodeExample = (
   api: ApiDefinition,
   functionName: string,
-  endpoint: Endpoint<unknown, unknown>
+  endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): string => {
   const sampleParams = endpoint.sampleParams;
   const hasParams =
@@ -399,7 +403,7 @@ const registerSchema = (
 const registerEndpoint = async (
   registry: OpenAPIRegistry,
   api: ApiDefinition,
-  endpoint: Endpoint<unknown, unknown>,
+  endpoint: Endpoint<EndpointParams, EndpointResponse>,
   groupName: string
 ): Promise<void> => {
   const operationId = endpoint.functionName;
@@ -560,7 +564,7 @@ const registerEndpoint = async (
 /**
  * All API modules to process
  *
- * Uses the shared API_MODULES array from src/shared/endpoints.ts
+ * Uses the endpointsFlat array from src/apis/endpoints.ts
  * to ensure consistency with the rest of the codebase.
  */
 const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);
@@ -586,7 +590,7 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
   }
 
   // Filter endpoints for this API from the flat registry
-  const apiEndpoints = endpoints.filter((e) => e.api.name === api.api.name);
+  const apiEndpoints = endpointsFlat.filter((e) => e.api.name === api.api.name);
   const totalEndpoints = apiEndpoints.length;
 
   // Register all endpoints and wait for completion
@@ -667,8 +671,108 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
     };
   });
 
+  /**
+   * Post-process OpenAPI document to add format: date-time to date fields
+   *
+   * Recursively walks through the OpenAPI document and adds format: date-time
+   * to string fields that represent dates/times. Identifies date fields by:
+   * - Descriptions containing specific date/time patterns (UTC datetime, when, etc.)
+   * - Field names in parent context containing date/time keywords
+   *
+   * Note: OpenAPI correctly documents dates as `type: string` with `format: date-time`
+   * because OpenAPI describes the HTTP API contract (what comes over the wire as JSON).
+   * JSON has no native Date type - dates are transmitted as strings. The ws-dottie
+   * library converts these strings to JavaScript Date objects client-side via
+   * convertDotNetDates(), but the OpenAPI spec correctly reflects the wire format.
+   *
+   * @param obj - The OpenAPI document or schema object to process
+   * @param parentKey - The key name in the parent object (for context)
+   * @returns The processed object with date-time formats added
+   */
+  const addDateTimeFormats = (
+    obj: unknown,
+    parentKey?: string
+  ): unknown => {
+    if (obj === null || obj === undefined) {
+      return obj;
+    }
+
+    if (typeof obj !== "object") {
+      return obj;
+    }
+
+    if (Array.isArray(obj)) {
+      return obj.map((item) => addDateTimeFormats(item, parentKey));
+    }
+
+    const record = obj as Record<string, unknown>;
+
+    // Check if this is a schema object with type: string and no format
+    if (record.type === "string" && !record.format) {
+      const schema = record as {
+        type?: string;
+        format?: string;
+        description?: string;
+        [key: string]: unknown;
+      };
+
+      // Check description for specific date/time patterns
+      const description = (schema.description || "").toLowerCase();
+      const hasDateTimeDescription =
+        description.includes("utc datetime") ||
+        description.includes("datetime when") ||
+        description.includes("when this") ||
+        description.includes("when the") ||
+        description.includes("date when") ||
+        description.includes("time when") ||
+        description.includes("timestamp") ||
+        (description.includes("date") &&
+          (description.includes("effective") ||
+            description.includes("expires") ||
+            description.includes("posted") ||
+            description.includes("updated")));
+
+      // Check parent key name for date/time keywords
+      const keyName = (parentKey || "").toLowerCase();
+      const hasDateTimeKeyName =
+        keyName.includes("time") ||
+        keyName.includes("date") ||
+        keyName.includes("updated") ||
+        keyName.includes("depart") ||
+        keyName.includes("arrival") ||
+        keyName.includes("effective") ||
+        keyName.includes("expires") ||
+        keyName.includes("posted") ||
+        keyName.includes("timestamp") ||
+        keyName.includes("lastupdated");
+
+      // Add format: date-time if this appears to be a date field
+      if (hasDateTimeDescription || hasDateTimeKeyName) {
+        return {
+          ...schema,
+          format: "date-time",
+        };
+      }
+    }
+
+    // Recursively process all properties
+    const processed: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(record)) {
+      // Skip $ref to avoid infinite loops
+      if (key === "$ref") {
+        processed[key] = value;
+      } else {
+        processed[key] = addDateTimeFormats(value, key);
+      }
+    }
+
+    return processed;
+  };
+
+  const processedDoc = addDateTimeFormats(openApiDoc);
+
   return {
-    ...openApiDoc,
+    ...processedDoc,
     tags,
   };
 };

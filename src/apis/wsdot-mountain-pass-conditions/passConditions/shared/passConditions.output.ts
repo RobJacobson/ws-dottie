@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 export const travelRestrictionSchema = z
@@ -24,7 +23,7 @@ export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 
 export const passConditionSchema = z
   .object({
-    MountainPassId: z.int().describe("Numeric ID of the mountain pass."),
+    MountainPassId: z.number().int().describe("Numeric ID of the mountain pass."),
     MountainPassName: z
       .string()
       .nullable()
@@ -35,16 +34,18 @@ export const passConditionSchema = z
     Longitude: z
       .number()
       .describe("Longitude of the mountain pass in decimal degrees."),
-    DateUpdated: zDotnetDate().describe(
+    DateUpdated: z.date().describe(
       "UTC datetime when the pass condition data was last updated."
     ),
     TemperatureInFahrenheit: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Current temperature at the mountain pass in degrees Fahrenheit."
       ),
     ElevationInFeet: z
+      .number()
       .int()
       .nullable()
       .describe("Elevation of the mountain pass above sea level in feet."),

@@ -1,4 +1,3 @@
-import { zDotnetDate } from "@/apis/shared";
 import { z } from "@/shared/zod";
 
 /**
@@ -24,7 +23,7 @@ export const weatherInfoSchema = z
       .number()
       .nullable()
       .describe("Precipitation amount in inches."),
-    ReadingTime: zDotnetDate().describe(
+    ReadingTime: z.date().describe(
       "UTC datetime when the weather reading was taken."
     ),
     RelativeHumidity: z
@@ -32,7 +31,7 @@ export const weatherInfoSchema = z
       .nullable()
       .describe("Relative humidity as a percentage (0-100)."),
     SkyCoverage: z.string().nullable().describe("Sky coverage condition code."),
-    StationID: z.int().describe("Numeric ID of the weather station."),
+    StationID: z.number().int().describe("Numeric ID of the weather station."),
     StationName: z
       .string()
       .nullable()
@@ -42,6 +41,7 @@ export const weatherInfoSchema = z
       .nullable()
       .describe("Current air temperature in degrees Fahrenheit."),
     Visibility: z
+      .number()
       .int()
       .nullable()
       .describe(

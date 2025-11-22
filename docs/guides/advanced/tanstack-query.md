@@ -2,7 +2,7 @@
 
 This guide covers integrating WS-Dottie with TanStack Query for optimal data fetching, caching, and state management in React applications.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
+> **📚 Documentation Navigation**: [Documentation Index](../../INDEX.md) • [Getting Started](../../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🚀 Quick Start
 

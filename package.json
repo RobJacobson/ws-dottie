@@ -1,6 +1,6 @@
 {
   "name": "ws-dottie",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Your friendly TypeScript companion for Washington State transportation APIs - WSDOT and WSF data with smart caching and React Query integration",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npm run docs:openapi:json && tsup",
     "dev": "tsup --watch",
-    "test": "node scripts/testRunner.js",
+    "test": "vitest --config tests/e2e/vitest.config.ts --run",
     "test:direct": "vitest --config tests/vitest.config.ts --run",
     "test:openapi": "node scripts/test-openapi-exports.js",
     "tests": "node scripts/run-api-tests.js",
@@ -36,7 +36,7 @@
     "react": ">=18.0.0"
   },
   "devDependencies": {
-    "@asteasolutions/zod-to-openapi": "^8.1.0",
+    "@asteasolutions/zod-to-openapi": "^7.3.4",
     "@biomejs/biome": "^2.2.4",
     "@happy-dom/global-registrator": "^18.0.1",
     "@redocly/cli": "^2.10.0",
@@ -60,7 +60,7 @@
     "glob": "^11.0.3",
     "json5": "^2.2.3",
     "picocolors": "^1.1.1",
-    "zod": "^4.0.0"
+    "zod": "^3.25.76"
   },
   "engines": {
     "node": ">=18.0.0"
