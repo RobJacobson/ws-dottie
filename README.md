@@ -16,7 +16,7 @@
 ## Table of Contents
 
 - [Why WS-Dottie is Special](#why-ws-dottie-is-special)
-- [Zod-powered validation](#zod-powered-validation-zod-4)
+- [Zod-powered validation](#zod-powered-validation-zod-3)
 - [What You Can Build](#-what-you-can-build)
 - [Quick Start](#-quick-start)
   - [Get Your Free API Key](#1-get-your-free-api-key)
@@ -82,9 +82,9 @@ Meet Dottie — your comprehensive TypeScript companion for fetching real-time W
 
 **🌐 Environment Agnostic**: Same code works in React apps, Node.js servers, and command-line tools. Automatic CORS handling with JSONP support for browsers.
 
-### Zod‑powered validation (Zod 4)
+### Zod‑powered validation (Zod 3)
 
-WS‑Dottie uses Zod 4 schemas for **optional** runtime validation and type inference across all APIs. Validation is **disabled by default** (`validate: false`) for optimal performance, but you can enable it when you need extra safety.
+WS‑Dottie uses Zod 3 schemas for **optional** runtime validation and type inference across all APIs. Validation is **disabled by default** (`validate: false`) for optimal performance, but you can enable it when you need extra safety.
 
 - **With validation** (`validate: true`): Strong runtime type safety, early detection of API changes, and safe data transformations
 - **Without validation** (`validate: false` - default): Faster performance, smaller bundles, and still type-safe with TypeScript
