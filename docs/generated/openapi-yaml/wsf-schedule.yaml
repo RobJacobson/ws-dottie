@@ -4540,7 +4540,7 @@ paths:
 
             const data = await fetchRouteDetailsByTripDate({
               params: {
-                "TripDate": "2025-11-22"
+                "TripDate": "2025-11-23"
               },
               fetchMode: 'native',
               validate: true
@@ -4601,7 +4601,7 @@ paths:
 
             const data = await fetchRouteDetailsByTripDateAndTerminals({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10
               },
@@ -4666,7 +4666,7 @@ paths:
 
             const data = await fetchRouteDetailsByTripDateAndRouteId({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "RouteID": 1
               },
               fetchMode: 'native',
@@ -4717,7 +4717,7 @@ paths:
 
             const data = await fetchRoutesByTripDate({
               params: {
-                "TripDate": "2025-11-22"
+                "TripDate": "2025-11-23"
               },
               fetchMode: 'native',
               validate: true
@@ -4760,7 +4760,7 @@ paths:
 
             const data = await fetchRoutesByTripDateAndTerminals({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10
               },
@@ -4805,7 +4805,7 @@ paths:
 
             const data = await fetchRoutesHavingServiceDisruptionsByTripDate({
               params: {
-                "TripDate": "2025-11-22"
+                "TripDate": "2025-11-23"
               },
               fetchMode: 'native',
               validate: true
@@ -4893,7 +4893,7 @@ paths:
 
             const data = await fetchScheduleByTripDateAndRouteId({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "RouteID": 9
               },
               fetchMode: 'native',
@@ -6327,7 +6327,7 @@ paths:
 
             const data = await fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10
               },
@@ -8299,7 +8299,7 @@ paths:
 
             const data = await fetchTerminalMatesSchedule({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "TerminalID": 1
               },
               fetchMode: 'native',
@@ -8339,7 +8339,7 @@ paths:
 
             const data = await fetchTerminals({
               params: {
-                "TripDate": "2025-11-22"
+                "TripDate": "2025-11-23"
               },
               fetchMode: 'native',
               validate: true
@@ -8377,7 +8377,7 @@ paths:
 
             const data = await fetchTerminalsAndMates({
               params: {
-                "TripDate": "2025-11-22"
+                "TripDate": "2025-11-23"
               },
               fetchMode: 'native',
               validate: true
@@ -8417,7 +8417,7 @@ paths:
 
             const data = await fetchTerminalsAndMatesByRoute({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "RouteID": 9
               },
               fetchMode: 'native',

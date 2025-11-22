@@ -53,35 +53,6 @@
           "RoadName"
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
-      },
-      "FetchWeatherStationsOutput": {
-        "type": "object",
-        "properties": {
-          "Latitude": {
-            "type": "number",
-            "description": "Latitude of the weather station in decimal degrees."
-          },
-          "Longitude": {
-            "type": "number",
-            "description": "Longitude of the weather station in decimal degrees."
-          },
-          "StationCode": {
-            "type": "integer",
-            "description": "Numeric ID of the weather station."
-          },
-          "StationName": {
-            "type": "string",
-            "nullable": true,
-            "description": "Display name of the weather station."
-          }
-        },
-        "required": [
-          "Latitude",
-          "Longitude",
-          "StationCode",
-          "StationName"
-        ],
-        "description": "Weather station metadata including station identifier, name, and location coordinates for WSDOT Road Weather Information System stations."
       }
     },
     "parameters": {}
@@ -108,7 +79,33 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchWeatherStationsOutput"
+                    "type": "object",
+                    "properties": {
+                      "Latitude": {
+                        "type": "number",
+                        "description": "Latitude of the weather station in decimal degrees."
+                      },
+                      "Longitude": {
+                        "type": "number",
+                        "description": "Longitude of the weather station in decimal degrees."
+                      },
+                      "StationCode": {
+                        "type": "integer",
+                        "description": "Numeric ID of the weather station."
+                      },
+                      "StationName": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the weather station."
+                      }
+                    },
+                    "required": [
+                      "Latitude",
+                      "Longitude",
+                      "StationCode",
+                      "StationName"
+                    ],
+                    "description": "Weather station metadata including station identifier, name, and location coordinates for WSDOT Road Weather Information System stations."
                   }
                 },
                 "examples": {

@@ -348,8 +348,8 @@ paths:
                 "StateRoute": "405",
                 "StartingMilepost": 10,
                 "EndingMilepost": 20,
-                "SearchTimeStart": "2025-11-20",
-                "SearchTimeEnd": "2025-11-21"
+                "SearchTimeStart": "2025-11-21",
+                "SearchTimeEnd": "2025-11-22"
               },
               fetchMode: 'native',
               validate: true

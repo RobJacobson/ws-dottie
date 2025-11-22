@@ -593,7 +593,7 @@ paths:
 
             const data = await fetchTerminalFares({
               params: {
-                "TripDate": "2025-11-22"
+                "TripDate": "2025-11-23"
               },
               fetchMode: 'native',
               validate: true
@@ -631,7 +631,7 @@ paths:
 
             const data = await fetchTerminalMatesFares({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "TerminalID": 1
               },
               fetchMode: 'native',
@@ -671,7 +671,7 @@ paths:
 
             const data = await fetchTerminalComboFares({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10
               },
@@ -712,7 +712,7 @@ paths:
 
             const data = await fetchTerminalComboFaresVerbose({
               params: {
-                "TripDate": "2025-11-22"
+                "TripDate": "2025-11-23"
               },
               fetchMode: 'native',
               validate: true
@@ -753,7 +753,7 @@ paths:
 
             const data = await fetchFareLineItemsBasic({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10,
                 "RoundTrip": false
@@ -800,7 +800,7 @@ paths:
 
             const data = await fetchFareLineItemsVerbose({
               params: {
-                "TripDate": "2025-11-21"
+                "TripDate": "2025-11-22"
               },
               fetchMode: 'native',
               validate: true
@@ -7112,7 +7112,7 @@ paths:
 
             const data = await fetchFareLineItemsByTripDateAndTerminals({
               params: {
-                "TripDate": "2025-11-22",
+                "TripDate": "2025-11-23",
                 "DepartingTerminalID": 3,
                 "ArrivingTerminalID": 7,
                 "RoundTrip": false
@@ -7159,7 +7159,7 @@ paths:
 
             const data = await fetchFareTotalsByTripDateAndRoute({
               params: {
-                "TripDate": "2025-11-21",
+                "TripDate": "2025-11-22",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10,
                 "RoundTrip": false,

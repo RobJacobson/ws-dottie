@@ -54,7 +54,7 @@
         ],
         "description": "Roadway location information including route, milepost, coordinates, and direction."
       },
-      "FetchTravelTimesOutput": {
+      "FetchTravelTimeByIdOutput": {
         "type": "object",
         "properties": {
           "AverageTime": {
@@ -184,23 +184,9 @@
           "TravelTimeID"
         ],
         "description": "Travel time route information including current and average travel times, route distance, start/end point locations, and update timestamp."
-      },
-      "FetchTravelTimeByIdInputTravelTimeIDParam": {
-        "type": "number",
-        "description": "Numeric ID of the travel time route."
       }
     },
-    "parameters": {
-      "FetchTravelTimeByIdInputTravelTimeIDParam": {
-        "schema": {
-          "$ref": "#/components/schemas/FetchTravelTimeByIdInputTravelTimeIDParam"
-        },
-        "required": true,
-        "description": "Numeric ID of the travel time route.",
-        "name": "TravelTimeID",
-        "in": "path"
-      }
-    }
+    "parameters": {}
   },
   "paths": {
     "/getTravelTimesAsJson": {
@@ -224,7 +210,135 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FetchTravelTimesOutput"
+                    "type": "object",
+                    "properties": {
+                      "AverageTime": {
+                        "type": "number",
+                        "description": "Average travel time to complete the route in minutes based on historical data."
+                      },
+                      "CurrentTime": {
+                        "type": "number",
+                        "description": "Current estimated travel time to complete the route in minutes based on real-time conditions."
+                      },
+                      "Description": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Human-readable description of the travel time route."
+                      },
+                      "Distance": {
+                        "type": "number",
+                        "description": "Total route distance from start to end point in miles."
+                      },
+                      "EndPoint": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "Description": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Human-readable description of the roadway location, such as interchange names or cross streets."
+                          },
+                          "Direction": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."
+                          },
+                          "Latitude": {
+                            "type": "number",
+                            "description": "Latitude of the roadway location in decimal degrees."
+                          },
+                          "Longitude": {
+                            "type": "number",
+                            "description": "Longitude of the roadway location in decimal degrees."
+                          },
+                          "MilePost": {
+                            "type": "number",
+                            "description": "Milepost marker along the highway corridor, with 0 indicating route terminus."
+                          },
+                          "RoadName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Highway or route designation code, such as '005' for I-5 or '090' for I-90."
+                          }
+                        },
+                        "required": [
+                          "Description",
+                          "Direction",
+                          "Latitude",
+                          "Longitude",
+                          "MilePost",
+                          "RoadName"
+                        ],
+                        "description": "Roadway location where the travel time route ends."
+                      },
+                      "Name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Display name of the travel time route."
+                      },
+                      "StartPoint": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "Description": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Human-readable description of the roadway location, such as interchange names or cross streets."
+                          },
+                          "Direction": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."
+                          },
+                          "Latitude": {
+                            "type": "number",
+                            "description": "Latitude of the roadway location in decimal degrees."
+                          },
+                          "Longitude": {
+                            "type": "number",
+                            "description": "Longitude of the roadway location in decimal degrees."
+                          },
+                          "MilePost": {
+                            "type": "number",
+                            "description": "Milepost marker along the highway corridor, with 0 indicating route terminus."
+                          },
+                          "RoadName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Highway or route designation code, such as '005' for I-5 or '090' for I-90."
+                          }
+                        },
+                        "required": [
+                          "Description",
+                          "Direction",
+                          "Latitude",
+                          "Longitude",
+                          "MilePost",
+                          "RoadName"
+                        ],
+                        "description": "Roadway location where the travel time route begins."
+                      },
+                      "TimeUpdated": {
+                        "type": "string",
+                        "description": "UTC datetime when the travel time data was last updated."
+                      },
+                      "TravelTimeID": {
+                        "type": "number",
+                        "description": "Numeric ID of the travel time route."
+                      }
+                    },
+                    "required": [
+                      "AverageTime",
+                      "CurrentTime",
+                      "Description",
+                      "Distance",
+                      "EndPoint",
+                      "Name",
+                      "StartPoint",
+                      "TimeUpdated",
+                      "TravelTimeID"
+                    ],
+                    "description": "Travel time route information including current and average travel times, route distance, start/end point locations, and update timestamp."
                   }
                 },
                 "examples": {
@@ -279,18 +393,13 @@
             "source": "import { fetchTravelTimeById } from 'ws-dottie/wsdot-travel-times/core';\n\nconst data = await fetchTravelTimeById({\n  params: {\n    \"TravelTimeID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/FetchTravelTimeByIdInputTravelTimeIDParam"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FetchTravelTimesOutput"
+                  "$ref": "#/components/schemas/FetchTravelTimeByIdOutput"
                 },
                 "examples": {
                   "sampleResponse": {
