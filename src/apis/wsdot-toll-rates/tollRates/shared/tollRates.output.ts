@@ -10,6 +10,7 @@ import { tollTripBaseSchema } from "../../shared/tollTripBaseSchema";
 export const tollRateSchema = tollTripBaseSchema
   .extend({
     CurrentToll: z
+      .number()
       .int()
       .describe(
         "Current toll amount in cents. May be negative when toll is unavailable. May not match sign display due to timing differences."

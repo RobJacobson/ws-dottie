@@ -19,6 +19,7 @@ export const weatherReadingSchema = z
       .number()
       .describe("Longitude of the weather station in decimal degrees."),
     Elevation: z
+      .number()
       .int()
       .describe("Elevation of the weather station above sea level in meters."),
     ReadingTime: zIsoDateString()
@@ -31,40 +32,47 @@ export const weatherReadingSchema = z
       .nullable()
       .describe("Current air temperature in degrees Celsius."),
     RelativeHumidty: z
+      .number()
       .int()
       .nullable()
       .describe("Relative humidity as a percentage (0-100)."),
     AverageWindSpeed: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Average wind speed during evaluation cycle in kilometers per hour."
       ),
     AverageWindDirection: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Average wind direction in degrees clockwise from north (0-359)."
       ),
     WindGust: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Maximum wind gust speed during evaluation cycle in kilometers per hour."
       ),
     Visibility: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Average visibility distance in meters (computed every 3 minutes)."
       ),
     PrecipitationIntensity: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Precipitation intensity derived from precipitation rate (intensity units)."
       ),
     PrecipitationType: z
+      .number()
       .int()
       .nullable()
       .describe(
@@ -107,12 +115,14 @@ export const weatherReadingSchema = z
         "Precipitation amount (liquid equivalent) from midnight GMT to current time in millimeters."
       ),
     BarometricPressure: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Atmospheric pressure in millibars (not adjusted for elevation)."
       ),
     SnowDepth: z
+      .number()
       .int()
       .nullable()
       .describe(
@@ -121,7 +131,7 @@ export const weatherReadingSchema = z
     SurfaceMeasurements: z
       .array(
         z.object({
-          SensorId: z.int().describe("Numeric ID of the surface sensor."),
+          SensorId: z.number().int().describe("Numeric ID of the surface sensor."),
           SurfaceTemperature: z
             .number()
             .nullable()
@@ -149,7 +159,7 @@ export const weatherReadingSchema = z
     SubSurfaceMeasurements: z
       .array(
         z.object({
-          SensorId: z.int().describe("Numeric ID of the subsurface sensor."),
+          SensorId: z.number().int().describe("Numeric ID of the subsurface sensor."),
           SubSurfaceTemperature: z
             .number()
             .nullable()

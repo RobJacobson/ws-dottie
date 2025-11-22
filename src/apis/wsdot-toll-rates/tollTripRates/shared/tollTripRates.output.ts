@@ -30,6 +30,7 @@ export const tollTripsRatesSchema = z
         "Array of trip rate information for all toll trips. Null when trip rates are unavailable."
       ),
     Version: z
+      .number()
       .int()
       .describe(
         "Version number of toll trips data. Increments when trip rates data is updated."

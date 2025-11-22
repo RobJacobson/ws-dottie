@@ -434,7 +434,8 @@ export const terminalVerboseSchema = terminalBaseSchema
            * A preferred sort order.
            */
           SortSeq: z
-            .int()
+      .number()
+      .int()
             .nullable()
             .describe(
               "Preferred display sort order for chamber of commerce link, as an integer sequence number. E.g., null for default sorting, numeric value when specific sort order is required. Used for controlling link display order."

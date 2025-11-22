@@ -10,7 +10,7 @@ export type MountainPassConditionsInput = z.infer<
 
 export const mountainPassConditionByIdInputSchema = z
   .object({
-    PassConditionID: z.int().describe("Numeric ID of the mountain pass."),
+    PassConditionID: z.number().int().describe("Numeric ID of the mountain pass."),
   })
   .describe(
     "Input parameters for retrieving a specific mountain pass condition by ID."

@@ -40,6 +40,7 @@ export const searchAlertsInputSchema = z
         "State route identifier as three-digit number, or undefined to include all routes."
       ),
     Region: z
+      .number()
       .int()
       .optional()
       .describe(

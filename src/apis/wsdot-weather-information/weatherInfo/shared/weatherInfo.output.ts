@@ -32,7 +32,7 @@ export const weatherInfoSchema = z
       .nullable()
       .describe("Relative humidity as a percentage (0-100)."),
     SkyCoverage: z.string().nullable().describe("Sky coverage condition code."),
-    StationID: z.int().describe("Numeric ID of the weather station."),
+    StationID: z.number().int().describe("Numeric ID of the weather station."),
     StationName: z
       .string()
       .nullable()
@@ -42,6 +42,7 @@ export const weatherInfoSchema = z
       .nullable()
       .describe("Current air temperature in degrees Fahrenheit."),
     Visibility: z
+      .number()
       .int()
       .nullable()
       .describe(

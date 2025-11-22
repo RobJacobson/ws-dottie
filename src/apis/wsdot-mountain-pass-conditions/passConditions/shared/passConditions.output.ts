@@ -24,7 +24,7 @@ export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 
 export const passConditionSchema = z
   .object({
-    MountainPassId: z.int().describe("Numeric ID of the mountain pass."),
+    MountainPassId: z.number().int().describe("Numeric ID of the mountain pass."),
     MountainPassName: z
       .string()
       .nullable()
@@ -39,12 +39,14 @@ export const passConditionSchema = z
       "UTC datetime when the pass condition data was last updated."
     ),
     TemperatureInFahrenheit: z
+      .number()
       .int()
       .nullable()
       .describe(
         "Current temperature at the mountain pass in degrees Fahrenheit."
       ),
     ElevationInFeet: z
+      .number()
       .int()
       .nullable()
       .describe("Elevation of the mountain pass above sea level in feet."),

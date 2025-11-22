@@ -12,6 +12,7 @@ export const tollTripVersionSchema = z
       "UTC datetime when version was created or last updated."
     ),
     Version: z
+      .number()
       .int()
       .describe(
         "Version number for toll trip rates data. Increments when trip rates data is updated."

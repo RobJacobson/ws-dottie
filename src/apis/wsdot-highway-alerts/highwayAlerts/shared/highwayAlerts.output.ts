@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
  */
 export const alertSchema = z
   .object({
-    AlertID: z.int().describe("Numeric ID of the highway alert."),
+    AlertID: z.number().int().describe("Numeric ID of the highway alert."),
     County: z
       .string()
       .nullable()

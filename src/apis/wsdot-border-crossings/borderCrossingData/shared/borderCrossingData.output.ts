@@ -24,6 +24,7 @@ export const borderCrossingSchema = z
       "UTC datetime when this border crossing wait time observation was recorded."
     ),
     WaitTime: z
+      .number()
       .int()
       .describe(
         "Current estimated wait time for this crossing in minutes; -1 when a wait time is not available."
