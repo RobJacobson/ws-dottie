@@ -127,7 +127,7 @@ try {
 } catch (error) {
   if (error.name === 'ZodError') {
     console.error('Validation error:', error.message);
-    console.error('Invalid fields:', error.errors);
+    console.error('Invalid fields:', error.issues);
   }
 }
 ```
