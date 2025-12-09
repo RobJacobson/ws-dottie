@@ -61,7 +61,7 @@ export interface FetchEndpoint<I, O> {
   /** Zod schema for input validation (optional - excluded in lite builds) */
   inputSchema?: z.ZodSchema<I>;
   /** Zod schema for output validation (optional - excluded in lite builds) */
-  outputSchema?: z.ZodType<O, any>;
+  outputSchema?: z.ZodType<O, unknown>;
 }
 
 /**
@@ -154,7 +154,7 @@ export type EndpointMeta<I, O> = {
   /** Zod schema for input validation */
   inputSchema: z.ZodSchema<I>;
   /** Zod schema for output validation */
-  outputSchema: z.ZodType<O, any>;
+  outputSchema: z.ZodType<O, unknown>;
   /** Optional sample parameters for testing - can be static or async function */
   sampleParams: Partial<I> | (() => Promise<Partial<I>>);
   /** One-sentence description of what this specific endpoint does */
