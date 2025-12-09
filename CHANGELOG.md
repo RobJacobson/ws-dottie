@@ -7,7 +7,7 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
-## [1.5.1] - 2025-11-22
+## [1.5.1] -∏ 2025-11-22
 
 - Improvements
   - **Zod Version Compatibility**: Downgraded from Zod v4 to Zod v3 for compatibility with TypeScript MCP SDK
