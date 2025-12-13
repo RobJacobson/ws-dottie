@@ -126,17 +126,18 @@ Use this exact structure (headings + order):
 Purpose: <one sentence>
 Use when: <use case 1>; <use case 2>; <use case 3>
 Avoid when: <anti-pattern 1> (prefer <functionName>); <anti-pattern 2>
-Inputs (highlights): <only non-obvious inputs/formats/constraints>
+Inputs: <FieldName: description> | <FieldName: description> | ...
 Returns: <array|object|string|number|boolean|null> — <what it represents>
 Output (highlights): <clauses describing major output content and key fields>
 Chaining: <recipe 1> / <recipe 2> / <recipe 3>
 ```
 
 Notes:
-- **Do not** add a “Title:” line; tool names already exist in MCP.
-- Keep “Use when” to **3 items max** (omit if it adds no signal).
-- Keep “Avoid when” to **2 items max**; each item should name the preferred `functionName`.
-- If a tool has no inputs, still include `Inputs (highlights): none`.
+- **Do not** add a "Title:" line; tool names already exist in MCP.
+- Keep "Use when" to **3 items max** (omit if it adds no signal).
+- Keep "Avoid when" to **2 items max**; each item should name the preferred `functionName`.
+- If a tool has no inputs, use an empty array `[]`.
+- Use **one line** for `Inputs`; the compiler will join array items with ` | `.
 - Use **one line** for `Output (highlights)`; the compiler will join clauses with ` | `.
 - Use **one line** for `Chaining`, with **slash-separated** recipes.
 
@@ -144,9 +145,9 @@ Notes:
 In code, we store *parts* and compile them later.
 
 - `useWhen` and `avoidWhen` are arrays of short phrases (no semicolons needed).
-- `inputsHighlights` is a single string line:
-  - Use comma/semicolon separation (for example: `TripDate (YYYY-MM-DD); TerminalID (from fetchTerminalFares → TerminalID)`).
-  - Do **not** use ` | ` here; the compiler does not post-process this field.
+- `inputs` is an array of strings, each following "FieldName: description" format:
+  - Example: `["TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range", "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID"]`
+  - The compiler will join array items with ` | `.
 - `outputHighlights` should be:
   - **4–8** array items for objects/arrays, and
   - **1–3** array items for scalar-return tools (string/number/boolean/null),
@@ -163,7 +164,7 @@ To keep descriptions predictable and token-efficient, use these budgets:
 - **purpose**: exactly 1 sentence.
 - **useWhen**: 0–3 items.
 - **avoidWhen**: 0–2 items (each must include a `prefer <functionName>`).
-- **inputsHighlights**: one short line or `none`.
+- **inputs**: 0–5 items (one per input field, or empty array `[]` if no inputs).
 - **returns**: one short line; do not include examples.
 - **outputHighlights**:
   - objects/arrays: 4–8 items
@@ -178,10 +179,12 @@ If you can’t fit within budgets, remove low-signal content first (not structur
 
 ### Content rules (what to include)
 - **Purpose**: what this endpoint returns, not how it’s implemented.
-- **Inputs (highlights)**:
-  - IDs and where to get them (if not obvious).
-  - Date/time formats (e.g. `YYYY-MM-DD`) and timezone assumptions if known.
-  - Any tricky enums/codes.
+- **Inputs**: Array of "FieldName: description" strings for each input field:
+  - **Required elements**: Field name, data type/format (when non-obvious), source guidance for IDs
+  - **FieldName**: Exact parameter name from the input schema
+  - **Description**: Include data type/format (e.g., "YYYY-MM-DD format"), source for IDs (e.g., "from fetchVesselBasics → VesselID"), and constraints
+  - **Example**: `"VesselID: numeric ID from fetchVesselBasics → VesselID"`
+  - Use empty array `[]` if the tool has no inputs
 - **Returns**: shape + unit-of-meaning (“one row per vessel”, “one record per voyage”).
 - **Output (highlights)** (required because there’s no output schema):
   - **Join keys**: IDs/names used to chain.
@@ -280,7 +283,7 @@ These examples demonstrate:
 Purpose: List basic vessel identification and operational status for the fleet.
 Use when: discovering VesselID values; building vessel pickers; light status checks
 Avoid when: you need full vessel specs/amenities (prefer fetchVesselsVerboseByVesselId)
-Inputs (highlights): none
+Inputs: []
 Returns: array — one item per vessel
 Output (highlights): IDs: VesselID | Names: VesselName, VesselAbbrev | Class: Class.ClassID, Class.PublicDisplayName | Status: Status (1=in service, 2=maintenance, 3=out of service) | Ownership: OwnedByWSF
 Chaining: fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByVesselId / fetchVesselLocationsByVesselId / fetchVesselStatsByVesselId / fetchVesselAccommodationsByVesselId
@@ -304,7 +307,7 @@ Chaining: fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByV
 Purpose: Get the complete vessel profile for a single vessel by VesselID.
 Use when: detailed vessel pages; enriching a selected vessel; minimizing payload size
 Avoid when: you need the entire fleet (prefer fetchVesselsVerbose)
-Inputs (highlights): VesselID (get it from fetchVesselBasics → VesselID)
+Inputs: VesselID: numeric ID from fetchVesselBasics → VesselID
 Returns: object — one vessel profile
 Output (highlights): IDs: VesselID, VesselSubjectID | Names: VesselName, VesselAbbrev | Status/ops: Status, OwnedByWSF | Specs/amenities: combines stats + accommodations | Large text: ADAInfo, VesselNameDesc, VesselHistory may be long
 Chaining: fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByVesselId
@@ -328,7 +331,7 @@ Chaining: fetchVesselLocations → extract VesselID → call fetchVesselLocation
 Purpose: List historical voyage records for one vessel across a date range.
 Use when: delay analysis; historical performance; schedule vs actual comparisons
 Avoid when: you don’t know the vessel’s name (prefer fetchVesselBasics to discover VesselName)
-Inputs (highlights): VesselName (from fetchVesselBasics → VesselName) | DateStart, DateEnd in YYYY-MM-DD
+Inputs: VesselName: from fetchVesselBasics → VesselName | DateStart: YYYY-MM-DD format | DateEnd: YYYY-MM-DD format
 Returns: array — one item per voyage record
 Output (highlights): Keys: VesselId (note casing), Vessel (name) | Terminals: Departing, Arriving | Time: ScheduledDepart, ActualDepart, EstArrival, Date (UTC datetimes) | Semantics: some time fields may be null
 Chaining: fetchVesselBasics → extract VesselName → call fetchVesselHistoriesByVesselNameAndDateRange
@@ -339,7 +342,7 @@ Chaining: fetchVesselBasics → extract VesselName → call fetchVesselHistories
 ## Author checklist (before shipping a `toolDescription`)
 
 - **Structure**: matches the required template and order.
-- **Inputs**: includes every non-obvious format constraint (IDs, date strings).
+- **Inputs**: includes complete "FieldName: description" format for all input fields.
 - **Returns**: states array vs object and the unit-of-meaning.
 - **Output highlights**: includes join keys + top 4–8 important fields + bloat warning if needed.
 - **Use when / Avoid when**: present and points to specific preferred tools.
