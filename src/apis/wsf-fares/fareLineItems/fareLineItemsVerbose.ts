@@ -33,8 +33,7 @@ export const fareLineItemsVerboseMeta = {
     avoidWhen: [
       "you only need fares for one route (prefer fetchFareLineItemsBasic or fetchFareLineItemsByTripDateAndTerminals)",
     ],
-    inputsHighlights:
-      "TripDate in YYYY-MM-DD format (from fetchFaresValidDateRange)",
+    inputs: ["TripDate: YYYY-MM-DD format, from fetchFaresValidDateRange"],
     returns: "object — comprehensive fare data for all terminal pairs",
     outputHighlights: [
       "TerminalComboVerbose: array of all terminal combinations with collection info",

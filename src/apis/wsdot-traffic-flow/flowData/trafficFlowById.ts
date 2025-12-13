@@ -28,8 +28,9 @@ export const trafficFlowByIdMeta = {
     avoidWhen: [
       "you need data for multiple stations (prefer fetchTrafficFlows)",
     ],
-    inputsHighlights:
-      "FlowDataID (numeric station identifier from fetchTrafficFlows FlowDataID field)",
+    inputs: [
+      "FlowDataID: numeric station identifier from fetchTrafficFlows FlowDataID field",
+    ],
     returns: "object — traffic flow data for one specific station",
     outputHighlights: [
       "Station identity: FlowDataID, StationName (route-direction-milepost code)",

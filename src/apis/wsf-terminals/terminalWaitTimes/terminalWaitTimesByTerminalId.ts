@@ -33,8 +33,7 @@ export const terminalWaitTimesByTerminalIdMeta = {
       "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
       "you need wait times for multiple terminals (prefer fetchTerminalWaitTimes)",
     ],
-    inputsHighlights:
-      "TerminalID (get it from fetchTerminalBasics → TerminalID)",
+    inputs: ["TerminalID: get it from fetchTerminalBasics → TerminalID"],
     returns: "object — one terminal with wait time information",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

@@ -15,7 +15,7 @@ import {
  */
 export const mountainPassConditionByIdMeta = {
   functionName: "fetchMountainPassConditionById",
-  endpoint: "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
+  endpoint: "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}", // Typo in original url
   inputSchema: mountainPassConditionByIdInputSchema,
   outputSchema: passConditionSchema,
   sampleParams: { PassConditionID: 12 },
@@ -35,8 +35,9 @@ export const mountainPassConditionByIdMeta = {
       "you need conditions for multiple passes (prefer fetchMountainPassConditions)",
       "you don't have a PassConditionID (prefer fetchMountainPassConditions to discover IDs)",
     ],
-    inputsHighlights:
-      "PassConditionID (numeric ID from bulk queries like fetchMountainPassConditions → MountainPassId)",
+    inputs: [
+      "PassConditionID: numeric ID from bulk queries like fetchMountainPassConditions → MountainPassId",
+    ],
     returns: "object — complete conditions for one mountain pass",
     outputHighlights: [
       "IDs: MountainPassId, links to location data",

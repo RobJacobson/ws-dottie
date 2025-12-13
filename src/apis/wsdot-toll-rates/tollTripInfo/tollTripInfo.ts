@@ -31,7 +31,7 @@ export const tollTripInfoMeta = {
       "you only need pricing information (prefer fetchTollRates)",
       "you need current toll amounts (prefer fetchTollRates)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per toll trip route",
     outputHighlights: [
       "Locations: StartLocationName/EndLocationName with milepost markers",

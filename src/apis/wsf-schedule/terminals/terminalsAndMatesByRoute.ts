@@ -34,8 +34,10 @@ export const terminalsAndMatesByRouteMeta = {
       "you need terminals for all routes (prefer fetchTerminalsAndMates)",
       "you don't know the RouteID (prefer fetchRoutesByTripDate first)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range); RouteID (from fetchRoutesByTripDate → RouteID)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "RouteID: from fetchRoutesByTripDate → RouteID",
+    ],
     returns: "array — valid terminal pairs for the specified route",
     outputHighlights: [
       "Departing terminal: DepartingTerminalID, DepartingDescription",

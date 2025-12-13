@@ -40,8 +40,14 @@ export const searchAlertsMeta = {
       "you need alerts for specific map areas (prefer fetchAlertsByMapArea)",
       "you only need one specific alert (prefer fetchAlertById)",
     ],
-    inputsHighlights:
-      "StateRoute (three-digit route number like '405'); Region (numeric ID: 7=Eastern, 8=North Central, 9=Northwest, 10=Olympic, 11=South Central, 12=Southwest); SearchTimeStart/SearchTimeEnd in ISO format; StartingMilepost/EndingMilepost for route segments",
+    inputs: [
+      "StateRoute: three-digit route number like '405'",
+      "Region: numeric ID (7=Eastern, 8=North Central, 9=Northwest, 10=Olympic, 11=South Central, 12=Southwest)",
+      "SearchTimeStart: ISO format",
+      "SearchTimeEnd: ISO format",
+      "StartingMilepost: for route segments",
+      "EndingMilepost: for route segments",
+    ],
     returns: "array — one item per alert matching search criteria",
     outputHighlights: [
       "IDs: AlertID (unique numeric identifier)",

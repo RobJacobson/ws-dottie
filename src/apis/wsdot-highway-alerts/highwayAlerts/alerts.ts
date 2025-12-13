@@ -30,7 +30,7 @@ export const alertsMeta = {
       "you only need alerts for specific map areas (prefer fetchAlertsByMapArea)",
       "you need filtered results (prefer searchAlerts)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per active highway alert",
     outputHighlights: [
       "IDs: AlertID (unique numeric identifier)",

@@ -30,8 +30,9 @@ export const highwayCameraByCameraIdMeta = {
       "you need multiple cameras (prefer bulk endpoints like fetchHighwayCameras or searchHighwayCamerasByRouteAndMilepost)",
       "you don't have a CameraID (prefer bulk endpoints to discover IDs)",
     ],
-    inputsHighlights:
-      "CameraID (numeric ID from bulk camera queries like fetchHighwayCameras → CameraID)",
+    inputs: [
+      "CameraID: numeric ID from bulk camera queries like fetchHighwayCameras → CameraID",
+    ],
     returns: "object — complete details for one highway camera",
     outputHighlights: [
       "IDs: CameraID, links to related location data",

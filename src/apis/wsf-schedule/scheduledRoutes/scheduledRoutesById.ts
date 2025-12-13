@@ -32,8 +32,7 @@ export const scheduledRoutesByIdMeta = {
       "you need routes across all seasons (prefer fetchScheduledRoutes)",
       "you don't know the ScheduleID (prefer fetchActiveSeasons first)",
     ],
-    inputsHighlights:
-      "ScheduleID (required, from fetchActiveSeasons → ScheduleID)",
+    inputs: ["ScheduleID: required, from fetchActiveSeasons → ScheduleID"],
     returns: "array — scheduled routes for the specified season",
     outputHighlights: [
       "IDs: ScheduleID, SchedRouteID, RouteID, RegionID",

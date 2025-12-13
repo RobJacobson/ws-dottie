@@ -29,7 +29,7 @@ export const borderCrossingsMeta = {
       "planning international travel timing",
       "monitoring border congestion",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per border crossing",
     outputHighlights: [
       "IDs: CrossingName (crossing code like I5, SR543Trucks)",

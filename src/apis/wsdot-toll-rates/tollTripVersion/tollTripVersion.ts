@@ -28,7 +28,7 @@ export const tollTripVersionMeta = {
       "determining when to refresh toll rate data",
     ],
     avoidWhen: ["you need the actual toll rates (prefer fetchTollTripRates)"],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "object — current version number and timestamp",
     outputHighlights: [
       "Version: numeric version number that increments when toll rates change",

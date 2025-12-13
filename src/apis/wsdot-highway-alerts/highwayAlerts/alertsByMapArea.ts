@@ -29,8 +29,9 @@ export const alertsByMapAreaMeta = {
       "you need filtered results with multiple criteria (prefer searchAlerts)",
       "you need all statewide alerts (prefer fetchAlerts)",
     ],
-    inputsHighlights:
-      "MapArea (code from fetchMapAreas like 'L2PS' for Puget Sound, 'L2SE' for Seattle)",
+    inputs: [
+      "MapArea: code from fetchMapAreas like 'L2PS' for Puget Sound, 'L2SE' for Seattle",
+    ],
     returns: "array — one item per alert in the specified map area",
     outputHighlights: [
       "IDs: AlertID (unique numeric identifier)",

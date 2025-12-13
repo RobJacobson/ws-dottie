@@ -32,7 +32,7 @@ export const terminalTransportsMeta = {
       "you only need transport info for one terminal (prefer fetchTerminalTransportsByTerminalId)",
       "you don't need detailed commuter information (prefer lighter endpoints)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per terminal",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

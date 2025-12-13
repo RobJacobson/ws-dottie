@@ -32,7 +32,7 @@ export const terminalBasicsMeta = {
       "you only need one terminal (prefer fetchTerminalBasicsByTerminalId)",
       "you need detailed terminal information (prefer fetchTerminalVerbose or fetchTerminalVerboseByTerminalId)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per terminal",
     outputHighlights: [
       "IDs: TerminalID (primary key), TerminalSubjectID, RegionID",

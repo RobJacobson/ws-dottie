@@ -32,7 +32,7 @@ export const weatherInformationMeta = {
       "you only need data for one station (prefer fetchWeatherInformationByStationId)",
       "you need weather for specific stations (prefer fetchCurrentWeatherForStations)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per weather station",
     outputHighlights: [
       "StationID and StationName for identification",

@@ -28,7 +28,7 @@ export const scheduleAlertsMeta = {
       "building alert displays for multiple routes",
       "accessing alerts in different formats (bulletin, homepage, IVR)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — all current schedule alerts",
     outputHighlights: [
       "IDs: BulletinID, AlertTypeID",

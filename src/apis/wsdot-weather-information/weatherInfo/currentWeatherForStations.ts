@@ -33,8 +33,9 @@ export const currentWeatherForStationsMeta = {
       "you need all stations statewide (prefer fetchWeatherInformation)",
       "you only need one station (prefer fetchWeatherInformationByStationId)",
     ],
-    inputsHighlights:
-      "StationList as comma-separated StationIDs from fetchWeatherStations → StationID",
+    inputs: [
+      "StationList: comma-separated StationIDs from fetchWeatherStations → StationID",
+    ],
     returns: "array — one item per requested station",
     outputHighlights: [
       "StationID and StationName for identification",

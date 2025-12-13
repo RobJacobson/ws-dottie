@@ -32,7 +32,7 @@ export const terminalLocationsMeta = {
       "you only need one terminal's location (prefer fetchTerminalLocationsByTerminalId)",
       "you don't need detailed location data (prefer lighter endpoints)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per terminal",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

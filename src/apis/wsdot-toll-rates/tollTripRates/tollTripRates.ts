@@ -31,7 +31,7 @@ export const tollTripRatesMeta = {
       "you only need HOV lane tolls (prefer fetchTollRates)",
       "you need historical rates (prefer fetchTripRatesByDate)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns:
       "object — container with version, update time, and array of all trip rates",
     outputHighlights: [

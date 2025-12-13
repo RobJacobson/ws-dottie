@@ -32,7 +32,7 @@ export const vesselLocationsMeta = {
     avoidWhen: [
       "you only need one vessel (prefer fetchVesselLocationsByVesselId)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per vessel location report",
     outputHighlights: [
       "IDs: VesselID, DepartingTerminalID, ArrivingTerminalID",

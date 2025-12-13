@@ -32,7 +32,7 @@ export const commercialVehicleRestrictionsWithIdMeta = {
     avoidWhen: [
       "you don't need unique restriction identifiers (prefer fetchCommercialVehicleRestrictions)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per commercial vehicle restriction",
     outputHighlights: [
       "IDs: UniqueID (format 'Type-State-Route-Sequence', e.g., 'B-WA-010-1')",

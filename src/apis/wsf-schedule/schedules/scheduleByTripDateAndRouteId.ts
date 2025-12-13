@@ -31,8 +31,10 @@ export const scheduleByTripDateAndRouteIdMeta = {
       "you need schedule for specific terminals (prefer fetchScheduleByTripDateAndTerminalIds)",
       "you need real-time schedule (prefer fetchScheduleTodayByRoute)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range); RouteID (from fetchRoutesByTripDate → RouteID)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "RouteID: from fetchRoutesByTripDate → RouteID",
+    ],
     returns:
       "object — complete schedule for route with all terminal combinations",
     outputHighlights: [

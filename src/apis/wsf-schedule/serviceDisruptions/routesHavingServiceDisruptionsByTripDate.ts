@@ -34,8 +34,9 @@ export const routesHavingServiceDisruptionsByTripDateMeta = {
       "you need disruptions for all dates (prefer fetchScheduleAlerts)",
       "you need disruptions for specific routes (check ServiceDisruptions in route endpoints)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+    ],
     returns: "array — service disruptions for the trip date (may be empty)",
     outputHighlights: [
       "Disruption details: BulletinID, BulletinFlag, PublishDate, DisruptionDescription",

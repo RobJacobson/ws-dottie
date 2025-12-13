@@ -28,7 +28,7 @@ export const tollRatesMeta = {
     avoidWhen: [
       "you only need toll rates for specific trips (prefer fetchTollTripRates)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per toll lane segment",
     outputHighlights: [
       "Locations: StartLocationName/EndLocationName with coordinates and mileposts",

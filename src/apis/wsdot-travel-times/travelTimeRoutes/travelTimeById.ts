@@ -28,8 +28,9 @@ export const travelTimeByIdMeta = {
       "route-specific travel planning",
     ],
     avoidWhen: ["you need data for multiple routes (prefer fetchTravelTimes)"],
-    inputsHighlights:
-      "TravelTimeID (numeric route identifier from fetchTravelTimes TravelTimeID field)",
+    inputs: [
+      "TravelTimeID: numeric route identifier from fetchTravelTimes TravelTimeID field",
+    ],
     returns: "object — travel time data for one specific route",
     outputHighlights: [
       "Route details: TravelTimeID, Name, Description of the travel route",

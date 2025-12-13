@@ -41,8 +41,11 @@ export const searchWeatherInformationMeta = {
       "you need current conditions (prefer fetchWeatherInformationByStationId)",
       "you need data for multiple stations (prefer fetchWeatherInformation)",
     ],
-    inputsHighlights:
-      "StationID from fetchWeatherStations → StationID; SearchStartTime, SearchEndTime in ISO-8601 UTC format",
+    inputs: [
+      "StationID: from fetchWeatherStations → StationID",
+      "SearchStartTime: ISO-8601 UTC format",
+      "SearchEndTime: ISO-8601 UTC format",
+    ],
     returns: "array — one item per reading timestamp",
     outputHighlights: [
       "StationID and StationName for identification",

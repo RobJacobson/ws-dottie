@@ -32,7 +32,7 @@ export const terminalWaitTimesMeta = {
       "you only need wait times for one terminal (prefer fetchTerminalWaitTimesByTerminalId)",
       "you're not interested in arrival timing guidance",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per terminal",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

@@ -30,7 +30,7 @@ export const vesselHistoriesMeta = {
     avoidWhen: [
       "you need detailed voyage records (prefer fetchVesselHistoriesByVesselAndDates)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per vessel with basic historical info",
     outputHighlights: [
       "Keys: VesselId (note casing), Vessel (name)",

@@ -34,8 +34,11 @@ export const routesByTripDateAndTerminalsMeta = {
       "you need all routes for a date (prefer fetchRoutesByTripDate)",
       "you need detailed route information (prefer fetchRouteDetailsByTripDateAndTerminals)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range); DepartingTerminalID, ArrivingTerminalID (from fetchTerminalsAndMates → TerminalID)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+    ],
     returns: "array — routes connecting the terminal pair (typically 1 item)",
     outputHighlights: [
       "IDs: RouteID, RegionID",

@@ -23,7 +23,7 @@ export const cacheFlushDateFaresMeta = {
       "checking if fare data has changed since last fetch",
       "coordinating cache invalidation across fare endpoints",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "string — UTC timestamp in ISO format",
     outputHighlights: [
       "ISO 8601 datetime string indicating last fares data update",

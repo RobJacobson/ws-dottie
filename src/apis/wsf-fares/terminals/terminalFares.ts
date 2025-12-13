@@ -31,8 +31,7 @@ export const terminalFaresMeta = {
     avoidWhen: [
       "you only need one terminal (prefer fetchTerminalMatesFares for terminal relationships)",
     ],
-    inputsHighlights:
-      "TripDate in YYYY-MM-DD format (from fetchFaresValidDateRange)",
+    inputs: ["TripDate: YYYY-MM-DD format, from fetchFaresValidDateRange"],
     returns: "array — one item per departing terminal",
     outputHighlights: [
       "TerminalID: numeric identifier for the terminal",

@@ -35,8 +35,11 @@ export const scheduleByTripDateAndTerminalIds = {
       "you need real-time schedule with current vessel assignments (prefer fetchScheduleTodayByTerminals)",
       "you don't know terminal IDs (prefer fetchTerminalsAndMates first)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range); DepartingTerminalID, ArrivingTerminalID (from fetchTerminalsAndMates → TerminalID)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+    ],
     returns:
       "object — complete schedule for terminal pair with all adjustments",
     outputHighlights: [

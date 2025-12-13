@@ -33,8 +33,7 @@ export const terminalLocationsByTerminalIdMeta = {
       "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
       "you need locations for multiple terminals (prefer fetchTerminalLocations)",
     ],
-    inputsHighlights:
-      "TerminalID (get it from fetchTerminalBasics → TerminalID)",
+    inputs: ["TerminalID: get it from fetchTerminalBasics → TerminalID"],
     returns: "object — one terminal with detailed location data",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

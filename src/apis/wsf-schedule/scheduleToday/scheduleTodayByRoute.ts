@@ -29,8 +29,10 @@ export const scheduleTodayByRouteMeta = {
       "you need schedule data for multiple routes (prefer bulk endpoints)",
       "you need historical schedule data (prefer sailing endpoints)",
     ],
-    inputsHighlights:
-      "RouteID (from fetchRoutesByTripDate → RouteID); OnlyRemainingTimes (true for future departures only, false for all today's departures)",
+    inputs: [
+      "RouteID: from fetchRoutesByTripDate → RouteID",
+      "OnlyRemainingTimes: true for future departures only, false for all today's departures",
+    ],
     returns: "object — today's complete schedule for the route",
     outputHighlights: [
       "Schedule info: ScheduleID, ScheduleName, ScheduleSeason, SchedulePDFUrl, ScheduleStart/End dates",

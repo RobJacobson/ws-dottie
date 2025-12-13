@@ -31,7 +31,7 @@ export const vesselsVerboseMeta = {
     avoidWhen: [
       "you only need one vessel (prefer fetchVesselsVerboseByVesselId)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per vessel",
     outputHighlights: [
       "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class info",

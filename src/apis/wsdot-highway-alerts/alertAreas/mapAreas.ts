@@ -26,7 +26,7 @@ export const mapAreasMeta = {
       "building regional filter interfaces",
       "obtaining valid area identifiers for alert queries",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per map area",
     outputHighlights: [
       "IDs: MapArea (region code like 'L2PS' for Puget Sound)",

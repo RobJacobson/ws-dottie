@@ -30,8 +30,9 @@ export const alertByIdMeta = {
       "you need multiple alerts (prefer bulk endpoints like fetchAlerts or searchAlerts)",
       "you don't have an AlertID (prefer bulk endpoints to discover IDs)",
     ],
-    inputsHighlights:
-      "AlertID (numeric ID from bulk alert queries like fetchAlerts → AlertID)",
+    inputs: [
+      "AlertID: numeric ID from bulk alert queries like fetchAlerts → AlertID",
+    ],
     returns: "object — complete details for one highway alert",
     outputHighlights: [
       "IDs: AlertID, links to related location/route data",

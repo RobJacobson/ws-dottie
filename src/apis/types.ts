@@ -158,10 +158,10 @@ export type ToolDescription = {
    */
   avoidWhen?: string[];
   /**
-   * Inputs (highlights): Non-obvious constraints (IDs, date formats, enums).
-   * Use "none" when there are no inputs.
+   * Inputs: Array of "FieldName: description" strings for each input field.
+   * Use empty array [] when there are no inputs.
    */
-  inputsHighlights?: string;
+  inputs?: string[];
   /**
    * Returns: Shape + unit-of-meaning, e.g. "array — one item per vessel".
    */

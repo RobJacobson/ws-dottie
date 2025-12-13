@@ -26,7 +26,7 @@ export const vesselStatsByVesselIdMeta = {
       "minimizing payload for single vessel details",
     ],
     avoidWhen: ["you need the entire fleet (prefer fetchVesselStats)"],
-    inputsHighlights: "VesselID (get it from fetchVesselBasics → VesselID)",
+    inputs: ["VesselID: numeric ID from fetchVesselBasics → VesselID"],
     returns: "object — one vessel's complete technical profile",
     outputHighlights: [
       "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class details",

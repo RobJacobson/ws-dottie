@@ -35,8 +35,9 @@ export const routeDetailsByTripDateMeta = {
       "you only need basic route identification (prefer fetchRoutesByTripDate)",
       "you need details for one specific route (prefer fetchRouteDetailsByTripDateAndRouteId)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+    ],
     returns: "array — one item per route operating on trip date",
     outputHighlights: [
       "IDs: RouteID, RegionID, VesselWatchID",

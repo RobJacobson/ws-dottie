@@ -34,8 +34,11 @@ export const scheduleTodayByTerminalsMeta = {
       "you need schedules for multiple terminal pairs (prefer fetchScheduleTodayByRoute)",
       "you don't know terminal IDs (prefer fetchTerminalsAndMates first)",
     ],
-    inputsHighlights:
-      "DepartingTerminalID, ArrivingTerminalID (from fetchTerminalsAndMates → TerminalID); OnlyRemainingTimes (true for future departures only, false for all today's departures)",
+    inputs: [
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "OnlyRemainingTimes: true for future departures only, false for all today's departures",
+    ],
     returns: "object — today's schedule for the terminal pair",
     outputHighlights: [
       "Schedule info: ScheduleID, ScheduleName, ScheduleSeason, SchedulePDFUrl, ScheduleStart/End dates",

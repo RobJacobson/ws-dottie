@@ -33,8 +33,7 @@ export const terminalComboFaresVerboseMeta = {
     avoidWhen: [
       "you only need one terminal pair (prefer fetchTerminalComboFares)",
     ],
-    inputsHighlights:
-      "TripDate in YYYY-MM-DD format (from fetchFaresValidDateRange)",
+    inputs: ["TripDate: YYYY-MM-DD format, from fetchFaresValidDateRange"],
     returns: "array — one item per terminal combination",
     outputHighlights: [
       "DepartingTerminalID: numeric ID of departure terminal",

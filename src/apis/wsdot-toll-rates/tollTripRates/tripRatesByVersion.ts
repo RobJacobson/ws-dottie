@@ -31,8 +31,9 @@ export const tripRatesByVersionMeta = {
       "you need current rates (prefer fetchTollTripRates)",
       "you need rates for a date range (prefer fetchTripRatesByDate)",
     ],
-    inputsHighlights:
-      "Version (numeric version number from fetchTollTripRates Version field)",
+    inputs: [
+      "Version: numeric version number from fetchTollTripRates Version field",
+    ],
     returns: "object — toll rates container for the specified version",
     outputHighlights: [
       "Container: LastUpdated (when this version was created), Version (matches input)",

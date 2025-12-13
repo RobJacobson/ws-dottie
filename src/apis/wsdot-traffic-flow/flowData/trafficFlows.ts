@@ -29,7 +29,7 @@ export const trafficFlowsMeta = {
       "you only need one station's data (prefer fetchTrafficFlowById)",
       "payload size is a concern (returns thousands of stations)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per traffic flow station",
     outputHighlights: [
       "Station info: FlowDataID (unique identifier), StationName (route-direction-milepost code)",

@@ -32,7 +32,7 @@ export const terminalVerboseMeta = {
       "you only need one terminal (prefer fetchTerminalVerboseByTerminalId)",
       "you only need specific data types (prefer targeted endpoints like fetchTerminalBasics or fetchTerminalLocations)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per terminal",
     outputHighlights: [
       "Combines ALL terminal data: basics + bulletins + locations + sailing space + transports + wait times",

@@ -33,8 +33,9 @@ export const terminalsAndMatesMeta = {
       "you need terminals for a specific departure point (prefer fetchTerminalMatesSchedule)",
       "you only need departing terminals (prefer fetchTerminals)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+    ],
     returns: "array — all valid terminal pairs for the trip date",
     outputHighlights: [
       "Departing terminal: DepartingTerminalID, DepartingDescription",

@@ -26,7 +26,7 @@ export const eventCategoriesMeta = {
       "building category filter interfaces",
       "understanding available alert classification types",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per event category name",
     outputHighlights: [
       "Categories: string names like 'Construction', 'Collision', 'Weather'",

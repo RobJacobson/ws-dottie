@@ -31,7 +31,7 @@ export const bridgeClearancesMeta = {
     avoidWhen: [
       "you only need bridges on specific routes (prefer fetchBridgeClearancesByRoute)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per bridge",
     outputHighlights: [
       "IDs: BridgeNumber (route/structure), StateStructureId, CrossingLocationId",

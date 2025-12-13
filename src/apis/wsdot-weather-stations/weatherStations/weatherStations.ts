@@ -34,7 +34,7 @@ export const weatherStationsMeta = {
       "you already know specific station IDs",
       "you need current weather conditions (prefer weather-information endpoints)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per weather station",
     outputHighlights: [
       "StationCode (numeric ID) and StationName for station identification",

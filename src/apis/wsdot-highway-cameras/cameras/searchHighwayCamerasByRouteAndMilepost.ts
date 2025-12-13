@@ -34,8 +34,12 @@ export const searchHighwayCamerasByRouteAndMilepostMeta = {
       "you need all statewide cameras (prefer fetchHighwayCameras)",
       "you only need one specific camera (prefer fetchHighwayCameraByCameraId)",
     ],
-    inputsHighlights:
-      "StateRoute (like 'I-5', 'I-90'); Region (optional region filter); StartingMilepost/EndingMilepost (optional milepost range)",
+    inputs: [
+      "StateRoute: like 'I-5', 'I-90'",
+      "Region: optional region filter",
+      "StartingMilepost: optional milepost range",
+      "EndingMilepost: optional milepost range",
+    ],
     returns: "array — one item per camera matching search criteria",
     outputHighlights: [
       "IDs: CameraID (unique numeric identifier)",

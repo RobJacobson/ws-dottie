@@ -32,7 +32,7 @@ export const vesselLocationsByVesselIdMeta = {
     avoidWhen: [
       "you need all vessels (bulk fetchVesselLocations is more efficient)",
     ],
-    inputsHighlights: "VesselID (get it from fetchVesselBasics → VesselID)",
+    inputs: ["VesselID: numeric ID from fetchVesselBasics → VesselID"],
     returns: "object — one vessel's real-time location data",
     outputHighlights: [
       "IDs: VesselID, DepartingTerminalID, ArrivingTerminalID",

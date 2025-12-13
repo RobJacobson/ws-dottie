@@ -29,7 +29,7 @@ export const sailingsByRouteIDMeta = {
       "you need inactive sailings too (prefer fetchAllSailingsBySchedRouteID)",
       "you need today's real-time schedule (prefer fetchScheduleTodayByRoute)",
     ],
-    inputsHighlights: "SchedRouteID (from fetchScheduledRoutes → SchedRouteID)",
+    inputs: ["SchedRouteID: from fetchScheduledRoutes → SchedRouteID"],
     returns: "array — active sailings for scheduled route (large payload)",
     outputHighlights: [
       "IDs: ScheduleID, SchedRouteID, RouteID, SailingID",

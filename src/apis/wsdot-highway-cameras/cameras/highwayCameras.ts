@@ -29,7 +29,7 @@ export const highwayCamerasMeta = {
       "you only need one specific camera (prefer fetchHighwayCameraByCameraId)",
       "building user-facing camera picker interfaces (prefer filtered endpoints)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per highway camera",
     outputHighlights: [
       "IDs: CameraID (unique numeric identifier)",

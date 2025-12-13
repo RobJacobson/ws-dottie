@@ -26,7 +26,7 @@ export const scheduleValidDateRangeMeta = {
       "determining available date ranges for planning",
       "checking schedule data availability",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "object — valid date range for schedule data",
     outputHighlights: [
       "DateFrom: Earliest valid trip date (UTC datetime)",

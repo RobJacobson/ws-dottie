@@ -32,7 +32,7 @@ export const commercialVehicleRestrictionsMeta = {
     avoidWhen: [
       "you need unique identifiers for restrictions (prefer fetchCommercialVehicleRestrictionsWithId)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per commercial vehicle restriction",
     outputHighlights: [
       "Location: StateRouteID, Latitude/Longitude, StartRoadwayLocation/EndRoadwayLocation, LocationDescription",

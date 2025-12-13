@@ -29,8 +29,9 @@ export const alertsByRegionIdMeta = {
       "you need filtered results with multiple criteria (prefer searchAlerts)",
       "you need all statewide alerts (prefer fetchAlerts)",
     ],
-    inputsHighlights:
-      "RegionID (numeric: 7=Eastern, 8=North Central, 9=Northwest, 10=Olympic, 11=South Central, 12=Southwest)",
+    inputs: [
+      "RegionID: numeric (7=Eastern, 8=North Central, 9=Northwest, 10=Olympic, 11=South Central, 12=Southwest)",
+    ],
     returns: "array — one item per alert in the specified region",
     outputHighlights: [
       "IDs: AlertID (unique numeric identifier)",

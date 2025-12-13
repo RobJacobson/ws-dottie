@@ -30,8 +30,10 @@ export const terminalMatesScheduleMeta = {
       "you need all terminals in the system (prefer fetchTerminals)",
       "you don't know the departing TerminalID (prefer fetchTerminals first)",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range); TerminalID (from fetchTerminals → TerminalID)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "TerminalID: from fetchTerminals → TerminalID",
+    ],
     returns: "array — valid arriving terminals for the departing terminal",
     outputHighlights: ["Terminal info: TerminalID, Description (display name)"],
     chaining: [

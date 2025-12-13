@@ -35,7 +35,7 @@ export const tripRatesByDateMeta = {
       "you need current rates only (prefer fetchTollTripRates)",
       "you need rates for a specific version (prefer fetchTripRatesByVersion)",
     ],
-    inputsHighlights: "FromDate, ToDate in YYYY-MM-DD format",
+    inputs: ["FromDate: YYYY-MM-DD format", "ToDate: YYYY-MM-DD format"],
     returns:
       "array — one item per day in date range, each containing trip rates for that day",
     outputHighlights: [

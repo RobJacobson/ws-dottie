@@ -26,8 +26,9 @@ export const terminalsMeta = {
       "building terminal selection interfaces",
       "getting TerminalID values for other endpoints",
     ],
-    inputsHighlights:
-      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+    ],
     returns: "array — valid departing terminals for the trip date",
     outputHighlights: ["Terminal info: TerminalID, Description (display name)"],
   },

@@ -26,7 +26,7 @@ export const cacheFlushDateTerminalsMeta = {
       "implementing cache invalidation strategies",
       "polling for terminal data updates",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "string — UTC timestamp when terminal data was last updated",
     outputHighlights: [
       "Timestamp in ISO 8601 format indicating last update time",

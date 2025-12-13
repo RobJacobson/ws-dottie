@@ -29,8 +29,7 @@ export const vesselAccommodationsByVesselIdMeta = {
       "showing detailed accommodation information",
     ],
     avoidWhen: ["you need all vessels (prefer fetchVesselAccommodations)"],
-    inputsHighlights:
-      "VesselID (get it from fetchVesselAccommodations → VesselID)",
+    inputs: ["VesselID: numeric ID from fetchVesselAccommodations → VesselID"],
     returns: "object — one vessel's accommodation profile",
     outputHighlights: [
       "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class details",

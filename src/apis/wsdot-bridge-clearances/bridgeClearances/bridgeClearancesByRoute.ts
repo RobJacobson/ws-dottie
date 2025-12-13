@@ -32,8 +32,9 @@ export const bridgeClearancesByRouteMeta = {
     avoidWhen: [
       "you need bridges across all routes (prefer fetchBridgeClearances)",
     ],
-    inputsHighlights:
-      "Route (three-digit route identifier, e.g., '005' for I-5, '167' for SR-167)",
+    inputs: [
+      "Route: three-digit route identifier, e.g., '005' for I-5, '167' for SR-167",
+    ],
     returns: "array — one item per bridge on the specified route",
     outputHighlights: [
       "IDs: BridgeNumber (route/structure), StateStructureId, CrossingLocationId",

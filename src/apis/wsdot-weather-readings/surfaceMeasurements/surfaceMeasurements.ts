@@ -32,7 +32,7 @@ export const surfaceMeasurementsMeta = {
       "you need subsurface measurements (prefer fetchSubSurfaceMeasurements)",
       "you need comprehensive weather data (prefer fetchWeatherReadings)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per surface sensor",
     outputHighlights: [
       "SensorId for sensor identification",

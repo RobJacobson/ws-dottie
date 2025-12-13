@@ -38,8 +38,14 @@ export const fareTotalsByTripDateAndRouteMeta = {
     avoidWhen: [
       "you need individual fare components (prefer fetchFareLineItemsBasic or fetchFareLineItemsByTripDateAndTerminals)",
     ],
-    inputsHighlights:
-      "TripDate in YYYY-MM-DD; DepartingTerminalID, ArrivingTerminalID; RoundTrip boolean; FareLineItemID (comma-separated IDs); Quantity (comma-separated numbers matching FareLineItemID order)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format",
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "RoundTrip: boolean",
+      "FareLineItemID: comma-separated IDs",
+      "Quantity: comma-separated numbers matching FareLineItemID order",
+    ],
     returns: "array — fare total breakdowns",
     outputHighlights: [
       "TotalType: 1=Departing, 2=Return, 3=Either (direction independent), 4=Grand Total",

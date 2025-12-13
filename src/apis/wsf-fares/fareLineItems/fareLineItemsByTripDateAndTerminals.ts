@@ -37,8 +37,12 @@ export const fareLineItemsByTripDateAndTerminalsMeta = {
       "you need fare totals (prefer fetchFareTotalsByTripDateAndRoute)",
       "you need all terminal combinations (prefer fetchFareLineItemsVerbose)",
     ],
-    inputsHighlights:
-      "TripDate in YYYY-MM-DD; DepartingTerminalID, ArrivingTerminalID; RoundTrip boolean (from terminal endpoints)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format",
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "RoundTrip: boolean, from terminal endpoints",
+    ],
     returns: "array — one item per fare component",
     outputHighlights: [
       "FareLineItemID: numeric identifier for the fare component",

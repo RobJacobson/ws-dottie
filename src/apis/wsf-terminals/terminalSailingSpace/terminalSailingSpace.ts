@@ -32,7 +32,7 @@ export const terminalSailingSpaceMeta = {
       "you only need space info for one terminal (prefer fetchTerminalSailingSpaceByTerminalId)",
       "you need static terminal data (prefer other terminal endpoints)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per terminal",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

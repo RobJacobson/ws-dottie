@@ -33,7 +33,7 @@ export const mountainPassConditionsMeta = {
     avoidWhen: [
       "you only need conditions for one specific pass (prefer fetchMountainPassConditionById)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per monitored mountain pass",
     outputHighlights: [
       "IDs: MountainPassId (unique numeric identifier)",

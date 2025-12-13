@@ -33,7 +33,7 @@ export const weatherInformationByStationIdMeta = {
     avoidWhen: [
       "you need data for multiple stations (prefer fetchCurrentWeatherForStations or fetchWeatherInformation)",
     ],
-    inputsHighlights: "StationID from fetchWeatherStations → StationID",
+    inputs: ["StationID: from fetchWeatherStations → StationID"],
     returns: "object — one weather station profile",
     outputHighlights: [
       "StationID and StationName for identification",

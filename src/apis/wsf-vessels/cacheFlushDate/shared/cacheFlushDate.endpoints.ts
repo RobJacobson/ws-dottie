@@ -25,7 +25,7 @@ export const cacheFlushDateVesselsMeta = {
       "implementing cache invalidation strategies",
       "polling for data freshness",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns:
       "string — UTC timestamp indicating when static vessel data was last updated",
     outputHighlights: [

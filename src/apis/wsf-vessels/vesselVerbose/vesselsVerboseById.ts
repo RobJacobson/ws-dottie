@@ -29,7 +29,7 @@ export const vesselsVerboseByVesselIdMeta = {
       "minimizing payload size",
     ],
     avoidWhen: ["you need the entire fleet (prefer fetchVesselsVerbose)"],
-    inputsHighlights: "VesselID (get it from fetchVesselBasics → VesselID)",
+    inputs: ["VesselID: numeric ID from fetchVesselBasics → VesselID"],
     returns: "object — one vessel profile",
     outputHighlights: [
       "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class info",

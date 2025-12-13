@@ -29,7 +29,7 @@ export const activeSeasonsMeta = {
       "finding current season information",
       "accessing schedule PDF documents",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per active schedule season",
     outputHighlights: [
       "IDs: ScheduleID (unique numeric identifier)",

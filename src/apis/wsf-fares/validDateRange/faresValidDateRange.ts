@@ -27,7 +27,7 @@ export const faresValidDateRangeMeta = {
       "determining available booking periods",
       "checking fare data coverage for specific dates",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "object — fare data validity period",
     outputHighlights: [
       "DateFrom: earliest UTC datetime when fares are available",

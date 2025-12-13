@@ -31,7 +31,7 @@ export const vesselBasicsMeta = {
     avoidWhen: [
       "you need full vessel specs/amenities (prefer fetchVesselAccommodationsByVesselId)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per vessel",
     outputHighlights: [
       "IDs: VesselID, VesselSubjectID",

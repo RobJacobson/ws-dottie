@@ -32,7 +32,7 @@ export const terminalBulletinsMeta = {
       "you only need bulletins for one terminal (prefer fetchTerminalBulletinsByTerminalId)",
       "you're not interested in bulletin content (prefer lighter endpoints)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per terminal",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

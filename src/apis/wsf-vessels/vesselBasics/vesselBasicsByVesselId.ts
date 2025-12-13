@@ -29,7 +29,7 @@ export const vesselBasicsByVesselIdMeta = {
       "checking operational status of a specific vessel",
     ],
     avoidWhen: ["you need the entire fleet (prefer fetchVesselBasics)"],
-    inputsHighlights: "VesselID (get it from fetchVesselBasics → VesselID)",
+    inputs: ["VesselID: numeric ID from fetchVesselBasics → VesselID"],
     returns: "object — one vessel's basic profile",
     outputHighlights: [
       "IDs: VesselID, VesselSubjectID",

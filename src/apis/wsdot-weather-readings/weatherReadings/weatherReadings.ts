@@ -34,7 +34,7 @@ export const weatherReadingsMeta = {
       "you only need subsurface measurements (prefer fetchSubSurfaceMeasurements)",
       "you need data for specific stations (prefer weather-information endpoints)",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per weather station",
     outputHighlights: [
       "StationId (NWS code), StationName, Latitude/Longitude, and Elevation for station identification",

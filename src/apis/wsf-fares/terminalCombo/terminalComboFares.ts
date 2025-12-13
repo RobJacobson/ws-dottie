@@ -38,8 +38,11 @@ export const terminalComboFaresMeta = {
     avoidWhen: [
       "you need all terminal combinations (prefer fetchTerminalComboFaresVerbose)",
     ],
-    inputsHighlights:
-      "TripDate in YYYY-MM-DD format; DepartingTerminalID, ArrivingTerminalID (from terminal endpoints)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format",
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+    ],
     returns: "object — fare collection information for one terminal pair",
     outputHighlights: [
       "DepartingDescription: name of departure terminal",

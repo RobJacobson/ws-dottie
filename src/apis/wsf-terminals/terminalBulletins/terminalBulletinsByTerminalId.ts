@@ -33,8 +33,7 @@ export const terminalBulletinsByTerminalIdMeta = {
       "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
       "you need bulletins for multiple terminals (prefer fetchTerminalBulletins)",
     ],
-    inputsHighlights:
-      "TerminalID (get it from fetchTerminalBasics → TerminalID)",
+    inputs: ["TerminalID: get it from fetchTerminalBasics → TerminalID"],
     returns: "object — one terminal with its bulletins",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

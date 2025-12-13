@@ -36,8 +36,11 @@ export const vesselHistoriesByVesselAndDatesMeta = {
     avoidWhen: [
       "you don't know the vessel's name (prefer fetchVesselBasics to discover VesselName)",
     ],
-    inputsHighlights:
-      "VesselName (from fetchVesselBasics → VesselName); DateStart, DateEnd in YYYY-MM-DD",
+    inputs: [
+      "VesselName: from fetchVesselBasics → VesselName",
+      "DateStart: YYYY-MM-DD format",
+      "DateEnd: YYYY-MM-DD format",
+    ],
     returns: "array — one item per voyage record",
     outputHighlights: [
       "Keys: VesselId (note casing), Vessel (name)",

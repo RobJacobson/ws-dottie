@@ -28,7 +28,7 @@ export const travelTimesMeta = {
       "finding available travel time routes for mapping",
     ],
     avoidWhen: ["you only need one route's data (prefer fetchTravelTimeById)"],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "array — one item per travel time route",
     outputHighlights: [
       "Route identity: TravelTimeID, Name (display name), Description",

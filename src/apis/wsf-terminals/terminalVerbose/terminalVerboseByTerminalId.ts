@@ -33,8 +33,7 @@ export const terminalVerboseByTerminalIdMeta = {
       "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
       "you only need specific data types (prefer targeted endpoints like fetchTerminalLocationsByTerminalId)",
     ],
-    inputsHighlights:
-      "TerminalID (get it from fetchTerminalBasics → TerminalID)",
+    inputs: ["TerminalID: get it from fetchTerminalBasics → TerminalID"],
     returns: "object — one complete terminal profile",
     outputHighlights: [
       "Combines ALL terminal data: basics + bulletins + locations + sailing space + transports + wait times",

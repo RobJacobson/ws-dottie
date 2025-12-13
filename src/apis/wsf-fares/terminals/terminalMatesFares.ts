@@ -33,8 +33,10 @@ export const terminalMatesFaresMeta = {
     avoidWhen: [
       "you need all terminals (prefer fetchTerminalFares for complete terminal list)",
     ],
-    inputsHighlights:
-      "TripDate in YYYY-MM-DD format; TerminalID (from fetchTerminalFares → TerminalID)",
+    inputs: [
+      "TripDate: YYYY-MM-DD format",
+      "TerminalID: from fetchTerminalFares → TerminalID",
+    ],
     returns: "array — one item per arriving terminal",
     outputHighlights: [
       "TerminalID: numeric identifier for arriving terminals",

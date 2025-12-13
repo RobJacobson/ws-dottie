@@ -32,7 +32,7 @@ export const timeAdjustmentsByRouteMeta = {
       "you need adjustments for all routes (prefer fetchTimeAdjustments)",
       "you need adjustments for a scheduled route (prefer fetchTimeAdjustmentsBySchedRoute)",
     ],
-    inputsHighlights: "RouteID (from fetchRoutesByTripDate → RouteID)",
+    inputs: ["RouteID: from fetchRoutesByTripDate → RouteID"],
     returns: "array — time adjustments for the specified route (may be empty)",
     outputHighlights: [
       "Schedule/route info: ScheduleID, SchedRouteID, RouteID, RouteDescription",

@@ -24,7 +24,7 @@ export const cacheFlushDateScheduleMeta = {
       "implementing cache invalidation strategies",
       "optimizing data refresh timing",
     ],
-    inputsHighlights: "none",
+    inputs: [],
     returns: "string — UTC timestamp or null",
     outputHighlights: [
       "Timestamp: UTC datetime string when static schedule data was last updated",
