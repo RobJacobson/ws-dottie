@@ -136,6 +136,49 @@ export interface EndpointGroupMeta {
 }
 
 /**
+ * Structured, author-friendly tool description parts.
+ *
+ * These fields map to the standard MCP tool description template used by
+ * ws-dottie-mcp. They are compiled into a single newline-delimited string.
+ *
+ * Note: ws-dottie-mcp publishes input schemas but not output schemas, so
+ * `outputHighlights` is required to provide high-level output guidance.
+ */
+export type ToolDescriptionParts = {
+  /** Purpose: One sentence describing what the tool returns/does. */
+  purpose: string;
+  /**
+   * Use when: Short phrases describing when this tool is the right choice.
+   * Keep to ~3 items max.
+   */
+  useWhen?: string[];
+  /**
+   * Avoid when: Short phrases describing when NOT to use this tool, ideally
+   * naming the preferred alternative tool(s). Keep to ~2 items max.
+   */
+  avoidWhen?: string[];
+  /**
+   * Inputs (highlights): Non-obvious constraints (IDs, date formats, enums).
+   * Use "none" when there are no inputs.
+   */
+  inputsHighlights?: string;
+  /**
+   * Returns: Shape + unit-of-meaning, e.g. "array — one item per vessel".
+   */
+  returns: string;
+  /**
+   * Output (highlights): 4–8 compact clauses describing major output content,
+   * key identifiers, important semantics, and potential bloat fields.
+   */
+  outputHighlights: string[];
+  /**
+   * Chaining: 1–3 explicit recipes showing how to obtain inputs for this tool
+   * from other tool outputs (IDs-first), using exact MCP tool names.
+   */
+  chaining?: string[];
+};
+
+/**
  * Endpoint metadata structure for individual endpoints
  *
  * This type defines the structure for endpoint-specific metadata used in the
@@ -159,6 +202,13 @@ export type EndpointMeta<I, O> = {
   sampleParams: Partial<I> | (() => Promise<Partial<I>>);
   /** One-sentence description of what this specific endpoint does */
   endpointDescription: string;
+  /**
+   * Optional structured MCP tool description parts (authoring format).
+   *
+   * ws-dottie-mcp compiles these into a single tool `description` string for
+   * registration with the MCP TypeScript SDK.
+   */
+  toolDescriptionParts?: ToolDescriptionParts;
 };
 
 /**
