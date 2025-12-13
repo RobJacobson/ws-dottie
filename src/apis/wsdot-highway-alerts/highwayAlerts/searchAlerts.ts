@@ -43,8 +43,8 @@ export const searchAlertsMeta = {
     inputs: [
       "StateRoute: three-digit route number like '405'",
       "Region: numeric ID (7=Eastern, 8=North Central, 9=Northwest, 10=Olympic, 11=South Central, 12=Southwest)",
-      "SearchTimeStart: ISO format",
-      "SearchTimeEnd: ISO format",
+      "SearchTimeStart: ISO-8601 UTC format",
+      "SearchTimeEnd: ISO-8601 UTC format",
       "StartingMilepost: for route segments",
       "EndingMilepost: for route segments",
     ],

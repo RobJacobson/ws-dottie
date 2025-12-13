@@ -29,7 +29,7 @@ export const vesselBasicsMeta = {
       "light status checks",
     ],
     avoidWhen: [
-      "you need full vessel specs/amenities (prefer fetchVesselAccommodationsByVesselId)",
+      "you need full vessel specs/amenities (prefer fetchVesselsVerboseByVesselId)",
     ],
     inputs: [],
     returns: "array — one item per vessel",

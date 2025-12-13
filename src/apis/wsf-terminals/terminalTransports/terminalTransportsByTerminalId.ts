@@ -33,7 +33,7 @@ export const terminalTransportsByTerminalIdMeta = {
       "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
       "you need transport info for multiple terminals (prefer fetchTerminalTransports)",
     ],
-    inputs: ["TerminalID: get it from fetchTerminalBasics → TerminalID"],
+    inputs: ["TerminalID: from fetchTerminalBasics → TerminalID"],
     returns: "object — one terminal with detailed transport info",
     outputHighlights: [
       "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",

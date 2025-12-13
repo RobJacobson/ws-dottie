@@ -32,7 +32,7 @@ export const terminalBasicsByTerminalIdMeta = {
       "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
       "you need detailed terminal information (prefer fetchTerminalVerboseByTerminalId)",
     ],
-    inputs: ["TerminalID: get it from fetchTerminalBasics → TerminalID"],
+    inputs: ["TerminalID: from fetchTerminalBasics → TerminalID"],
     returns: "object — one terminal profile",
     outputHighlights: [
       "IDs: TerminalID (primary key), TerminalSubjectID, RegionID",
