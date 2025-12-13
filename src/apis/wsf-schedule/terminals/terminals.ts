@@ -18,6 +18,19 @@ export const terminalsMeta = {
   outputSchema: terminalSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
   endpointDescription: "List valid departing terminals for a trip date.",
+  toolDescription: {
+    purpose:
+      "List all valid departing terminals available for ferry service on a specific trip date.",
+    useWhen: [
+      "discovering available departure terminals",
+      "building terminal selection interfaces",
+      "getting TerminalID values for other endpoints",
+    ],
+    inputsHighlights:
+      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range)",
+    returns: "array — valid departing terminals for the trip date",
+    outputHighlights: ["Terminal info: TerminalID, Description (display name)"],
+  },
 } satisfies EndpointMeta<TerminalsInput, Terminal[]>;
 
 /**

@@ -144,7 +144,7 @@ export interface EndpointGroupMeta {
  * Note: ws-dottie-mcp publishes input schemas but not output schemas, so
  * `outputHighlights` is required to provide high-level output guidance.
  */
-export type ToolDescriptionParts = {
+export type ToolDescription = {
   /** Purpose: One sentence describing what the tool returns/does. */
   purpose: string;
   /**
@@ -208,7 +208,7 @@ export type EndpointMeta<I, O> = {
    * ws-dottie-mcp compiles these into a single tool `description` string for
    * registration with the MCP TypeScript SDK.
    */
-  toolDescriptionParts?: ToolDescriptionParts;
+  toolDescription: ToolDescription;
 };
 
 /**

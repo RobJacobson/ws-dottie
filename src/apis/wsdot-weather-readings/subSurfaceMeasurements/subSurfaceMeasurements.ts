@@ -21,6 +21,31 @@ export const subSurfaceMeasurementsMeta = {
   sampleParams: {},
   endpointDescription:
     "List subsurface measurements from all weather stations statewide.",
+  toolDescription: {
+    purpose:
+      "List subsurface temperature measurements from sensors embedded 12-18 inches below road pavement at WSDOT weather stations.",
+    useWhen: [
+      "monitoring subsurface road temperatures",
+      "analyzing pavement conditions",
+      "studying ground temperature patterns",
+    ],
+    avoidWhen: [
+      "you need surface-level measurements (prefer fetchSurfaceMeasurements)",
+      "you need comprehensive weather data (prefer fetchWeatherReadings)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — one item per subsurface sensor",
+    outputHighlights: [
+      "SensorId for sensor identification",
+      "SubSurfaceTemperature in Celsius from sensors 12-18 inches below pavement",
+      "Measurements help assess pavement conditions and freeze/thaw cycles",
+      "SensorId may be undefined for some sensors",
+      "Temperature values may be undefined when sensors are offline",
+    ],
+    chaining: [
+      "fetchWeatherStations → extract StationID → correlate with subsurface measurements",
+    ],
+  },
 } satisfies EndpointMeta<SubSurfaceMeasurementsInput, SubsurfaceMeasurement[]>;
 
 /**

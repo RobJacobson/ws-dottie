@@ -20,6 +20,31 @@ export const terminalBasicsByTerminalIdMeta = {
   outputSchema: terminalBasicSchema,
   sampleParams: { TerminalID: 1 },
   endpointDescription: "Get basic information for a specific terminal by ID.",
+  toolDescription: {
+    purpose:
+      "Get basic identification and amenity information for a single terminal by its TerminalID.",
+    useWhen: [
+      "enriching a terminal picker with basic details",
+      "getting terminal info when you already know the TerminalID",
+      "minimizing payload size for single terminal queries",
+    ],
+    avoidWhen: [
+      "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
+      "you need detailed terminal information (prefer fetchTerminalVerboseByTerminalId)",
+    ],
+    inputsHighlights:
+      "TerminalID (get it from fetchTerminalBasics → TerminalID)",
+    returns: "object — one terminal profile",
+    outputHighlights: [
+      "IDs: TerminalID (primary key), TerminalSubjectID, RegionID",
+      "Names: TerminalName, TerminalAbbrev",
+      "Display: SortSeq (ordering for UI lists)",
+      "Amenities: OverheadPassengerLoading, Elevator, WaitingRoom, FoodService, Restroom (boolean flags)",
+    ],
+    chaining: [
+      "fetchTerminalBasics → extract TerminalID → call fetchTerminalBasicsByTerminalId (for single terminal details)",
+    ],
+  },
 } satisfies EndpointMeta<TerminalBasicsByIdInput, TerminalBasic>;
 
 /**

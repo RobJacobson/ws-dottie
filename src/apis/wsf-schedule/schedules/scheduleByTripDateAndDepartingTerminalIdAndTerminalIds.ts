@@ -23,6 +23,34 @@ export const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta = {
   },
   endpointDescription:
     "Get sailing schedule for a terminal pair and trip date.",
+  toolDescription: {
+    purpose:
+      "Get complete sailing schedule for a specific terminal pair on a trip date, accounting for contingencies and time adjustments.",
+    useWhen: [
+      "planning travel between known terminals on a specific date",
+      "getting scheduled departure times with all adjustments applied",
+      "checking terminal-to-terminal sailing availability",
+    ],
+    avoidWhen: [
+      "you need real-time schedule with current vessel assignments (prefer fetchScheduleTodayByTerminals)",
+      "you don't know terminal IDs (prefer fetchTerminalsAndMates first)",
+    ],
+    inputsHighlights:
+      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range); DepartingTerminalID, ArrivingTerminalID (from fetchTerminalsAndMates → TerminalID)",
+    returns:
+      "object — complete schedule for terminal pair with all adjustments",
+    outputHighlights: [
+      "Schedule info: ScheduleID, ScheduleName, ScheduleSeason, SchedulePDFUrl, ScheduleStart/End dates",
+      "Route coverage: AllRoutes array of RouteIDs",
+      "Terminal combination: Single TerminalCombos entry with DepartingTerminalID/Name, ArrivingTerminalID/Name",
+      "Departure times: Times array with DepartingTime, ArrivingTime, LoadingRule (1=Passenger, 2=Vehicle, 3=Both)",
+      "Vessel assignments: VesselID, VesselName, VesselHandicapAccessible, VesselPositionNum",
+      "Additional info: SailingNotes, Annotations, AnnotationIndexes for special conditions",
+    ],
+    chaining: [
+      "fetchTerminalsAndMates → extract DepartingTerminalID, ArrivingTerminalID → call fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds with { DepartingTerminalID: ..., ArrivingTerminalID: ..., TripDate: ... }",
+    ],
+  },
 } satisfies EndpointMeta<ScheduleByTripDateAndTerminalsInput, Schedule>;
 
 /**

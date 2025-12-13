@@ -20,6 +20,25 @@ export const scheduleAlertsMeta = {
   outputSchema: alertDetailSchema.array(),
   sampleParams: {},
   endpointDescription: "List all current schedule alerts.",
+  toolDescription: {
+    purpose:
+      "List all current schedule alerts with detailed text in multiple formats for different display contexts.",
+    useWhen: [
+      "monitoring system-wide alerts and disruptions",
+      "building alert displays for multiple routes",
+      "accessing alerts in different formats (bulletin, homepage, IVR)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — all current schedule alerts",
+    outputHighlights: [
+      "IDs: BulletinID, AlertTypeID",
+      "Alert types: AlertType, BulletinFlag, CommunicationFlag, RouteAlertFlag",
+      "Text formats: BulletinText (HTML), RouteAlertText (compact), HomepageAlertText (HTML), IVRText",
+      "Timing: PublishDate (UTC)",
+      "Scope: AllRoutesFlag, AffectedRouteIDs array",
+      "Metadata: AlertFullTitle, DisruptionDescription, SortSeq for display ordering",
+    ],
+  },
 } satisfies EndpointMeta<ScheduleAlertsInput, AlertDetail[]>;
 
 /**

@@ -21,6 +21,29 @@ export const bridgeClearancesMeta = {
   sampleParams: {},
   endpointDescription:
     "List vertical clearance data for all Washington State bridges.",
+  toolDescription: {
+    purpose: "List vertical clearance data for all Washington State bridges.",
+    useWhen: [
+      "comprehensive bridge database analysis",
+      "bulk data export for external systems",
+      "complete state-wide bridge inventory",
+    ],
+    avoidWhen: [
+      "you only need bridges on specific routes (prefer fetchBridgeClearancesByRoute)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — one item per bridge",
+    outputHighlights: [
+      "IDs: BridgeNumber (route/structure), StateStructureId, CrossingLocationId",
+      "Location: Latitude, Longitude, SRMP (milepost), StateRouteID",
+      "Clearance: VerticalClearanceMaximumInches/MinimumInches (in inches), VerticalClearanceMaximumFeetInch/MinimumFeetInch (formatted)",
+      "Metadata: CrossingDescription, APILastUpdate, RouteDate",
+      "Large dataset: thousands of bridges with detailed location and clearance data",
+    ],
+    chaining: [
+      "fetchBridgeClearances → extract StateRouteID → call fetchBridgeClearancesByRoute with { Route: ... } (for route-specific filtering)",
+    ],
+  },
 } satisfies EndpointMeta<BridgeClearancesInput, BridgeClearance[]>;
 
 /**

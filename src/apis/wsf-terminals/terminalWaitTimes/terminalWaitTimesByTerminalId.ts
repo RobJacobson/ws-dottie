@@ -21,6 +21,33 @@ export const terminalWaitTimesByTerminalIdMeta = {
   sampleParams: { TerminalID: 11 },
   endpointDescription:
     "Get wait time information for a specific terminal by ID.",
+  toolDescription: {
+    purpose:
+      "Get current passenger and vehicle wait time guidance for a single terminal by its TerminalID.",
+    useWhen: [
+      "getting arrival time recommendations for a specific terminal",
+      "displaying wait time information for one location",
+      "minimizing payload when you only need wait times for one terminal",
+    ],
+    avoidWhen: [
+      "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
+      "you need wait times for multiple terminals (prefer fetchTerminalWaitTimes)",
+    ],
+    inputsHighlights:
+      "TerminalID (get it from fetchTerminalBasics → TerminalID)",
+    returns: "object — one terminal with wait time information",
+    outputHighlights: [
+      "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",
+      "WaitTimes array: one or more wait time entries for this terminal",
+      "Route association: RouteID, RouteName (may be null for general terminal advice)",
+      "Wait guidance: WaitTimeNotes (detailed arrival recommendations for vehicles and passengers)",
+      "IVR version: WaitTimeIVRNotes (simplified notes for phone systems)",
+      "Last updated: WaitTimeLastUpdated timestamp for freshness indication",
+    ],
+    chaining: [
+      "fetchTerminalBasics → extract TerminalID → call fetchTerminalWaitTimesByTerminalId",
+    ],
+  },
 } satisfies EndpointMeta<TerminalWaitTimesByIdInput, TerminalWaitTime>;
 
 /**

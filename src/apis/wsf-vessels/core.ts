@@ -27,7 +27,6 @@ export * from "./vesselHistories/shared/vesselHistories.input";
 export * from "./vesselHistories/shared/vesselHistories.output";
 // Vessel Histories
 export { fetchVesselHistories } from "./vesselHistories/vesselHistories";
-export { fetchVesselHistoriesByVesselNameAndDateRange } from "./vesselHistories/vesselHistoriesByVesselNameAndDateRange";
 export * from "./vesselLocations/shared/vesselLocations.input";
 export * from "./vesselLocations/shared/vesselLocations.output";
 // Vessel Locations

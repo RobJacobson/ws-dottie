@@ -20,6 +20,30 @@ export const timeAdjustmentsMeta = {
   outputSchema: timeAdjustmentSchema.array(),
   sampleParams: {},
   endpointDescription: "List all time adjustments across all routes.",
+  toolDescription: {
+    purpose:
+      "List all schedule time adjustments and cancellations across all routes and scheduled routes.",
+    useWhen: [
+      "monitoring all schedule deviations system-wide",
+      "checking for tidal adjustments and event-related changes",
+      "building comprehensive schedule adjustment tracking",
+    ],
+    avoidWhen: [
+      "you need adjustments for a specific route (prefer fetchTimeAdjustmentsByRoute)",
+      "you need adjustments for a specific scheduled route (prefer fetchTimeAdjustmentsBySchedRoute)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — all time adjustments across all routes (large payload)",
+    outputHighlights: [
+      "Schedule/route info: ScheduleID, SchedRouteID, RouteID, RouteDescription",
+      "Sailing details: SailingID, SailingDescription, SailingDir (1=Westbound, 2=Eastbound)",
+      "Time adjustment: TimeToAdj (original time), AdjDateFrom/AdjDateThru (adjustment period)",
+      "Adjustment type: AdjType (1=Addition, 2=Cancellation), TidalAdj (tidal-related), DepArrIndicator (1=Departure, 2=Arrival)",
+      "Vessel/terminal: VesselID, VesselName, TerminalID, TerminalDescription",
+      "Events: EventID, EventDescription (reason for adjustment)",
+      "Annotations: Additional context and notes for the adjustment",
+    ],
+  },
 } satisfies EndpointMeta<TimeAdjustmentsInput, TimeAdjustment[]>;
 
 /**

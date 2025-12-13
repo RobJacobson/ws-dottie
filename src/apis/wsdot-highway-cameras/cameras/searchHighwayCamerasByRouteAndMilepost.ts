@@ -21,6 +21,37 @@ export const searchHighwayCamerasByRouteAndMilepostMeta = {
     EndingMilepost: 20,
   },
   endpointDescription: "Search cameras by route and milepost range.",
+  toolDescription: {
+    purpose:
+      "Search highway cameras using flexible filters for route, region, and milepost range.",
+    useWhen: [
+      "finding cameras along specific highways or routes",
+      "getting cameras within milepost ranges on highways",
+      "building route-specific camera displays",
+      "filtering cameras by geographic regions",
+    ],
+    avoidWhen: [
+      "you need all statewide cameras (prefer fetchHighwayCameras)",
+      "you only need one specific camera (prefer fetchHighwayCameraByCameraId)",
+    ],
+    inputsHighlights:
+      "StateRoute (like 'I-5', 'I-90'); Region (optional region filter); StartingMilepost/EndingMilepost (optional milepost range)",
+    returns: "array — one item per camera matching search criteria",
+    outputHighlights: [
+      "IDs: CameraID (unique numeric identifier)",
+      "Location: CameraLocation (route, milepost, direction), DisplayLatitude/DisplayLongitude",
+      "Image: ImageURL (camera feed URL), ImageWidth/ImageHeight (dimensions)",
+      "Status: IsActive (true = operational)",
+      "Metadata: Title (display name), Description (purpose/location info)",
+      "Ownership: CameraOwner, OwnerURL, Region (administrative area)",
+      "Display: SortOrder (for location-based sorting)",
+      "Filtered results: smaller payload than statewide fetchHighwayCameras",
+    ],
+    chaining: [
+      "searchHighwayCamerasByRouteAndMilepost → extract CameraID → call fetchHighwayCameraByCameraId with { CameraID: ... }",
+      "fetchHighwayCameras → extract CameraLocation.RoadName → call searchHighwayCamerasByRouteAndMilepost with { StateRoute: ... }",
+    ],
+  },
 } satisfies EndpointMeta<HighwayCamerasByRouteAndMilepostInput, Camera[]>;
 
 /**

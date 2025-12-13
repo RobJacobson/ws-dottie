@@ -22,6 +22,32 @@ export const weatherInformationByStationIdMeta = {
   sampleParams: { StationID: 1909 },
   endpointDescription:
     "Get current weather information for a specific station by ID.",
+  toolDescription: {
+    purpose:
+      "Get current atmospheric conditions from a specific WSDOT Road Weather Information System station.",
+    useWhen: [
+      "monitoring conditions at a specific location",
+      "getting weather data for a known station",
+      "building detailed views for individual stations",
+    ],
+    avoidWhen: [
+      "you need data for multiple stations (prefer fetchCurrentWeatherForStations or fetchWeatherInformation)",
+    ],
+    inputsHighlights: "StationID from fetchWeatherStations → StationID",
+    returns: "object — one weather station profile",
+    outputHighlights: [
+      "StationID and StationName for identification",
+      "Latitude/Longitude coordinates for mapping",
+      "TemperatureInFahrenheit, RelativeHumidity, and PrecipitationInInches for conditions",
+      "WindSpeedInMPH, WindDirection, and WindGustSpeedInMPH for wind data",
+      "BarometricPressure and Visibility for atmospheric conditions",
+      "ReadingTime as UTC timestamp when measurements were taken",
+      "Fields may be null when sensors are unavailable",
+    ],
+    chaining: [
+      "fetchWeatherStations → extract StationID → call fetchWeatherInformationByStationId with { StationID: ... }",
+    ],
+  },
 } satisfies EndpointMeta<WeatherInformationByStationIdInput, WeatherInfo>;
 
 /**

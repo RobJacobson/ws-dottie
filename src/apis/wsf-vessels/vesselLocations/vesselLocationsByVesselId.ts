@@ -21,6 +21,31 @@ export const vesselLocationsByVesselIdMeta = {
   sampleParams: { VesselID: 18 },
   endpointDescription:
     "Get current location and status for a specific vessel by ID.",
+  toolDescription: {
+    purpose:
+      "Get real-time location and status for a single vessel by VesselID.",
+    useWhen: [
+      "tracking a specific ferry",
+      "getting detailed location data for one vessel",
+      "minimizing payload size for single vessel tracking",
+    ],
+    avoidWhen: [
+      "you need all vessels (bulk fetchVesselLocations is more efficient)",
+    ],
+    inputsHighlights: "VesselID (get it from fetchVesselBasics → VesselID)",
+    returns: "object — one vessel's real-time location data",
+    outputHighlights: [
+      "IDs: VesselID, DepartingTerminalID, ArrivingTerminalID",
+      "Position: Latitude, Longitude, Speed (knots), Heading (0–359)",
+      "Ops: InService, AtDock, ManagedBy (1=WSF, 2=KCM)",
+      "Time: TimeStamp, LeftDock, Eta, ScheduledDeparture (all UTC)",
+      "Routes: OpRouteAbbrev array, VesselPositionNum",
+      "Notes: VesselWatch* fields provide system status and messages",
+    ],
+    chaining: [
+      "fetchVesselBasics → extract VesselID → call fetchVesselLocationsByVesselId",
+    ],
+  },
 } satisfies EndpointMeta<VesselLocationsByIdInput, VesselLocation>;
 
 /**

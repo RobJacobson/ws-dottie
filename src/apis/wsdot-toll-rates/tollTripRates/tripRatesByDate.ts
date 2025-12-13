@@ -24,6 +24,28 @@ export const tripRatesByDateMeta = {
     ToDate: datesHelper.today(),
   },
   endpointDescription: "Get historical toll rates for a specified date range.",
+  toolDescription: {
+    purpose: "Get historical toll rates for a specified date range.",
+    useWhen: [
+      "analyzing toll rate changes over time",
+      "historical toll cost comparisons",
+      "trend analysis for toll pricing",
+    ],
+    avoidWhen: [
+      "you need current rates only (prefer fetchTollTripRates)",
+      "you need rates for a specific version (prefer fetchTripRatesByVersion)",
+    ],
+    inputsHighlights: "FromDate, ToDate in YYYY-MM-DD format",
+    returns:
+      "array — one item per day in date range, each containing trip rates for that day",
+    outputHighlights: [
+      "Array structure: one TollTripsRates object per day in the date range",
+      "Each day: LastUpdated, Version, Trips array with rate details",
+      "Rate details: TripName, Toll amount, Message text, MessageUpdateTime",
+      "Version tracking: each day has its own version number",
+      "Large payload: returns historical data for entire date range",
+    ],
+  },
 } satisfies EndpointMeta<TripRatesByDateInput, TollTripsRates[]>;
 
 /**

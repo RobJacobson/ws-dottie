@@ -20,6 +20,34 @@ export const timeAdjustmentsBySchedRouteMeta = {
   outputSchema: timeAdjustmentSchema.array(),
   sampleParams: { SchedRouteID: 2401 },
   endpointDescription: "List time adjustments for a specific scheduled route.",
+  toolDescription: {
+    purpose:
+      "List schedule time adjustments and cancellations for a specific scheduled route.",
+    useWhen: [
+      "checking schedule deviations for a particular scheduled route",
+      "monitoring adjustments affecting specific scheduled routes",
+      "getting scheduled route-specific schedule changes",
+    ],
+    avoidWhen: [
+      "you need adjustments for all scheduled routes (prefer fetchTimeAdjustments)",
+      "you need adjustments for a route (prefer fetchTimeAdjustmentsByRoute)",
+    ],
+    inputsHighlights: "SchedRouteID (from fetchScheduledRoutes → SchedRouteID)",
+    returns:
+      "array — time adjustments for the specified scheduled route (may be empty)",
+    outputHighlights: [
+      "Schedule/route info: ScheduleID, SchedRouteID, RouteID, RouteDescription",
+      "Sailing details: SailingID, SailingDescription, SailingDir (1=Westbound, 2=Eastbound)",
+      "Time adjustment: TimeToAdj (original time), AdjDateFrom/AdjDateThru (adjustment period)",
+      "Adjustment type: AdjType (1=Addition, 2=Cancellation), TidalAdj (tidal-related), DepArrIndicator (1=Departure, 2=Arrival)",
+      "Vessel/terminal: VesselID, VesselName, TerminalID, TerminalDescription",
+      "Events: EventID, EventDescription (reason for adjustment)",
+      "Annotations: Additional context and notes for the adjustment",
+    ],
+    chaining: [
+      "fetchScheduledRoutes → extract SchedRouteID → call fetchTimeAdjustmentsBySchedRoute with { SchedRouteID: ... }",
+    ],
+  },
 } satisfies EndpointMeta<TimeAdjustmentsBySchedRouteInput, TimeAdjustment[]>;
 
 /**

@@ -21,6 +21,29 @@ export const commercialVehicleRestrictionsMeta = {
   sampleParams: {},
   endpointDescription:
     "List commercial vehicle restrictions for all Washington State highways.",
+  toolDescription: {
+    purpose:
+      "List commercial vehicle restrictions for all Washington State highways.",
+    useWhen: [
+      "statewide commercial vehicle routing analysis",
+      "bulk restriction data export",
+      "comprehensive restriction database queries",
+    ],
+    avoidWhen: [
+      "you need unique identifiers for restrictions (prefer fetchCommercialVehicleRestrictionsWithId)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — one item per commercial vehicle restriction",
+    outputHighlights: [
+      "Location: StateRouteID, Latitude/Longitude, StartRoadwayLocation/EndRoadwayLocation, LocationDescription",
+      "Restrictions: MaximumGrossVehicleWeightInPounds, RestrictionHeightInInches/WidthInInches/LengthInInches, RestrictionWeightInPounds",
+      "Vehicle classes: BLMaxAxle, CL8MaxAxle, SAMaxAxle, TDMaxAxle (weight limits by vehicle classification)",
+      "Bridge info: BridgeName, BridgeNumber, RestrictionType (0=bridge, 1=road)",
+      "Dates: DateEffective, DateExpires, DatePosted",
+      "Status: IsPermanentRestriction, IsWarning, IsDetourAvailable, IsExceptionsAllowed",
+      "Large dataset: thousands of restrictions with detailed weight/height limits and location data",
+    ],
+  },
 } satisfies EndpointMeta<CommercialVehicleRestrictionsInput, CVRestriction[]>;
 
 /**

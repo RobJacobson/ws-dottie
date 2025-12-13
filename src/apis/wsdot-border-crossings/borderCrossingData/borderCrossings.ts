@@ -21,6 +21,23 @@ export const borderCrossingsMeta = {
   sampleParams: {},
   endpointDescription:
     "List current wait times for all Washington border crossings into Canada.",
+  toolDescription: {
+    purpose:
+      "List current wait times for all Washington border crossings into Canada.",
+    useWhen: [
+      "checking border crossing wait times",
+      "planning international travel timing",
+      "monitoring border congestion",
+    ],
+    inputsHighlights: "none",
+    returns: "array — one item per border crossing",
+    outputHighlights: [
+      "IDs: CrossingName (crossing code like I5, SR543Trucks)",
+      "Location: BorderCrossingLocation (route, coordinates, description)",
+      "Time: Time (UTC timestamp of observation)",
+      "Wait times: WaitTime (minutes, -1 when unavailable)",
+    ],
+  },
 } satisfies EndpointMeta<BorderCrossingsInput, BorderCrossing[]>;
 
 /**

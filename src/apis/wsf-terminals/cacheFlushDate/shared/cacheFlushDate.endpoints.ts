@@ -18,6 +18,25 @@ export const cacheFlushDateTerminalsMeta = {
   outputSchema: cacheFlushDateOutputSchema,
   sampleParams: {},
   endpointDescription: "Get cache flush timestamp for static terminals data.",
+  toolDescription: {
+    purpose:
+      "Get timestamp indicating when static terminal data was last updated for cache invalidation.",
+    useWhen: [
+      "detecting when terminal data has changed",
+      "implementing cache invalidation strategies",
+      "polling for terminal data updates",
+    ],
+    inputsHighlights: "none",
+    returns: "string — UTC timestamp when terminal data was last updated",
+    outputHighlights: [
+      "Timestamp in ISO 8601 format indicating last update time",
+      "Returns undefined if no update has occurred",
+      "Used to determine when cached terminal information should be refreshed",
+    ],
+    chaining: [
+      "fetchCacheFlushDateTerminals → compare with cached timestamp → call terminal bulk endpoints if changed",
+    ],
+  },
 } satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
 
 /**

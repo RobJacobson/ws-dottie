@@ -18,6 +18,31 @@ export const routesByTripDateMeta = {
   outputSchema: routeSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
   endpointDescription: "List all routes available for specified trip date.",
+  toolDescription: {
+    purpose:
+      "List basic route identification and service disruption information for all routes operating on a specific trip date.",
+    useWhen: [
+      "discovering available RouteIDs for a date",
+      "building route selection interfaces",
+      "checking for service disruptions across all routes",
+    ],
+    avoidWhen: [
+      "you need detailed route information (prefer fetchRouteDetailsByTripDate)",
+      "you need routes for specific terminals (prefer fetchRoutesByTripDateAndTerminals)",
+    ],
+    inputsHighlights:
+      "TripDate (YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range)",
+    returns: "array — one item per route operating on trip date",
+    outputHighlights: [
+      "IDs: RouteID, RegionID",
+      "Names: RouteAbbrev, Description",
+      "Service status: ServiceDisruptions array with BulletinID, BulletinFlag, PublishDate, DisruptionDescription",
+    ],
+    chaining: [
+      "fetchRoutesByTripDate → extract RouteID → call fetchRouteDetailsByTripDateAndRouteId with { RouteID: ..., TripDate: ... }",
+      "fetchRoutesByTripDate → extract RouteID → call fetchSailingsByRouteID with { RouteID: ... }",
+    ],
+  },
 } satisfies EndpointMeta<RoutesByTripDateInput, Route[]>;
 
 /**

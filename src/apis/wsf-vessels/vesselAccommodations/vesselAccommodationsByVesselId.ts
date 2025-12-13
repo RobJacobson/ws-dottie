@@ -21,6 +21,27 @@ export const vesselAccommodationsByVesselIdMeta = {
   sampleParams: { VesselID: 65 },
   endpointDescription:
     "Get amenities and accessibility features for a specific vessel.",
+  toolDescription: {
+    purpose: "Get amenities and accessibility features for a specific vessel.",
+    useWhen: [
+      "displaying vessel amenities for a selected ferry",
+      "checking accessibility features for trip planning",
+      "showing detailed accommodation information",
+    ],
+    avoidWhen: ["you need all vessels (prefer fetchVesselAccommodations)"],
+    inputsHighlights:
+      "VesselID (get it from fetchVesselAccommodations → VesselID)",
+    returns: "object — one vessel's accommodation profile",
+    outputHighlights: [
+      "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class details",
+      "Amenities: Elevator, ADAAccessible, MainCabinGalley, MainCabinRestroom, PublicWifi",
+      "Accessibility: CarDeckRestroom, CarDeckShelter, ADAInfo (detailed accessibility text)",
+      "AdditionalInfo may contain extra notes; ADAInfo can be lengthy",
+    ],
+    chaining: [
+      "fetchVesselAccommodations → extract VesselID → call fetchVesselAccommodationsByVesselId",
+    ],
+  },
 } satisfies EndpointMeta<VesselAccommodationsByIdInput, VesselAccommodation>;
 
 /**

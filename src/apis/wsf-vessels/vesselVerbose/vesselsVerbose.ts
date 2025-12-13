@@ -20,6 +20,31 @@ export const vesselsVerboseMeta = {
   outputSchema: vesselVerboseSchema.array(),
   sampleParams: {},
   endpointDescription: "List complete vessel information for all vessels.",
+  toolDescription: {
+    purpose:
+      "List complete vessel profiles for all vessels (basics + stats + accommodations).",
+    useWhen: [
+      "offline snapshots",
+      "one-time full export",
+      "debugging schema differences",
+    ],
+    avoidWhen: [
+      "you only need one vessel (prefer fetchVesselsVerboseByVesselId)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — one item per vessel",
+    outputHighlights: [
+      "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class info",
+      "Status/ops: Status, OwnedByWSF",
+      "Capacity/specs: MaxPassengerCount, RegDeckSpace, TallDeckSpace, SpeedInKnots",
+      "Amenities: Elevator, ADAAccessible, MainCabinGalley, MainCabinRestroom, PublicWifi",
+      "Dimensions: Length, Beam, Draft, Displacement, Tonnage",
+      "Large text: ADAInfo, VesselNameDesc, VesselHistory can be long",
+    ],
+    chaining: [
+      "fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByVesselId",
+    ],
+  },
 } satisfies EndpointMeta<VesselVerboseInput, VesselVerbose[]>;
 
 /**

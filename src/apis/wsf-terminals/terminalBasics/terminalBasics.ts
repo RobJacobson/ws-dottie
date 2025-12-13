@@ -20,6 +20,30 @@ export const terminalBasicsMeta = {
   outputSchema: terminalBasicSchema.array(),
   sampleParams: {},
   endpointDescription: "List basic information for all terminals.",
+  toolDescription: {
+    purpose:
+      "List basic identification and amenity information for all terminals in the WSF system.",
+    useWhen: [
+      "discovering TerminalID values for specific terminals",
+      "building terminal selection interfaces",
+      "getting overview of terminal locations and basic facilities",
+    ],
+    avoidWhen: [
+      "you only need one terminal (prefer fetchTerminalBasicsByTerminalId)",
+      "you need detailed terminal information (prefer fetchTerminalVerbose or fetchTerminalVerboseByTerminalId)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — one item per terminal",
+    outputHighlights: [
+      "IDs: TerminalID (primary key), TerminalSubjectID, RegionID",
+      "Names: TerminalName, TerminalAbbrev",
+      "Display: SortSeq (ordering for UI lists)",
+      "Amenities: OverheadPassengerLoading, Elevator, WaitingRoom, FoodService, Restroom (boolean flags)",
+    ],
+    chaining: [
+      "fetchTerminalBasics → extract TerminalID → call fetchTerminalVerboseByTerminalId / fetchTerminalLocationsByTerminalId / fetchTerminalBulletinsByTerminalId",
+    ],
+  },
 } satisfies EndpointMeta<TerminalBasicsInput, TerminalBasic[]>;
 
 /**

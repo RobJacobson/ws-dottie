@@ -17,6 +17,28 @@ export const vesselStatsMeta = {
   outputSchema: vesselStatSchema.array(),
   sampleParams: {},
   endpointDescription: "List technical specifications for all vessels.",
+  toolDescription: {
+    purpose: "List technical specifications for all vessels in the fleet.",
+    useWhen: [
+      "comparing vessel capabilities",
+      "building technical reference databases",
+      "analyzing fleet specifications",
+    ],
+    avoidWhen: ["you only need one vessel (prefer fetchVesselStatsByVesselId)"],
+    inputsHighlights: "none",
+    returns: "array — one item per vessel",
+    outputHighlights: [
+      "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class info",
+      "Capacity/specs: MaxPassengerCount, RegDeckSpace, TallDeckSpace, SpeedInKnots",
+      "Dimensions: Length, Beam, Draft (in feet/inches), Displacement, Tonnage",
+      "Power: EngineCount, Horsepower, PropulsionInfo",
+      "Build: YearBuilt, YearRebuilt, CityBuilt",
+      "Large text: VesselNameDesc, VesselHistory can be lengthy descriptions",
+    ],
+    chaining: [
+      "fetchVesselBasics → extract VesselID → call fetchVesselStatsByVesselId",
+    ],
+  },
 } satisfies EndpointMeta<VesselStatsInput, VesselStat[]>;
 
 /**

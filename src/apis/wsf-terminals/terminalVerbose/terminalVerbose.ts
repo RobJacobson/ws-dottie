@@ -20,6 +20,36 @@ export const terminalVerboseMeta = {
   outputSchema: terminalVerboseSchema.array(),
   sampleParams: {},
   endpointDescription: "List comprehensive information for all terminals.",
+  toolDescription: {
+    purpose:
+      "List complete terminal profiles combining all available data for all terminals in the WSF system.",
+    useWhen: [
+      "building offline applications needing all terminal data",
+      "one-time bulk export of complete terminal information",
+      "debugging or data analysis requiring full terminal datasets",
+    ],
+    avoidWhen: [
+      "you only need one terminal (prefer fetchTerminalVerboseByTerminalId)",
+      "you only need specific data types (prefer targeted endpoints like fetchTerminalBasics or fetchTerminalLocations)",
+    ],
+    inputsHighlights: "none",
+    returns: "array — one item per terminal",
+    outputHighlights: [
+      "Combines ALL terminal data: basics + bulletins + locations + sailing space + transports + wait times",
+      "IDs: TerminalID, TerminalSubjectID, RegionID",
+      "Names: TerminalName, TerminalAbbrev, SortSeq",
+      "Amenities: OverheadPassengerLoading, Elevator, WaitingRoom, FoodService, Restroom",
+      "Bulletins: full bulletins array with HTML content and metadata",
+      "Location: coordinates, full address, map links, directions, GIS zoom levels",
+      "Sailing space: real-time departure schedules with vehicle capacity and availability",
+      "Transportation: parking, airport shuttles, vehicle tips, transit links (extensive HTML)",
+      "Wait times: current passenger wait time estimates",
+      "Massive payload: contains all terminal data combined, extremely large response",
+    ],
+    chaining: [
+      "fetchTerminalBasics → extract TerminalID → call fetchTerminalVerboseByTerminalId (preferred for single terminal)",
+    ],
+  },
 } satisfies EndpointMeta<TerminalVerboseInput, TerminalVerbose[]>;
 
 /**

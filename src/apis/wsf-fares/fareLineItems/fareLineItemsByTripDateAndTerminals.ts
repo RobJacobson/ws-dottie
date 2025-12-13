@@ -25,6 +25,34 @@ export const fareLineItemsByTripDateAndTerminalsMeta = {
   },
   endpointDescription:
     "List all fare line items for a specific terminal combination and trip type.",
+  toolDescription: {
+    purpose:
+      "List complete fare components for a specific terminal pair and trip type.",
+    useWhen: [
+      "getting all available fare options for a route (not just popular ones)",
+      "building detailed fare selection with all passenger/vehicle categories",
+      "analyzing complete fare structures for specific journeys",
+    ],
+    avoidWhen: [
+      "you need fare totals (prefer fetchFareTotalsByTripDateAndRoute)",
+      "you need all terminal combinations (prefer fetchFareLineItemsVerbose)",
+    ],
+    inputsHighlights:
+      "TripDate in YYYY-MM-DD; DepartingTerminalID, ArrivingTerminalID; RoundTrip boolean (from terminal endpoints)",
+    returns: "array — one item per fare component",
+    outputHighlights: [
+      "FareLineItemID: numeric identifier for the fare component",
+      "FareLineItem: human-readable fare description",
+      "Category: grouping like 'Passenger' or 'Vehicle'",
+      "DirectionIndependent: whether fare is same in both directions",
+      "Amount: cost in dollars for this fare component",
+      "includes all fare types available for the specific route",
+    ],
+    chaining: [
+      "fetchTerminalMatesFares → extract ArrivingTerminalID → call fetchFareLineItemsByTripDateAndTerminals",
+      "fetchFareLineItemsByTripDateAndTerminals → extract FareLineItemID → call fetchFareTotalsByTripDateAndRoute",
+    ],
+  },
 } satisfies EndpointMeta<FareLineItemsByTripDateAndTerminalsInput, LineItem[]>;
 
 /**

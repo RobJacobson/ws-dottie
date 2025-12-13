@@ -16,6 +16,21 @@ export const cacheFlushDateScheduleMeta = {
   outputSchema: cacheFlushDateOutputSchema,
   sampleParams: {},
   endpointDescription: "Get cache flush timestamp for static schedule data.",
+  toolDescription: {
+    purpose:
+      "Get the timestamp when static schedule data was last updated for cache invalidation.",
+    useWhen: [
+      "detecting when schedule data has changed",
+      "implementing cache invalidation strategies",
+      "optimizing data refresh timing",
+    ],
+    inputsHighlights: "none",
+    returns: "string — UTC timestamp or null",
+    outputHighlights: [
+      "Timestamp: UTC datetime string when static schedule data was last updated",
+      "Null handling: returns null if no update has occurred",
+    ],
+  },
 } satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
 
 /**

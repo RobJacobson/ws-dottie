@@ -18,6 +18,28 @@ export const vesselStatsByVesselIdMeta = {
   sampleParams: { VesselID: 32 },
   endpointDescription:
     "Get technical specifications for a specific vessel by ID.",
+  toolDescription: {
+    purpose: "Get technical specifications for a single vessel by VesselID.",
+    useWhen: [
+      "detailed vessel specification pages",
+      "comparing specific vessel capabilities",
+      "minimizing payload for single vessel details",
+    ],
+    avoidWhen: ["you need the entire fleet (prefer fetchVesselStats)"],
+    inputsHighlights: "VesselID (get it from fetchVesselBasics → VesselID)",
+    returns: "object — one vessel's complete technical profile",
+    outputHighlights: [
+      "IDs: VesselID, VesselSubjectID, VesselName, VesselAbbrev, Class details",
+      "Capacity: MaxPassengerCount, RegDeckSpace, TallDeckSpace, TallDeckClearance",
+      "Performance: SpeedInKnots, Horsepower, EngineCount, PropulsionInfo",
+      "Dimensions: Length, Beam, Draft (in feet/inches), Displacement, Tonnage",
+      "Build: YearBuilt, YearRebuilt, CityBuilt, SolasCertified",
+      "Large text: VesselNameDesc, VesselHistory can be lengthy historical info",
+    ],
+    chaining: [
+      "fetchVesselBasics → extract VesselID → call fetchVesselStatsByVesselId",
+    ],
+  },
 } satisfies EndpointMeta<VesselStatsByIdInput, VesselStat>;
 
 /**

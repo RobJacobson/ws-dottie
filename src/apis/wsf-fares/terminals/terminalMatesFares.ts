@@ -22,6 +22,31 @@ export const terminalMatesFaresMeta = {
   sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
   endpointDescription:
     "List arriving terminals for a given departing terminal and trip date.",
+  toolDescription: {
+    purpose:
+      "List all valid arriving terminals for a specific departing terminal and trip date.",
+    useWhen: [
+      "discovering ferry routes from a specific departure terminal",
+      "building arrival terminal selection for a chosen departure",
+      "validating terminal pair combinations",
+    ],
+    avoidWhen: [
+      "you need all terminals (prefer fetchTerminalFares for complete terminal list)",
+    ],
+    inputsHighlights:
+      "TripDate in YYYY-MM-DD format; TerminalID (from fetchTerminalFares → TerminalID)",
+    returns: "array — one item per arriving terminal",
+    outputHighlights: [
+      "TerminalID: numeric identifier for arriving terminals",
+      "Description: human-readable terminal names",
+      "only terminals reachable from the specified departing terminal",
+      "use for building route selection interfaces",
+    ],
+    chaining: [
+      "fetchTerminalFares → extract TerminalID → call fetchTerminalMatesFares",
+      "fetchTerminalMatesFares → extract TerminalID → call fare calculation endpoints",
+    ],
+  },
 } satisfies EndpointMeta<TerminalMatesInput, TerminalList>;
 
 /**
