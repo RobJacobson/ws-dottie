@@ -85,13 +85,15 @@ If you exceed the soft max, prefer:
 
 ## Naming and cross-references (avoid ambiguity)
 
-### Always refer to tools by their MCP tool name
-Use the exact `ws-dottie-mcp` tool name, in snake_case, e.g.:
+### Always refer to tools by `functionName` (source of truth)
+In `ws-dottie`, all cross-references in `toolDescriptionParts` must use the
+endpoint’s existing `functionName` (for example `fetchVesselBasicsByVesselId`).
 
-- `get_vessel_basics`
-- `get_vessel_verbose_by_id`
+`ws-dottie-mcp` will transform these names (via deterministic string substitutions)
+into the final MCP tool names. This avoids drift and eliminates guesswork in
+`ws-dottie`.
 
-This avoids ambiguity for agents and makes chaining instructions copy/pasteable.
+This keeps `functionName` as the single source of truth for tool identity.
 
 ### Refer to fields using exact JSON keys
 If the output contains `VesselID`, say `VesselID` (not “vessel id”).
@@ -123,20 +125,52 @@ Use this exact structure (headings + order):
 ```
 Purpose: <one sentence>
 Use when: <use case 1>; <use case 2>; <use case 3>
-Avoid when: <anti-pattern 1> (prefer <tool_name>); <anti-pattern 2>
+Avoid when: <anti-pattern 1> (prefer <functionName>); <anti-pattern 2>
 Inputs (highlights): <only non-obvious inputs/formats/constraints>
-Returns: <array|object> — <what each item represents>
-Output (highlights): <4–8 short bullet-like clauses separated by " | ">
+Returns: <array|object|string|number|boolean|null> — <what it represents>
+Output (highlights): <clauses describing major output content and key fields>
 Chaining: <recipe 1> / <recipe 2> / <recipe 3>
 ```
 
 Notes:
 - **Do not** add a “Title:” line; tool names already exist in MCP.
 - Keep “Use when” to **3 items max** (omit if it adds no signal).
-- Keep “Avoid when” to **2 items max**; each item should name the preferred tool.
+- Keep “Avoid when” to **2 items max**; each item should name the preferred `functionName`.
 - If a tool has no inputs, still include `Inputs (highlights): none`.
-- Use **one line** for `Output (highlights)`; pack clauses with ` | `.
+- Use **one line** for `Output (highlights)`; the compiler will join clauses with ` | `.
 - Use **one line** for `Chaining`, with **slash-separated** recipes.
+
+### How these map to `toolDescriptionParts` in code
+In code, we store *parts* and compile them later.
+
+- `useWhen` and `avoidWhen` are arrays of short phrases (no semicolons needed).
+- `inputsHighlights` is a single string line:
+  - Use comma/semicolon separation (for example: `TripDate (YYYY-MM-DD); TerminalID (from fetchTerminalFares → TerminalID)`).
+  - Do **not** use ` | ` here; the compiler does not post-process this field.
+- `outputHighlights` should be:
+  - **4–8** array items for objects/arrays, and
+  - **1–3** array items for scalar-return tools (string/number/boolean/null),
+    to avoid filler text.
+  - Do **not** embed ` | ` inside a single string; the compiler will join items.
+- Omit `avoidWhen`/`chaining` entirely if you have no items (do not set `[]`).
+
+---
+
+## Consistency budgets (hard limits)
+
+To keep descriptions predictable and token-efficient, use these budgets:
+
+- **purpose**: exactly 1 sentence.
+- **useWhen**: 0–3 items.
+- **avoidWhen**: 0–2 items (each must include a `prefer <functionName>`).
+- **inputsHighlights**: one short line or `none`.
+- **returns**: one short line; do not include examples.
+- **outputHighlights**:
+  - objects/arrays: 4–8 items
+  - scalars: 1–3 items
+- **chaining**: 0–3 items.
+
+If you can’t fit within budgets, remove low-signal content first (not structure).
 
 ---
 
@@ -159,7 +193,7 @@ Notes:
   - “Avoid when” is for safety/efficiency (what not to do + which tool to prefer).
 - **Chaining**:
   - Always include at least **one** IDs-first recipe when possible.
-  - Always reference tools by exact MCP name (snake_case).
+  - Always reference tools by exact `functionName` (camelCase).
   - Always name the field to extract (exact JSON key).
 
 ### Content rules (what to avoid)
@@ -168,6 +202,13 @@ Notes:
 - Avoid long lists of fields. Prefer 4–8 highlights.
 - Avoid marketing prose or domain history; agents want operational guidance.
 - Avoid ambiguous references (“this endpoint”, “the previous tool”). Use tool names.
+- Avoid brittle hard numbers (exact counts, KB sizes) unless they are stable,
+  enforced, and crucial. Prefer qualitative guidance (“small directory payload”,
+  “large bulk response”) over estimates.
+- Avoid filler output highlights (for example “essential for applications”) unless
+  they encode a concrete semantic, format, or downstream use.
+- Avoid speculating about nullability and edge cases; only state what you can
+  confirm from schemas and sample outputs.
 
 ---
 
@@ -188,6 +229,17 @@ If an endpoint can return very large payloads, recommend a smaller tool first:
 
 `Chaining: <small summary tool> → choose items → call <detail tool>`
 
+Note: in `ws-dottie`, replace `<list tool>` / `<by-id tool>` with actual
+`functionName` identifiers.
+
+### Standard chaining grammar (required)
+Write each `chaining` entry as one of these forms:
+
+- `<functionName> → extract <FieldName> → call <functionName> with { <ParamName>: ... }`
+- `<functionName> → extract <FieldName> → call <functionName>` (only when the next tool takes that field name directly as its only parameter)
+
+Always use exact `functionName` and exact JSON key casing.
+
 ---
 
 ## Output (highlights): required because ws-dottie-mcp has no output schema
@@ -204,6 +256,14 @@ Recommended composition for most endpoints:
 
 Only include categories that apply.
 
+### Output highlights quality bar
+Each output highlight item must be one of:
+- **Key field(s)** (join keys, high-signal fields)
+- **Semantics** (enum meanings, units, noteworthy nullability)
+- **Bloat warning** (fields that dominate size)
+
+If an item does not fit one of these, remove it.
+
 ---
 
 ## Worked examples (wsf-vessels)
@@ -214,64 +274,64 @@ These examples demonstrate:
 - output highlights (since output schemas aren’t shipped),
 - and “avoid when” guidance to prevent context bloat.
 
-### Example: `get_vessel_basics`
+### Example: `fetchVesselBasics`
 
 ```
 Purpose: List basic vessel identification and operational status for the fleet.
 Use when: discovering VesselID values; building vessel pickers; light status checks
-Avoid when: you need full vessel specs/amenities (prefer get_vessel_verbose_by_id)
+Avoid when: you need full vessel specs/amenities (prefer fetchVesselsVerboseByVesselId)
 Inputs (highlights): none
 Returns: array — one item per vessel
 Output (highlights): IDs: VesselID | Names: VesselName, VesselAbbrev | Class: Class.ClassID, Class.PublicDisplayName | Status: Status (1=in service, 2=maintenance, 3=out of service) | Ownership: OwnedByWSF
-Chaining: get_vessel_basics → extract VesselID → call get_vessel_verbose_by_id / get_vessel_locations_by_id / get_vessel_stats_by_id / get_vessel_accommodations_by_id
+Chaining: fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByVesselId / fetchVesselLocationsByVesselId / fetchVesselStatsByVesselId / fetchVesselAccommodationsByVesselId
 ```
 
-### Example: `get_vessel_verbose` (bulk, large payload)
+### Example: `fetchVesselsVerbose` (bulk, large payload)
 
 ```
 Purpose: List complete vessel profiles for all vessels (basics + stats + accommodations).
 Use when: offline snapshots; one-time full export; debugging schema differences
-Avoid when: you only need one vessel (prefer get_vessel_verbose_by_id)
+Avoid when: you only need one vessel (prefer fetchVesselsVerboseByVesselId)
 Inputs (highlights): none
 Returns: array — one item per vessel
 Output (highlights): IDs: VesselID | Status/ops: Status, OwnedByWSF | Capacity/specs: MaxPassengerCount, RegDeckSpace, TallDeckSpace, PropulsionInfo | Amenities: ADAAccessible, Elevator, Restroom flags | Large text: ADAInfo, VesselNameDesc, VesselHistory can be long
-Chaining: get_vessel_basics → extract VesselID → call get_vessel_verbose_by_id (preferred for one vessel)
+Chaining: fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByVesselId (preferred for one vessel)
 ```
 
-### Example: `get_vessel_verbose_by_id`
+### Example: `fetchVesselsVerboseByVesselId`
 
 ```
 Purpose: Get the complete vessel profile for a single vessel by VesselID.
 Use when: detailed vessel pages; enriching a selected vessel; minimizing payload size
-Avoid when: you need the entire fleet (prefer get_vessel_verbose)
-Inputs (highlights): VesselID (get it from get_vessel_basics → VesselID)
+Avoid when: you need the entire fleet (prefer fetchVesselsVerbose)
+Inputs (highlights): VesselID (get it from fetchVesselBasics → VesselID)
 Returns: object — one vessel profile
 Output (highlights): IDs: VesselID, VesselSubjectID | Names: VesselName, VesselAbbrev | Status/ops: Status, OwnedByWSF | Specs/amenities: combines stats + accommodations | Large text: ADAInfo, VesselNameDesc, VesselHistory may be long
-Chaining: get_vessel_basics → extract VesselID → call get_vessel_verbose_by_id
+Chaining: fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByVesselId
 ```
 
-### Example: `get_vessel_locations`
+### Example: `fetchVesselLocations`
 
 ```
 Purpose: List real-time vessel locations and ETA/terminal assignment data.
 Use when: map displays; “where is my ferry”; live operational dashboards
-Avoid when: you only need one vessel (prefer get_vessel_locations_by_id)
+Avoid when: you only need one vessel (prefer fetchVesselLocationsByVesselId)
 Inputs (highlights): none
 Returns: array — one item per vessel location report
 Output (highlights): IDs: VesselID, DepartingTerminalID, ArrivingTerminalID | Position: Latitude, Longitude, Speed (knots), Heading (0–359) | Ops: InService, AtDock | Time: TimeStamp, LeftDock, Eta, ScheduledDeparture | Notes: VesselWatch* fields describe VesselWatch system status/messages
-Chaining: get_vessel_locations → extract VesselID → call get_vessel_locations_by_id / get_vessel_basics for names
+Chaining: fetchVesselLocations → extract VesselID → call fetchVesselLocationsByVesselId / fetchVesselBasics for names
 ```
 
-### Example: `get_vessel_histories_by_vessel_name_and_date_range`
+### Example: `fetchVesselHistoriesByVesselNameAndDateRange`
 
 ```
 Purpose: List historical voyage records for one vessel across a date range.
 Use when: delay analysis; historical performance; schedule vs actual comparisons
-Avoid when: you don’t know the vessel’s name (prefer get_vessel_basics to discover VesselName)
-Inputs (highlights): VesselName (from get_vessel_basics → VesselName) | DateStart, DateEnd in YYYY-MM-DD
+Avoid when: you don’t know the vessel’s name (prefer fetchVesselBasics to discover VesselName)
+Inputs (highlights): VesselName (from fetchVesselBasics → VesselName) | DateStart, DateEnd in YYYY-MM-DD
 Returns: array — one item per voyage record
 Output (highlights): Keys: VesselId (note casing), Vessel (name) | Terminals: Departing, Arriving | Time: ScheduledDepart, ActualDepart, EstArrival, Date (UTC datetimes) | Semantics: some time fields may be null
-Chaining: get_vessel_basics → extract VesselName → call get_vessel_histories_by_vessel_name_and_date_range
+Chaining: fetchVesselBasics → extract VesselName → call fetchVesselHistoriesByVesselNameAndDateRange
 ```
 
 ---
@@ -283,8 +343,6 @@ Chaining: get_vessel_basics → extract VesselName → call get_vessel_histories
 - **Returns**: states array vs object and the unit-of-meaning.
 - **Output highlights**: includes join keys + top 4–8 important fields + bloat warning if needed.
 - **Use when / Avoid when**: present and points to specific preferred tools.
-- **Chaining**: at least one explicit IDs-first recipe using exact tool names and exact field names.
+- **Chaining**: uses standard chaining grammar with exact `functionName` values and exact field names.
+- **Budgets**: within the hard limits (useWhen/avoidWhen/chaining lengths; outputHighlights count).
  
-
-
-

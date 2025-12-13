@@ -9,10 +9,10 @@ import {
 import { type Schedule, scheduleSchema } from "./shared/schedules.output";
 
 /**
- * Metadata for the fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds endpoint
+ * Metadata for the fetchScheduleByTripDateAndTerminalIds endpoint
  */
-export const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta = {
-  functionName: "fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
+export const scheduleByTripDateAndTerminalIds = {
+  functionName: "fetchScheduleByTripDateAndTerminalIds",
   endpoint: "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
   inputSchema: scheduleByTripDateAndTerminals,
   outputSchema: scheduleSchema,
@@ -48,26 +48,28 @@ export const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta = {
       "Additional info: SailingNotes, Annotations, AnnotationIndexes for special conditions",
     ],
     chaining: [
-      "fetchTerminalsAndMates → extract DepartingTerminalID, ArrivingTerminalID → call fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds with { DepartingTerminalID: ..., ArrivingTerminalID: ..., TripDate: ... }",
+      "fetchTerminalsAndMates → extract DepartingTerminalID, ArrivingTerminalID → call fetchScheduleByTripDateAndTerminalIds with { DepartingTerminalID: ..., ArrivingTerminalID: ..., TripDate: ... }",
     ],
   },
 } satisfies EndpointMeta<ScheduleByTripDateAndTerminalsInput, Schedule>;
 
 /**
- * Factory result for schedule by trip date and departing terminal ID and terminal IDs
+ * Factory result for schedule by trip date and terminal IDs
  */
-const scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsFactory =
-  createFetchAndHook<ScheduleByTripDateAndTerminalsInput, Schedule>({
-    api: wsfScheduleApiMeta,
-    endpoint: scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta,
-    getEndpointGroup: () =>
-      require("./shared/schedules.endpoints").schedulesGroup,
-  });
+const scheduleByTripDateAndTerminalIdsFactory = createFetchAndHook<
+  ScheduleByTripDateAndTerminalsInput,
+  Schedule
+>({
+  api: wsfScheduleApiMeta,
+  endpoint: scheduleByTripDateAndTerminalIds,
+  getEndpointGroup: () =>
+    require("./shared/schedules.endpoints").schedulesGroup,
+});
 
 /**
  * Fetch function and React Query hook for retrieving sailing schedule for a terminal pair and trip date
  */
 export const {
-  fetch: fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
-  hook: useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
-} = scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsFactory;
+  fetch: fetchScheduleByTripDateAndTerminalIds,
+  hook: useScheduleByTripDateAndTerminalIds,
+} = scheduleByTripDateAndTerminalIdsFactory;

@@ -19,7 +19,7 @@ export { useSailingsByRouteID } from "./sailings/sailingsByRouteID";
 export { useScheduleAlerts } from "./scheduleAlerts/scheduleAlerts";
 export { useScheduledRoutes } from "./scheduledRoutes/scheduledRoutes";
 export { useScheduledRoutesById } from "./scheduledRoutes/scheduledRoutesById";
-export { useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds } from "./schedules/scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
+export { useScheduleByTripDateAndTerminalIds } from "./schedules/scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
 // Schedules
 export { useScheduleByTripDateAndRouteId } from "./schedules/scheduleByTripDateAndRouteId";
 // Schedule Today

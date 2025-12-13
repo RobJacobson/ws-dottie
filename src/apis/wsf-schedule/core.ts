@@ -54,7 +54,7 @@ export { fetchScheduledRoutes } from "./scheduledRoutes/scheduledRoutes";
 export { fetchScheduledRoutesById } from "./scheduledRoutes/scheduledRoutesById";
 export * from "./scheduledRoutes/shared/scheduledRoutes.input";
 export * from "./scheduledRoutes/shared/scheduledRoutes.output";
-export { fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds } from "./schedules/scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
+export { fetchScheduleByTripDateAndTerminalIds } from "./schedules/scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
 // Schedules
 export { fetchScheduleByTripDateAndRouteId } from "./schedules/scheduleByTripDateAndRouteId";
 export * from "./schedules/shared/schedules.input";

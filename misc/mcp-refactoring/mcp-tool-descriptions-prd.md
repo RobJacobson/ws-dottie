@@ -48,7 +48,11 @@ For the requested set of endpoints:
 2. Ensure descriptions are **consistent across the codebase**, follow the style
    guide, and reflect the real inputs/outputs of the endpoint.
 3. Provide explicit **Use when / Avoid when** guidance for tool selection.
-4. Provide explicit **Chaining** guidance (IDs-first) using exact MCP tool names.
+4. Provide explicit **Chaining** guidance (IDs-first) using exact `functionName`
+   references.
+
+Success is measured by: high tool-selection accuracy, low validation failures,
+and minimal token bloat in tool metadata.
 
 ---
 
@@ -87,15 +91,21 @@ Your `toolDescriptionParts` must map cleanly to the style guide template:
 - **Avoid when**: `avoidWhen` (optional, ≤ 2 items; must name preferred tool)
 - **Inputs (highlights)**: `inputsHighlights` (optional; use `"none"` if no inputs)
 - **Returns**: `returns` (required)
-- **Output (highlights)**: `outputHighlights` (required; 4–8 compact clauses)
+- **Output (highlights)**: `outputHighlights` (required; usually 4–8 clauses,
+  but scalar tools may use 1–3 to avoid filler)
 - **Chaining**: `chaining` (optional but strongly recommended; 1–3 recipes)
 
-### R3: Tool names must be exact MCP tool names
-In `avoidWhen` and `chaining`, reference tools using the **exact snake_case MCP
-tool name** (e.g., `get_vessel_basics`, `get_vessel_verbose_by_id`).
+### R3: Tool references must use exact `functionName`
+In `ws-dottie`, in `avoidWhen` and `chaining`, reference tools using the **exact
+`functionName`** from the corresponding `EndpointMeta` object (for example
+`fetchVesselBasicsByVesselId`).
 
-If you are unsure of the exact MCP tool name for an endpoint, ask the requester
-for the mapping before finalizing descriptions.
+`ws-dottie-mcp` will transform `functionName` values into the final MCP tool
+names via deterministic string substitutions.
+
+**Do not guess tool names.** If you cannot find a referenced `functionName` in
+the codebase, stop and ask the requester for clarification (or locate the correct
+`EndpointMeta.functionName` and use that).
 
 ### R4: Output highlights are mandatory and must be accurate
 Because there is no output schema in `ws-dottie-mcp`, `outputHighlights` must
@@ -115,6 +125,14 @@ Follow the style guide’s practical length heuristics:
 
 Prefer short clauses and omit low-signal details.
 
+### R6: Hard budgets (must pass)
+- `useWhen`: 0–3 items
+- `avoidWhen`: 0–2 items
+- `chaining`: 0–3 items
+- `outputHighlights`: objects/arrays 4–8 items; scalars 1–3 items
+
+Reject PRs that exceed budgets unless requester explicitly approves an exception.
+
 ---
 
 ## Research workflow (required)
@@ -131,6 +149,13 @@ For each endpoint, derive the content from these sources (in order):
 If any of these sources disagree, prefer the schemas and sample outputs. Flag
 material mismatches to the requester.
 
+**Important**: validate `returns` and `outputHighlights` against sample output.
+Some endpoints return scalar JSON values (for example, a JSON string timestamp),
+not objects. Do not assume “object” just because the Zod output schema is `z.date()`.
+
+Also avoid unverified claims like “returns undefined/null if no updates” unless
+you can confirm that behavior in the sample output or upstream docs.
+
 ---
 
 ## Authoring guidelines (what “good” looks like)
@@ -145,8 +170,8 @@ material mismatches to the requester.
 
 ### Avoid when
 - 1–2 short anti-patterns.
-- Must include the preferred alternative tool by name:
-  - “Avoid when: you only need one vessel (prefer get_vessel_verbose_by_id)”
+- Must include the preferred alternative tool by `functionName`:
+  - “Avoid when: you only need one vessel (prefer fetchVesselsVerboseByVesselId)”
 
 ### Inputs (highlights)
 - Use `"none"` when there are no inputs.
@@ -161,9 +186,14 @@ material mismatches to the requester.
   - “object — one vessel profile”
 
 ### Output (highlights)
-- 4–8 compact clauses.
+- Objects/arrays: 4–8 compact clauses.
+- Scalars: 1–3 compact clauses.
 - Include join keys and major categories.
 - Call out bloat fields when they dominate payload size.
+
+**Structured authoring rule**: `outputHighlights` is an array of clauses.
+Each array item should be one compact clause. Do not pack multiple clauses into
+one string using ` | `; the compiler will join items.
 
 ### Chaining
 - 1–3 explicit recipes.
@@ -174,7 +204,11 @@ material mismatches to the requester.
   - and the input key used.
 
 Example (pattern):
-- `get_vessel_basics → extract VesselID → call get_vessel_verbose_by_id with { VesselID: ... }`
+- `fetchVesselBasics → extract VesselID → call fetchVesselsVerboseByVesselId with { VesselID: ... }`
+
+**Required grammar**: each `chaining` entry must follow one of:
+- `<functionName> → extract <FieldName> → call <functionName> with { <ParamName>: ... }`
+- `<functionName> → extract <FieldName> → call <functionName>`
 
 ---
 
@@ -184,12 +218,23 @@ For each endpoint:
 
 - `toolDescriptionParts` exists and type-checks against `ToolDescriptionParts`.
 - `purpose` and `returns` are present and accurate.
-- `outputHighlights` is present and has **4–8** clauses.
+- `outputHighlights` is present and has an appropriate number of clauses:
+  - 4–8 for objects/arrays
+  - 1–3 for scalar-return tools
 - `useWhen`/`avoidWhen` are present where they improve selection; avoid is used
   whenever there is a clear “better” tool (by-id vs bulk).
 - `chaining` exists for endpoints that take IDs/names and references exact tool
-  names + exact field names.
+  `functionName` values + exact field names.
+- No empty arrays: omit `avoidWhen` / `chaining` if there are no items.
+- No speculative claims (nullability/edge cases) unless confirmed by schema + sample output.
 - No endpoint behavior changes; docs-only changes.
+
+### Quick rubric (score each tool 0–2; target ≥ 8/10)
+- **Selection clarity**: can an agent pick this tool vs nearby tools?
+- **Output interpretability**: can an agent use the result without an output schema?
+- **Chaining quality**: are the recipes explicit and correct?
+- **Token efficiency**: within budgets, no filler.
+- **Non-speculative**: claims match schemas + samples.
 
 ---
 
@@ -202,12 +247,6 @@ For each endpoint:
 
 ---
 
-## Open questions to resolve with the requester (ask before finalizing)
-
-1. Exact list of APIs/endpoints to cover (and expected completion order).
-2. The exact MCP tool-name mapping for endpoints (snake_case).
-3. Any endpoints where “avoid when” should *not* discourage bulk usage
-   (rare, but possible).
 
 
 

@@ -1,5 +1,5 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta } from "../scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
+import { scheduleByTripDateAndTerminalIds } from "../scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
 import { scheduleByTripDateAndRouteIdMeta } from "../scheduleByTripDateAndRouteId";
 
 /**
@@ -20,6 +20,6 @@ export const schedulesGroup: EndpointGroupMeta = {
   },
   endpoints: [
     scheduleByTripDateAndRouteIdMeta,
-    scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsMeta,
+    scheduleByTripDateAndTerminalIds,
   ],
 };

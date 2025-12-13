@@ -28,7 +28,7 @@ export const scheduleByTripDateAndRouteIdMeta = {
       "checking all departure options for a route",
     ],
     avoidWhen: [
-      "you need schedule for specific terminals (prefer fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds)",
+      "you need schedule for specific terminals (prefer fetchScheduleByTripDateAndTerminalIds)",
       "you need real-time schedule (prefer fetchScheduleTodayByRoute)",
     ],
     inputsHighlights:
