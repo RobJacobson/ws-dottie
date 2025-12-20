@@ -98,7 +98,7 @@ const saveSample = (
   endpoint: Endpoint<EndpointParams, EndpointResponse>,
   data: unknown
 ): void => {
-  const apiDir = join(docsRoot, endpoint.api);
+  const apiDir = join(docsRoot, endpoint.api.name);
   mkdirSync(apiDir, { recursive: true });
 
   const filePath = join(apiDir, `${endpoint.functionName}.json`);
@@ -137,7 +137,7 @@ const processEndpoint = async (
   endpoint: Endpoint<EndpointParams, EndpointResponse>;
 }> => {
   process.stdout.write(
-    `  [${index + 1}/${total}] Fetching ${endpoint.api}.${endpoint.functionName}...\r`
+    `  [${index + 1}/${total}] Fetching ${endpoint.api.name}.${endpoint.functionName}...\r`
   );
 
   const endpointKey = `${endpoint.api}.${endpoint.functionName}`;
@@ -158,7 +158,7 @@ const processEndpoint = async (
   if (data !== null) {
     saveSample(endpoint, data);
     process.stdout.write(
-      `  [${index + 1}/${total}] ✓ Fetched ${endpoint.api}.${endpoint.functionName}      \n`
+      `  [${index + 1}/${total}] ✓ Fetched ${endpoint.api.name}.${endpoint.functionName}      \n`
     );
     return { success: true, endpoint };
   } else {
