@@ -40,7 +40,7 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchTravelTimeByIdOutput:
+    FetchTravelTimesOutput:
       type: object
       properties:
         AverageTime:
@@ -128,8 +128,8 @@ components:
           description: Roadway location where the travel time route begins.
         TimeUpdated:
           type: string
+          format: date
           description: UTC datetime when the travel time data was last updated.
-          format: date-time
         TravelTimeID:
           type: number
           description: Numeric ID of the travel time route.
@@ -144,7 +144,17 @@ components:
         - TimeUpdated
         - TravelTimeID
       description: Travel time route information including current and average travel times, route distance, start/end point locations, and update timestamp.
-  parameters: {}
+    FetchTravelTimeByIdInputTravelTimeIDParam:
+      type: number
+      description: Numeric ID of the travel time route.
+  parameters:
+    FetchTravelTimeByIdInputTravelTimeIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchTravelTimeByIdInputTravelTimeIDParam'
+      required: true
+      description: Numeric ID of the travel time route.
+      name: TravelTimeID
+      in: path
 paths:
   /getTravelTimesAsJson:
     get:
@@ -171,116 +181,14 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    AverageTime:
-                      type: number
-                      description: Average travel time to complete the route in minutes based on historical data.
-                    CurrentTime:
-                      type: number
-                      description: Current estimated travel time to complete the route in minutes based on real-time conditions.
-                    Description:
-                      type: string
-                      nullable: true
-                      description: Human-readable description of the travel time route.
-                    Distance:
-                      type: number
-                      description: Total route distance from start to end point in miles.
-                    EndPoint:
-                      type: object
-                      nullable: true
-                      properties:
-                        Description:
-                          type: string
-                          nullable: true
-                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
-                        Direction:
-                          type: string
-                          nullable: true
-                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
-                        Latitude:
-                          type: number
-                          description: Latitude of the roadway location in decimal degrees.
-                        Longitude:
-                          type: number
-                          description: Longitude of the roadway location in decimal degrees.
-                        MilePost:
-                          type: number
-                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
-                        RoadName:
-                          type: string
-                          nullable: true
-                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
-                      required:
-                        - Description
-                        - Direction
-                        - Latitude
-                        - Longitude
-                        - MilePost
-                        - RoadName
-                      description: Roadway location where the travel time route ends.
-                    Name:
-                      type: string
-                      nullable: true
-                      description: Display name of the travel time route.
-                    StartPoint:
-                      type: object
-                      nullable: true
-                      properties:
-                        Description:
-                          type: string
-                          nullable: true
-                          description: Human-readable description of the roadway location, such as interchange names or cross streets.
-                        Direction:
-                          type: string
-                          nullable: true
-                          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
-                        Latitude:
-                          type: number
-                          description: Latitude of the roadway location in decimal degrees.
-                        Longitude:
-                          type: number
-                          description: Longitude of the roadway location in decimal degrees.
-                        MilePost:
-                          type: number
-                          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
-                        RoadName:
-                          type: string
-                          nullable: true
-                          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
-                      required:
-                        - Description
-                        - Direction
-                        - Latitude
-                        - Longitude
-                        - MilePost
-                        - RoadName
-                      description: Roadway location where the travel time route begins.
-                    TimeUpdated:
-                      type: string
-                      description: UTC datetime when the travel time data was last updated.
-                      format: date-time
-                    TravelTimeID:
-                      type: number
-                      description: Numeric ID of the travel time route.
-                  required:
-                    - AverageTime
-                    - CurrentTime
-                    - Description
-                    - Distance
-                    - EndPoint
-                    - Name
-                    - StartPoint
-                    - TimeUpdated
-                    - TravelTimeID
-                  description: Travel time route information including current and average travel times, route distance, start/end point locations, and update timestamp.
+                  $ref: '#/components/schemas/FetchTravelTimesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 163 total)
                   value:
-                    - AverageTime: 26
-                      CurrentTime: 26
+                    - AverageTime: 48
+                      CurrentTime: 70
                       Description: Everett to Downtown Seattle using HOV lanes
                       Distance: 26.72
                       EndPoint:
@@ -298,7 +206,7 @@ paths:
                         Longitude: -122.199237
                         MilePost: 192.55
                         RoadName: '005'
-                      TimeUpdated: '2025-11-15T17:40:00.000Z'
+                      TimeUpdated: '2025-12-19T01:35:00.000Z'
                       TravelTimeID: 2
   /getTravelTimeAsJson?TravelTimeID={TravelTimeID}:
     get:
@@ -320,20 +228,22 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTravelTimeByIdInputTravelTimeIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTravelTimeByIdOutput'
+                $ref: '#/components/schemas/FetchTravelTimesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    AverageTime: 27
-                    CurrentTime: 26
+                    AverageTime: 58
+                    CurrentTime: 77
                     Description: Everett to Downtown Seattle
                     Distance: 26.72
                     EndPoint:
@@ -351,7 +261,7 @@ paths:
                       Longitude: -122.199237
                       MilePost: 192.55
                       RoadName: '005'
-                    TimeUpdated: '2025-11-15T17:40:00.000Z'
+                    TimeUpdated: '2025-12-19T01:35:00.000Z'
                     TravelTimeID: 1
 tags:
   - name: travel-time-routes

@@ -4692,29 +4692,6 @@
     "Title": "I-205 at MP 29.3: 18th St"
   },
   {
-    "CameraID": 10053,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 45.624602,
-      "Longitude": -122.559333,
-      "MilePost": 29,
-      "RoadName": "I-205"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 45.624602,
-    "DisplayLongitude": -122.559333,
-    "ImageHeight": 244,
-    "ImageURL": "https://images.wsdot.wa.gov/sw/205vc02863.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "SW",
-    "SortOrder": 1100,
-    "Title": "I-205 at MP 28.6: 6th St"
-  },
-  {
     "CameraID": 10114,
     "CameraLocation": {
       "Description": null,
@@ -4736,6 +4713,29 @@
     "Region": "SW",
     "SortOrder": 1100,
     "Title": "I-205 at MP 29.1: 15th St"
+  },
+  {
+    "CameraID": 10053,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 45.624602,
+      "Longitude": -122.559333,
+      "MilePost": 29,
+      "RoadName": "I-205"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 45.624602,
+    "DisplayLongitude": -122.559333,
+    "ImageHeight": 244,
+    "ImageURL": "https://images.wsdot.wa.gov/sw/205vc02863.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "SW",
+    "SortOrder": 1100,
+    "Title": "I-205 at MP 28.6: 6th St"
   },
   {
     "CameraID": 10054,
@@ -4830,29 +4830,6 @@
     "Title": "I-205 at MP 29.7: Burton Rd"
   },
   {
-    "CameraID": 3062,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 45.657208,
-      "Longitude": -122.570395,
-      "MilePost": 31,
-      "RoadName": "I-205"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 45.657208,
-    "DisplayLongitude": -122.570395,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/sw/205vc03090.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "SW",
-    "SortOrder": 1100,
-    "Title": "I-205 at MP 30.9: SR 500 Camera 1"
-  },
-  {
     "CameraID": 10055,
     "CameraLocation": {
       "Description": null,
@@ -4897,6 +4874,29 @@
     "Region": "SW",
     "SortOrder": 1100,
     "Title": "I-205 at MP 30.8: SR 500 SB Ramp Meter"
+  },
+  {
+    "CameraID": 3062,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 45.657208,
+      "Longitude": -122.570395,
+      "MilePost": 31,
+      "RoadName": "I-205"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 45.657208,
+    "DisplayLongitude": -122.570395,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/sw/205vc03090.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "SW",
+    "SortOrder": 1100,
+    "Title": "I-205 at MP 30.9: SR 500 Camera 1"
   },
   {
     "CameraID": 9938,
@@ -5290,29 +5290,6 @@
     "Title": "I-405 at MP 1.6: Oakesdale Ave"
   },
   {
-    "CameraID": 10008,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.467855,
-      "Longitude": -122.215182,
-      "MilePost": 2,
-      "RoadName": "I-405"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.467855,
-    "DisplayLongitude": -122.215182,
-    "ImageHeight": 244,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc00245.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 1200,
-    "Title": "I-405 at MP 2.4: SR 167, East"
-  },
-  {
     "CameraID": 1061,
     "CameraLocation": {
       "Description": null,
@@ -5334,6 +5311,29 @@
     "Region": "NW",
     "SortOrder": 1200,
     "Title": "I-405 at MP 2.2: SR 167 Interchange"
+  },
+  {
+    "CameraID": 10008,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.467855,
+      "Longitude": -122.215182,
+      "MilePost": 2,
+      "RoadName": "I-405"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.467855,
+    "DisplayLongitude": -122.215182,
+    "ImageHeight": 244,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc00245.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 1200,
+    "Title": "I-405 at MP 2.4: SR 167, East"
   },
   {
     "CameraID": 1363,
@@ -5451,29 +5451,6 @@
     "Title": "I-405 at MP 2.8: Talbot Rd, NB Ramp"
   },
   {
-    "CameraID": 1062,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 47.485715,
-      "Longitude": -122.194756,
-      "MilePost": 4,
-      "RoadName": "I-405"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.485715,
-    "DisplayLongitude": -122.194756,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc00417.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 1200,
-    "Title": "I-405 at MP 4.1: SR 169 Interchange"
-  },
-  {
     "CameraID": 10011,
     "CameraLocation": {
       "Description": null,
@@ -5495,6 +5472,29 @@
     "Region": "NW",
     "SortOrder": 1200,
     "Title": "I-405 at MP 4: SR 169, NB Ramps"
+  },
+  {
+    "CameraID": 1062,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.485715,
+      "Longitude": -122.194756,
+      "MilePost": 4,
+      "RoadName": "I-405"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.485715,
+    "DisplayLongitude": -122.194756,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc00417.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 1200,
+    "Title": "I-405 at MP 4.1: SR 169 Interchange"
   },
   {
     "CameraID": 1063,
@@ -6394,29 +6394,6 @@
     "Title": "I-405 at MP 17.3: NE 70th,SB Ramps"
   },
   {
-    "CameraID": 1075,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.659686,
-      "Longitude": -122.18687,
-      "MilePost": 17,
-      "RoadName": "I-405"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.659686,
-    "DisplayLongitude": -122.18687,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc01675.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 1200,
-    "Title": "I-405 at MP 16.7: NE 59th St"
-  },
-  {
     "CameraID": 1380,
     "CameraLocation": {
       "Description": null,
@@ -6438,6 +6415,29 @@
     "Region": "NW",
     "SortOrder": 1200,
     "Title": "I-405 at MP 17.4: NE 70nd Pl"
+  },
+  {
+    "CameraID": 1075,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.659686,
+      "Longitude": -122.18687,
+      "MilePost": 17,
+      "RoadName": "I-405"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.659686,
+    "DisplayLongitude": -122.18687,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc01675.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 1200,
+    "Title": "I-405 at MP 16.7: NE 59th St"
   },
   {
     "CameraID": 10017,
@@ -6969,29 +6969,6 @@
     "Title": "I-405 at MP 23.9: NE 183rd St"
   },
   {
-    "CameraID": 1384,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 47.783062,
-      "Longitude": -122.195618,
-      "MilePost": 25,
-      "RoadName": "I-405"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.783062,
-    "DisplayLongitude": -122.195618,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc02553.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 1200,
-    "Title": "I-405 at MP 25.5: 236th St SE, SB"
-  },
-  {
     "CameraID": 10030,
     "CameraLocation": {
       "Description": null,
@@ -7013,6 +6990,29 @@
     "Region": "NW",
     "SortOrder": 1200,
     "Title": "I-405 at MP 25.1: 243rd St SE"
+  },
+  {
+    "CameraID": 1384,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.783062,
+      "Longitude": -122.195618,
+      "MilePost": 25,
+      "RoadName": "I-405"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.783062,
+    "DisplayLongitude": -122.195618,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc02553.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 1200,
+    "Title": "I-405 at MP 25.5: 236th St SE, SB"
   },
   {
     "CameraID": 1385,
@@ -7222,29 +7222,6 @@
     "Title": "I-405 at MP 27.4: 216th St SE, NB"
   },
   {
-    "CameraID": 1085,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.812238,
-      "Longitude": -122.231287,
-      "MilePost": 28,
-      "RoadName": "I-405"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.812238,
-    "DisplayLongitude": -122.231287,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc02826.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 1200,
-    "Title": "I-405 at MP 28.2: 204th St SE, SB"
-  },
-  {
     "CameraID": 10035,
     "CameraLocation": {
       "Description": null,
@@ -7266,6 +7243,29 @@
     "Region": "NW",
     "SortOrder": 1200,
     "Title": "I-405 at MP 28: Richmond Rd"
+  },
+  {
+    "CameraID": 1085,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.812238,
+      "Longitude": -122.231287,
+      "MilePost": 28,
+      "RoadName": "I-405"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.812238,
+    "DisplayLongitude": -122.231287,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc02826.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 1200,
+    "Title": "I-405 at MP 28.2: 204th St SE, SB"
   },
   {
     "CameraID": 1084,
@@ -7314,29 +7314,6 @@
     "Title": "I-405 at MP 27.8: 210th St SE, SB "
   },
   {
-    "CameraID": 1390,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.819541,
-      "Longitude": -122.241328,
-      "MilePost": 29,
-      "RoadName": "I-405"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.819541,
-    "DisplayLongitude": -122.241328,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc02895.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 1200,
-    "Title": "I-405 at MP 28.9: Damson Rd"
-  },
-  {
     "CameraID": 10036,
     "CameraLocation": {
       "Description": null,
@@ -7358,6 +7335,29 @@
     "Region": "NW",
     "SortOrder": 1200,
     "Title": "I-405 at MP 29.2: Bing Rd"
+  },
+  {
+    "CameraID": 1390,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.819541,
+      "Longitude": -122.241328,
+      "MilePost": 29,
+      "RoadName": "I-405"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.819541,
+    "DisplayLongitude": -122.241328,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/405vc02895.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 1200,
+    "Title": "I-405 at MP 28.9: Damson Rd"
   },
   {
     "CameraID": 1086,
@@ -7866,29 +7866,6 @@
     "Title": "I-5 at MP 3.3: Main St North"
   },
   {
-    "CameraID": 10050,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 45.657999,
-      "Longitude": -122.665394,
-      "MilePost": 3,
-      "RoadName": "I-5"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 45.657999,
-    "DisplayLongitude": -122.665394,
-    "ImageHeight": 209,
-    "ImageURL": "https://images.wsdot.wa.gov/sw/005vc00296.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "SW",
-    "SortOrder": 1000,
-    "Title": "I-5 at MP 2.9: Main St. Ramp meter"
-  },
-  {
     "CameraID": 9931,
     "CameraLocation": {
       "Description": null,
@@ -7910,6 +7887,29 @@
     "Region": "SW",
     "SortOrder": 1000,
     "Title": "I-5 at MP 3.6: S of 63rd St"
+  },
+  {
+    "CameraID": 10050,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 45.657999,
+      "Longitude": -122.665394,
+      "MilePost": 3,
+      "RoadName": "I-5"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 45.657999,
+    "DisplayLongitude": -122.665394,
+    "ImageHeight": 209,
+    "ImageURL": "https://images.wsdot.wa.gov/sw/005vc00296.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "SW",
+    "SortOrder": 1000,
+    "Title": "I-5 at MP 2.9: Main St. Ramp meter"
   },
   {
     "CameraID": 4021,
@@ -9775,29 +9775,6 @@
     "Title": "I-5 @ MP 117.18: Mounts Rd Scale"
   },
   {
-    "CameraID": 10225,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 47.085301,
-      "Longitude": -122.65606,
-      "MilePost": 117,
-      "RoadName": "I-5"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.085301,
-    "DisplayLongitude": -122.65606,
-    "ImageHeight": 244,
-    "ImageURL": "https://images.wsdot.wa.gov/orflow/005vc11742.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "OL",
-    "SortOrder": 1000,
-    "Title": "I-5 @ MP 117.4: Center Dr SB"
-  },
-  {
     "CameraID": 10197,
     "CameraLocation": {
       "Description": null,
@@ -9819,6 +9796,29 @@
     "Region": "OL",
     "SortOrder": 1000,
     "Title": "I-5 at MP 116.7: Mounts Road"
+  },
+  {
+    "CameraID": 10225,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.085301,
+      "Longitude": -122.65606,
+      "MilePost": 117,
+      "RoadName": "I-5"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.085301,
+    "DisplayLongitude": -122.65606,
+    "ImageHeight": 244,
+    "ImageURL": "https://images.wsdot.wa.gov/orflow/005vc11742.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "OL",
+    "SortOrder": 1000,
+    "Title": "I-5 @ MP 117.4: Center Dr SB"
   },
   {
     "CameraID": 9486,
@@ -10764,29 +10764,6 @@
     "Title": "I-5 at MP 136.1: Port of Tacoma I/C"
   },
   {
-    "CameraID": 10064,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.241236,
-      "Longitude": -122.395987,
-      "MilePost": 136,
-      "RoadName": "I-5"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.241236,
-    "DisplayLongitude": -122.395987,
-    "ImageHeight": 209,
-    "ImageURL": "https://images.wsdot.wa.gov/orflow/005vc13562.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "OL",
-    "SortOrder": 1000,
-    "Title": "I-5 at MP 135.6: Puyallup River Bridge North"
-  },
-  {
     "CameraID": 1011,
     "CameraLocation": {
       "Description": null,
@@ -10808,6 +10785,29 @@
     "Region": "OL",
     "SortOrder": 1000,
     "Title": "I-5 at MP 136.6: Port of Tacoma Rd"
+  },
+  {
+    "CameraID": 10064,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.241236,
+      "Longitude": -122.395987,
+      "MilePost": 136,
+      "RoadName": "I-5"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.241236,
+    "DisplayLongitude": -122.395987,
+    "ImageHeight": 209,
+    "ImageURL": "https://images.wsdot.wa.gov/orflow/005vc13562.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "OL",
+    "SortOrder": 1000,
+    "Title": "I-5 at MP 135.6: Puyallup River Bridge North"
   },
   {
     "CameraID": 9215,
@@ -20520,18 +20520,18 @@
     "CameraLocation": {
       "Description": null,
       "Direction": "B",
-      "Latitude": 47.673769,
-      "Longitude": -117.239126,
+      "Latitude": 47.674077,
+      "Longitude": -117.234105,
       "MilePost": 290,
       "RoadName": "I-90"
     },
     "CameraOwner": null,
     "Description": null,
-    "DisplayLatitude": 47.673769,
-    "DisplayLongitude": -117.239126,
-    "ImageHeight": 352,
+    "DisplayLatitude": 47.674077,
+    "DisplayLongitude": -117.234105,
+    "ImageHeight": 223,
     "ImageURL": "https://images.wsdot.wa.gov/spokane/wsdot_090_28980_pines.jpg",
-    "ImageWidth": 219,
+    "ImageWidth": 360,
     "IsActive": true,
     "OwnerURL": null,
     "Region": "ER",
@@ -20744,98 +20744,6 @@
     "Region": "ER",
     "SortOrder": 1300,
     "Title": "I-90 at MP 296: Liberty Lake (4)"
-  },
-  {
-    "CameraID": 8254,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 47.670525,
-      "Longitude": -117.111317,
-      "MilePost": 296,
-      "RoadName": "I-90"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.670525,
-    "DisplayLongitude": -117.111317,
-    "ImageHeight": 219,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/LibertyLake4.jpg",
-    "ImageWidth": 352,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 1300,
-    "Title": "I-90 at MP 296: Liberty Lake (5)"
-  },
-  {
-    "CameraID": 8255,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 47.670525,
-      "Longitude": -117.111317,
-      "MilePost": 296,
-      "RoadName": "I-90"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.670525,
-    "DisplayLongitude": -117.111317,
-    "ImageHeight": 219,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/LibertyLake5.jpg",
-    "ImageWidth": 352,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 1300,
-    "Title": "I-90 at MP 296: Liberty Lake (6)"
-  },
-  {
-    "CameraID": 8256,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 47.670525,
-      "Longitude": -117.111317,
-      "MilePost": 296,
-      "RoadName": "I-90"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.670525,
-    "DisplayLongitude": -117.111317,
-    "ImageHeight": 219,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/LibertyLake6.jpg",
-    "ImageWidth": 352,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 1300,
-    "Title": "I-90 at MP 296: Liberty Lake (7)"
-  },
-  {
-    "CameraID": 8257,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 47.670525,
-      "Longitude": -117.111317,
-      "MilePost": 296,
-      "RoadName": "I-90"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.670525,
-    "DisplayLongitude": -117.111317,
-    "ImageHeight": 219,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/LibertyLake7.jpg",
-    "ImageWidth": 352,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 1300,
-    "Title": "I-90 at MP 296: Liberty Lake (8)"
   },
   {
     "CameraID": 9229,
@@ -21689,29 +21597,6 @@
     "Title": "SR 14 at MP 11.45"
   },
   {
-    "CameraID": 9396,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 45.580469,
-      "Longitude": -122.427261,
-      "MilePost": 12,
-      "RoadName": "SR 14"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 45.580469,
-    "DisplayLongitude": -122.427261,
-    "ImageHeight": 209,
-    "ImageURL": "https://images.wsdot.wa.gov/sw/014vc01239.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "SW",
-    "SortOrder": 3014,
-    "Title": "SR 14 at MP 12.4: 6th Ave"
-  },
-  {
     "CameraID": 9711,
     "CameraLocation": {
       "Description": null,
@@ -21733,6 +21618,29 @@
     "Region": "SW",
     "SortOrder": 3014,
     "Title": "SR 14 at MP 12.38"
+  },
+  {
+    "CameraID": 9396,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 45.580469,
+      "Longitude": -122.427261,
+      "MilePost": 12,
+      "RoadName": "SR 14"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 45.580469,
+    "DisplayLongitude": -122.427261,
+    "ImageHeight": 209,
+    "ImageURL": "https://images.wsdot.wa.gov/sw/014vc01239.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "SW",
+    "SortOrder": 3014,
+    "Title": "SR 14 at MP 12.4: 6th Ave"
   },
   {
     "CameraID": 9397,
@@ -22655,29 +22563,6 @@
     "Title": "SR 167 at MP 6: SR 512 Interchange"
   },
   {
-    "CameraID": 1176,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.201976,
-      "Longitude": -122.257715,
-      "MilePost": 8,
-      "RoadName": "SR 167"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.201976,
-    "DisplayLongitude": -122.257715,
-    "ImageHeight": 209,
-    "ImageURL": "https://images.wsdot.wa.gov/ORFlow/167vc00700.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "OL",
-    "SortOrder": 3167,
-    "Title": "SR 167 at MP 7: SR 410 Interchange"
-  },
-  {
     "CameraID": 10093,
     "CameraLocation": {
       "Description": null,
@@ -22699,6 +22584,29 @@
     "Region": "OL",
     "SortOrder": 3167,
     "Title": "SR 167 at MP 8.03: 48th St E"
+  },
+  {
+    "CameraID": 1176,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.201976,
+      "Longitude": -122.257715,
+      "MilePost": 8,
+      "RoadName": "SR 167"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.201976,
+    "DisplayLongitude": -122.257715,
+    "ImageHeight": 209,
+    "ImageURL": "https://images.wsdot.wa.gov/ORFlow/167vc00700.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "OL",
+    "SortOrder": 3167,
+    "Title": "SR 167 at MP 7: SR 410 Interchange"
   },
   {
     "CameraID": 10092,
@@ -23230,29 +23138,6 @@
     "Title": "SR 167 at MP 20.6: 4th Ave N"
   },
   {
-    "CameraID": 1181,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.404973,
-      "Longitude": -122.220683,
-      "MilePost": 22,
-      "RoadName": "SR 167"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.404973,
-    "DisplayLongitude": -122.220683,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/167vc02189.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 3167,
-    "Title": "SR 167 at MP 21.8: S 220th St"
-  },
-  {
     "CameraID": 1465,
     "CameraLocation": {
       "Description": null,
@@ -23274,6 +23159,29 @@
     "Region": "NW",
     "SortOrder": 3167,
     "Title": "SR 167 at MP 22.4: S 212th St"
+  },
+  {
+    "CameraID": 1181,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.404973,
+      "Longitude": -122.220683,
+      "MilePost": 22,
+      "RoadName": "SR 167"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.404973,
+    "DisplayLongitude": -122.220683,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/167vc02189.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 3167,
+    "Title": "SR 167 at MP 21.8: S 220th St"
   },
   {
     "CameraID": 9611,
@@ -23345,6 +23253,29 @@
     "Title": "SR 167 at MP 24.42: S 180th, NB Ramp"
   },
   {
+    "CameraID": 10001,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.449522,
+      "Longitude": -122.215342,
+      "MilePost": 25,
+      "RoadName": "SR 167"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.449522,
+    "DisplayLongitude": -122.215342,
+    "ImageHeight": 244,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/167vc02501.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 3167,
+    "Title": "SR 167 at MP 25: S 34th St"
+  },
+  {
     "CameraID": 1182,
     "CameraLocation": {
       "Description": null,
@@ -23389,29 +23320,6 @@
     "Region": "NW",
     "SortOrder": 3167,
     "Title": "SR 167 at MP 25.3: S 27th Pl"
-  },
-  {
-    "CameraID": 10001,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.449522,
-      "Longitude": -122.215342,
-      "MilePost": 25,
-      "RoadName": "SR 167"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.449522,
-    "DisplayLongitude": -122.215342,
-    "ImageHeight": 244,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/167vc02501.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 3167,
-    "Title": "SR 167 at MP 25: S 34th St"
   },
   {
     "CameraID": 10003,
@@ -23552,29 +23460,6 @@
     "Title": "SR 167 at MP 26.1: I-405 Interchange, SW Quad"
   },
   {
-    "CameraID": 10007,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.358386,
-      "Longitude": -122.020261,
-      "MilePost": 11,
-      "RoadName": "SR 169"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.358386,
-    "DisplayLongitude": -122.020261,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/169vc01123.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 3169,
-    "Title": "SR 169 at MP 11.2"
-  },
-  {
     "CameraID": 9613,
     "CameraLocation": {
       "Description": null,
@@ -23596,6 +23481,29 @@
     "Region": "NW",
     "SortOrder": 3169,
     "Title": "SR 169 at MP 10.9: SE 276th St"
+  },
+  {
+    "CameraID": 10007,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.358386,
+      "Longitude": -122.020261,
+      "MilePost": 11,
+      "RoadName": "SR 169"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.358386,
+    "DisplayLongitude": -122.020261,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/169vc01123.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 3169,
+    "Title": "SR 169 at MP 11.2"
   },
   {
     "CameraID": 9614,
@@ -27324,29 +27232,6 @@
     "Title": "SR 432 at MP 9.8: Talley Way WB"
   },
   {
-    "CameraID": 1252,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "O",
-      "Latitude": 46.116235,
-      "Longitude": -122.950513,
-      "MilePost": 1,
-      "RoadName": "SR 433"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 46.116235,
-    "DisplayLongitude": -122.950513,
-    "ImageHeight": 244,
-    "ImageURL": "https://images.wsdot.wa.gov/sw/433vc00093.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "SW",
-    "SortOrder": 3433,
-    "Title": "SR 433 at MP 0.9: Lewis and Clark Bridge"
-  },
-  {
     "CameraID": 10199,
     "CameraLocation": {
       "Description": null,
@@ -27386,6 +27271,29 @@
     "ImageHeight": 640,
     "ImageURL": "https://images.wsdot.wa.gov/sw/433vc00095.jpg",
     "ImageWidth": 300,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "SW",
+    "SortOrder": 3433,
+    "Title": "SR 433 at MP 0.9: Lewis and Clark Bridge"
+  },
+  {
+    "CameraID": 1252,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "O",
+      "Latitude": 46.116235,
+      "Longitude": -122.950513,
+      "MilePost": 1,
+      "RoadName": "SR 433"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 46.116235,
+    "DisplayLongitude": -122.950513,
+    "ImageHeight": 244,
+    "ImageURL": "https://images.wsdot.wa.gov/sw/433vc00093.jpg",
+    "ImageWidth": 335,
     "IsActive": true,
     "OwnerURL": null,
     "Region": "SW",
@@ -27600,29 +27508,6 @@
     "Title": "SR 500 at MP 4.3: 4th Plain Blvd"
   },
   {
-    "CameraID": 1255,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 45.661864,
-      "Longitude": -122.558292,
-      "MilePost": 5,
-      "RoadName": "SR 500"
-    },
-    "CameraOwner": "",
-    "Description": null,
-    "DisplayLatitude": 45.661864,
-    "DisplayLongitude": -122.558292,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/sw/500vc00546.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": "",
-    "Region": "SW",
-    "SortOrder": 3500,
-    "Title": "SR 500 at MP 5.4: 112th & Gher Rd."
-  },
-  {
     "CameraID": 10171,
     "CameraLocation": {
       "Description": null,
@@ -27644,6 +27529,29 @@
     "Region": "SW",
     "SortOrder": 3500,
     "Title": "SR 500 at MP 4.56: West of I-205"
+  },
+  {
+    "CameraID": 1255,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 45.661864,
+      "Longitude": -122.558292,
+      "MilePost": 5,
+      "RoadName": "SR 500"
+    },
+    "CameraOwner": "",
+    "Description": null,
+    "DisplayLatitude": 45.661864,
+    "DisplayLongitude": -122.558292,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/sw/500vc00546.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": "",
+    "Region": "SW",
+    "SortOrder": 3500,
+    "Title": "SR 500 at MP 5.4: 112th & Gher Rd."
   },
   {
     "CameraID": 3063,
@@ -30498,29 +30406,6 @@
     "Title": "SR 522 at MP 5.3: NE 165th St"
   },
   {
-    "CameraID": 1203,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.758387,
-      "Longitude": -122.249756,
-      "MilePost": 7,
-      "RoadName": "SR 522"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.758387,
-    "DisplayLongitude": -122.249756,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/522vc00721.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 3522,
-    "Title": "SR 522 at MP 7.2: 68th Ave"
-  },
-  {
     "CameraID": 1498,
     "CameraLocation": {
       "Description": null,
@@ -30542,6 +30427,29 @@
     "Region": "NW",
     "SortOrder": 3522,
     "Title": "SR 522 at MP 6.6: 61st Ave NE"
+  },
+  {
+    "CameraID": 1203,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.758387,
+      "Longitude": -122.249756,
+      "MilePost": 7,
+      "RoadName": "SR 522"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.758387,
+    "DisplayLongitude": -122.249756,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/522vc00721.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 3522,
+    "Title": "SR 522 at MP 7.2: 68th Ave"
   },
   {
     "CameraID": 9675,
@@ -31303,29 +31211,6 @@
     "Title": "SR 526 at MP 1.4: Airport Rd, EB"
   },
   {
-    "CameraID": 9091,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.922903,
-      "Longitude": -122.226155,
-      "MilePost": 3,
-      "RoadName": "SR 526"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.922903,
-    "DisplayLongitude": -122.226155,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/526vc00358.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 3526,
-    "Title": "SR 526 at MP 3.5: Evergreen Way"
-  },
-  {
     "CameraID": 10047,
     "CameraLocation": {
       "Description": null,
@@ -31347,6 +31232,29 @@
     "Region": "NW",
     "SortOrder": 3526,
     "Title": "SR 526 at MP 2.9: 9th Ave W"
+  },
+  {
+    "CameraID": 9091,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.922903,
+      "Longitude": -122.226155,
+      "MilePost": 3,
+      "RoadName": "SR 526"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.922903,
+    "DisplayLongitude": -122.226155,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/526vc00358.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 3526,
+    "Title": "SR 526 at MP 3.5: Evergreen Way"
   },
   {
     "CameraID": 1308,
@@ -32131,29 +32039,6 @@
     "Title": "SR 539 at MP 8.6: Wiser Lake (North)"
   },
   {
-    "CameraID": 1528,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 48.920968,
-      "Longitude": -122.485745,
-      "MilePost": 10,
-      "RoadName": "SR 539"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 48.920968,
-    "DisplayLongitude": -122.485745,
-    "ImageHeight": 244,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/539vc00955.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 3539,
-    "Title": "SR 539 at MP 9.5: River Rd"
-  },
-  {
     "CameraID": 9442,
     "CameraLocation": {
       "Description": null,
@@ -32198,6 +32083,29 @@
     "Region": "NW",
     "SortOrder": 3539,
     "Title": "SR 539 at MP 10.8: Front St"
+  },
+  {
+    "CameraID": 1528,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 48.920968,
+      "Longitude": -122.485745,
+      "MilePost": 10,
+      "RoadName": "SR 539"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 48.920968,
+    "DisplayLongitude": -122.485745,
+    "ImageHeight": 244,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/539vc00955.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 3539,
+    "Title": "SR 539 at MP 9.5: River Rd"
   },
   {
     "CameraID": 9444,
@@ -32476,29 +32384,6 @@
     "Title": "SR 599 at MP 1: Metro Bus Base"
   },
   {
-    "CameraID": 4038,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 46.558534,
-      "Longitude": -122.275289,
-      "MilePost": 0,
-      "RoadName": "SR 7"
-    },
-    "CameraOwner": "Lewiscounty.com Tiger Mountain Technologies",
-    "Description": null,
-    "DisplayLatitude": 46.558534,
-    "DisplayLongitude": -122.275289,
-    "ImageHeight": 240,
-    "ImageURL": "https://home.lewiscounty.com/~mortonwebcam/fullsize.jpg",
-    "ImageWidth": 320,
-    "IsActive": true,
-    "OwnerURL": "http://www.lewiscounty.com/",
-    "Region": "SW",
-    "SortOrder": 3007,
-    "Title": "SR7 at MP 0.45: Morton (SR508)"
-  },
-  {
     "CameraID": 9370,
     "CameraLocation": {
       "Description": null,
@@ -32520,6 +32405,29 @@
     "Region": "SW",
     "SortOrder": 3007,
     "Title": "SR 7 at MP 0: Morton"
+  },
+  {
+    "CameraID": 4038,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 46.558534,
+      "Longitude": -122.275289,
+      "MilePost": 0,
+      "RoadName": "SR 7"
+    },
+    "CameraOwner": "Lewiscounty.com Tiger Mountain Technologies",
+    "Description": null,
+    "DisplayLatitude": 46.558534,
+    "DisplayLongitude": -122.275289,
+    "ImageHeight": 240,
+    "ImageURL": "https://home.lewiscounty.com/~mortonwebcam/fullsize.jpg",
+    "ImageWidth": 320,
+    "IsActive": true,
+    "OwnerURL": "http://www.lewiscounty.com/",
+    "Region": "SW",
+    "SortOrder": 3007,
+    "Title": "SR7 at MP 0.45: Morton (SR508)"
   },
   {
     "CameraID": 9935,
@@ -33971,29 +33879,6 @@
     "Title": "SR 99 at MP 33.2: Comstock St"
   },
   {
-    "CameraID": 9263,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.622305,
-      "Longitude": -122.344528,
-      "MilePost": 33,
-      "RoadName": "SR 99"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.622305,
-    "DisplayLongitude": -122.344528,
-    "ImageHeight": 249,
-    "ImageURL": "https://images.wsdot.wa.gov/nw/099vc03266.jpg",
-    "ImageWidth": 335,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "NW",
-    "SortOrder": 3099,
-    "Title": "SR 99 at MP 32.6: 6th Ave/Harrison"
-  },
-  {
     "CameraID": 9802,
     "CameraLocation": {
       "Description": null,
@@ -34015,6 +33900,29 @@
     "Region": "NW",
     "SortOrder": 3099,
     "Title": "SR 99 at MP 32.7: North Portal"
+  },
+  {
+    "CameraID": 9263,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.622305,
+      "Longitude": -122.344528,
+      "MilePost": 33,
+      "RoadName": "SR 99"
+    },
+    "CameraOwner": null,
+    "Description": null,
+    "DisplayLatitude": 47.622305,
+    "DisplayLongitude": -122.344528,
+    "ImageHeight": 249,
+    "ImageURL": "https://images.wsdot.wa.gov/nw/099vc03266.jpg",
+    "ImageWidth": 335,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "NW",
+    "SortOrder": 3099,
+    "Title": "SR 99 at MP 32.6: 6th Ave/Harrison"
   },
   {
     "CameraID": 9807,
@@ -35188,98 +35096,6 @@
     "Region": "ER",
     "SortOrder": 2195,
     "Title": "US 195 at MP 81.6: Spangle (3)"
-  },
-  {
-    "CameraID": 8044,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 47.48369,
-      "Longitude": -117.3993,
-      "MilePost": 81,
-      "RoadName": "US 195"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.48369,
-    "DisplayLongitude": -117.3993,
-    "ImageHeight": 251,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/Medium_Spangle4.jpg",
-    "ImageWidth": 360,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 2195,
-    "Title": "US 195 at MP 81.6: Spangle (5)"
-  },
-  {
-    "CameraID": 8045,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 47.48369,
-      "Longitude": -117.3993,
-      "MilePost": 81,
-      "RoadName": "US 195"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.48369,
-    "DisplayLongitude": -117.3993,
-    "ImageHeight": 250,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/Medium_Spangle5.jpg",
-    "ImageWidth": 320,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 2195,
-    "Title": "US 195 at MP 81.6: Spangle (6)"
-  },
-  {
-    "CameraID": 8046,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 47.48369,
-      "Longitude": -117.3993,
-      "MilePost": 81,
-      "RoadName": "US 195"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.48369,
-    "DisplayLongitude": -117.3993,
-    "ImageHeight": 251,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/Medium_Spangle6.jpg",
-    "ImageWidth": 360,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 2195,
-    "Title": "US 195 at MP 81.6: Spangle (7)"
-  },
-  {
-    "CameraID": 8047,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 47.48369,
-      "Longitude": -117.3993,
-      "MilePost": 81,
-      "RoadName": "US 195"
-    },
-    "CameraOwner": null,
-    "Description": null,
-    "DisplayLatitude": 47.48369,
-    "DisplayLongitude": -117.3993,
-    "ImageHeight": 250,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/Medium_Spangle7.jpg",
-    "ImageWidth": 320,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 2195,
-    "Title": "US 195 at MP 81.6: Spangle (8)"
   },
   {
     "CameraID": 9451,
@@ -37067,7 +36883,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 260,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium4.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier4.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37090,7 +36906,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 261,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37113,7 +36929,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 260,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium1.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier1.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37136,7 +36952,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 260,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium2.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier2.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37159,7 +36975,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 260,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium3.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier3.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37182,7 +36998,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 260,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium5.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier5.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37205,7 +37021,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 260,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium6.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier6.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37228,7 +37044,7 @@
     "DisplayLatitude": 48.9997,
     "DisplayLongitude": -118.22391,
     "ImageHeight": 260,
-    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier_medium7.jpg",
+    "ImageURL": "https://images.wsdot.wa.gov/rweather/laurier7.jpg",
     "ImageWidth": 352,
     "IsActive": true,
     "OwnerURL": null,
@@ -37283,29 +37099,6 @@
     "Title": "US 395 NSC at MP 160.7: Wellesley Ave"
   },
   {
-    "CameraID": 9322,
-    "CameraLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.722373,
-      "Longitude": -117.356723,
-      "MilePost": 162,
-      "RoadName": "US 395 NSC"
-    },
-    "CameraOwner": null,
-    "Description": "Milepost 162.06",
-    "DisplayLatitude": 47.722373,
-    "DisplayLongitude": -117.356723,
-    "ImageHeight": 352,
-    "ImageURL": "https://images.wsdot.wa.gov/spokane/wsdot_395nsc_16216_freya.jpg",
-    "ImageWidth": 219,
-    "IsActive": true,
-    "OwnerURL": null,
-    "Region": "ER",
-    "SortOrder": 2396,
-    "Title": "US 395 NSC at MP 162.1: NSC 395 & Freya"
-  },
-  {
     "CameraID": 10099,
     "CameraLocation": {
       "Description": null,
@@ -37327,6 +37120,29 @@
     "Region": "ER",
     "SortOrder": 2396,
     "Title": "US 395 NSC at MP 161.8: Francis Ave"
+  },
+  {
+    "CameraID": 9322,
+    "CameraLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.722373,
+      "Longitude": -117.356723,
+      "MilePost": 162,
+      "RoadName": "US 395 NSC"
+    },
+    "CameraOwner": null,
+    "Description": "Milepost 162.06",
+    "DisplayLatitude": 47.722373,
+    "DisplayLongitude": -117.356723,
+    "ImageHeight": 352,
+    "ImageURL": "https://images.wsdot.wa.gov/spokane/wsdot_395nsc_16216_freya.jpg",
+    "ImageWidth": 219,
+    "IsActive": true,
+    "OwnerURL": null,
+    "Region": "ER",
+    "SortOrder": 2396,
+    "Title": "US 395 NSC at MP 162.1: NSC 395 & Freya"
   },
   {
     "CameraID": 4045,

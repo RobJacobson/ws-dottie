@@ -325,33 +325,33 @@
                         "Latitude": 47.427,
                         "Longitude": -121.418,
                         "Elevation": 876,
-                        "ReadingTime": "2025-11-16T01:38:33.000Z",
-                        "AirTemperature": 8.2,
+                        "ReadingTime": "2025-12-19T09:28:33.000Z",
+                        "AirTemperature": -0.1,
                         "RelativeHumidty": 100,
-                        "AverageWindSpeed": 3,
-                        "AverageWindDirection": 355,
-                        "WindGust": 7,
-                        "Visibility": 828,
-                        "PrecipitationIntensity": 0,
-                        "PrecipitationType": 0,
-                        "PrecipitationPast1Hour": 0.1,
-                        "PrecipitationPast3Hours": 0.8,
-                        "PrecipitationPast6Hours": 2.7,
-                        "PrecipitationPast12Hours": 6.6,
-                        "PrecipitationPast24Hours": 20.9,
+                        "AverageWindSpeed": 0,
+                        "AverageWindDirection": 250,
+                        "WindGust": 5,
+                        "Visibility": 2000,
+                        "PrecipitationIntensity": 3,
+                        "PrecipitationType": 2,
+                        "PrecipitationPast1Hour": 1.8,
+                        "PrecipitationPast3Hours": 5.3,
+                        "PrecipitationPast6Hours": 7,
+                        "PrecipitationPast12Hours": 15.5,
+                        "PrecipitationPast24Hours": null,
                         "PrecipitationAccumulation": null,
                         "BarometricPressure": null,
                         "SnowDepth": null,
                         "SurfaceMeasurements": [
                           {
                             "SensorId": 0,
-                            "SurfaceTemperature": 10,
+                            "SurfaceTemperature": 0.1,
                             "RoadFreezingTemperature": null,
-                            "RoadSurfaceCondition": 104
+                            "RoadSurfaceCondition": 105
                           },
                           {
                             "SensorId": 1,
-                            "SurfaceTemperature": 8.7,
+                            "SurfaceTemperature": -0.5,
                             "RoadFreezingTemperature": null,
                             "RoadSurfaceCondition": 105
                           }
@@ -359,7 +359,7 @@
                         "SubSurfaceMeasurements": [
                           {
                             "SensorId": 0,
-                            "SubSurfaceTemperature": 6.8
+                            "SubSurfaceTemperature": 1
                           }
                         ]
                       }
@@ -401,7 +401,50 @@
                     "summary": "Sample response",
                     "description": "Example of a successful response from the API (showing first item of 131 total)",
                     "value": [
-                      {}
+                      {
+                        "StationId": "TALPE",
+                        "StationName": "090ws05226 - Alpental",
+                        "Latitude": 47.427,
+                        "Longitude": -121.418,
+                        "Elevation": 876,
+                        "ReadingTime": "2025-12-19T09:28:33.000Z",
+                        "AirTemperature": -0.1,
+                        "RelativeHumidty": 100,
+                        "AverageWindSpeed": 0,
+                        "AverageWindDirection": 250,
+                        "WindGust": 5,
+                        "Visibility": 2000,
+                        "PrecipitationIntensity": 3,
+                        "PrecipitationType": 2,
+                        "PrecipitationPast1Hour": 1.8,
+                        "PrecipitationPast3Hours": 5.3,
+                        "PrecipitationPast6Hours": 7,
+                        "PrecipitationPast12Hours": 15.5,
+                        "PrecipitationPast24Hours": null,
+                        "PrecipitationAccumulation": null,
+                        "BarometricPressure": null,
+                        "SnowDepth": null,
+                        "SurfaceMeasurements": [
+                          {
+                            "SensorId": 0,
+                            "SurfaceTemperature": 0.1,
+                            "RoadFreezingTemperature": null,
+                            "RoadSurfaceCondition": 105
+                          },
+                          {
+                            "SensorId": 1,
+                            "SurfaceTemperature": -0.5,
+                            "RoadFreezingTemperature": null,
+                            "RoadSurfaceCondition": 105
+                          }
+                        ],
+                        "SubSurfaceMeasurements": [
+                          {
+                            "SensorId": 0,
+                            "SubSurfaceTemperature": 1
+                          }
+                        ]
+                      }
                     ]
                   }
                 }
@@ -440,7 +483,50 @@
                     "summary": "Sample response",
                     "description": "Example of a successful response from the API (showing first item of 131 total)",
                     "value": [
-                      {}
+                      {
+                        "StationId": "TALPE",
+                        "StationName": "090ws05226 - Alpental",
+                        "Latitude": 47.427,
+                        "Longitude": -121.418,
+                        "Elevation": 876,
+                        "ReadingTime": "2025-12-19T09:28:33.000Z",
+                        "AirTemperature": -0.1,
+                        "RelativeHumidty": 100,
+                        "AverageWindSpeed": 0,
+                        "AverageWindDirection": 250,
+                        "WindGust": 5,
+                        "Visibility": 2000,
+                        "PrecipitationIntensity": 3,
+                        "PrecipitationType": 2,
+                        "PrecipitationPast1Hour": 1.8,
+                        "PrecipitationPast3Hours": 5.3,
+                        "PrecipitationPast6Hours": 7,
+                        "PrecipitationPast12Hours": 15.5,
+                        "PrecipitationPast24Hours": null,
+                        "PrecipitationAccumulation": null,
+                        "BarometricPressure": null,
+                        "SnowDepth": null,
+                        "SurfaceMeasurements": [
+                          {
+                            "SensorId": 0,
+                            "SurfaceTemperature": 0.1,
+                            "RoadFreezingTemperature": null,
+                            "RoadSurfaceCondition": 105
+                          },
+                          {
+                            "SensorId": 1,
+                            "SurfaceTemperature": -0.5,
+                            "RoadFreezingTemperature": null,
+                            "RoadSurfaceCondition": 105
+                          }
+                        ],
+                        "SubSurfaceMeasurements": [
+                          {
+                            "SensorId": 0,
+                            "SubSurfaceTemperature": 1
+                          }
+                        ]
+                      }
                     ]
                   }
                 }

@@ -411,7 +411,7 @@
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 1648 total)",
+                    "description": "Example of a successful response from the API (showing first item of 1640 total)",
                     "value": [
                       {
                         "CameraID": 9818,

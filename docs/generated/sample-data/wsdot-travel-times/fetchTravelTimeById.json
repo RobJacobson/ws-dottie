@@ -1,6 +1,6 @@
 {
-  "AverageTime": 27,
-  "CurrentTime": 26,
+  "AverageTime": 58,
+  "CurrentTime": 77,
   "Description": "Everett to Downtown Seattle",
   "Distance": 26.72,
   "EndPoint": {
@@ -20,6 +20,6 @@
     "MilePost": 192.55,
     "RoadName": "005"
   },
-  "TimeUpdated": "2025-11-15T17:40:00.000Z",
+  "TimeUpdated": "2025-12-19T01:35:00.000Z",
   "TravelTimeID": 1
 }

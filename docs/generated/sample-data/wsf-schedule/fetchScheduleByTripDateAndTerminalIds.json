@@ -14,12 +14,12 @@
       "DepartingTerminalName": "Anacortes",
       "ArrivingTerminalID": 10,
       "ArrivingTerminalName": "Friday Harbor",
-      "SailingNotes": "",
+      "SailingNotes": "Alternate Service 12/12 - 12/22.",
       "Annotations": [],
       "Times": [
         {
-          "DepartingTime": "2025-11-16T12:05:00.000Z",
-          "ArrivingTime": "2025-11-16T13:15:00.000Z",
+          "DepartingTime": "2025-12-20T12:05:00.000Z",
+          "ArrivingTime": "2025-12-20T13:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -31,11 +31,11 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-16T14:15:00.000Z",
-          "ArrivingTime": "2025-11-16T15:45:00.000Z",
+          "DepartingTime": "2025-12-20T14:15:00.000Z",
+          "ArrivingTime": "2025-12-20T16:00:00.000Z",
           "LoadingRule": 3,
-          "VesselID": 69,
-          "VesselName": "Samish",
+          "VesselID": 17,
+          "VesselName": "Kaleetan",
           "VesselHandicapAccessible": true,
           "VesselPositionNum": 3,
           "Routes": [
@@ -44,11 +44,11 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-16T16:40:00.000Z",
-          "ArrivingTime": "2025-11-16T17:50:00.000Z",
+          "DepartingTime": "2025-12-20T16:40:00.000Z",
+          "ArrivingTime": "2025-12-20T17:50:00.000Z",
           "LoadingRule": 3,
-          "VesselID": 17,
-          "VesselName": "Kaleetan",
+          "VesselID": 18,
+          "VesselName": "Kitsap",
           "VesselHandicapAccessible": true,
           "VesselPositionNum": 1,
           "Routes": [
@@ -57,8 +57,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-16T18:30:00.000Z",
-          "ArrivingTime": "2025-11-16T19:40:00.000Z",
+          "DepartingTime": "2025-12-20T18:30:00.000Z",
+          "ArrivingTime": "2025-12-20T19:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -70,11 +70,11 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-16T21:35:00.000Z",
-          "ArrivingTime": "2025-11-16T22:45:00.000Z",
+          "DepartingTime": "2025-12-20T21:50:00.000Z",
+          "ArrivingTime": "2025-12-20T23:05:00.000Z",
           "LoadingRule": 3,
-          "VesselID": 69,
-          "VesselName": "Samish",
+          "VesselID": 17,
+          "VesselName": "Kaleetan",
           "VesselHandicapAccessible": true,
           "VesselPositionNum": 3,
           "Routes": [
@@ -83,8 +83,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-17T00:20:00.000Z",
-          "ArrivingTime": "2025-11-17T01:50:00.000Z",
+          "DepartingTime": "2025-12-21T00:20:00.000Z",
+          "ArrivingTime": "2025-12-21T01:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -96,11 +96,11 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-17T01:35:00.000Z",
-          "ArrivingTime": "2025-11-17T03:05:00.000Z",
+          "DepartingTime": "2025-12-21T01:35:00.000Z",
+          "ArrivingTime": "2025-12-21T02:50:00.000Z",
           "LoadingRule": 3,
-          "VesselID": 69,
-          "VesselName": "Samish",
+          "VesselID": 17,
+          "VesselName": "Kaleetan",
           "VesselHandicapAccessible": true,
           "VesselPositionNum": 3,
           "Routes": [
@@ -109,8 +109,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-17T04:15:00.000Z",
-          "ArrivingTime": "2025-11-17T05:45:00.000Z",
+          "DepartingTime": "2025-12-21T04:15:00.000Z",
+          "ArrivingTime": "2025-12-21T05:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",

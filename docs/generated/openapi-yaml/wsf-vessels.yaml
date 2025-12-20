@@ -42,9 +42,9 @@ components:
       description: Roadway location information including route, milepost, coordinates, and direction.
     FetchCacheFlushDateVesselsOutput:
       type: string
+      format: date
       description: UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.
-      format: date-time
-    FetchVesselAccommodationsByVesselIdOutput:
+    FetchVesselAccommodationsOutput:
       type: object
       properties:
         VesselID:
@@ -145,7 +145,7 @@ components:
         - ADAInfo
         - AdditionalInfo
       description: Vessel accommodation information including amenities, accessibility features, and passenger facilities.
-    FetchVesselBasicsByVesselIdOutput:
+    FetchVesselBasicsOutput:
       type: object
       properties:
         VesselID:
@@ -226,7 +226,56 @@ components:
         - Status
         - OwnedByWSF
       description: Basic vessel information including identification, operational status, and ownership.
-    FetchVesselLocationsByVesselIdOutput:
+    FetchVesselHistoriesOutput:
+      type: object
+      properties:
+        VesselId:
+          type: integer
+          description: Numeric ID of the vessel.
+        Vessel:
+          type: string
+          nullable: true
+          description: Display name of the vessel.
+        Departing:
+          type: string
+          nullable: true
+          description: Display name of the departing terminal.
+          format: date-time
+        Arriving:
+          type: string
+          nullable: true
+          description: Display name of the arriving terminal.
+        ScheduledDepart:
+          type: string
+          nullable: true
+          format: date
+          description: UTC datetime of scheduled departure from origin terminal.
+        ActualDepart:
+          type: string
+          nullable: true
+          format: date
+          description: UTC datetime of actual departure from origin terminal.
+        EstArrival:
+          type: string
+          nullable: true
+          format: date
+          description: UTC datetime of estimated arrival at destination terminal.
+        Date:
+          type: string
+          nullable: true
+          format: date
+          description: UTC datetime indicating the calendar date when this voyage occurred.
+      required:
+        - VesselId
+        - Vessel
+        - Departing
+        - Arriving
+        - ScheduledDepart
+        - ActualDepart
+        - EstArrival
+        - Date
+      description: Historical vessel voyage record including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times.
+    FetchVesselLocationsOutput:
       type: object
       properties:
         VesselID:
@@ -286,13 +335,13 @@ components:
         LeftDock:
           type: string
           nullable: true
+          format: date
           description: UTC datetime when vessel last departed from dock.
-          format: date-time
         Eta:
           type: string
           nullable: true
+          format: date
           description: UTC datetime of estimated arrival at destination terminal.
-          format: date-time
         EtaBasis:
           type: string
           nullable: true
@@ -300,8 +349,8 @@ components:
         ScheduledDeparture:
           type: string
           nullable: true
+          format: date
           description: UTC datetime of scheduled departure from origin terminal.
-          format: date-time
         OpRouteAbbrev:
           type: array
           nullable: true
@@ -326,8 +375,8 @@ components:
           description: 'Code indicating management owner: 1 = WSF, 2 = KCM.'
         TimeStamp:
           type: string
+          format: date
           description: UTC datetime when vessel location data was last updated.
-          format: date-time
         VesselWatchShutID:
           type: integer
           description: Numeric ID indicating VesselWatch shutdown status condition.
@@ -378,7 +427,7 @@ components:
         - VesselWatchStatus
         - VesselWatchMsg
       description: Real-time vessel location data including GPS coordinates, terminal assignments, speed, heading, and ETA information.
-    FetchVesselStatsByVesselIdOutput:
+    FetchVesselStatsOutput:
       type: object
       properties:
         VesselID:
@@ -547,7 +596,7 @@ components:
         - SolasCertified
         - MaxPassengerCountForInternational
       description: Vessel technical specifications including dimensions, capacity, speed, propulsion, and build details.
-    FetchVesselsVerboseByVesselIdOutput:
+    FetchVesselsVerboseOutput:
       allOf:
         - type: object
           properties:
@@ -898,7 +947,90 @@ components:
             - MaxPassengerCountForInternational
           description: Vessel technical specifications including dimensions, capacity, speed, propulsion, and build details.
       description: Complete vessel information combining identification, operational status, accommodations, and technical specifications in a single schema.
-  parameters: {}
+    FetchVesselAccommodationsByVesselIdInputVesselIDParam:
+      type: integer
+      description: Numeric ID of the vessel.
+    FetchVesselBasicsByVesselIdInputVesselIDParam:
+      type: integer
+      description: Numeric ID of the vessel.
+    FetchVesselHistoriesByVesselAndDatesInputVesselNameParam:
+      type: string
+      description: Display name of the vessel.
+      format: date-time
+    FetchVesselHistoriesByVesselAndDatesInputDateStartParam:
+      type: string
+      description: Start date for history query in YYYY-MM-DD format.
+      format: date-time
+    FetchVesselHistoriesByVesselAndDatesInputDateEndParam:
+      type: string
+      description: End date for history query in YYYY-MM-DD format.
+      format: date-time
+    FetchVesselLocationsByVesselIdInputVesselIDParam:
+      type: integer
+      description: Numeric ID of the vessel.
+    FetchVesselStatsByVesselIdInputVesselIDParam:
+      type: integer
+      description: Numeric ID of the vessel.
+    FetchVesselsVerboseByVesselIdInputVesselIDParam:
+      type: integer
+      description: Numeric ID of the vessel.
+  parameters:
+    FetchVesselAccommodationsByVesselIdInputVesselIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselAccommodationsByVesselIdInputVesselIDParam'
+      required: true
+      description: Numeric ID of the vessel.
+      name: VesselID
+      in: path
+    FetchVesselBasicsByVesselIdInputVesselIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselBasicsByVesselIdInputVesselIDParam'
+      required: true
+      description: Numeric ID of the vessel.
+      name: VesselID
+      in: path
+    FetchVesselHistoriesByVesselAndDatesInputVesselNameParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselHistoriesByVesselAndDatesInputVesselNameParam'
+      required: true
+      description: Display name of the vessel.
+      name: VesselName
+      in: path
+    FetchVesselHistoriesByVesselAndDatesInputDateStartParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselHistoriesByVesselAndDatesInputDateStartParam'
+      required: true
+      description: Start date for history query in YYYY-MM-DD format.
+      name: DateStart
+      in: path
+    FetchVesselHistoriesByVesselAndDatesInputDateEndParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselHistoriesByVesselAndDatesInputDateEndParam'
+      required: true
+      description: End date for history query in YYYY-MM-DD format.
+      name: DateEnd
+      in: path
+    FetchVesselLocationsByVesselIdInputVesselIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselLocationsByVesselIdInputVesselIDParam'
+      required: true
+      description: Numeric ID of the vessel.
+      name: VesselID
+      in: path
+    FetchVesselStatsByVesselIdInputVesselIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselStatsByVesselIdInputVesselIDParam'
+      required: true
+      description: Numeric ID of the vessel.
+      name: VesselID
+      in: path
+    FetchVesselsVerboseByVesselIdInputVesselIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchVesselsVerboseByVesselIdInputVesselIDParam'
+      required: true
+      description: Numeric ID of the vessel.
+      name: VesselID
+      in: path
 paths:
   /cacheflushdate:
     get:
@@ -928,7 +1060,7 @@ paths:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
-                  value: '2025-11-14T06:28:07.687Z'
+                  value: '2025-12-19T00:57:12.643Z'
   /vesselAccommodations:
     get:
       summary: List amenities and accessibility features for all vessels.
@@ -954,106 +1086,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    VesselID:
-                      type: integer
-                      description: Numeric ID of the vessel.
-                    VesselSubjectID:
-                      type: integer
-                      description: Numeric ID of the WSF subject for this vessel.
-                    VesselName:
-                      type: string
-                      nullable: true
-                      description: Display name of the vessel.
-                    VesselAbbrev:
-                      type: string
-                      nullable: true
-                      description: Abbreviation code of the vessel.
-                    Class:
-                      type: object
-                      nullable: true
-                      properties:
-                        ClassID:
-                          type: integer
-                          description: Numeric ID of the vessel class.
-                        ClassSubjectID:
-                          type: integer
-                          description: Numeric ID of the WSF subject for this vessel class.
-                        ClassName:
-                          type: string
-                          nullable: true
-                          description: Display name of the vessel class.
-                        SortSeq:
-                          type: integer
-                          nullable: true
-                          description: Display sort order; lower values appear first in lists.
-                        DrawingImg:
-                          type: string
-                          nullable: true
-                          description: URL to detailed vessel class drawing image.
-                        SilhouetteImg:
-                          type: string
-                          nullable: true
-                          description: URL to small silhouette image of vessel class.
-                        PublicDisplayName:
-                          type: string
-                          nullable: true
-                          description: Public-facing display name of the vessel class.
-                      required:
-                        - ClassID
-                        - ClassSubjectID
-                        - ClassName
-                        - SortSeq
-                        - DrawingImg
-                        - SilhouetteImg
-                        - PublicDisplayName
-                      description: Vessel class information grouping similar vessels in the fleet.
-                    CarDeckRestroom:
-                      type: boolean
-                      description: True if ADA-accessible restroom is available on car deck; otherwise false.
-                    CarDeckShelter:
-                      type: boolean
-                      description: True if ADA-accessible shelter is available on car deck; otherwise false.
-                    Elevator:
-                      type: boolean
-                      description: True if elevator is available for passenger deck access; otherwise false.
-                    ADAAccessible:
-                      type: boolean
-                      description: True if vessel meets ADA accessibility standards; otherwise false.
-                    MainCabinGalley:
-                      type: boolean
-                      description: True if food service galley is available in main passenger cabin; otherwise false.
-                    MainCabinRestroom:
-                      type: boolean
-                      description: True if restroom is available in main passenger cabin; otherwise false.
-                    PublicWifi:
-                      type: boolean
-                      description: True if public WiFi is available on vessel; otherwise false.
-                    ADAInfo:
-                      type: string
-                      nullable: true
-                      description: Detailed ADA accessibility information for passengers with disabilities.
-                    AdditionalInfo:
-                      type: string
-                      nullable: true
-                      description: Additional accommodation notes not covered by standard boolean flags.
-                  required:
-                    - VesselID
-                    - VesselSubjectID
-                    - VesselName
-                    - VesselAbbrev
-                    - Class
-                    - CarDeckRestroom
-                    - CarDeckShelter
-                    - Elevator
-                    - ADAAccessible
-                    - MainCabinGalley
-                    - MainCabinRestroom
-                    - PublicWifi
-                    - ADAInfo
-                    - AdditionalInfo
-                  description: Vessel accommodation information including amenities, accessibility features, and passenger facilities.
+                  $ref: '#/components/schemas/FetchVesselAccommodationsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1100,13 +1133,15 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchVesselAccommodationsByVesselIdInputVesselIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchVesselAccommodationsByVesselIdOutput'
+                $ref: '#/components/schemas/FetchVesselAccommodationsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1158,86 +1193,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    VesselID:
-                      type: integer
-                      description: Numeric ID of the vessel.
-                    VesselSubjectID:
-                      type: integer
-                      description: Numeric ID of the WSF subject for this vessel.
-                    VesselName:
-                      type: string
-                      nullable: true
-                      description: Display name of the vessel.
-                    VesselAbbrev:
-                      type: string
-                      nullable: true
-                      description: Abbreviation code of the vessel.
-                    Class:
-                      type: object
-                      nullable: true
-                      properties:
-                        ClassID:
-                          type: integer
-                          description: Numeric ID of the vessel class.
-                        ClassSubjectID:
-                          type: integer
-                          description: Numeric ID of the WSF subject for this vessel class.
-                        ClassName:
-                          type: string
-                          nullable: true
-                          description: Display name of the vessel class.
-                        SortSeq:
-                          type: integer
-                          nullable: true
-                          description: Display sort order; lower values appear first in lists.
-                        DrawingImg:
-                          type: string
-                          nullable: true
-                          description: URL to detailed vessel class drawing image.
-                        SilhouetteImg:
-                          type: string
-                          nullable: true
-                          description: URL to small silhouette image of vessel class.
-                        PublicDisplayName:
-                          type: string
-                          nullable: true
-                          description: Public-facing display name of the vessel class.
-                      required:
-                        - ClassID
-                        - ClassSubjectID
-                        - ClassName
-                        - SortSeq
-                        - DrawingImg
-                        - SilhouetteImg
-                        - PublicDisplayName
-                      description: Vessel class information grouping similar vessels in the fleet.
-                    Status:
-                      anyOf:
-                        - type: number
-                          enum:
-                            - 1
-                        - type: number
-                          enum:
-                            - 2
-                        - type: number
-                          enum:
-                            - 3
-                        - nullable: true
-                      description: 'Code indicating operational status: 1 = In Service, 2 = Maintenance, 3 = Out of Service.'
-                    OwnedByWSF:
-                      type: boolean
-                      description: True if vessel is owned by WSF; otherwise false.
-                  required:
-                    - VesselID
-                    - VesselSubjectID
-                    - VesselName
-                    - VesselAbbrev
-                    - Class
-                    - Status
-                    - OwnedByWSF
-                  description: Basic vessel information including identification, operational status, and ownership.
+                  $ref: '#/components/schemas/FetchVesselBasicsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1277,13 +1233,15 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchVesselBasicsByVesselIdInputVesselIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchVesselBasicsByVesselIdOutput'
+                $ref: '#/components/schemas/FetchVesselBasicsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1328,54 +1286,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    VesselId:
-                      type: integer
-                      description: Numeric ID of the vessel.
-                    Vessel:
-                      type: string
-                      nullable: true
-                      description: Display name of the vessel.
-                    Departing:
-                      type: string
-                      nullable: true
-                      description: Display name of the departing terminal.
-                      format: date-time
-                    Arriving:
-                      type: string
-                      nullable: true
-                      description: Display name of the arriving terminal.
-                    ScheduledDepart:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of scheduled departure from origin terminal.
-                      format: date-time
-                    ActualDepart:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of actual departure from origin terminal.
-                      format: date-time
-                    EstArrival:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of estimated arrival at destination terminal.
-                      format: date-time
-                    Date:
-                      type: string
-                      nullable: true
-                      description: UTC datetime indicating the calendar date when this voyage occurred.
-                      format: date-time
-                  required:
-                    - VesselId
-                    - Vessel
-                    - Departing
-                    - Arriving
-                    - ScheduledDepart
-                    - ActualDepart
-                    - EstArrival
-                    - Date
-                  description: Historical vessel voyage record including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times.
+                  $ref: '#/components/schemas/FetchVesselHistoriesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1391,16 +1302,16 @@ paths:
                       Date: null
   /vesselHistory/{VesselName}/{DateStart}/{DateEnd}:
     get:
-      summary: Get historical sailing records for a vessel within a date range.
-      operationId: fetchVesselHistoriesByVesselNameAndDateRange
+      summary: List historical voyage records for one vessel across a date range.
+      operationId: fetchVesselHistoriesByVesselAndDates
       tags:
         - vessel-histories
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchVesselHistoriesByVesselNameAndDateRange } from 'ws-dottie/wsf-vessels/core';
+            import { fetchVesselHistoriesByVesselAndDates } from 'ws-dottie/wsf-vessels/core';
 
-            const data = await fetchVesselHistoriesByVesselNameAndDateRange({
+            const data = await fetchVesselHistoriesByVesselAndDates({
               params: {
                 "VesselName": "Tacoma",
                 "DateStart": "2025-09-01",
@@ -1411,6 +1322,10 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchVesselHistoriesByVesselAndDatesInputVesselNameParam'
+        - $ref: '#/components/parameters/FetchVesselHistoriesByVesselAndDatesInputDateStartParam'
+        - $ref: '#/components/parameters/FetchVesselHistoriesByVesselAndDatesInputDateEndParam'
       responses:
         '200':
           description: Success
@@ -1419,54 +1334,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    VesselId:
-                      type: integer
-                      description: Numeric ID of the vessel.
-                    Vessel:
-                      type: string
-                      nullable: true
-                      description: Display name of the vessel.
-                    Departing:
-                      type: string
-                      nullable: true
-                      description: Display name of the departing terminal.
-                      format: date-time
-                    Arriving:
-                      type: string
-                      nullable: true
-                      description: Display name of the arriving terminal.
-                    ScheduledDepart:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of scheduled departure from origin terminal.
-                      format: date-time
-                    ActualDepart:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of actual departure from origin terminal.
-                      format: date-time
-                    EstArrival:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of estimated arrival at destination terminal.
-                      format: date-time
-                    Date:
-                      type: string
-                      nullable: true
-                      description: UTC datetime indicating the calendar date when this voyage occurred.
-                      format: date-time
-                  required:
-                    - VesselId
-                    - Vessel
-                    - Departing
-                    - Arriving
-                    - ScheduledDepart
-                    - ActualDepart
-                    - EstArrival
-                    - Date
-                  description: Historical vessel voyage record including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times.
+                  $ref: '#/components/schemas/FetchVesselHistoriesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1505,189 +1373,39 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    VesselID:
-                      type: integer
-                      description: Numeric ID of the vessel.
-                    VesselName:
-                      type: string
-                      nullable: true
-                      description: Display name of the vessel.
-                    Mmsi:
-                      type: integer
-                      nullable: true
-                      description: Maritime Mobile Service Identity number for AIS tracking.
-                    DepartingTerminalID:
-                      type: integer
-                      description: Numeric ID of the departing terminal.
-                    DepartingTerminalName:
-                      type: string
-                      nullable: true
-                      description: Display name of the departing terminal.
-                      format: date-time
-                    DepartingTerminalAbbrev:
-                      type: string
-                      nullable: true
-                      description: Abbreviation code of the departing terminal.
-                      format: date-time
-                    ArrivingTerminalID:
-                      type: integer
-                      nullable: true
-                      description: Numeric ID of the arriving terminal.
-                    ArrivingTerminalName:
-                      type: string
-                      nullable: true
-                      description: Display name of the arriving terminal.
-                    ArrivingTerminalAbbrev:
-                      type: string
-                      nullable: true
-                      description: Abbreviation code of the arriving terminal.
-                    Latitude:
-                      type: number
-                      description: Vessel GPS latitude coordinate in decimal degrees.
-                    Longitude:
-                      type: number
-                      description: Vessel GPS longitude coordinate in decimal degrees.
-                    Speed:
-                      type: number
-                      description: Vessel speed over ground in knots.
-                    Heading:
-                      type: number
-                      description: Vessel heading direction in degrees clockwise from north (0-359).
-                    InService:
-                      type: boolean
-                      description: True if vessel is available for passenger operations; otherwise false.
-                    AtDock:
-                      type: boolean
-                      description: True if vessel is currently docked at terminal; otherwise false.
-                    LeftDock:
-                      type: string
-                      nullable: true
-                      description: UTC datetime when vessel last departed from dock.
-                      format: date-time
-                    Eta:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of estimated arrival at destination terminal.
-                      format: date-time
-                    EtaBasis:
-                      type: string
-                      nullable: true
-                      description: Description of ETA calculation method.
-                    ScheduledDeparture:
-                      type: string
-                      nullable: true
-                      description: UTC datetime of scheduled departure from origin terminal.
-                      format: date-time
-                    OpRouteAbbrev:
-                      type: array
-                      nullable: true
-                      items:
-                        type: string
-                      description: Array of abbreviated route names currently serviced by vessel.
-                    VesselPositionNum:
-                      type: integer
-                      nullable: true
-                      description: Vessel position number for route scheduling.
-                    SortSeq:
-                      type: integer
-                      description: Display sort order; lower values appear first in lists.
-                    ManagedBy:
-                      anyOf:
-                        - type: number
-                          enum:
-                            - 1
-                        - type: number
-                          enum:
-                            - 2
-                      description: 'Code indicating management owner: 1 = WSF, 2 = KCM.'
-                    TimeStamp:
-                      type: string
-                      description: UTC datetime when vessel location data was last updated.
-                      format: date-time
-                    VesselWatchShutID:
-                      type: integer
-                      description: Numeric ID indicating VesselWatch shutdown status condition.
-                    VesselWatchShutMsg:
-                      type: string
-                      nullable: true
-                      description: User-facing message for VesselWatch shutdown status.
-                    VesselWatchShutFlag:
-                      type: string
-                      nullable: true
-                      description: Code indicating whether VesselWatch shutdown conditions are active.
-                    VesselWatchStatus:
-                      type: string
-                      nullable: true
-                      description: Code indicating current operational state of VesselWatch tracking system.
-                    VesselWatchMsg:
-                      type: string
-                      nullable: true
-                      description: User-facing message about VesselWatch system status.
-                  required:
-                    - VesselID
-                    - VesselName
-                    - Mmsi
-                    - DepartingTerminalID
-                    - DepartingTerminalName
-                    - DepartingTerminalAbbrev
-                    - ArrivingTerminalID
-                    - ArrivingTerminalName
-                    - ArrivingTerminalAbbrev
-                    - Latitude
-                    - Longitude
-                    - Speed
-                    - Heading
-                    - InService
-                    - AtDock
-                    - LeftDock
-                    - Eta
-                    - EtaBasis
-                    - ScheduledDeparture
-                    - OpRouteAbbrev
-                    - VesselPositionNum
-                    - SortSeq
-                    - ManagedBy
-                    - TimeStamp
-                    - VesselWatchShutID
-                    - VesselWatchShutMsg
-                    - VesselWatchShutFlag
-                    - VesselWatchStatus
-                    - VesselWatchMsg
-                  description: Real-time vessel location data including GPS coordinates, terminal assignments, speed, heading, and ETA information.
+                  $ref: '#/components/schemas/FetchVesselLocationsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 21 total)
                   value:
-                    - VesselID: 2
-                      VesselName: Chelan
-                      Mmsi: 366709770
-                      DepartingTerminalID: 1
-                      DepartingTerminalName: Anacortes
-                      DepartingTerminalAbbrev: ANA
-                      ArrivingTerminalID: 10
-                      ArrivingTerminalName: Friday Harbor
-                      ArrivingTerminalAbbrev: FRH
-                      Latitude: 48.536383
-                      Longitude: -123.013343
-                      Speed: 0.7
-                      Heading: 211
+                    - VesselID: 15
+                      VesselName: Issaquah
+                      Mmsi: 366773040
+                      DepartingTerminalID: 18
+                      DepartingTerminalName: Shaw Island
+                      DepartingTerminalAbbrev: SHI
+                      ArrivingTerminalID: 15
+                      ArrivingTerminalName: Orcas Island
+                      ArrivingTerminalAbbrev: ORI
+                      Latitude: 48.52055
+                      Longitude: -122.67803
+                      Speed: 15.8
+                      Heading: 91
                       InService: true
                       AtDock: false
-                      LeftDock: '2025-11-15T16:40:47.000Z'
-                      Eta: '2025-11-15T17:46:00.000Z'
-                      EtaBasis: Vessel Chelan departed Anacortes going to Friday Harbor and using vessel Chelan closest location data from Nov 14 2025  9:45AM
-                      ScheduledDeparture: '2025-11-15T16:40:00.000Z'
+                      LeftDock: null
+                      Eta: null
+                      EtaBasis: Vessel Issaquah departed Shaw going to Orcas and using vessel Issaquah closest location data from Dec 18 2025  1:08PM
+                      ScheduledDeparture: null
                       OpRouteAbbrev:
                         - ana-sj
                       VesselPositionNum: 1
                       SortSeq: 20
                       ManagedBy: 1
-                      TimeStamp: '2025-11-15T17:44:51.000Z'
-                      VesselWatchShutID: 2
-                      VesselWatchShutMsg: Vessel information unavailable
+                      TimeStamp: '2025-12-19T01:40:48.000Z'
+                      VesselWatchShutID: 12
+                      VesselWatchShutMsg: Vessel out of service - mechanical issues
                       VesselWatchShutFlag: '0'
                       VesselWatchStatus: '0'
                       VesselWatchMsg: 'WSF''s VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. '
@@ -1711,13 +1429,15 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchVesselLocationsByVesselIdInputVesselIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchVesselLocationsByVesselIdOutput'
+                $ref: '#/components/schemas/FetchVesselLocationsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1726,27 +1446,27 @@ paths:
                     VesselID: 18
                     VesselName: Kitsap
                     Mmsi: 366772980
-                    DepartingTerminalID: 138
-                    DepartingTerminalName: Everett Harbor
-                    DepartingTerminalAbbrev: EVH
+                    DepartingTerminalID: 122
+                    DepartingTerminalName: Eagle Harbor
+                    DepartingTerminalAbbrev: EAH
                     ArrivingTerminalID: null
                     ArrivingTerminalName: null
                     ArrivingTerminalAbbrev: null
-                    Latitude: 47.620557
-                    Longitude: -122.432302
+                    Latitude: 47.62056
+                    Longitude: -122.515033
                     Speed: 0
-                    Heading: 348
+                    Heading: 17
                     InService: false
-                    AtDock: false
-                    LeftDock: '2025-11-15T08:57:52.000Z'
+                    AtDock: true
+                    LeftDock: null
                     Eta: null
-                    EtaBasis: Calculating
+                    EtaBasis: null
                     ScheduledDeparture: null
                     OpRouteAbbrev: []
                     VesselPositionNum: null
                     SortSeq: 9999
                     ManagedBy: 1
-                    TimeStamp: '2025-11-15T08:57:52.000Z'
+                    TimeStamp: '2025-12-19T01:40:45.000Z'
                     VesselWatchShutID: 6
                     VesselWatchShutMsg: Vessel temporarily out of service
                     VesselWatchShutFlag: '0'
@@ -1777,174 +1497,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    VesselID:
-                      type: integer
-                      description: Numeric ID of the vessel.
-                    VesselSubjectID:
-                      type: integer
-                      description: Numeric ID of the WSF subject for this vessel.
-                    VesselName:
-                      type: string
-                      nullable: true
-                      description: Display name of the vessel.
-                    VesselAbbrev:
-                      type: string
-                      nullable: true
-                      description: Abbreviation code of the vessel.
-                    Class:
-                      type: object
-                      nullable: true
-                      properties:
-                        ClassID:
-                          type: integer
-                          description: Numeric ID of the vessel class.
-                        ClassSubjectID:
-                          type: integer
-                          description: Numeric ID of the WSF subject for this vessel class.
-                        ClassName:
-                          type: string
-                          nullable: true
-                          description: Display name of the vessel class.
-                        SortSeq:
-                          type: integer
-                          nullable: true
-                          description: Display sort order; lower values appear first in lists.
-                        DrawingImg:
-                          type: string
-                          nullable: true
-                          description: URL to detailed vessel class drawing image.
-                        SilhouetteImg:
-                          type: string
-                          nullable: true
-                          description: URL to small silhouette image of vessel class.
-                        PublicDisplayName:
-                          type: string
-                          nullable: true
-                          description: Public-facing display name of the vessel class.
-                      required:
-                        - ClassID
-                        - ClassSubjectID
-                        - ClassName
-                        - SortSeq
-                        - DrawingImg
-                        - SilhouetteImg
-                        - PublicDisplayName
-                      description: Vessel class information grouping similar vessels in the fleet.
-                    VesselNameDesc:
-                      type: string
-                      description: Cultural and historical context for vessel name origin.
-                    VesselHistory:
-                      type: string
-                      nullable: true
-                      description: Operational history and milestones for the vessel.
-                    Beam:
-                      type: string
-                      description: Vessel beam width in feet and inches.
-                    CityBuilt:
-                      type: string
-                      description: City where vessel was constructed.
-                    SpeedInKnots:
-                      type: integer
-                      nullable: true
-                      description: Maximum operational speed in knots.
-                    Draft:
-                      type: string
-                      description: Vessel draft depth in feet and inches.
-                    EngineCount:
-                      type: integer
-                      nullable: true
-                      description: Total number of propulsion engines aboard vessel.
-                    Horsepower:
-                      type: integer
-                      nullable: true
-                      description: Total engine horsepower output.
-                    Length:
-                      type: string
-                      description: Vessel overall length in feet and inches.
-                    MaxPassengerCount:
-                      type: integer
-                      nullable: true
-                      description: Maximum passenger capacity.
-                    PassengerOnly:
-                      type: boolean
-                      description: True if vessel carries only passengers; otherwise false.
-                    FastFerry:
-                      type: boolean
-                      description: True if vessel is classified as a fast ferry; otherwise false.
-                    PropulsionInfo:
-                      type: string
-                      description: Engine propulsion type and fuel technology.
-                    TallDeckClearance:
-                      type: integer
-                      nullable: true
-                      description: Tall deck vertical clearance height in inches.
-                    RegDeckSpace:
-                      type: integer
-                      nullable: true
-                      description: Maximum regular deck vehicle capacity including tall deck spaces.
-                    TallDeckSpace:
-                      type: integer
-                      nullable: true
-                      description: Tall deck vehicle capacity.
-                    Tonnage:
-                      type: integer
-                      nullable: true
-                      description: Vessel gross tonnage.
-                    Displacement:
-                      type: integer
-                      nullable: true
-                      description: Vessel displacement weight in long tons.
-                    YearBuilt:
-                      type: integer
-                      nullable: true
-                      description: Vessel construction year.
-                    YearRebuilt:
-                      type: integer
-                      nullable: true
-                      description: Vessel major rebuild year.
-                    VesselDrawingImg:
-                      type: string
-                      nullable: true
-                      description: URL to detailed vessel drawing image.
-                    SolasCertified:
-                      type: boolean
-                      description: True if vessel meets SOLAS international safety standards; otherwise false.
-                    MaxPassengerCountForInternational:
-                      type: integer
-                      nullable: true
-                      description: Maximum passenger capacity for international routes.
-                  required:
-                    - VesselID
-                    - VesselSubjectID
-                    - VesselName
-                    - VesselAbbrev
-                    - Class
-                    - VesselNameDesc
-                    - VesselHistory
-                    - Beam
-                    - CityBuilt
-                    - SpeedInKnots
-                    - Draft
-                    - EngineCount
-                    - Horsepower
-                    - Length
-                    - MaxPassengerCount
-                    - PassengerOnly
-                    - FastFerry
-                    - PropulsionInfo
-                    - TallDeckClearance
-                    - RegDeckSpace
-                    - TallDeckSpace
-                    - Tonnage
-                    - Displacement
-                    - YearBuilt
-                    - YearRebuilt
-                    - VesselDrawingImg
-                    - SolasCertified
-                    - MaxPassengerCountForInternational
-                  description: Vessel technical specifications including dimensions, capacity, speed, propulsion, and build details.
+                  $ref: '#/components/schemas/FetchVesselStatsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2005,13 +1558,15 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchVesselStatsByVesselIdInputVesselIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchVesselStatsByVesselIdOutput'
+                $ref: '#/components/schemas/FetchVesselStatsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2077,356 +1632,7 @@ paths:
               schema:
                 type: array
                 items:
-                  allOf:
-                    - type: object
-                      properties:
-                        VesselID:
-                          type: integer
-                          description: Numeric ID of the vessel.
-                        VesselSubjectID:
-                          type: integer
-                          description: Numeric ID of the WSF subject for this vessel.
-                        VesselName:
-                          type: string
-                          nullable: true
-                          description: Display name of the vessel.
-                        VesselAbbrev:
-                          type: string
-                          nullable: true
-                          description: Abbreviation code of the vessel.
-                        Class:
-                          type: object
-                          nullable: true
-                          properties:
-                            ClassID:
-                              type: integer
-                              description: Numeric ID of the vessel class.
-                            ClassSubjectID:
-                              type: integer
-                              description: Numeric ID of the WSF subject for this vessel class.
-                            ClassName:
-                              type: string
-                              nullable: true
-                              description: Display name of the vessel class.
-                            SortSeq:
-                              type: integer
-                              nullable: true
-                              description: Display sort order; lower values appear first in lists.
-                            DrawingImg:
-                              type: string
-                              nullable: true
-                              description: URL to detailed vessel class drawing image.
-                            SilhouetteImg:
-                              type: string
-                              nullable: true
-                              description: URL to small silhouette image of vessel class.
-                            PublicDisplayName:
-                              type: string
-                              nullable: true
-                              description: Public-facing display name of the vessel class.
-                          required:
-                            - ClassID
-                            - ClassSubjectID
-                            - ClassName
-                            - SortSeq
-                            - DrawingImg
-                            - SilhouetteImg
-                            - PublicDisplayName
-                          description: Vessel class information grouping similar vessels in the fleet.
-                        Status:
-                          anyOf:
-                            - type: number
-                              enum:
-                                - 1
-                            - type: number
-                              enum:
-                                - 2
-                            - type: number
-                              enum:
-                                - 3
-                            - nullable: true
-                          description: 'Code indicating operational status: 1 = In Service, 2 = Maintenance, 3 = Out of Service.'
-                        OwnedByWSF:
-                          type: boolean
-                          description: True if vessel is owned by WSF; otherwise false.
-                      required:
-                        - VesselID
-                        - VesselSubjectID
-                        - VesselName
-                        - VesselAbbrev
-                        - Class
-                        - Status
-                        - OwnedByWSF
-                      description: Basic vessel information including identification, operational status, and ownership.
-                    - type: object
-                      properties:
-                        VesselID:
-                          type: integer
-                          description: Numeric ID of the vessel.
-                        VesselSubjectID:
-                          type: integer
-                          description: Numeric ID of the WSF subject for this vessel.
-                        VesselName:
-                          type: string
-                          nullable: true
-                          description: Display name of the vessel.
-                        VesselAbbrev:
-                          type: string
-                          nullable: true
-                          description: Abbreviation code of the vessel.
-                        Class:
-                          type: object
-                          nullable: true
-                          properties:
-                            ClassID:
-                              type: integer
-                              description: Numeric ID of the vessel class.
-                            ClassSubjectID:
-                              type: integer
-                              description: Numeric ID of the WSF subject for this vessel class.
-                            ClassName:
-                              type: string
-                              nullable: true
-                              description: Display name of the vessel class.
-                            SortSeq:
-                              type: integer
-                              nullable: true
-                              description: Display sort order; lower values appear first in lists.
-                            DrawingImg:
-                              type: string
-                              nullable: true
-                              description: URL to detailed vessel class drawing image.
-                            SilhouetteImg:
-                              type: string
-                              nullable: true
-                              description: URL to small silhouette image of vessel class.
-                            PublicDisplayName:
-                              type: string
-                              nullable: true
-                              description: Public-facing display name of the vessel class.
-                          required:
-                            - ClassID
-                            - ClassSubjectID
-                            - ClassName
-                            - SortSeq
-                            - DrawingImg
-                            - SilhouetteImg
-                            - PublicDisplayName
-                          description: Vessel class information grouping similar vessels in the fleet.
-                        CarDeckRestroom:
-                          type: boolean
-                          description: True if ADA-accessible restroom is available on car deck; otherwise false.
-                        CarDeckShelter:
-                          type: boolean
-                          description: True if ADA-accessible shelter is available on car deck; otherwise false.
-                        Elevator:
-                          type: boolean
-                          description: True if elevator is available for passenger deck access; otherwise false.
-                        ADAAccessible:
-                          type: boolean
-                          description: True if vessel meets ADA accessibility standards; otherwise false.
-                        MainCabinGalley:
-                          type: boolean
-                          description: True if food service galley is available in main passenger cabin; otherwise false.
-                        MainCabinRestroom:
-                          type: boolean
-                          description: True if restroom is available in main passenger cabin; otherwise false.
-                        PublicWifi:
-                          type: boolean
-                          description: True if public WiFi is available on vessel; otherwise false.
-                        ADAInfo:
-                          type: string
-                          nullable: true
-                          description: Detailed ADA accessibility information for passengers with disabilities.
-                        AdditionalInfo:
-                          type: string
-                          nullable: true
-                          description: Additional accommodation notes not covered by standard boolean flags.
-                      required:
-                        - VesselID
-                        - VesselSubjectID
-                        - VesselName
-                        - VesselAbbrev
-                        - Class
-                        - CarDeckRestroom
-                        - CarDeckShelter
-                        - Elevator
-                        - ADAAccessible
-                        - MainCabinGalley
-                        - MainCabinRestroom
-                        - PublicWifi
-                        - ADAInfo
-                        - AdditionalInfo
-                      description: Vessel accommodation information including amenities, accessibility features, and passenger facilities.
-                    - type: object
-                      properties:
-                        VesselID:
-                          type: integer
-                          description: Numeric ID of the vessel.
-                        VesselSubjectID:
-                          type: integer
-                          description: Numeric ID of the WSF subject for this vessel.
-                        VesselName:
-                          type: string
-                          nullable: true
-                          description: Display name of the vessel.
-                        VesselAbbrev:
-                          type: string
-                          nullable: true
-                          description: Abbreviation code of the vessel.
-                        Class:
-                          type: object
-                          nullable: true
-                          properties:
-                            ClassID:
-                              type: integer
-                              description: Numeric ID of the vessel class.
-                            ClassSubjectID:
-                              type: integer
-                              description: Numeric ID of the WSF subject for this vessel class.
-                            ClassName:
-                              type: string
-                              nullable: true
-                              description: Display name of the vessel class.
-                            SortSeq:
-                              type: integer
-                              nullable: true
-                              description: Display sort order; lower values appear first in lists.
-                            DrawingImg:
-                              type: string
-                              nullable: true
-                              description: URL to detailed vessel class drawing image.
-                            SilhouetteImg:
-                              type: string
-                              nullable: true
-                              description: URL to small silhouette image of vessel class.
-                            PublicDisplayName:
-                              type: string
-                              nullable: true
-                              description: Public-facing display name of the vessel class.
-                          required:
-                            - ClassID
-                            - ClassSubjectID
-                            - ClassName
-                            - SortSeq
-                            - DrawingImg
-                            - SilhouetteImg
-                            - PublicDisplayName
-                          description: Vessel class information grouping similar vessels in the fleet.
-                        VesselNameDesc:
-                          type: string
-                          description: Cultural and historical context for vessel name origin.
-                        VesselHistory:
-                          type: string
-                          nullable: true
-                          description: Operational history and milestones for the vessel.
-                        Beam:
-                          type: string
-                          description: Vessel beam width in feet and inches.
-                        CityBuilt:
-                          type: string
-                          description: City where vessel was constructed.
-                        SpeedInKnots:
-                          type: integer
-                          nullable: true
-                          description: Maximum operational speed in knots.
-                        Draft:
-                          type: string
-                          description: Vessel draft depth in feet and inches.
-                        EngineCount:
-                          type: integer
-                          nullable: true
-                          description: Total number of propulsion engines aboard vessel.
-                        Horsepower:
-                          type: integer
-                          nullable: true
-                          description: Total engine horsepower output.
-                        Length:
-                          type: string
-                          description: Vessel overall length in feet and inches.
-                        MaxPassengerCount:
-                          type: integer
-                          nullable: true
-                          description: Maximum passenger capacity.
-                        PassengerOnly:
-                          type: boolean
-                          description: True if vessel carries only passengers; otherwise false.
-                        FastFerry:
-                          type: boolean
-                          description: True if vessel is classified as a fast ferry; otherwise false.
-                        PropulsionInfo:
-                          type: string
-                          description: Engine propulsion type and fuel technology.
-                        TallDeckClearance:
-                          type: integer
-                          nullable: true
-                          description: Tall deck vertical clearance height in inches.
-                        RegDeckSpace:
-                          type: integer
-                          nullable: true
-                          description: Maximum regular deck vehicle capacity including tall deck spaces.
-                        TallDeckSpace:
-                          type: integer
-                          nullable: true
-                          description: Tall deck vehicle capacity.
-                        Tonnage:
-                          type: integer
-                          nullable: true
-                          description: Vessel gross tonnage.
-                        Displacement:
-                          type: integer
-                          nullable: true
-                          description: Vessel displacement weight in long tons.
-                        YearBuilt:
-                          type: integer
-                          nullable: true
-                          description: Vessel construction year.
-                        YearRebuilt:
-                          type: integer
-                          nullable: true
-                          description: Vessel major rebuild year.
-                        VesselDrawingImg:
-                          type: string
-                          nullable: true
-                          description: URL to detailed vessel drawing image.
-                        SolasCertified:
-                          type: boolean
-                          description: True if vessel meets SOLAS international safety standards; otherwise false.
-                        MaxPassengerCountForInternational:
-                          type: integer
-                          nullable: true
-                          description: Maximum passenger capacity for international routes.
-                      required:
-                        - VesselID
-                        - VesselSubjectID
-                        - VesselName
-                        - VesselAbbrev
-                        - Class
-                        - VesselNameDesc
-                        - VesselHistory
-                        - Beam
-                        - CityBuilt
-                        - SpeedInKnots
-                        - Draft
-                        - EngineCount
-                        - Horsepower
-                        - Length
-                        - MaxPassengerCount
-                        - PassengerOnly
-                        - FastFerry
-                        - PropulsionInfo
-                        - TallDeckClearance
-                        - RegDeckSpace
-                        - TallDeckSpace
-                        - Tonnage
-                        - Displacement
-                        - YearBuilt
-                        - YearRebuilt
-                        - VesselDrawingImg
-                        - SolasCertified
-                        - MaxPassengerCountForInternational
-                      description: Vessel technical specifications including dimensions, capacity, speed, propulsion, and build details.
-                  description: Complete vessel information combining identification, operational status, accommodations, and technical specifications in a single schema.
+                  $ref: '#/components/schemas/FetchVesselsVerboseOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -2498,13 +1704,15 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchVesselsVerboseByVesselIdInputVesselIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchVesselsVerboseByVesselIdOutput'
+                $ref: '#/components/schemas/FetchVesselsVerboseOutput'
               examples:
                 sampleResponse:
                   summary: Sample response

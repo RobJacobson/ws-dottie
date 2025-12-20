@@ -390,36 +390,36 @@
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 118 total)",
+                    "description": "Example of a successful response from the API (showing first item of 150 total)",
                     "value": [
                       {
-                        "AlertID": 670961,
+                        "AlertID": 676150,
                         "County": null,
                         "EndRoadwayLocation": {
                           "Description": null,
-                          "Direction": "N",
-                          "Latitude": 48.703758665,
-                          "Longitude": -122.474705077,
-                          "MilePost": 250,
-                          "RoadName": "005"
+                          "Direction": "S",
+                          "Latitude": 47.467582009,
+                          "Longitude": -122.224704348,
+                          "MilePost": 2,
+                          "RoadName": "405"
                         },
-                        "EndTime": "2025-11-21T00:00:00.000Z",
-                        "EventCategory": "Maintenance",
+                        "EndTime": "2025-12-19T13:30:00.000Z",
+                        "EventCategory": "Construction",
                         "EventStatus": "Open",
                         "ExtendedDescription": "",
-                        "HeadlineDescription": "Daily from 8 a.m. to 4 p.m. on Wednesday, Nov. 19 and Thursday, Nov. 20, maintenance crews will close one right lane of northbound Interstate 5 from North Lake Samish Overpass (milepost 246) to State Route 11/Chuckanut Drive (milepost 250) for rock removal.",
-                        "LastUpdatedTime": "2025-11-13T20:14:26.087Z",
-                        "Priority": "Medium",
+                        "HeadlineDescription": "Up to three lanes of southbound I-405 from milepost 4.5 to milepost 2 will be closed nightly, 10:30 p.m. Monday, Dec. 15 – 5:30 a.m. Friday, Dec. 19.",
+                        "LastUpdatedTime": "2025-12-12T22:39:47.180Z",
+                        "Priority": "Low",
                         "Region": "Northwest",
                         "StartRoadwayLocation": {
                           "Description": null,
-                          "Direction": "N",
-                          "Latitude": 48.690337506,
-                          "Longitude": -122.41057518,
-                          "MilePost": 246.8,
-                          "RoadName": "005"
+                          "Direction": "S",
+                          "Latitude": 47.490051559,
+                          "Longitude": -122.192627997,
+                          "MilePost": 4.5,
+                          "RoadName": "405"
                         },
-                        "StartTime": "2025-11-13T20:08:00.000Z"
+                        "StartTime": "2025-12-15T08:00:00.000Z"
                       }
                     ]
                   }
@@ -440,7 +440,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2025-12-08\",\n    \"SearchTimeEnd\": \"2025-12-09\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2025-12-19\",\n    \"SearchTimeEnd\": \"2025-12-20\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -477,10 +477,10 @@
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 14 total)",
+                    "description": "Example of a successful response from the API (showing first item of 11 total)",
                     "value": [
                       {
-                        "AlertID": 671050,
+                        "AlertID": 676956,
                         "County": null,
                         "EndRoadwayLocation": {
                           "Description": null,
@@ -490,23 +490,23 @@
                           "MilePost": 0,
                           "RoadName": "405"
                         },
-                        "EndTime": "2025-11-14T15:22:31.000Z",
+                        "EndTime": "2025-12-19T00:18:32.000Z",
                         "EventCategory": "Disabled vehicle",
                         "EventStatus": "Closed",
                         "ExtendedDescription": "",
-                        "HeadlineDescription": "Cleared 7:22 AM : On I-405 southbound at NE 70th Pl (MP 17) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.",
-                        "LastUpdatedTime": "2025-11-14T15:22:31.560Z",
+                        "HeadlineDescription": "Cleared 4:18 PM : On the I-405 southbound on-ramp from NE 8th St (MP 14) there is a disabled vehicle blocking the right lane.  The Incident Response Team and the State Patrol have arrived on the scene.",
+                        "LastUpdatedTime": "2025-12-19T00:18:33.010Z",
                         "Priority": "Highest",
                         "Region": "Northwest",
                         "StartRoadwayLocation": {
                           "Description": null,
                           "Direction": "S",
-                          "Latitude": 47.670427237,
-                          "Longitude": -122.187174248,
-                          "MilePost": 17.49,
+                          "Latitude": 47.618804349,
+                          "Longitude": -122.188908322,
+                          "MilePost": 13.92,
                           "RoadName": "405"
                         },
-                        "StartTime": "2025-11-14T14:54:00.000Z"
+                        "StartTime": "2025-12-18T23:56:00.000Z"
                       }
                     ]
                   }

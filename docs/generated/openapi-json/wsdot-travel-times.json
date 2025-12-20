@@ -234,8 +234,8 @@
                     "description": "Example of a successful response from the API (showing first item of 163 total)",
                     "value": [
                       {
-                        "AverageTime": 26,
-                        "CurrentTime": 26,
+                        "AverageTime": 48,
+                        "CurrentTime": 70,
                         "Description": "Everett to Downtown Seattle using HOV lanes",
                         "Distance": 26.72,
                         "EndPoint": {
@@ -255,7 +255,7 @@
                           "MilePost": 192.55,
                           "RoadName": "005"
                         },
-                        "TimeUpdated": "2025-11-15T17:40:00.000Z",
+                        "TimeUpdated": "2025-12-19T01:35:00.000Z",
                         "TravelTimeID": 2
                       }
                     ]
@@ -298,8 +298,8 @@
                     "summary": "Sample response",
                     "description": "Example of a successful response from the API",
                     "value": {
-                      "AverageTime": 27,
-                      "CurrentTime": 26,
+                      "AverageTime": 58,
+                      "CurrentTime": 77,
                       "Description": "Everett to Downtown Seattle",
                       "Distance": 26.72,
                       "EndPoint": {
@@ -319,7 +319,7 @@
                         "MilePost": 192.55,
                         "RoadName": "005"
                       },
-                      "TimeUpdated": "2025-11-15T17:40:00.000Z",
+                      "TimeUpdated": "2025-12-19T01:35:00.000Z",
                       "TravelTimeID": 1
                     }
                   }

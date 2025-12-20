@@ -75,7 +75,7 @@
     "Latitude": 47.327879005,
     "Longitude": -121.336482905,
     "StationCode": 1979,
-    "StationName": "Price Creek on I-90 at mp 60.8"
+    "StationName": "Stampede Overpass on I-90 at mp 62.97"
   },
   {
     "Latitude": 47.078,
@@ -141,7 +141,7 @@
     "Latitude": 48.0938,
     "Longitude": -123.2783,
     "StationCode": 2045,
-    "StationName": "Seibert Creek Bridge"
+    "StationName": "Seibert Creek Bridge on US 101 at mp 256"
   },
   {
     "Latitude": 45.569,
@@ -165,7 +165,7 @@
     "Latitude": 47.427,
     "Longitude": -121.418,
     "StationCode": 2085,
-    "StationName": "Alpental Exit on I-90 at mp 52.26"
+    "StationName": "Snoqualmie Pass Summit"
   },
   {
     "Latitude": 47.4187,
@@ -207,7 +207,7 @@
     "Latitude": 47.8156,
     "Longitude": -119.363,
     "StationCode": 2175,
-    "StationName": "Mansfield on SR 17 at mp 112.22"
+    "StationName": "SR 17 / SR 172 at mp 112.22"
   },
   {
     "Latitude": 47.9723,
@@ -336,8 +336,8 @@
     "StationName": "Nine Mile on SR 291 at mp 9.20"
   },
   {
-    "Latitude": 47.787111111,
-    "Longitude": -117.406694444,
+    "Latitude": 47.7871111111,
+    "Longitude": -117.4066944444,
     "StationCode": 2689,
     "StationName": "US 395 at MP 167.90: Wandermere Rd"
   },
@@ -354,8 +354,8 @@
     "StationName": "Garden Springs on I-90 at mp 278.20"
   },
   {
-    "Latitude": 47.59373512,
-    "Longitude": -117.562104577,
+    "Latitude": 47.593735119903,
+    "Longitude": -117.562104576509,
     "StationCode": 2694,
     "StationName": "Medical Lake on I-90 at mp 273.00"
   },
@@ -585,7 +585,7 @@
     "Latitude": 48.446,
     "Longitude": -122.432,
     "StationCode": 3267,
-    "StationName": "Mount Vernon on SR 20 at mp 55.09"
+    "StationName": "SR 20 / SR 536 at Mount Vernon at mp 55.09"
   },
   {
     "Latitude": 47.9163,

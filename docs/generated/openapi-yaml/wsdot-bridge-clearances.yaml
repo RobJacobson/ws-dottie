@@ -40,7 +40,108 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-  parameters: {}
+    FetchBridgeClearancesOutput:
+      type: object
+      properties:
+        APILastUpdate:
+          type: string
+          format: date
+          description: UTC datetime when the bridge clearance record was last updated.
+        BridgeNumber:
+          type: string
+          nullable: true
+          description: Two-part bridge identifier combining route and structure number. E.g., '519/101FTP' for route 519 bridge 101FTP, '5/629A' for I-5 bridge 629A.
+        ControlEntityGuid:
+          type: string
+          description: Unique bridge control entity identifier as a GUID.
+        CrossingDescription:
+          type: string
+          nullable: true
+          description: Human-readable description of the bridge crossing location and type.
+        CrossingLocationId:
+          type: number
+          description: Numeric ID of the bridge crossing location.
+        CrossingRecordGuid:
+          type: string
+          description: Unique identifier for the bridge crossing record as a GUID.
+        InventoryDirection:
+          type: string
+          nullable: true
+          description: 'Code indicating milepost direction: I = Increasing, D = Decreasing, B = Both directions.'
+        Latitude:
+          type: number
+          description: Bridge GPS latitude coordinate in decimal degrees.
+        LocationGuid:
+          type: string
+          description: Unique identifier for the bridge location as a GUID.
+        Longitude:
+          type: number
+          description: Bridge GPS longitude coordinate in decimal degrees.
+        RouteDate:
+          type: string
+          format: date
+          description: UTC datetime when the route information was established or last updated.
+        SRMP:
+          type: number
+          description: State Route Milepost reference point in decimal format.
+        SRMPAheadBackIndicator:
+          type: string
+          nullable: true
+          description: 'Code indicating milepost equation area: A = ahead mileage equation area.'
+        StateRouteID:
+          type: string
+          nullable: true
+          description: State route identifier assigned by legislature. E.g., '00167' for SR-167, '005S119195' for I-5 southbound segment.
+        StateStructureId:
+          type: string
+          nullable: true
+          description: Permanent 8-digit bridge structure identifier assigned by WSDOT Bridge Office.
+        VerticalClearanceMaximumFeetInch:
+          type: string
+          nullable: true
+          description: Maximum vertical clearance height in feet and inches format. E.g., '14 ft 3 in'.
+        VerticalClearanceMaximumInches:
+          type: number
+          description: Maximum vertical clearance height in total inches.
+        VerticalClearanceMinimumFeetInch:
+          type: string
+          nullable: true
+          description: Minimum vertical clearance height in feet and inches format. E.g., '14 ft 3 in'.
+        VerticalClearanceMinimumInches:
+          type: number
+          description: Minimum vertical clearance height in total inches.
+      required:
+        - APILastUpdate
+        - BridgeNumber
+        - ControlEntityGuid
+        - CrossingDescription
+        - CrossingLocationId
+        - CrossingRecordGuid
+        - InventoryDirection
+        - Latitude
+        - LocationGuid
+        - Longitude
+        - RouteDate
+        - SRMP
+        - SRMPAheadBackIndicator
+        - StateRouteID
+        - StateStructureId
+        - VerticalClearanceMaximumFeetInch
+        - VerticalClearanceMaximumInches
+        - VerticalClearanceMinimumFeetInch
+        - VerticalClearanceMinimumInches
+      description: Bridge clearance record with location coordinates, route associations, vertical clearance measurements, and structure identification.
+    FetchBridgeClearancesByRouteInputRouteParam:
+      type: string
+      description: State route identifier as three-digit number. E.g., '005' for I-5, '167' for SR-167, '520' for SR-520.
+  parameters:
+    FetchBridgeClearancesByRouteInputRouteParam:
+      schema:
+        $ref: '#/components/schemas/FetchBridgeClearancesByRouteInputRouteParam'
+      required: true
+      description: State route identifier as three-digit number. E.g., '005' for I-5, '167' for SR-167, '520' for SR-520.
+      name: Route
+      in: path
 paths:
   /getClearancesAsJson:
     get:
@@ -67,102 +168,13 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    APILastUpdate:
-                      type: string
-                      description: UTC datetime when the bridge clearance record was last updated.
-                      format: date-time
-                    BridgeNumber:
-                      type: string
-                      nullable: true
-                      description: Two-part bridge identifier combining route and structure number. E.g., '519/101FTP' for route 519 bridge 101FTP, '5/629A' for I-5 bridge 629A.
-                    ControlEntityGuid:
-                      type: string
-                      description: Unique bridge control entity identifier as a GUID.
-                    CrossingDescription:
-                      type: string
-                      nullable: true
-                      description: Human-readable description of the bridge crossing location and type.
-                    CrossingLocationId:
-                      type: number
-                      description: Numeric ID of the bridge crossing location.
-                    CrossingRecordGuid:
-                      type: string
-                      description: Unique identifier for the bridge crossing record as a GUID.
-                    InventoryDirection:
-                      type: string
-                      nullable: true
-                      description: 'Code indicating milepost direction: I = Increasing, D = Decreasing, B = Both directions.'
-                    Latitude:
-                      type: number
-                      description: Bridge GPS latitude coordinate in decimal degrees.
-                    LocationGuid:
-                      type: string
-                      description: Unique identifier for the bridge location as a GUID.
-                    Longitude:
-                      type: number
-                      description: Bridge GPS longitude coordinate in decimal degrees.
-                    RouteDate:
-                      type: string
-                      description: UTC datetime when the route information was established or last updated.
-                      format: date-time
-                    SRMP:
-                      type: number
-                      description: State Route Milepost reference point in decimal format.
-                    SRMPAheadBackIndicator:
-                      type: string
-                      nullable: true
-                      description: 'Code indicating milepost equation area: A = ahead mileage equation area.'
-                    StateRouteID:
-                      type: string
-                      nullable: true
-                      description: State route identifier assigned by legislature. E.g., '00167' for SR-167, '005S119195' for I-5 southbound segment.
-                    StateStructureId:
-                      type: string
-                      nullable: true
-                      description: Permanent 8-digit bridge structure identifier assigned by WSDOT Bridge Office.
-                    VerticalClearanceMaximumFeetInch:
-                      type: string
-                      nullable: true
-                      description: Maximum vertical clearance height in feet and inches format. E.g., '14 ft 3 in'.
-                    VerticalClearanceMaximumInches:
-                      type: number
-                      description: Maximum vertical clearance height in total inches.
-                    VerticalClearanceMinimumFeetInch:
-                      type: string
-                      nullable: true
-                      description: Minimum vertical clearance height in feet and inches format. E.g., '14 ft 3 in'.
-                    VerticalClearanceMinimumInches:
-                      type: number
-                      description: Minimum vertical clearance height in total inches.
-                  required:
-                    - APILastUpdate
-                    - BridgeNumber
-                    - ControlEntityGuid
-                    - CrossingDescription
-                    - CrossingLocationId
-                    - CrossingRecordGuid
-                    - InventoryDirection
-                    - Latitude
-                    - LocationGuid
-                    - Longitude
-                    - RouteDate
-                    - SRMP
-                    - SRMPAheadBackIndicator
-                    - StateRouteID
-                    - StateStructureId
-                    - VerticalClearanceMaximumFeetInch
-                    - VerticalClearanceMaximumInches
-                    - VerticalClearanceMinimumFeetInch
-                    - VerticalClearanceMinimumInches
-                  description: Bridge clearance record with location coordinates, route associations, vertical clearance measurements, and structure identification.
+                  $ref: '#/components/schemas/FetchBridgeClearancesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 2992 total)
+                  description: Example of a successful response from the API (showing first item of 2990 total)
                   value:
-                    - APILastUpdate: '2025-11-14T11:30:02.387Z'
+                    - APILastUpdate: '2025-12-18T11:30:01.980Z'
                       BridgeNumber: 519/101FTP
                       ControlEntityGuid: e589eb93-c01b-4498-8243-89f48bf5c43d
                       CrossingDescription: SEATTLE SLIP 1 PASS. OHL
@@ -201,6 +213,8 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchBridgeClearancesByRouteInputRouteParam'
       responses:
         '200':
           description: Success
@@ -209,102 +223,13 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    APILastUpdate:
-                      type: string
-                      description: UTC datetime when the bridge clearance record was last updated.
-                      format: date-time
-                    BridgeNumber:
-                      type: string
-                      nullable: true
-                      description: Two-part bridge identifier combining route and structure number. E.g., '519/101FTP' for route 519 bridge 101FTP, '5/629A' for I-5 bridge 629A.
-                    ControlEntityGuid:
-                      type: string
-                      description: Unique bridge control entity identifier as a GUID.
-                    CrossingDescription:
-                      type: string
-                      nullable: true
-                      description: Human-readable description of the bridge crossing location and type.
-                    CrossingLocationId:
-                      type: number
-                      description: Numeric ID of the bridge crossing location.
-                    CrossingRecordGuid:
-                      type: string
-                      description: Unique identifier for the bridge crossing record as a GUID.
-                    InventoryDirection:
-                      type: string
-                      nullable: true
-                      description: 'Code indicating milepost direction: I = Increasing, D = Decreasing, B = Both directions.'
-                    Latitude:
-                      type: number
-                      description: Bridge GPS latitude coordinate in decimal degrees.
-                    LocationGuid:
-                      type: string
-                      description: Unique identifier for the bridge location as a GUID.
-                    Longitude:
-                      type: number
-                      description: Bridge GPS longitude coordinate in decimal degrees.
-                    RouteDate:
-                      type: string
-                      description: UTC datetime when the route information was established or last updated.
-                      format: date-time
-                    SRMP:
-                      type: number
-                      description: State Route Milepost reference point in decimal format.
-                    SRMPAheadBackIndicator:
-                      type: string
-                      nullable: true
-                      description: 'Code indicating milepost equation area: A = ahead mileage equation area.'
-                    StateRouteID:
-                      type: string
-                      nullable: true
-                      description: State route identifier assigned by legislature. E.g., '00167' for SR-167, '005S119195' for I-5 southbound segment.
-                    StateStructureId:
-                      type: string
-                      nullable: true
-                      description: Permanent 8-digit bridge structure identifier assigned by WSDOT Bridge Office.
-                    VerticalClearanceMaximumFeetInch:
-                      type: string
-                      nullable: true
-                      description: Maximum vertical clearance height in feet and inches format. E.g., '14 ft 3 in'.
-                    VerticalClearanceMaximumInches:
-                      type: number
-                      description: Maximum vertical clearance height in total inches.
-                    VerticalClearanceMinimumFeetInch:
-                      type: string
-                      nullable: true
-                      description: Minimum vertical clearance height in feet and inches format. E.g., '14 ft 3 in'.
-                    VerticalClearanceMinimumInches:
-                      type: number
-                      description: Minimum vertical clearance height in total inches.
-                  required:
-                    - APILastUpdate
-                    - BridgeNumber
-                    - ControlEntityGuid
-                    - CrossingDescription
-                    - CrossingLocationId
-                    - CrossingRecordGuid
-                    - InventoryDirection
-                    - Latitude
-                    - LocationGuid
-                    - Longitude
-                    - RouteDate
-                    - SRMP
-                    - SRMPAheadBackIndicator
-                    - StateRouteID
-                    - StateStructureId
-                    - VerticalClearanceMaximumFeetInch
-                    - VerticalClearanceMaximumInches
-                    - VerticalClearanceMinimumFeetInch
-                    - VerticalClearanceMinimumInches
-                  description: Bridge clearance record with location coordinates, route associations, vertical clearance measurements, and structure identification.
+                  $ref: '#/components/schemas/FetchBridgeClearancesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 972 total)
                   value:
-                    - APILastUpdate: '2025-11-14T11:30:02.387Z'
+                    - APILastUpdate: '2025-12-18T11:30:01.980Z'
                       BridgeNumber: 5/629A
                       ControlEntityGuid: 88ba5341-b39c-43c9-95a5-bc9584b2d798
                       CrossingDescription: I-5 S-S RAMP UNDER BROADWAY

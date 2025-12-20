@@ -210,24 +210,24 @@
                     "description": "Example of a successful response from the API (showing first item of 16 total)",
                     "value": [
                       {
-                        "MountainPassId": 1,
-                        "MountainPassName": "Blewett Pass US 97",
+                        "DateUpdated": "2025-12-18T19:23:34.613Z",
+                        "ElevationInFeet": 4102,
                         "Latitude": 47.335298205,
                         "Longitude": -120.581068216,
-                        "DateUpdated": "2025-11-15T14:49:36.827Z",
-                        "TemperatureInFahrenheit": 43,
-                        "ElevationInFeet": 4102,
-                        "WeatherCondition": "Partly cloudy.",
-                        "RoadCondition": "Bare and wet.",
-                        "TravelAdvisoryActive": true,
+                        "MountainPassId": 1,
+                        "MountainPassName": "Blewett Pass US 97",
                         "RestrictionOne": {
-                          "RestrictionText": "No restrictions",
+                          "RestrictionText": "Traction Tires Required, Chains required on Vehicles over 10,000 gross vehicle weight.  Oversize Vehicles Prohibited.",
                           "TravelDirection": "Northbound"
                         },
                         "RestrictionTwo": {
-                          "RestrictionText": "No restrictions",
+                          "RestrictionText": "Traction Tires Required, Chains required on Vehicles over 10,000 gross vehicle weight.  Oversize Vehicles Prohibited.",
                           "TravelDirection": "Southbound"
-                        }
+                        },
+                        "RoadCondition": "Compact snow and ice",
+                        "TemperatureInFahrenheit": 29,
+                        "TravelAdvisoryActive": true,
+                        "WeatherCondition": "Snow"
                       }
                     ]
                   }
@@ -269,24 +269,24 @@
                     "summary": "Sample response",
                     "description": "Example of a successful response from the API",
                     "value": {
-                      "MountainPassId": 12,
-                      "MountainPassName": "White Pass  US 12",
+                      "DateUpdated": "2025-12-18T23:56:37.967Z",
+                      "ElevationInFeet": 4500,
                       "Latitude": 46.638333,
                       "Longitude": -121.39,
-                      "DateUpdated": "2025-11-15T16:32:50.010Z",
-                      "TemperatureInFahrenheit": 44,
-                      "ElevationInFeet": 4500,
-                      "WeatherCondition": "Raining",
-                      "RoadCondition": "Bare and wet",
-                      "TravelAdvisoryActive": true,
+                      "MountainPassId": 12,
+                      "MountainPassName": "White Pass  US 12",
                       "RestrictionOne": {
-                        "RestrictionText": "No restrictions",
+                        "RestrictionText": "Traction Tires Advised, Oversize Vehicles Prohibited.",
                         "TravelDirection": "Eastbound"
                       },
                       "RestrictionTwo": {
-                        "RestrictionText": "No restrictions",
+                        "RestrictionText": "Traction Tires Advised, Oversize Vehicles Prohibited.",
                         "TravelDirection": "Westbound"
-                      }
+                      },
+                      "RoadCondition": "Bare and wet with snow and slush in places",
+                      "TemperatureInFahrenheit": null,
+                      "TravelAdvisoryActive": true,
+                      "WeatherCondition": "Raining"
                     }
                   }
                 }
