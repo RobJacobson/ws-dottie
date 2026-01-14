@@ -228,7 +228,14 @@ export const outputResult = (result: unknown, options: CliOptions): void => {
     return;
   }
 
-  // Use colorized output in all cases
+  // Handle pretty printing with colors
+  if (options.pretty) {
+    const colorizedOutput = colorizeValuePretty(outputResult);
+    console.log(colorizedOutput);
+    return;
+  }
+
+  // Use compact colorized output for non-pretty mode
   const colorizedOutput = colorizeValue(outputResult);
 
   if (options.limit && options.limit > 0 && !Array.isArray(result)) {
@@ -299,6 +306,69 @@ const colorizeValue = (value: unknown): string => {
       );
       return `{${entries.join(",")}}`;
     }
+    default:
+      return String(value);
+  }
+};
+
+/**
+ * Recursively colorizes a JavaScript value with pretty-printing
+ * Handles all JSON types: objects, arrays, strings, numbers, booleans, null, and dates
+ * Produces properly indented output with syntax highlighting
+ *
+ * @param value - Value to colorize and pretty-print
+ * @param indent - Current indentation level (default: 0)
+ * @returns Pretty-printed and colorized string representation
+ */
+const colorizeValuePretty = (value: unknown, indent = 0): string => {
+  const indentStr = '  '.repeat(indent);
+
+  // Handle null first (typeof null === 'object')
+  if (value === null) return pc.yellow("null");
+
+  // Handle Date objects specifically
+  if (value instanceof Date) {
+    return pc.green(`"${value.toISOString()}"`);
+  }
+
+  // Handle arrays
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return '[]';
+    }
+
+    const items = value.map(item => {
+      const itemStr = colorizeValuePretty(item, indent + 1);
+      return `${'  '.repeat(indent + 1)}${itemStr}`;
+    });
+
+    return `[\n${items.join(',\n')}\n${indentStr}]`;
+  }
+
+  // Handle objects
+  if (typeof value === 'object') {
+    const entries = Object.entries(value);
+    if (entries.length === 0) {
+      return '{}';
+    }
+
+    const formattedEntries = entries.map(([key, val]) => {
+      const coloredKey = pc.gray(`"${key}"`);
+      const coloredValue = colorizeValuePretty(val, indent + 1);
+      return `${'  '.repeat(indent + 1)}${coloredKey}: ${coloredValue}`;
+    });
+
+    return `{\n${formattedEntries.join(',\n')}\n${indentStr}}`;
+  }
+
+  // Handle primitives
+  switch (typeof value) {
+    case "string":
+      return pc.green(`"${value}"`);
+    case "number":
+      return pc.cyan(String(value));
+    case "boolean":
+      return pc.yellow(String(value));
     default:
       return String(value);
   }
