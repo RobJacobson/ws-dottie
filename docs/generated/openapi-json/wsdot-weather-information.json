@@ -401,7 +401,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2025-12-19T00:00:00.000Z\",\n    \"SearchEndTime\": \"2025-12-20T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2026-01-13T00:00:00.000Z\",\n    \"SearchEndTime\": \"2026-01-14T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [

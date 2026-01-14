@@ -5936,7 +5936,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchRouteDetailsByTripDate } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRouteDetailsByTripDate({\n  params: {\n    \"TripDate\": \"2025-12-21\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchRouteDetailsByTripDate } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRouteDetailsByTripDate({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -6050,7 +6050,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchRouteDetailsByTripDateAndTerminals } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRouteDetailsByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2025-12-21\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchRouteDetailsByTripDateAndTerminals } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRouteDetailsByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -6170,7 +6170,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchRouteDetailsByTripDateAndRouteId } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRouteDetailsByTripDateAndRouteId({\n  params: {\n    \"TripDate\": \"2025-12-21\",\n    \"RouteID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchRouteDetailsByTripDateAndRouteId } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRouteDetailsByTripDateAndRouteId({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"RouteID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -6249,7 +6249,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchRoutesByTripDate } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRoutesByTripDate({\n  params: {\n    \"TripDate\": \"2025-12-21\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchRoutesByTripDate } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRoutesByTripDate({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -6305,7 +6305,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchRoutesByTripDateAndTerminals } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRoutesByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2025-12-21\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchRoutesByTripDateAndTerminals } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRoutesByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -6361,7 +6361,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchRoutesHavingServiceDisruptionsByTripDate } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRoutesHavingServiceDisruptionsByTripDate({\n  params: {\n    \"TripDate\": \"2025-12-21\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchRoutesHavingServiceDisruptionsByTripDate } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchRoutesHavingServiceDisruptionsByTripDate({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -6469,7 +6469,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchScheduleByTripDateAndRouteId({\n  params: {\n    \"TripDate\": \"2025-12-21\",\n    \"RouteID\": 9\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchScheduleByTripDateAndRouteId({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"RouteID\": 9\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -8554,7 +8554,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchScheduleByTripDateAndTerminalIds } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchScheduleByTripDateAndTerminalIds({\n  params: {\n    \"TripDate\": \"2025-12-21\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchScheduleByTripDateAndTerminalIds } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchScheduleByTripDateAndTerminalIds({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -11083,7 +11083,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminalMatesSchedule } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminalMatesSchedule({\n  params: {\n    \"TripDate\": \"2025-12-21\",\n    \"TerminalID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminalMatesSchedule } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminalMatesSchedule({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"TerminalID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -11133,7 +11133,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminals } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminals({\n  params: {\n    \"TripDate\": \"2025-12-21\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminals } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminals({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -11180,7 +11180,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminalsAndMates } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminalsAndMates({\n  params: {\n    \"TripDate\": \"2025-12-21\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminalsAndMates } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminalsAndMates({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -11229,7 +11229,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminalsAndMatesByRoute } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminalsAndMatesByRoute({\n  params: {\n    \"TripDate\": \"2025-12-21\",\n    \"RouteID\": 9\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminalsAndMatesByRoute } from 'ws-dottie/wsf-schedule/core';\n\nconst data = await fetchTerminalsAndMatesByRoute({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"RouteID\": 9\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [

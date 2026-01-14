@@ -440,7 +440,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2025-12-19\",\n    \"SearchTimeEnd\": \"2025-12-20\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';\n\nconst data = await searchAlerts({\n  params: {\n    \"StateRoute\": \"405\",\n    \"StartingMilepost\": 10,\n    \"EndingMilepost\": 20,\n    \"SearchTimeStart\": \"2026-01-13\",\n    \"SearchTimeEnd\": \"2026-01-14\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
