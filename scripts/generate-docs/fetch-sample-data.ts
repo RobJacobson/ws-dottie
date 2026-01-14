@@ -113,13 +113,13 @@ const saveSample = (
 const createPlaceholderFile = (
   endpoint: Endpoint<EndpointParams, EndpointResponse>
 ): void => {
-  const apiDir = join(docsRoot, endpoint.api);
+  const apiDir = join(docsRoot, endpoint.api.name);
   mkdirSync(apiDir, { recursive: true });
 
   const filePath = join(apiDir, `${endpoint.functionName}.json`);
   const placeholderData = {
     message: `This endpoint is skipped due to known server-side issues. See fetch-sample-data.ts SKIP_ENDPOINTS list for details.`,
-    endpoint: `${endpoint.api}.${endpoint.functionName}`,
+    endpoint: `${endpoint.api.name}.${endpoint.functionName}`,
     reason: "Server-side issues prevent reliable data fetching",
   };
   writeFileSync(filePath, JSON.stringify(placeholderData, null, 2), "utf-8");

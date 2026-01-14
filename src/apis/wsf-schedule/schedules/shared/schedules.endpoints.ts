@@ -1,6 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
-import { scheduleByTripDateAndTerminalIds } from "../scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
 import { scheduleByTripDateAndRouteIdMeta } from "../scheduleByTripDateAndRouteId";
+import { scheduleByTripDateAndTerminalIds } from "../scheduleByTripDateAndTerminalIds";
 
 /**
  * Endpoint group metadata for schedules endpoints
