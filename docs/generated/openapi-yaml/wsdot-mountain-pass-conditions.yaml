@@ -40,7 +40,7 @@ components:
         - MilePost
         - RoadName
       description: Roadway location information including route, milepost, coordinates, and direction.
-    FetchMountainPassConditionByIdOutput:
+    FetchMountainPassConditionsOutput:
       type: object
       properties:
         MountainPassId:
@@ -58,8 +58,8 @@ components:
           description: Longitude of the mountain pass in decimal degrees.
         DateUpdated:
           type: string
+          format: date
           description: UTC datetime when the pass condition data was last updated.
-          format: date-time
         TemperatureInFahrenheit:
           type: integer
           nullable: true
@@ -125,7 +125,17 @@ components:
         - RestrictionOne
         - RestrictionTwo
       description: Real-time mountain pass condition information including weather, road surface conditions, temperature, elevation, travel restrictions by direction, and advisory status.
-  parameters: {}
+    FetchMountainPassConditionByIdInputPassConditionIDParam:
+      type: integer
+      description: Numeric ID of the mountain pass.
+  parameters:
+    FetchMountainPassConditionByIdInputPassConditionIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchMountainPassConditionByIdInputPassConditionIDParam'
+      required: true
+      description: Numeric ID of the mountain pass.
+      name: PassConditionID
+      in: path
 paths:
   /getMountainPassConditionsAsJson:
     get:
@@ -152,111 +162,28 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    MountainPassId:
-                      type: integer
-                      description: Numeric ID of the mountain pass.
-                    MountainPassName:
-                      type: string
-                      nullable: true
-                      description: Display name of the mountain pass.
-                    Latitude:
-                      type: number
-                      description: Latitude of the mountain pass in decimal degrees.
-                    Longitude:
-                      type: number
-                      description: Longitude of the mountain pass in decimal degrees.
-                    DateUpdated:
-                      type: string
-                      description: UTC datetime when the pass condition data was last updated.
-                      format: date-time
-                    TemperatureInFahrenheit:
-                      type: integer
-                      nullable: true
-                      description: Current temperature at the mountain pass in degrees Fahrenheit.
-                    ElevationInFeet:
-                      type: integer
-                      nullable: true
-                      description: Elevation of the mountain pass above sea level in feet.
-                    WeatherCondition:
-                      type: string
-                      nullable: true
-                      description: Current weather conditions at the mountain pass.
-                    RoadCondition:
-                      type: string
-                      nullable: true
-                      description: Current roadway surface conditions at the mountain pass.
-                    TravelAdvisoryActive:
-                      type: boolean
-                      description: True if a travel advisory is currently active for the pass; otherwise false.
-                    RestrictionOne:
-                      type: object
-                      nullable: true
-                      properties:
-                        RestrictionText:
-                          type: string
-                          nullable: true
-                          description: Text description of travel restrictions for this direction, such as 'No restrictions', 'Closed for the season', or chain requirements.
-                        TravelDirection:
-                          type: string
-                          nullable: true
-                          description: Direction of travel for which this restriction applies, such as 'Eastbound', 'Westbound', 'Northbound', or 'Southbound'.
-                      required:
-                        - RestrictionText
-                        - TravelDirection
-                      description: Travel restriction information for the primary direction of the pass.
-                    RestrictionTwo:
-                      type: object
-                      nullable: true
-                      properties:
-                        RestrictionText:
-                          type: string
-                          nullable: true
-                          description: Text description of travel restrictions for this direction, such as 'No restrictions', 'Closed for the season', or chain requirements.
-                        TravelDirection:
-                          type: string
-                          nullable: true
-                          description: Direction of travel for which this restriction applies, such as 'Eastbound', 'Westbound', 'Northbound', or 'Southbound'.
-                      required:
-                        - RestrictionText
-                        - TravelDirection
-                      description: Travel restriction information for the secondary direction of the pass.
-                  required:
-                    - MountainPassId
-                    - MountainPassName
-                    - Latitude
-                    - Longitude
-                    - DateUpdated
-                    - TemperatureInFahrenheit
-                    - ElevationInFeet
-                    - WeatherCondition
-                    - RoadCondition
-                    - TravelAdvisoryActive
-                    - RestrictionOne
-                    - RestrictionTwo
-                  description: Real-time mountain pass condition information including weather, road surface conditions, temperature, elevation, travel restrictions by direction, and advisory status.
+                  $ref: '#/components/schemas/FetchMountainPassConditionsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 16 total)
                   value:
-                    - MountainPassId: 1
-                      MountainPassName: Blewett Pass US 97
+                    - DateUpdated: '2025-12-18T19:23:34.613Z'
+                      ElevationInFeet: 4102
                       Latitude: 47.335298205
                       Longitude: -120.581068216
-                      DateUpdated: '2025-11-15T14:49:36.827Z'
-                      TemperatureInFahrenheit: 43
-                      ElevationInFeet: 4102
-                      WeatherCondition: Partly cloudy.
-                      RoadCondition: Bare and wet.
-                      TravelAdvisoryActive: true
+                      MountainPassId: 1
+                      MountainPassName: Blewett Pass US 97
                       RestrictionOne:
-                        RestrictionText: No restrictions
+                        RestrictionText: Traction Tires Required, Chains required on Vehicles over 10,000 gross vehicle weight.  Oversize Vehicles Prohibited.
                         TravelDirection: Northbound
                       RestrictionTwo:
-                        RestrictionText: No restrictions
+                        RestrictionText: Traction Tires Required, Chains required on Vehicles over 10,000 gross vehicle weight.  Oversize Vehicles Prohibited.
                         TravelDirection: Southbound
+                      RoadCondition: Compact snow and ice
+                      TemperatureInFahrenheit: 29
+                      TravelAdvisoryActive: true
+                      WeatherCondition: Snow
   /getMountainPassConditionAsJon?PassConditionID={PassConditionID}:
     get:
       summary: Get current conditions for a specific mountain pass by ID.
@@ -277,34 +204,36 @@ paths:
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchMountainPassConditionByIdInputPassConditionIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
+                $ref: '#/components/schemas/FetchMountainPassConditionsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    MountainPassId: 12
-                    MountainPassName: White Pass  US 12
+                    DateUpdated: '2025-12-18T23:56:37.967Z'
+                    ElevationInFeet: 4500
                     Latitude: 46.638333
                     Longitude: -121.39
-                    DateUpdated: '2025-11-15T16:32:50.010Z'
-                    TemperatureInFahrenheit: 44
-                    ElevationInFeet: 4500
-                    WeatherCondition: Raining
-                    RoadCondition: Bare and wet
-                    TravelAdvisoryActive: true
+                    MountainPassId: 12
+                    MountainPassName: White Pass  US 12
                     RestrictionOne:
-                      RestrictionText: No restrictions
+                      RestrictionText: Traction Tires Advised, Oversize Vehicles Prohibited.
                       TravelDirection: Eastbound
                     RestrictionTwo:
-                      RestrictionText: No restrictions
+                      RestrictionText: Traction Tires Advised, Oversize Vehicles Prohibited.
                       TravelDirection: Westbound
+                    RoadCondition: Bare and wet with snow and slush in places
+                    TemperatureInFahrenheit: null
+                    TravelAdvisoryActive: true
+                    WeatherCondition: Raining
 tags:
   - name: pass-conditions
     description: Real-time mountain pass conditions including weather, road status, and travel restrictions.

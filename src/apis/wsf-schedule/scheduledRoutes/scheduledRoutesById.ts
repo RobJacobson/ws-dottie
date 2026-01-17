@@ -20,6 +20,30 @@ export const scheduledRoutesByIdMeta = {
   outputSchema: schedRouteSchema.array(),
   sampleParams: { ScheduleID: 193 },
   endpointDescription: "List scheduled routes for a specific schedule season.",
+  toolDescription: {
+    purpose:
+      "List scheduled routes for a specific schedule season with route details and contingency information.",
+    useWhen: [
+      "getting routes for a specific season",
+      "season-specific route planning",
+      "checking which routes are active in a particular schedule",
+    ],
+    avoidWhen: [
+      "you need routes across all seasons (prefer fetchScheduledRoutes)",
+      "you don't know the ScheduleID (prefer fetchActiveSeasons first)",
+    ],
+    inputs: ["ScheduleID: required, from fetchActiveSeasons → ScheduleID"],
+    returns: "array — scheduled routes for the specified season",
+    outputHighlights: [
+      "IDs: ScheduleID, SchedRouteID, RouteID, RegionID",
+      "Route info: RouteAbbrev, Description, SeasonalRouteNotes (HTML)",
+      "Contingency: ContingencyOnly flag, ContingencyAdj array with DateFrom/Thru, EventID, AdjType (1=Addition, 2=Cancellation)",
+      "Service status: ServiceDisruptions array with BulletinID, BulletinFlag, PublishDate, DisruptionDescription",
+    ],
+    chaining: [
+      "fetchActiveSeasons → extract ScheduleID → call fetchScheduledRoutesById with { ScheduleID: ... }",
+    ],
+  },
 } satisfies EndpointMeta<ScheduledRoutesByIdInput, SchedRoute[]>;
 
 /**

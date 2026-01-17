@@ -215,7 +215,7 @@
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 1462 total)",
+                    "description": "Example of a successful response from the API (showing first item of 1471 total)",
                     "value": [
                       {
                         "FlowDataID": 2482,
@@ -230,7 +230,7 @@
                         },
                         "Region": "Northwest",
                         "StationName": "002es00068",
-                        "Time": "2025-11-15T17:43:22.000Z"
+                        "Time": "2025-12-19T01:37:22.000Z"
                       }
                     ]
                   }
@@ -284,7 +284,7 @@
                       },
                       "Region": "Northwest",
                       "StationName": "002es00068",
-                      "Time": "2025-11-15T17:43:22.000Z"
+                      "Time": "2025-12-19T01:37:22.000Z"
                     }
                   }
                 }

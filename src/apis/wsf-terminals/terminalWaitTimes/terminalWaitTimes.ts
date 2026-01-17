@@ -20,6 +20,32 @@ export const terminalWaitTimesMeta = {
   outputSchema: terminalWaitTimeSchema.array(),
   sampleParams: {},
   endpointDescription: "List wait time information for all terminals.",
+  toolDescription: {
+    purpose:
+      "List current passenger and vehicle wait time guidance for all terminals in the WSF system.",
+    useWhen: [
+      "displaying wait time information across all terminals",
+      "providing arrival time recommendations for passengers",
+      "getting comprehensive wait time overview for planning purposes",
+    ],
+    avoidWhen: [
+      "you only need wait times for one terminal (prefer fetchTerminalWaitTimesByTerminalId)",
+      "you're not interested in arrival timing guidance",
+    ],
+    inputs: [],
+    returns: "array — one item per terminal",
+    outputHighlights: [
+      "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",
+      "WaitTimes array: one or more wait time entries per terminal",
+      "Route association: RouteID, RouteName (may be null for general terminal advice)",
+      "Wait guidance: WaitTimeNotes (detailed arrival recommendations for vehicles and passengers)",
+      "IVR version: WaitTimeIVRNotes (simplified notes for phone systems)",
+      "Last updated: WaitTimeLastUpdated timestamp for freshness indication",
+    ],
+    chaining: [
+      "fetchTerminalBasics → extract TerminalID → call fetchTerminalWaitTimesByTerminalId (for single terminal wait times)",
+    ],
+  },
 } satisfies EndpointMeta<TerminalWaitTimesInput, TerminalWaitTime[]>;
 
 /**

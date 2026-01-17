@@ -27,6 +27,38 @@ export const routeDetailsByTripDateAndTerminalsMeta = {
   },
   endpointDescription:
     "List detailed route information for terminal pair on date.",
+  toolDescription: {
+    purpose:
+      "Get detailed route information for routes connecting specific departing and arriving terminals on a trip date.",
+    useWhen: [
+      "planning travel between known terminals",
+      "checking route options for a specific terminal pair",
+      "getting alerts and notes for terminal-to-terminal routes",
+    ],
+    avoidWhen: [
+      "you need routes for all terminals (prefer fetchRouteDetailsByTripDate)",
+      "you don't know terminal IDs (prefer fetchTerminalsAndMates first)",
+    ],
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+    ],
+    returns: "array — routes connecting the terminal pair (typically 1 item)",
+    outputHighlights: [
+      "IDs: RouteID, RegionID, VesselWatchID",
+      "Names: RouteAbbrev, Description",
+      "Route characteristics: ReservationFlag, InternationalFlag, PassengerOnlyFlag",
+      "Timing: CrossingTime (estimated minutes)",
+      "Accessibility: AdaNotes (HTML accessibility information)",
+      "Information: GeneralRouteNotes, SeasonalRouteNotes (HTML-formatted route info)",
+      "Alerts: Alerts array with BulletinID, AlertDescription, AlertFullText (HTML), PublishDate",
+      "Large text fields: AdaNotes, GeneralRouteNotes, SeasonalRouteNotes, AlertFullText may be lengthy HTML",
+    ],
+    chaining: [
+      "fetchTerminalsAndMates → extract DepartingTerminalID, ArrivingTerminalID → call fetchRouteDetailsByTripDateAndTerminals with { DepartingTerminalID: ..., ArrivingTerminalID: ..., TripDate: ... }",
+    ],
+  },
 } satisfies EndpointMeta<
   RouteDetailsByTripDateAndTerminalsInput,
   RouteDetail[]

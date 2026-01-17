@@ -1,6 +1,6 @@
 # API Endpoints Overview
 
-This table reflects all current endpoints defined under `src/apis` as of 2025-01-28.
+This table reflects all current endpoints defined under `src/apis` as of 2025-12-13.
 
 ## Quick Reference by Category
 
@@ -104,7 +104,7 @@ This table reflects all current endpoints defined under `src/apis` as of 2025-01
 | wsf-schedule | schedule-valid-date-range | fetchScheduleValidDateRange | useScheduleValidDateRange | /validdaterange | scheduleValidDateRangeInputSchema | validDateRangeSchema | Get valid schedule date range |
 | wsf-schedule | scheduled-routes | fetchScheduledRoutes | useScheduledRoutes | /schedroutes | scheduledRoutesInputSchema | z.array(schedRouteSchema) | Get all scheduled routes |
 | wsf-schedule | scheduled-routes | fetchScheduledRoutesById | useScheduledRoutesById | /schedroutes/{ScheduleID} | scheduledRoutesByIdInputSchema | z.array(schedRouteSchema) | Get scheduled routes by ID |
-| wsf-schedule | schedules | fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds | useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds | /schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} | scheduleByTripDateAndTerminals | scheduleSchema | Get schedule for a date and terminals |
+| wsf-schedule | schedules | fetchScheduleByTripDateAndTerminalIds | useScheduleByTripDateAndTerminalIds | /schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} | scheduleByTripDateAndTerminals | scheduleSchema | Get schedule for a date and terminals |
 | wsf-schedule | schedules | fetchScheduleByTripDateAndRouteId | useScheduleByTripDateAndRouteId | /schedule/{TripDate}/{RouteID} | scheduleByTripDateAndRouteIdInputSchema | scheduleSchema | Get schedule for a date and route |
 | wsf-schedule | service-disruptions | fetchRoutesHavingServiceDisruptionsByTripDate | useRoutesHavingServiceDisruptionsByTripDate | /routeshavingservicedisruptions/{TripDate} | routesHavingServiceDisruptionsByTripDateInputSchema | z.array(serviceDisruptionSchema) | Get routes with service disruptions |
 | wsf-schedule | time-adjustments | fetchTimeAdjustments | useTimeAdjustments | /timeadj | timeAdjustmentsInputSchema | z.array(timeAdjustmentSchema) | Get all time adjustments |

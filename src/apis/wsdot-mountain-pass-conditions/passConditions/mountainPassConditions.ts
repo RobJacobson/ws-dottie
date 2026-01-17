@@ -21,6 +21,34 @@ export const mountainPassConditionsMeta = {
   sampleParams: {},
   endpointDescription:
     "List current conditions for all monitored mountain passes.",
+  toolDescription: {
+    purpose:
+      "List current weather, road conditions, and travel restrictions for all monitored mountain passes in Washington State.",
+    useWhen: [
+      "planning winter travel across mountain passes",
+      "monitoring statewide pass conditions and restrictions",
+      "building comprehensive pass condition dashboards",
+      "checking multiple passes for route planning",
+    ],
+    avoidWhen: [
+      "you only need conditions for one specific pass (prefer fetchMountainPassConditionById)",
+    ],
+    inputs: [],
+    returns: "array — one item per monitored mountain pass",
+    outputHighlights: [
+      "IDs: MountainPassId (unique numeric identifier)",
+      "Location: MountainPassName, Latitude/Longitude coordinates, ElevationInFeet",
+      "Weather: WeatherCondition (current conditions), TemperatureInFahrenheit",
+      "Road: RoadCondition (surface status)",
+      "Restrictions: RestrictionOne/RestrictionTwo (direction-specific travel restrictions with text)",
+      "Status: TravelAdvisoryActive (true = advisory in effect), DateUpdated (last refresh)",
+      "Directional data: separate restrictions for each travel direction",
+      "Small dataset: ~15 monitored passes with comprehensive condition data",
+    ],
+    chaining: [
+      "fetchMountainPassConditions → extract MountainPassId → call fetchMountainPassConditionById with { PassConditionID: ... }",
+    ],
+  },
 } satisfies EndpointMeta<MountainPassConditionsInput, PassCondition[]>;
 
 /**

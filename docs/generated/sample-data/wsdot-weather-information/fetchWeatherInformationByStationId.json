@@ -1,17 +1,17 @@
 {
-  "BarometricPressure": 957.5,
+  "BarometricPressure": 940.3,
   "Latitude": 47.4748,
   "Longitude": -122.2704,
   "PrecipitationInInches": null,
-  "ReadingTime": "2025-11-15T17:30:00.000Z",
+  "ReadingTime": "2025-12-19T01:30:00.000Z",
   "RelativeHumidity": 99,
   "SkyCoverage": "N/A",
   "StationID": 1909,
   "StationName": "S 144th St on SB I-5 at mp 155.32",
-  "TemperatureInFahrenheit": 56.84,
+  "TemperatureInFahrenheit": 51.8,
   "Visibility": 1,
-  "WindDirection": 200,
-  "WindDirectionCardinal": "SSW",
+  "WindDirection": 175,
+  "WindDirectionCardinal": "S",
   "WindGustSpeedInMPH": 0,
   "WindSpeedInMPH": 0
 }

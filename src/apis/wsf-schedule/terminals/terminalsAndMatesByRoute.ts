@@ -22,6 +22,31 @@ export const terminalsAndMatesByRouteMeta = {
   sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
   endpointDescription:
     "List valid terminal pairs for a specific route and trip date.",
+  toolDescription: {
+    purpose:
+      "List all valid departing-arriving terminal combinations available on a specific route for a trip date.",
+    useWhen: [
+      "getting terminal options for a specific route",
+      "planning travel along a particular ferry route",
+      "validating route-specific terminal availability",
+    ],
+    avoidWhen: [
+      "you need terminals for all routes (prefer fetchTerminalsAndMates)",
+      "you don't know the RouteID (prefer fetchRoutesByTripDate first)",
+    ],
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "RouteID: from fetchRoutesByTripDate → RouteID",
+    ],
+    returns: "array — valid terminal pairs for the specified route",
+    outputHighlights: [
+      "Departing terminal: DepartingTerminalID, DepartingDescription",
+      "Arriving terminal: ArrivingTerminalID, ArrivingDescription",
+    ],
+    chaining: [
+      "fetchRoutesByTripDate → extract RouteID → call fetchTerminalsAndMatesByRoute with { RouteID: ..., TripDate: ... }",
+    ],
+  },
 } satisfies EndpointMeta<TerminalsAndMatesByRouteInput, TerminalMate[]>;
 
 /**

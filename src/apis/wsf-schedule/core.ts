@@ -54,9 +54,9 @@ export { fetchScheduledRoutes } from "./scheduledRoutes/scheduledRoutes";
 export { fetchScheduledRoutesById } from "./scheduledRoutes/scheduledRoutesById";
 export * from "./scheduledRoutes/shared/scheduledRoutes.input";
 export * from "./scheduledRoutes/shared/scheduledRoutes.output";
-export { fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds } from "./schedules/scheduleByTripDateAndDepartingTerminalIdAndTerminalIds";
 // Schedules
 export { fetchScheduleByTripDateAndRouteId } from "./schedules/scheduleByTripDateAndRouteId";
+export { fetchScheduleByTripDateAndTerminalIds } from "./schedules/scheduleByTripDateAndTerminalIds";
 export * from "./schedules/shared/schedules.input";
 export * from "./schedules/shared/schedules.output";
 // Schedule Today

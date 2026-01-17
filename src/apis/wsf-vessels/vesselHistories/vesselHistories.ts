@@ -20,6 +20,28 @@ export const vesselHistoriesMeta = {
   outputSchema: vesselHistorySchema.array(),
   sampleParams: {},
   endpointDescription: "List historical sailing records for all vessels.",
+  toolDescription: {
+    purpose:
+      "List basic vessel information for historical sailing records (may contain mostly null data).",
+    useWhen: [
+      "getting a basic list of vessels with historical data available",
+      "discovering which vessels have voyage history",
+    ],
+    avoidWhen: [
+      "you need detailed voyage records (prefer fetchVesselHistoriesByVesselAndDates)",
+    ],
+    inputs: [],
+    returns: "array — one item per vessel with basic historical info",
+    outputHighlights: [
+      "Keys: VesselId (note casing), Vessel (name)",
+      "Terminals: Departing, Arriving (may be null)",
+      "Time: ScheduledDepart, ActualDepart, EstArrival, Date (may be null UTC datetimes)",
+      "Note: this endpoint often returns mostly null values",
+    ],
+    chaining: [
+      "fetchVesselHistories → extract Vessel → call fetchVesselHistoriesByVesselAndDates",
+    ],
+  },
 } satisfies EndpointMeta<VesselHistoriesInput, VesselHistory[]>;
 
 /**

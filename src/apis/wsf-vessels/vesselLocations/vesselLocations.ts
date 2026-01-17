@@ -21,6 +21,31 @@ export const vesselLocationsMeta = {
   sampleParams: {},
   endpointDescription:
     "List current locations and status for all active vessels.",
+  toolDescription: {
+    purpose:
+      "List real-time vessel locations and ETA/terminal assignment data.",
+    useWhen: [
+      "map displays",
+      "live operational dashboards",
+      "tracking all vessels simultaneously",
+    ],
+    avoidWhen: [
+      "you only need one vessel (prefer fetchVesselLocationsByVesselId)",
+    ],
+    inputs: [],
+    returns: "array — one item per vessel location report",
+    outputHighlights: [
+      "IDs: VesselID, DepartingTerminalID, ArrivingTerminalID",
+      "Position: Latitude, Longitude, Speed (knots), Heading (0–359)",
+      "Ops: InService, AtDock",
+      "Time: TimeStamp, LeftDock, Eta, ScheduledDeparture",
+      "Notes: VesselWatch* fields describe VesselWatch system status/messages",
+    ],
+    chaining: [
+      "fetchVesselLocations → extract VesselID → call fetchVesselLocationsByVesselId",
+      "fetchVesselLocations → extract VesselID → call fetchVesselBasics for names",
+    ],
+  },
 } satisfies EndpointMeta<VesselLocationsInput, VesselLocation[]>;
 
 /**

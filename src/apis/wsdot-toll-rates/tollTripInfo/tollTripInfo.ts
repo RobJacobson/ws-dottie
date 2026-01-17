@@ -20,6 +20,27 @@ export const tollTripInfoMeta = {
   outputSchema: tollTripInfoSchema.array(),
   sampleParams: {},
   endpointDescription: "List trip information for all toll trips statewide.",
+  toolDescription: {
+    purpose: "List trip information for all toll trips statewide.",
+    useWhen: [
+      "mapping toll routes and lanes",
+      "understanding toll trip geography",
+      "route planning with location data",
+    ],
+    avoidWhen: [
+      "you only need pricing information (prefer fetchTollRates)",
+      "you need current toll amounts (prefer fetchTollRates)",
+    ],
+    inputs: [],
+    returns: "array — one item per toll trip route",
+    outputHighlights: [
+      "Locations: StartLocationName/EndLocationName with milepost markers",
+      "Coordinates: Start/End Latitude/Longitude for precise mapping",
+      "Route details: TravelDirection, TripName (unique route identifier)",
+      "Geometry: Encoded route geometry data for visualization (may be null)",
+      "Metadata: ModifiedDate showing when route info was last updated",
+    ],
+  },
 } satisfies EndpointMeta<TollTripInfoInput, TollTripInfo[]>;
 
 /**

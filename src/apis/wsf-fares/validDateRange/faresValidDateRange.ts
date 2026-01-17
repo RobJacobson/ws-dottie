@@ -20,6 +20,25 @@ export const faresValidDateRangeMeta = {
   outputSchema: validDateRangeSchema,
   sampleParams: {},
   endpointDescription: "Get the validity date range for published fares data.",
+  toolDescription: {
+    purpose: "Get date range when fares data is published and available.",
+    useWhen: [
+      "validating trip dates before fare queries",
+      "determining available booking periods",
+      "checking fare data coverage for specific dates",
+    ],
+    inputs: [],
+    returns: "object — fare data validity period",
+    outputHighlights: [
+      "DateFrom: earliest UTC datetime when fares are available",
+      "DateThru: latest UTC datetime when fares are available",
+      "both dates in ISO 8601 format",
+      "use to validate TripDate parameters in other endpoints",
+    ],
+    chaining: [
+      "fetchFaresValidDateRange → validate TripDate → call fare endpoints with valid dates",
+    ],
+  },
 } satisfies EndpointMeta<FaresValidDateRangeInput, ValidDateRange>;
 
 /**

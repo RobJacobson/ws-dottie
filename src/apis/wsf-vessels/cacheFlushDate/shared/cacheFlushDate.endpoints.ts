@@ -18,6 +18,22 @@ export const cacheFlushDateVesselsMeta = {
   outputSchema: cacheFlushDateOutputSchema,
   sampleParams: {},
   endpointDescription: "Get cache flush timestamp for static wsf-vessels data.",
+  toolDescription: {
+    purpose: "Get the cache invalidation timestamp for static vessel data.",
+    useWhen: [
+      "detecting when static vessel data has been updated",
+      "implementing cache invalidation strategies",
+      "polling for data freshness",
+    ],
+    inputs: [],
+    returns:
+      "string — UTC timestamp indicating when static vessel data was last updated",
+    outputHighlights: [
+      "UTC datetime string in ISO format (e.g., '2025-11-14T06:28:07.687Z')",
+      "May be absent if no update has occurred",
+      "Use this to determine when to refresh cached vessel information",
+    ],
+  },
 } satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
 
 /**

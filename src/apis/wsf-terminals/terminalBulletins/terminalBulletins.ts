@@ -20,6 +20,31 @@ export const terminalBulletinsMeta = {
   outputSchema: terminalBulletinSchema.array(),
   sampleParams: {},
   endpointDescription: "List bulletins and alerts for all terminals.",
+  toolDescription: {
+    purpose:
+      "List alerts, announcements, and service bulletins for all terminals in the WSF system.",
+    useWhen: [
+      "checking for terminal-specific alerts and announcements",
+      "building notification systems for terminal updates",
+      "getting comprehensive bulletin overview across all terminals",
+    ],
+    avoidWhen: [
+      "you only need bulletins for one terminal (prefer fetchTerminalBulletinsByTerminalId)",
+      "you're not interested in bulletin content (prefer lighter endpoints)",
+    ],
+    inputs: [],
+    returns: "array — one item per terminal",
+    outputHighlights: [
+      "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",
+      "Bulletins array: contains zero or more bulletin objects per terminal",
+      "Bulletin content: BulletinTitle, BulletinText (HTML-formatted, can be lengthy), BulletinSortSeq",
+      "Bulletin metadata: BulletinLastUpdated (timestamp), BulletinLastUpdatedSortable (legacy format)",
+      "Large text: BulletinText contains HTML content that can be substantial",
+    ],
+    chaining: [
+      "fetchTerminalBasics → extract TerminalID → call fetchTerminalBulletinsByTerminalId (for single terminal bulletins)",
+    ],
+  },
 } satisfies EndpointMeta<TerminalBulletinsInput, TerminalBulletin[]>;
 
 /**

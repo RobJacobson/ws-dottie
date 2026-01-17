@@ -16,6 +16,23 @@ export const cacheFlushDateFaresMeta = {
   outputSchema: cacheFlushDateOutputSchema,
   sampleParams: {},
   endpointDescription: "Get cache flush timestamp for static fares data.",
+  toolDescription: {
+    purpose: "Get timestamp when WSF fares static data was last updated.",
+    useWhen: [
+      "determining when to refresh cached fare information",
+      "checking if fare data has changed since last fetch",
+      "coordinating cache invalidation across fare endpoints",
+    ],
+    inputs: [],
+    returns: "string — UTC timestamp in ISO format",
+    outputHighlights: [
+      "ISO 8601 datetime string indicating last fares data update",
+      "useful for cache invalidation and data freshness checks",
+    ],
+    chaining: [
+      "fetchCacheFlushDateFares → compare with cached timestamp → invalidate cache if newer",
+    ],
+  },
 } satisfies EndpointMeta<CacheFlushDateInput, CacheFlushDateOutput>;
 
 /**

@@ -18,6 +18,26 @@ export const tollRatesMeta = {
   sampleParams: {},
   endpointDescription:
     "List current toll rates for all HOV toll lanes statewide.",
+  toolDescription: {
+    purpose: "List current toll rates for all HOV toll lanes statewide.",
+    useWhen: [
+      "route planning with toll costs",
+      "comparing toll rates across different lanes",
+      "toll pricing analysis",
+    ],
+    avoidWhen: [
+      "you only need toll rates for specific trips (prefer fetchTollTripRates)",
+    ],
+    inputs: [],
+    returns: "array — one item per toll lane segment",
+    outputHighlights: [
+      "Locations: StartLocationName/EndLocationName with coordinates and mileposts",
+      "Toll pricing: CurrentToll (cents), CurrentMessage (sign display text)",
+      "Route info: StateRoute (e.g., '099', '405'), TravelDirection, TripName",
+      "Timing: TimeUpdated (UTC timestamp for last rate change)",
+      "Coordinates: Start/End Latitude/Longitude for mapping",
+    ],
+  },
 } satisfies EndpointMeta<TollRatesInput, TollRate[]>;
 
 /**

@@ -13,7 +13,7 @@ export { useVesselAccommodationsByVesselId } from "./vesselAccommodations/vessel
 export { useVesselBasics } from "./vesselBasics/vesselBasics";
 export { useVesselBasicsByVesselId } from "./vesselBasics/vesselBasicsByVesselId";
 export { useVesselHistories } from "./vesselHistories/vesselHistories";
-export { useVesselHistoriesByVesselNameAndDateRange } from "./vesselHistories/vesselHistoriesByVesselNameAndDateRange";
+export { useVesselHistoriesByVesselAndDates } from "./vesselHistories/vesselHistoriesByVesselAndDates";
 export { useVesselLocations } from "./vesselLocations/vesselLocations";
 export { useVesselLocationsByVesselId } from "./vesselLocations/vesselLocationsByVesselId";
 export { useVesselStats } from "./vesselStats/vesselStats";

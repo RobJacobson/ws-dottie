@@ -21,6 +21,32 @@ export const bridgeClearancesByRouteMeta = {
   sampleParams: { Route: "005" },
   endpointDescription:
     "Get vertical clearance data for bridges on a specific state route.",
+  toolDescription: {
+    purpose:
+      "Get vertical clearance data for bridges on a specific state route.",
+    useWhen: [
+      "route planning with height restrictions",
+      "bridge clearance verification for specific highways",
+      "targeted bridge data analysis by route",
+    ],
+    avoidWhen: [
+      "you need bridges across all routes (prefer fetchBridgeClearances)",
+    ],
+    inputs: [
+      "Route: three-digit route identifier, e.g., '005' for I-5, '167' for SR-167",
+    ],
+    returns: "array — one item per bridge on the specified route",
+    outputHighlights: [
+      "IDs: BridgeNumber (route/structure), StateStructureId, CrossingLocationId",
+      "Location: Latitude, Longitude, SRMP (milepost), StateRouteID",
+      "Clearance: VerticalClearanceMaximumInches/MinimumInches (in inches), VerticalClearanceMaximumFeetInch/MinimumFeetInch (formatted)",
+      "Metadata: CrossingDescription, APILastUpdate, RouteDate",
+      "Route-filtered: subset of bridges specific to requested route",
+    ],
+    chaining: [
+      "fetchBridgeClearances → extract StateRouteID → call fetchBridgeClearancesByRoute (to filter to specific route)",
+    ],
+  },
 } satisfies EndpointMeta<BridgeClearancesByRouteInput, BridgeClearance[]>;
 
 /**

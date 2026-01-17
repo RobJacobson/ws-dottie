@@ -20,6 +20,34 @@ export const weatherInformationMeta = {
   outputSchema: weatherInfoSchema.array(),
   sampleParams: {},
   endpointDescription: "List current weather information for all stations.",
+  toolDescription: {
+    purpose:
+      "List current atmospheric conditions from all WSDOT Road Weather Information System stations statewide.",
+    useWhen: [
+      "building statewide weather maps",
+      "monitoring road conditions across regions",
+      "needing comprehensive weather data for analysis",
+    ],
+    avoidWhen: [
+      "you only need data for one station (prefer fetchWeatherInformationByStationId)",
+      "you need weather for specific stations (prefer fetchCurrentWeatherForStations)",
+    ],
+    inputs: [],
+    returns: "array — one item per weather station",
+    outputHighlights: [
+      "StationID and StationName for identification",
+      "Latitude/Longitude coordinates for mapping",
+      "TemperatureInFahrenheit, RelativeHumidity, and PrecipitationInInches for conditions",
+      "WindSpeedInMPH, WindDirection, and WindGustSpeedInMPH for wind data",
+      "BarometricPressure and Visibility for atmospheric conditions",
+      "ReadingTime as UTC timestamp when measurements were taken",
+      "Some fields may be null when sensors are unavailable",
+    ],
+    chaining: [
+      "fetchWeatherStations → extract StationID → call fetchWeatherInformationByStationId with { StationID: ... }",
+      "fetchWeatherStations → extract multiple StationIDs → call fetchCurrentWeatherForStations with { StationList: ... }",
+    ],
+  },
 } satisfies EndpointMeta<WeatherInformationInput, WeatherInfo[]>;
 
 /**

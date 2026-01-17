@@ -20,6 +20,27 @@ export const travelTimesMeta = {
   outputSchema: travelTimeRouteSchema.array(),
   sampleParams: {},
   endpointDescription: "List travel time data for all available routes.",
+  toolDescription: {
+    purpose: "List travel time data for all available routes.",
+    useWhen: [
+      "route planning with current travel times",
+      "comparing travel times across multiple routes",
+      "finding available travel time routes for mapping",
+    ],
+    avoidWhen: ["you only need one route's data (prefer fetchTravelTimeById)"],
+    inputs: [],
+    returns: "array — one item per travel time route",
+    outputHighlights: [
+      "Route identity: TravelTimeID, Name (display name), Description",
+      "Travel times: CurrentTime (current minutes), AverageTime (historical average minutes)",
+      "Distance: route length in miles from start to end",
+      "Locations: StartPoint and EndPoint with coordinates, road names, mileposts",
+      "Timing: TimeUpdated (UTC timestamp of last update)",
+    ],
+    chaining: [
+      "fetchTravelTimes → extract TravelTimeID → call fetchTravelTimeById with { TravelTimeID: ... }",
+    ],
+  },
 } satisfies EndpointMeta<TravelTimesInput, TravelTimeRoute[]>;
 
 /**

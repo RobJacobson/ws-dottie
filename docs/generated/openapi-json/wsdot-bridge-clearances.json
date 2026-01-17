@@ -212,10 +212,10 @@
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 2992 total)",
+                    "description": "Example of a successful response from the API (showing first item of 2990 total)",
                     "value": [
                       {
-                        "APILastUpdate": "2025-11-14T11:30:02.387Z",
+                        "APILastUpdate": "2025-12-18T11:30:01.980Z",
                         "BridgeNumber": "519/101FTP",
                         "ControlEntityGuid": "e589eb93-c01b-4498-8243-89f48bf5c43d",
                         "CrossingDescription": "SEATTLE SLIP 1 PASS. OHL",
@@ -279,7 +279,7 @@
                     "description": "Example of a successful response from the API (showing first item of 972 total)",
                     "value": [
                       {
-                        "APILastUpdate": "2025-11-14T11:30:02.387Z",
+                        "APILastUpdate": "2025-12-18T11:30:01.980Z",
                         "BridgeNumber": "5/629A",
                         "ControlEntityGuid": "88ba5341-b39c-43c9-95a5-bc9584b2d798",
                         "CrossingDescription": "I-5 S-S RAMP UNDER BROADWAY",

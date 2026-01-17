@@ -21,6 +21,31 @@ export const terminalBulletinsByTerminalIdMeta = {
   sampleParams: { TerminalID: 3 },
   endpointDescription:
     "Get bulletins and alerts for a specific terminal by ID.",
+  toolDescription: {
+    purpose:
+      "Get alerts, announcements, and service bulletins for a single terminal by its TerminalID.",
+    useWhen: [
+      "checking for alerts at a specific terminal you're interested in",
+      "enriching terminal details with current bulletins",
+      "minimizing payload when you only need one terminal's bulletins",
+    ],
+    avoidWhen: [
+      "you don't know the TerminalID (prefer fetchTerminalBasics to discover IDs)",
+      "you need bulletins for multiple terminals (prefer fetchTerminalBulletins)",
+    ],
+    inputs: ["TerminalID: from fetchTerminalBasics → TerminalID"],
+    returns: "object — one terminal with its bulletins",
+    outputHighlights: [
+      "Terminal info: TerminalID, TerminalName, TerminalAbbrev (same as terminalBasics)",
+      "Bulletins array: zero or more bulletin objects for this terminal",
+      "Bulletin content: BulletinTitle, BulletinText (HTML-formatted), BulletinSortSeq",
+      "Bulletin metadata: BulletinLastUpdated (timestamp), BulletinLastUpdatedSortable",
+      "Large text: BulletinText contains HTML content that can be substantial",
+    ],
+    chaining: [
+      "fetchTerminalBasics → extract TerminalID → call fetchTerminalBulletinsByTerminalId",
+    ],
+  },
 } satisfies EndpointMeta<TerminalBulletinsByIdInput, TerminalBulletin>;
 
 /**

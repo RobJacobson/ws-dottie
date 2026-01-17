@@ -589,7 +589,7 @@
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 343 total)",
+                    "description": "Example of a successful response from the API (showing first item of 329 total)",
                     "value": [
                       {
                         "BLMaxAxle": 20000,
@@ -672,7 +672,7 @@
                 "examples": {
                   "sampleResponse": {
                     "summary": "Sample response",
-                    "description": "Example of a successful response from the API (showing first item of 343 total)",
+                    "description": "Example of a successful response from the API (showing first item of 329 total)",
                     "value": [
                       {
                         "BLMaxAxle": 20000,

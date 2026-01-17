@@ -20,6 +20,31 @@ export const tollTripRatesMeta = {
   outputSchema: tollTripsRatesSchema,
   sampleParams: {},
   endpointDescription: "Get current toll rates for all trips.",
+  toolDescription: {
+    purpose: "Get current toll rates for all trips.",
+    useWhen: [
+      "comprehensive toll pricing across all routes",
+      "version tracking for toll data changes",
+      "bulk toll rate analysis",
+    ],
+    avoidWhen: [
+      "you only need HOV lane tolls (prefer fetchTollRates)",
+      "you need historical rates (prefer fetchTripRatesByDate)",
+    ],
+    inputs: [],
+    returns:
+      "object — container with version, update time, and array of all trip rates",
+    outputHighlights: [
+      "Container: LastUpdated (UTC timestamp), Version (data version number)",
+      "Trips array: each item has TripName, Toll (dollars), Message, MessageUpdateTime",
+      "Rate details: Message (display text like '$4.95' or 'FREE'), MessageUpdateTime",
+      "Trip identification: TripName (unique route identifier)",
+      "Null handling: Trips array may be null when rates unavailable",
+    ],
+    chaining: [
+      "fetchTollTripRates → extract Version → call fetchTripRatesByVersion with { Version: ... }",
+    ],
+  },
 } satisfies EndpointMeta<TollTripRatesInput, TollTripsRates>;
 
 /**

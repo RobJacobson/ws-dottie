@@ -27,6 +27,34 @@ export const terminalComboFaresMeta = {
   },
   endpointDescription:
     "Get fare collection description for a specific terminal combination and trip date.",
+  toolDescription: {
+    purpose:
+      "Get fare collection procedures for a specific terminal pair and trip date.",
+    useWhen: [
+      "determining where and how fares are collected for a route",
+      "building fare payment instructions for users",
+      "understanding fare collection logistics for trip planning",
+    ],
+    avoidWhen: [
+      "you need all terminal combinations (prefer fetchTerminalComboFaresVerbose)",
+    ],
+    inputs: [
+      "TripDate: YYYY-MM-DD format",
+      "DepartingTerminalID: from fetchTerminalsAndMates → TerminalID",
+      "ArrivingTerminalID: from fetchTerminalsAndMates → TerminalID",
+    ],
+    returns: "object — fare collection information for one terminal pair",
+    outputHighlights: [
+      "DepartingDescription: name of departure terminal",
+      "ArrivingDescription: name of arrival terminal",
+      "CollectionDescription: detailed text about fare collection procedures",
+      "describes which terminals collect fares and payment requirements",
+    ],
+    chaining: [
+      "fetchTerminalMatesFares → extract ArrivingTerminalID → call fetchTerminalComboFares",
+      "fetchTerminalComboFares → display collection procedures to user",
+    ],
+  },
 } satisfies EndpointMeta<TerminalComboInput, TerminalComboFares>;
 
 /**

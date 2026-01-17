@@ -20,6 +20,23 @@ export const tollTripVersionMeta = {
   outputSchema: tollTripVersionSchema,
   sampleParams: {},
   endpointDescription: "Get current version and timestamp for toll trip data.",
+  toolDescription: {
+    purpose: "Get current version and timestamp for toll trip data.",
+    useWhen: [
+      "checking if toll data has been updated",
+      "version tracking for caching decisions",
+      "determining when to refresh toll rate data",
+    ],
+    avoidWhen: ["you need the actual toll rates (prefer fetchTollTripRates)"],
+    inputs: [],
+    returns: "object — current version number and timestamp",
+    outputHighlights: [
+      "Version: numeric version number that increments when toll rates change",
+      "TimeStamp: UTC datetime when this version was created/updated",
+      "Change detection: compare Version to detect toll rate updates",
+      "Caching: use for determining when to refresh cached toll data",
+    ],
+  },
 } satisfies EndpointMeta<TollTripVersionInput, TollTripVersion>;
 
 /**

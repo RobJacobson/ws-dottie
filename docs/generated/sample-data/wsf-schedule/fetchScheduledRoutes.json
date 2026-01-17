@@ -9,7 +9,16 @@
     "SeasonalRouteNotes": "The Anacortes-San Juan Islands route will operate its regular schedule on Thanksgiving and Christmas.",
     "RegionID": 1,
     "ServiceDisruptions": [],
-    "ContingencyAdj": []
+    "ContingencyAdj": [
+      {
+        "DateFrom": "2025-12-12T11:00:00.000Z",
+        "DateThru": "2025-12-23T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 2,
+        "ReplacedBySchedRouteID": 2400
+      }
+    ]
   },
   {
     "ScheduleID": 193,
@@ -113,6 +122,14 @@
         "EventDescription": null,
         "AdjType": 2,
         "ReplacedBySchedRouteID": 2395
+      },
+      {
+        "DateFrom": "2025-12-08T11:00:00.000Z",
+        "DateThru": "2025-12-27T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 2,
+        "ReplacedBySchedRouteID": 2395
       }
     ]
   },
@@ -154,6 +171,14 @@
       {
         "DateFrom": "2025-10-29T10:00:00.000Z",
         "DateThru": "2025-11-10T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 2,
+        "ReplacedBySchedRouteID": 2392
+      },
+      {
+        "DateFrom": "2025-12-08T11:00:00.000Z",
+        "DateThru": "2025-12-27T10:59:00.000Z",
         "EventID": null,
         "EventDescription": null,
         "AdjType": 2,
@@ -203,6 +228,14 @@
         "EventDescription": null,
         "AdjType": 2,
         "ReplacedBySchedRouteID": 2393
+      },
+      {
+        "DateFrom": "2025-12-08T11:00:00.000Z",
+        "DateThru": "2025-12-27T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 2,
+        "ReplacedBySchedRouteID": 2393
       }
     ]
   },
@@ -217,6 +250,27 @@
     "RegionID": 5,
     "ServiceDisruptions": [],
     "ContingencyAdj": []
+  },
+  {
+    "ScheduleID": 193,
+    "SchedRouteID": 2400,
+    "ContingencyOnly": true,
+    "RouteID": 9,
+    "RouteAbbrev": "ana-sj",
+    "Description": "Anacortes / San Juan Islands Alternate Service",
+    "SeasonalRouteNotes": "Alternate schedule with <i>Tillikum</i> or <i>Salish</i> in the #3 position.",
+    "RegionID": 1,
+    "ServiceDisruptions": [],
+    "ContingencyAdj": [
+      {
+        "DateFrom": "2025-12-12T11:00:00.000Z",
+        "DateThru": "2025-12-23T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 1,
+        "ReplacedBySchedRouteID": null
+      }
+    ]
   },
   {
     "ScheduleID": 193,
@@ -256,6 +310,14 @@
       {
         "DateFrom": "2025-10-29T10:00:00.000Z",
         "DateThru": "2025-11-10T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 1,
+        "ReplacedBySchedRouteID": null
+      },
+      {
+        "DateFrom": "2025-12-08T11:00:00.000Z",
+        "DateThru": "2025-12-27T10:59:00.000Z",
         "EventID": null,
         "EventDescription": null,
         "AdjType": 1,
@@ -305,6 +367,14 @@
         "EventDescription": null,
         "AdjType": 1,
         "ReplacedBySchedRouteID": null
+      },
+      {
+        "DateFrom": "2025-12-08T11:00:00.000Z",
+        "DateThru": "2025-12-27T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 1,
+        "ReplacedBySchedRouteID": null
       }
     ]
   },
@@ -350,6 +420,14 @@
         "EventDescription": null,
         "AdjType": 1,
         "ReplacedBySchedRouteID": null
+      },
+      {
+        "DateFrom": "2025-12-08T11:00:00.000Z",
+        "DateThru": "2025-12-27T10:59:00.000Z",
+        "EventID": null,
+        "EventDescription": null,
+        "AdjType": 1,
+        "ReplacedBySchedRouteID": null
       }
     ]
   },
@@ -391,6 +469,30 @@
   },
   {
     "ScheduleID": 194,
+    "SchedRouteID": 2413,
+    "ContingencyOnly": false,
+    "RouteID": 6,
+    "RouteAbbrev": "ed-king",
+    "Description": "Edmonds / Kingston",
+    "SeasonalRouteNotes": "",
+    "RegionID": 3,
+    "ServiceDisruptions": [],
+    "ContingencyAdj": []
+  },
+  {
+    "ScheduleID": 194,
+    "SchedRouteID": 2410,
+    "ContingencyOnly": false,
+    "RouteID": 5,
+    "RouteAbbrev": "sea-bi",
+    "Description": "Seattle / Bainbridge Island",
+    "SeasonalRouteNotes": "The Seattle-Bainbridge Island schedule is presented as a sailing day which begins with the first printed sailing time for that day and progresses consecutively through the last printed sailing time even though the last sailing may be past midnight and technically on the following day. Please pay special attention to annotations next to sailing times.",
+    "RegionID": 4,
+    "ServiceDisruptions": [],
+    "ContingencyAdj": []
+  },
+  {
+    "ScheduleID": 194,
     "SchedRouteID": 2407,
     "ContingencyOnly": false,
     "RouteID": 3,
@@ -398,6 +500,54 @@
     "Description": "Seattle / Bremerton",
     "SeasonalRouteNotes": "A temporary sailing schedule is in effect during <font color=\"red\">Winter 2026</font>, due to construction at the Bremerton terminal.",
     "RegionID": 4,
+    "ServiceDisruptions": [],
+    "ContingencyAdj": []
+  },
+  {
+    "ScheduleID": 194,
+    "SchedRouteID": 2411,
+    "ContingencyOnly": false,
+    "RouteID": 14,
+    "RouteAbbrev": "f-v-s",
+    "Description": "Fauntleroy / Vashon",
+    "SeasonalRouteNotes": "<a href=\"https://wsdot.wa.gov/Ferries/infodesk/faq/Vashon-Island-Low-Tides.htm\" class=\"content_text\"><strong>Vashon Low Tides</a> </strong>",
+    "RegionID": 5,
+    "ServiceDisruptions": [],
+    "ContingencyAdj": []
+  },
+  {
+    "ScheduleID": 194,
+    "SchedRouteID": 2408,
+    "ContingencyOnly": false,
+    "RouteID": 13,
+    "RouteAbbrev": "f-s",
+    "Description": "Fauntleroy / Southworth",
+    "SeasonalRouteNotes": "",
+    "RegionID": 5,
+    "ServiceDisruptions": [],
+    "ContingencyAdj": []
+  },
+  {
+    "ScheduleID": 194,
+    "SchedRouteID": 2412,
+    "ContingencyOnly": false,
+    "RouteID": 15,
+    "RouteAbbrev": "s-v",
+    "Description": "Southworth / Vashon",
+    "SeasonalRouteNotes": "<ul style=\"font-size: 1em;\"><li>Vehicle load limits may be in effect on multiple-destination sailings.</li><li>Loading of Vashon-destined vehicles will terminate 5 minutes prior to printed departure time on all multiple-destination sailings.</li>\n<li><a href=\"https://wsdot.wa.gov/Ferries/infodesk/faq/Vashon-Island-Low-Tides.htm\" class=\"content_text\"><strong>Vashon Low Tides</a> </strong></li>",
+    "RegionID": 5,
+    "ServiceDisruptions": [],
+    "ContingencyAdj": []
+  },
+  {
+    "ScheduleID": 194,
+    "SchedRouteID": 2406,
+    "ContingencyOnly": false,
+    "RouteID": 1,
+    "RouteAbbrev": "pd-tal",
+    "Description": "Pt Defiance / Tahlequah",
+    "SeasonalRouteNotes": " ",
+    "RegionID": 5,
     "ServiceDisruptions": [],
     "ContingencyAdj": []
   }

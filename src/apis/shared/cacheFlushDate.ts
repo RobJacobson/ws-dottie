@@ -15,7 +15,7 @@ import { z } from "@/shared/zod";
  */
 export const cacheFlushDateInputSchema = z
   .object({})
-  .describe("Input parameters for cache flush date endpoint.");
+  .describe("Input parameters for cache flush date endpoint."); 
 
 export type CacheFlushDateInput = zod.infer<typeof cacheFlushDateInputSchema>;
 

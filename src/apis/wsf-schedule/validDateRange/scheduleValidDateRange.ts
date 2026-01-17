@@ -18,6 +18,21 @@ export const scheduleValidDateRangeMeta = {
   outputSchema: validDateRangeSchema,
   sampleParams: {},
   endpointDescription: "Get the valid date range for schedule data.",
+  toolDescription: {
+    purpose:
+      "Get the date range for which schedule data is currently published and available.",
+    useWhen: [
+      "validating trip dates before calling other schedule endpoints",
+      "determining available date ranges for planning",
+      "checking schedule data availability",
+    ],
+    inputs: [],
+    returns: "object — valid date range for schedule data",
+    outputHighlights: [
+      "DateFrom: Earliest valid trip date (UTC datetime)",
+      "DateThru: Latest valid trip date (UTC datetime)",
+    ],
+  },
 } satisfies EndpointMeta<ScheduleValidDateRangeInput, ValidDateRange>;
 
 /**

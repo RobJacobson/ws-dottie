@@ -22,6 +22,27 @@ export const routesHavingServiceDisruptionsByTripDateMeta = {
   sampleParams: { TripDate: datesHelper.tomorrow() },
   endpointDescription:
     "List routes with service disruptions for a specific trip date.",
+  toolDescription: {
+    purpose:
+      "List all service disruptions affecting routes on a specific trip date.",
+    useWhen: [
+      "checking for disruptions before planning travel",
+      "monitoring service reliability for a date",
+      "getting disruption details for planning alternatives",
+    ],
+    avoidWhen: [
+      "you need disruptions for all dates (prefer fetchScheduleAlerts)",
+      "you need disruptions for specific routes (check ServiceDisruptions in route endpoints)",
+    ],
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+    ],
+    returns: "array — service disruptions for the trip date (may be empty)",
+    outputHighlights: [
+      "Disruption details: BulletinID, BulletinFlag, PublishDate, DisruptionDescription",
+      "Note: Results may be empty when no disruptions exist for the date",
+    ],
+  },
 } satisfies EndpointMeta<
   RoutesHavingServiceDisruptionsByTripDateInput,
   ServiceDisruption[]

@@ -18,6 +18,28 @@ export const terminalMatesScheduleMeta = {
   sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
   endpointDescription:
     "List valid arriving terminals for a departing terminal and trip date.",
+  toolDescription: {
+    purpose:
+      "List all valid arriving terminals that can be reached from a specific departing terminal on a trip date.",
+    useWhen: [
+      "discovering travel destinations from a starting terminal",
+      "building terminal selection interfaces",
+      "validating terminal-to-terminal routes",
+    ],
+    avoidWhen: [
+      "you need all terminals in the system (prefer fetchTerminals)",
+      "you don't know the departing TerminalID (prefer fetchTerminals first)",
+    ],
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+      "TerminalID: from fetchTerminals → TerminalID",
+    ],
+    returns: "array — valid arriving terminals for the departing terminal",
+    outputHighlights: ["Terminal info: TerminalID, Description (display name)"],
+    chaining: [
+      "fetchTerminals → extract TerminalID → call fetchTerminalMatesSchedule with { TerminalID: ..., TripDate: ... }",
+    ],
+  },
 } satisfies EndpointMeta<TerminalMatesInput, TerminalList>;
 
 /**

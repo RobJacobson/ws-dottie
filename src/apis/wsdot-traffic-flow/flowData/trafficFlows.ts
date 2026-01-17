@@ -18,6 +18,30 @@ export const trafficFlowsMeta = {
   sampleParams: {},
   endpointDescription:
     "List current traffic flow conditions for all stations statewide.",
+  toolDescription: {
+    purpose: "List current traffic flow conditions for all stations statewide.",
+    useWhen: [
+      "comprehensive traffic analysis across all regions",
+      "finding available traffic stations for mapping",
+      "bulk traffic monitoring",
+    ],
+    avoidWhen: [
+      "you only need one station's data (prefer fetchTrafficFlowById)",
+      "payload size is a concern (returns thousands of stations)",
+    ],
+    inputs: [],
+    returns: "array — one item per traffic flow station",
+    outputHighlights: [
+      "Station info: FlowDataID (unique identifier), StationName (route-direction-milepost code)",
+      "Flow condition: FlowReadingValue (0=Unknown, 1=WideOpen, 2=Moderate, 3=Heavy, 4=StopAndGo, 5=NoData)",
+      "Location: FlowStationLocation with coordinates, direction, milepost, road name",
+      "Region: WSDOT region maintaining the station",
+      "Timing: Time (UTC timestamp of last reading)",
+    ],
+    chaining: [
+      "fetchTrafficFlows → extract FlowDataID → call fetchTrafficFlowById with { FlowDataID: ... }",
+    ],
+  },
 } satisfies EndpointMeta<TrafficFlowsInput, FlowData[]>;
 
 /**

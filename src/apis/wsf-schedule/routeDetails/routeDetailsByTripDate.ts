@@ -22,6 +22,34 @@ export const routeDetailsByTripDateMeta = {
   sampleParams: { TripDate: datesHelper.tomorrow() },
   endpointDescription:
     "List detailed route information for all routes on specified date.",
+  toolDescription: {
+    purpose:
+      "List comprehensive route details for all routes operating on a specific trip date.",
+    useWhen: [
+      "discovering all available routes for a date",
+      "accessing route alerts and seasonal notes",
+      "planning multi-route travel",
+      "checking reservation and accessibility requirements",
+    ],
+    avoidWhen: [
+      "you only need basic route identification (prefer fetchRoutesByTripDate)",
+      "you need details for one specific route (prefer fetchRouteDetailsByTripDateAndRouteId)",
+    ],
+    inputs: [
+      "TripDate: YYYY-MM-DD format, from fetchScheduleValidDateRange → valid date range",
+    ],
+    returns: "array — one item per route operating on trip date",
+    outputHighlights: [
+      "IDs: RouteID, RegionID, VesselWatchID",
+      "Names: RouteAbbrev, Description",
+      "Route characteristics: ReservationFlag, InternationalFlag, PassengerOnlyFlag",
+      "Timing: CrossingTime (estimated minutes)",
+      "Accessibility: AdaNotes (HTML accessibility information)",
+      "Information: GeneralRouteNotes, SeasonalRouteNotes (HTML-formatted route info)",
+      "Alerts: Alerts array with BulletinID, AlertDescription, AlertFullText (HTML), PublishDate",
+      "Large text fields: AdaNotes, GeneralRouteNotes, SeasonalRouteNotes, AlertFullText may be lengthy HTML",
+    ],
+  },
 } satisfies EndpointMeta<RouteDetailsByTripDateInput, RouteDetail[]>;
 
 /**

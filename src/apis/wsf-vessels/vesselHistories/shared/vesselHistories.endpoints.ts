@@ -1,6 +1,6 @@
 import type { EndpointGroupMeta } from "@/apis/types";
 import { vesselHistoriesMeta } from "../vesselHistories";
-import { vesselHistoriesByVesselNameAndDateRangeMeta } from "../vesselHistoriesByVesselNameAndDateRange";
+import { vesselHistoriesByVesselAndDatesMeta } from "../vesselHistoriesByVesselAndDates";
 
 /**
  * Endpoint group metadata for vessel histories endpoints
@@ -18,5 +18,5 @@ export const vesselHistoriesGroup: EndpointGroupMeta = {
       "Generate reports on operational history.",
     ],
   },
-  endpoints: [vesselHistoriesMeta, vesselHistoriesByVesselNameAndDateRangeMeta],
+  endpoints: [vesselHistoriesMeta, vesselHistoriesByVesselAndDatesMeta],
 };
