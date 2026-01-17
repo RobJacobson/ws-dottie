@@ -18,7 +18,7 @@ export const timeAdjustmentsBySchedRouteMeta = {
   endpoint: "/timeadjbyschedroute/{SchedRouteID}",
   inputSchema: timeAdjustmentsBySchedRouteInputSchema,
   outputSchema: timeAdjustmentSchema.array(),
-  sampleParams: { SchedRouteID: 2401 },
+  sampleParams: { SchedRouteID: 2445 },
   endpointDescription: "List time adjustments for a specific scheduled route.",
   toolDescription: {
     purpose:

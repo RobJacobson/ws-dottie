@@ -15,7 +15,7 @@ export const sailingsByRouteIDMeta = {
   endpoint: "/sailings/{SchedRouteID}",
   inputSchema: sailingsByRouteIDInputSchema,
   outputSchema: sailingSchema.array(),
-  sampleParams: { SchedRouteID: 2401 },
+  sampleParams: { SchedRouteID: 2445 },
   endpointDescription: "List active sailings for specified scheduled route.",
   toolDescription: {
     purpose:

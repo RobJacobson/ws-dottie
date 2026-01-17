@@ -791,7 +791,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminalFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalFares({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminalFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalFares({\n  params: {\n    \"TripDate\": \"2026-01-16\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -838,7 +838,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminalMatesFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalMatesFares({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"TerminalID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminalMatesFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalMatesFares({\n  params: {\n    \"TripDate\": \"2026-01-16\",\n    \"TerminalID\": 1\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -888,7 +888,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminalComboFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFares({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminalComboFares } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFares({\n  params: {\n    \"TripDate\": \"2026-01-16\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -937,7 +937,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTerminalComboFaresVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFaresVerbose({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTerminalComboFaresVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchTerminalComboFaresVerbose({\n  params: {\n    \"TripDate\": \"2026-01-16\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -987,7 +987,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchFareLineItemsBasic } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsBasic({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchFareLineItemsBasic } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsBasic({\n  params: {\n    \"TripDate\": \"2026-01-16\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -1046,7 +1046,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchFareLineItemsVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsVerbose({\n  params: {\n    \"TripDate\": \"2026-01-14\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchFareLineItemsVerbose } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsVerbose({\n  params: {\n    \"TripDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -10016,7 +10016,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"DepartingTerminalID\": 3,\n    \"ArrivingTerminalID\": 7,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareLineItemsByTripDateAndTerminals({\n  params: {\n    \"TripDate\": \"2026-01-16\",\n    \"DepartingTerminalID\": 3,\n    \"ArrivingTerminalID\": 7,\n    \"RoundTrip\": false\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
@@ -10075,7 +10075,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchFareTotalsByTripDateAndRoute } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareTotalsByTripDateAndRoute({\n  params: {\n    \"TripDate\": \"2026-01-14\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false,\n    \"FareLineItemID\": \"1,2\",\n    \"Quantity\": \"3,1\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchFareTotalsByTripDateAndRoute } from 'ws-dottie/wsf-fares/core';\n\nconst data = await fetchFareTotalsByTripDateAndRoute({\n  params: {\n    \"TripDate\": \"2026-01-15\",\n    \"DepartingTerminalID\": 1,\n    \"ArrivingTerminalID\": 10,\n    \"RoundTrip\": false,\n    \"FareLineItemID\": \"1,2\",\n    \"Quantity\": \"3,1\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [

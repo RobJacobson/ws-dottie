@@ -15,7 +15,7 @@ export const allSailingsBySchedRouteIDMeta = {
   endpoint: "/allsailings/{SchedRouteID}",
   inputSchema: allSailingsBySchedRouteIDInputSchema,
   outputSchema: sailingSchema.array(),
-  sampleParams: { SchedRouteID: 2401 },
+  sampleParams: { SchedRouteID: 2445 },
   endpointDescription:
     "List all sailings for scheduled route including inactive sailings.",
   toolDescription: {

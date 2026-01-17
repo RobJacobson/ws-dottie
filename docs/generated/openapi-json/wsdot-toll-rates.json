@@ -879,7 +879,7 @@
         "x-codeSamples": [
           {
             "lang": "JavaScript",
-            "source": "import { fetchTripRatesByDate } from 'ws-dottie/wsdot-toll-rates/core';\n\nconst data = await fetchTripRatesByDate({\n  params: {\n    \"FromDate\": \"2026-01-13\",\n    \"ToDate\": \"2026-01-14\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
+            "source": "import { fetchTripRatesByDate } from 'ws-dottie/wsdot-toll-rates/core';\n\nconst data = await fetchTripRatesByDate({\n  params: {\n    \"FromDate\": \"2026-01-14\",\n    \"ToDate\": \"2026-01-15\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"
           }
         ],
         "parameters": [
