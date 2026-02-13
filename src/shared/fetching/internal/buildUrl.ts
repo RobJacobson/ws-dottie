@@ -53,11 +53,21 @@ export const buildCompleteUrl = <TInput = never>(
   const paramRecord = params as Record<string, unknown>;
   const { path, query } = splitUrlIntoParts(urlTemplate);
 
+  // Extract which parameters are used in the path template
+  const pathTemplateParams = new Set<string>();
+  const pathParamMatches = path.match(/\{([^}]+)\}/g);
+  if (pathParamMatches) {
+    for (const match of pathParamMatches) {
+      const paramName = match.slice(1, -1); // Remove { and }
+      pathTemplateParams.add(paramName);
+    }
+  }
+
   // Process path template replacement
   const processedPath = replacePathTemplates(path, paramRecord);
 
-  // Build query string
-  const queryString = buildQueryString(query, paramRecord);
+  // Build query string, excluding parameters already used in the path
+  const queryString = buildQueryString(query, paramRecord, pathTemplateParams);
 
   // Combine path and query
   const baseUrl = queryString
@@ -117,14 +127,17 @@ const replacePathTemplates = (
  *
  * Handles template parameter replacement in existing query strings and adds
  * new parameters. Removes unfilled optional template parameters.
+ * Excludes parameters that were already used in path template replacement.
  *
  * @param existingQuery - Existing query string from template (may contain placeholders)
  * @param params - Parameters to add as query parameters
+ * @param pathTemplateParams - Set of parameter names already used in path template
  * @returns Complete query string with all parameters encoded
  */
 const buildQueryString = (
   existingQuery: string,
-  params: Record<string, unknown>
+  params: Record<string, unknown>,
+  pathTemplateParams: Set<string> = new Set()
 ): string => {
   // First replace template placeholders in the existing query string
   let processedQuery = existingQuery;
@@ -171,9 +184,14 @@ const buildQueryString = (
 
   const searchParams = new URLSearchParams(processedQuery);
 
-  // Add new parameters that aren't already in the template
+  // Add new parameters that aren't already in the template and weren't used in the path
   for (const [key, value] of Object.entries(params)) {
-    if (value !== undefined && value !== null && !searchParams.has(key)) {
+    if (
+      value !== undefined &&
+      value !== null &&
+      !searchParams.has(key) &&
+      !pathTemplateParams.has(key)
+    ) {
       searchParams.set(key, formatParamValue(value));
     }
   }

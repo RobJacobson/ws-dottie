@@ -20,8 +20,8 @@ export const vesselHistoriesByVesselAndDatesMeta = {
   outputSchema: vesselHistorySchema.array(),
   sampleParams: {
     VesselName: "Tacoma",
-    DateStart: "2025-09-01",
-    DateEnd: "2025-10-01",
+    DateStart: "2026-01-01",
+    DateEnd: "2026-01-05",
   },
   endpointDescription:
     "List historical voyage records for one vessel across a date range.",
