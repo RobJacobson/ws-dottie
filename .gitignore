@@ -269,3 +269,7 @@ working/
 
 # OpenAPI sample cache (local, non-committed)
 openapi-docs/samples/
+
+# Generated OpenAPI specs (build output, not committed)
+docs/generated/openapi-json/
+docs/generated/openapi-yaml/
