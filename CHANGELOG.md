@@ -7,7 +7,36 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
-## [1.5.1] -∏ 2025-11-22
+## [1.6.0] - 2026-02-13
+
+- Features
+  - **Schedule by Terminal Pair**: New `fetchScheduleByTripDateAndTerminalIds` endpoint to retrieve sailing schedules by trip date and departing/arriving terminal IDs
+  - **Vessel Histories in Core API**: Exported `fetchVesselHistoriesByVesselAndDates` from the core API for vessel history by vessel and date range
+  - **CLI Output**: Pretty-printing and colorization for CLI output via `colorizeValuePretty` and configurable `outputResult` options
+  - **MCP Tool Descriptions**: Structured MCP tool descriptions for all ws-dottie endpoints; endpoint metadata now includes `toolDescriptions` for better agent discoverability
+  - **Docs Script**: Script to extract API endpoints and generate markdown documentation tables
+
+- Improvements
+  - **Zod v4 Restored**: Reinstated Zod v4 (after 1.5.1 downgrade) with type fixes; resolved type errors by using `unknown` instead of `any` where appropriate
+  - **API Metadata**: Standardized input descriptions and migrated `inputsHighlights` to a consistent array format across APIs
+  - **URL Building**: `buildUrl` now excludes parameters already used in path templates when building query strings
+  - **Cleanup**: Removed deprecated tool definitions and examples; removed outdated configuration files
+
+- Fixes
+  - **Sample Data Path**: Sample data directory path now uses `endpoint.api.name` for correct structure
+  - **Mountain Pass API**: Corrected JSON path for `fetchMountainPassConditionById` (`getMountainPassConditionAsJon` → `getMountainPassConditionAsJson`)
+
+- Docs
+  - **MCP Best Practices**: Added guide for writing high-quality MCP tool descriptions and migrated input highlights format
+  - **Terminal APIs**: Updated input descriptions for terminal-related APIs
+  - **API Overview**: Updated endpoints overview date and JSON format references; regenerated API documentation and sample data
+
+- Build/Chore
+  - **Dependencies**: Updated dependencies (e.g. zod-to-openapi, biome, typescript) and added `bun.lock` for reproducible installs
+  - **Generated Artifacts**: OpenAPI JSON and YAML under `docs/generated/` removed from git tracking and added to `.gitignore` (generated at build time)
+  - **OpenAPI Schemas**: Updated OpenAPI schemas; sample parameters adjusted (e.g. SchedRouteID, vessel history date ranges)
+
+## [1.5.1] - 2025-11-22
 
 - Improvements
   - **Zod Version Compatibility**: Downgraded from Zod v4 to Zod v3 for compatibility with TypeScript MCP SDK
