@@ -266,5 +266,5 @@ const executeRequest = async <I, O>(
     console.error(`🔍 Calling ${endpoint.functionName} (${strategy})...`);
   }
 
-  return await executeApiRequest(endpoint, params as I, options);
+  return await executeApiRequest(endpoint, params as I, options, isQuiet);
 };

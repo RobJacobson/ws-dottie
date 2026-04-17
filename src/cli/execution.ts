@@ -22,20 +22,21 @@ import type { CliOptions } from "./types";
  * @param endpoint - Endpoint definition with schemas and configuration
  * @param params - Parameters to send with the request
  * @param options - CLI options including transport and validation flags
+ * @param isQuiet - When true (e.g. --quiet/--silent/--limit), suppress fetch-layer logs so stdout is only JSON
  * @returns Promise resolving to API response data
  */
 export const executeApiRequest = async <I, O>(
   endpoint: Endpoint<I, O>,
   params: I,
-  options: CliOptions
+  options: CliOptions,
+  isQuiet: boolean
 ): Promise<unknown> => {
   // Commander.js converts --no-validation to validation: false
   const validate = options.validation !== false;
   const fetchMode = (options.jsonp ?? false) ? "jsonp" : "native";
 
-  // Use "none" logging mode during tests to avoid interfering with JSON parsing
-  // In normal usage, this will be overridden by the CLI options
-  const logMode = process.env.NODE_ENV === "test" ? "none" : "info";
+  const logMode =
+    process.env.NODE_ENV === "test" || isQuiet ? "none" : "info";
 
   return fetchDottie({
     endpoint,

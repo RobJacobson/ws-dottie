@@ -7,6 +7,11 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.6.1] - 2026-04-16
+
+- Fixes
+  - **`buildCompleteUrl`**: When `params` was omitted, URLs were returned without `apiaccesscode` / `AccessCode`. Fetch helpers that passed no `params` (or only optional wrapper fields) now receive the API key the same as when an empty `params` object was passed.
+
 ## [1.6.0] - 2026-02-13
 
 - Features
