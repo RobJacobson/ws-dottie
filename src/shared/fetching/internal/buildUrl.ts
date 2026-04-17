@@ -47,7 +47,11 @@ export const buildCompleteUrl = <TInput = never>(
         `Missing required URL parameters: ${templateParams.join(", ")} in URL template: ${urlTemplate}`
       );
     }
-    return urlTemplate;
+    // Must still inject the API key (same as the `params` branch). Previously this
+    // path returned the raw template, so callers with no `params` hit unauthenticated URLs.
+    const url = new URL(urlTemplate);
+    injectApiKey(url);
+    return url.toString();
   }
 
   const paramRecord = params as Record<string, unknown>;
