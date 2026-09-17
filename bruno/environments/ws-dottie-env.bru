@@ -9,7 +9,7 @@ vars {
   wsdot_traffic_flow_base_url: https://www.wsdot.wa.gov/traffic/api/trafficflow/trafficflowrest.svc
   wsdot_travel_times_base_url: https://www.wsdot.wa.gov/traffic/api/traveltimes/traveltimesrest.svc
   wsdot_weather_information_base_url: https://www.wsdot.wa.gov/traffic/api/weatherinformation/weatherinformationrest.svc
-  wsdot_weather_readings_base_url: https://www.wsdot.wa.gov/traffic/api/weatherreadings/weatherreadingsrest.svc
+  wsdot_weather_readings_base_url: https://www.wsdot.wa.gov/traffic/api/api
   wsdot_weather_stations_base_url: https://www.wsdot.wa.gov/traffic/api/weatherstations/weatherstationsrest.svc
   wsf_fares_base_url: https://www.wsdot.wa.gov/ferries/api/fares/rest
   wsf_schedule_base_url: https://www.wsdot.wa.gov/ferries/api/schedule/rest
@@ -20,19 +20,31 @@ vars {
   vessel_id: 18
   terminal_id: 1
   route: 005
-  trip_date: 2025-10-30
+  route_id: 9
+  schedule_id: 196
+  only_remaining_times: false
+  round_trip: false
+  fare_line_item_id: 1,2
+  quantity: 3,1
+  trip_date: 2026-12-20
   alert_id: 468632
   region_id: 9
-  map_area: Seattle
+  map_area: L2LO
   state_route: 405
+  camera_state_route: I-5
   pass_condition_id: 12
   starting_milepost: 10
   ending_milepost: 20
-  search_time_start: 2025-10-01
-  search_time_end: 2025-10-31
-  sched_route_id: 2327
+  search_time_start: 2026-08-16T00:00:00Z
+  search_time_end: 2026-09-16T23:59:59Z
+  search_start_time: 2026-09-15T00:00:00Z
+  search_end_time: 2026-09-16T23:59:59Z
+  station_list: 1909,1966,1970
+  sched_route_id: 2447
   date_start: 2025-10-01
   date_end: 2025-10-31
+  from_date: 2026-09-01
+  to_date: 2026-09-16
   vessel_name: Cathlamet
   flow_data_id: 2482
   travel_time_id: 1
@@ -40,5 +52,6 @@ vars {
   camera_id: 9818
   cv_restriction_id: 1
   search_text: Seattle
-  version: 1.0
+  version: 470252
+  WSDOT_ACCESS_TOKEN: 9e61c697-3c2f-490e-af96-72d4e8ecbc7e
 }

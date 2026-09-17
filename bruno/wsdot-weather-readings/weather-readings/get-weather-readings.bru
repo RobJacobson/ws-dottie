@@ -1,15 +1,15 @@
 meta {
   name: GetWeatherReadings
- type: http
- seq: 1
+  type: http
+  seq: 1
 }
 
 get {
-  url: {{wsdot_weather_readings_base_url}}/GetWeatherReadingsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsdot_weather_readings_base_url}}/Scanweb?AccessCode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- AccessCode: {{WSDOT_ACCESS_TOKEN}}
+  AccessCode: {{WSDOT_ACCESS_TOKEN}}
 }

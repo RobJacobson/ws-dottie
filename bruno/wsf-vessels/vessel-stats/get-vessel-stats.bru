@@ -1,15 +1,15 @@
 meta {
   name: GetVesselStats
- type: http
- seq: 1
+  type: http
+  seq: 1
 }
 
 get {
-  url: {{wsf_vessels_base_url}}/vesselStats?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_vessels_base_url}}/vesselstats?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }

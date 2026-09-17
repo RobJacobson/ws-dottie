@@ -1,0 +1,15 @@
+meta {
+  name: GetTodaysScheduleByRouteId
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{wsf_schedule_base_url}}/scheduletoday/{{route_id}}/{{only_remaining_times}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}

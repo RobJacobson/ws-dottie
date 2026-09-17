@@ -1,15 +1,15 @@
 meta {
   name: GetFareLineItemsByTripDateAndTerminals
- type: http
- seq: 1
+  type: http
+  seq: 1
 }
 
 get {
-  url: {{wsf_fares_base_url}}/fareLineItems/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_fares_base_url}}/farelineitems/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/{{round_trip}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }

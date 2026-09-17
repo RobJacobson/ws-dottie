@@ -1,15 +1,15 @@
 meta {
   name: GetTerminalMates
- type: http
- seq: 1
+  type: http
+  seq: 1
 }
 
 get {
-  url: {{wsf_schedule_base_url}}/terminalMates?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_schedule_base_url}}/terminalmates/{{trip_date}}/{{terminal_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }

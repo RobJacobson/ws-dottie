@@ -1,15 +1,15 @@
 meta {
   name: GetRouteDetailsByDateAndTerminals
- type: http
- seq: 3
+  type: http
+  seq: 3
 }
 
 get {
-  url: {{wsf_schedule_base_url}}/routeDetails/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_schedule_base_url}}/routedetails/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }

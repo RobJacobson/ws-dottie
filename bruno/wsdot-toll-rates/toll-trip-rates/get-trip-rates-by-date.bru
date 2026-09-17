@@ -1,16 +1,17 @@
 meta {
   name: GetTripRatesByDate
- type: http
- seq: 2
+  type: http
+  seq: 2
 }
 
 get {
-  url: {{wsdot_toll_rates_base_url}}/GetTripRatesByDateAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&Date={{trip_date}}
- body: none
- auth: inherit
+  url: {{wsdot_toll_rates_base_url}}/GetTripRatesByDateAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&fromDate={{from_date}}&toDate={{to_date}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- AccessCode: {{WSDOT_ACCESS_TOKEN}}
- Date: {{trip_date}}
+  AccessCode: {{WSDOT_ACCESS_TOKEN}}
+  fromDate: {{from_date}}
+  toDate: {{to_date}}
 }

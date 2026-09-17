@@ -1,11 +1,11 @@
 meta {
-  name: GetRoutesByDate
+  name: GetVesselVerbose
   type: http
   seq: 1
 }
 
 get {
-  url: {{wsf_schedule_base_url}}/routes/{{trip_date}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  url: {{wsf_vessels_base_url}}/vesselverbose?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
   body: none
   auth: inherit
 }
