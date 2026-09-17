@@ -13,3 +13,8 @@ get {
 params:query {
   apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }
+
+vars:pre-request {
+  route_id: 9
+  only_remaining_times: false
+}

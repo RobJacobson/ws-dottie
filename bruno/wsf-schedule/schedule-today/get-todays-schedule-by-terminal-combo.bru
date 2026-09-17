@@ -13,3 +13,9 @@ get {
 params:query {
   apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }
+
+vars:pre-request {
+  departing_terminal_id: 7
+  arriving_terminal_id: 3
+  only_remaining_times: false
+}

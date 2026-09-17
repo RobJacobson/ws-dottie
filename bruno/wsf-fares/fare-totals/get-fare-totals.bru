@@ -13,3 +13,12 @@ get {
 params:query {
   apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }
+
+vars:pre-request {
+  trip_date: 2026-12-20
+  departing_terminal_id: 7
+  arriving_terminal_id: 3
+  round_trip: false
+  fare_line_item_id: 1,2
+  quantity: 3,1
+}

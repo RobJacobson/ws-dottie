@@ -23,4 +23,6 @@ This Bruno collection contains API endpoints for Washington State transportation
 
 ## Environment
 
-This collection uses the `ws-dottie-env` environment which contains all necessary base URLs and default parameters.
+The `ws-dottie-env` environment holds values shared by every request: `WSDOT_ACCESS_TOKEN` and the `*_base_url` hosts.
+
+Path and query samples (`trip_date`, `route_id`, `station_id`, and similar) live on each request as pre-request vars, so one request can use a different date or ID than another. Edit them in that request's Vars tab.
