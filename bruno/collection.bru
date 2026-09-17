@@ -1,0 +1,39 @@
+script:post-response {
+  // Rewrite Microsoft JSON dates in the IDE Response pane only.
+  // Wire format: "/Date(1781420400000-0700)/" → "2026-06-12T07:00:00.000Z"
+  const DOTNET_DATE = /^\/Date\((-?\d+)(?:[+-]\d{4})?\)\/$/;
+
+  const toIsoIfDotNetDate = (value) => {
+    if (typeof value !== "string") {
+      return value;
+    }
+    const match = value.match(DOTNET_DATE);
+    if (!match) {
+      return value;
+    }
+    const date = new Date(Number(match[1]));
+    return Number.isNaN(date.getTime()) ? value : date.toISOString();
+  };
+
+  let body = res.getBody();
+  if (body == null) {
+    return;
+  }
+
+  if (typeof body === "string") {
+    const trimmed = body.trim();
+    if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+      try {
+        body = JSON.parse(trimmed);
+      } catch {
+        // Keep the original string (bare "/Date(...)/" still converts below).
+      }
+    }
+  }
+
+  const converted = JSON.parse(JSON.stringify(body), (_, value) =>
+    toIsoIfDotNetDate(value)
+  );
+
+  res.setBody(converted);
+}
