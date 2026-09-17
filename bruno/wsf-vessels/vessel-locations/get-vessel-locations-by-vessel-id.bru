@@ -1,15 +1,19 @@
 meta {
   name: GetVesselLocationsByVesselId
- type: http
- seq: 2
+  type: http
+  seq: 2
 }
 
 get {
-  url: {{wsf_vessels_base_url}}/vesselLocations/{{vessel_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_vessels_base_url}}/vessellocations/{{vessel_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  vessel_id: 18
 }

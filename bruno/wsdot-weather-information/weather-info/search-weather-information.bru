@@ -1,16 +1,24 @@
 meta {
   name: SearchWeatherInformation
- type: http
- seq: 4
+  type: http
+  seq: 4
 }
 
 get {
-  url: {{wsdot_weather_information_base_url}}/SearchWeatherInformationAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&SearchText={{search_text}}
- body: none
- auth: inherit
+  url: {{wsdot_weather_information_base_url}}/SearchWeatherInformationAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&StationID={{station_id}}&SearchStartTime={{search_start_time}}&SearchEndTime={{search_end_time}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- AccessCode: {{WSDOT_ACCESS_TOKEN}}
- SearchText: {{search_text}}
+  AccessCode: {{WSDOT_ACCESS_TOKEN}}
+  StationID: {{station_id}}
+  SearchStartTime: {{search_start_time}}
+  SearchEndTime: {{search_end_time}}
+}
+
+vars:pre-request {
+  station_id: 1909
+  search_start_time: 2026-09-15T00:00:00Z
+  search_end_time: 2026-09-16T23:59:59Z
 }

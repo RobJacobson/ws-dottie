@@ -1,15 +1,20 @@
 meta {
   name: GetCurrentWeatherForStations
- type: http
- seq: 3
+  type: http
+  seq: 3
 }
 
 get {
-  url: {{wsdot_weather_information_base_url}}/GetCurrentWeatherForStationsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsdot_weather_information_base_url}}/GetCurrentWeatherForStationsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&StationList={{station_list}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- AccessCode: {{WSDOT_ACCESS_TOKEN}}
+  AccessCode: {{WSDOT_ACCESS_TOKEN}}
+  StationList: {{station_list}}
+}
+
+vars:pre-request {
+  station_list: 1909,1966,1970
 }

@@ -1,15 +1,19 @@
 meta {
   name: GetFaresTerminals
- type: http
- seq: 1
+  type: http
+  seq: 1
 }
 
 get {
-  url: {{wsf_fares_base_url}}/terminals?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_fares_base_url}}/terminals/{{trip_date}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  trip_date: 2026-12-20
 }

@@ -1,15 +1,19 @@
 meta {
   name: GetTerminalBasicsByTerminalId
- type: http
- seq: 2
+  type: http
+  seq: 2
 }
 
 get {
-  url: {{wsf_terminals_base_url}}/terminals/{{terminal_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_terminals_base_url}}/terminalbasics/{{terminal_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  terminal_id: 1
 }

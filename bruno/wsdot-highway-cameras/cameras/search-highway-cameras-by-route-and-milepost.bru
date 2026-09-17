@@ -1,18 +1,24 @@
 meta {
   name: SearchHighwayCamerasByRouteAndMilepost
- type: http
- seq: 2
+  type: http
+  seq: 2
 }
 
 get {
-  url: {{wsdot_highway_cameras_base_url}}/GetCamerasByRouteAndMilepostAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&Route={{route}}&StartingMilepost={{starting_milepost}}&EndingMilepost={{ending_milepost}}
- body: none
- auth: inherit
+  url: {{wsdot_highway_cameras_base_url}}/SearchCamerasAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&StateRoute={{camera_state_route}}&StartingMilepost={{starting_milepost}}&EndingMilepost={{ending_milepost}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- AccessCode: {{WSDOT_ACCESS_TOKEN}}
- Route: {{route}}
- StartingMilepost: {{starting_milepost}}
- EndingMilepost: {{ending_milepost}}
+  AccessCode: {{WSDOT_ACCESS_TOKEN}}
+  StateRoute: {{camera_state_route}}
+  StartingMilepost: {{starting_milepost}}
+  EndingMilepost: {{ending_milepost}}
+}
+
+vars:pre-request {
+  camera_state_route: I-5
+  starting_milepost: 10
+  ending_milepost: 20
 }

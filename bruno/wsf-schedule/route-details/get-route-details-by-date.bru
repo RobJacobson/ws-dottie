@@ -1,15 +1,19 @@
 meta {
   name: GetRouteDetailsByDate
- type: http
- seq: 1
+  type: http
+  seq: 1
 }
 
 get {
-  url: {{wsf_schedule_base_url}}/routeDetails/{{trip_date}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_schedule_base_url}}/routedetails/{{trip_date}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  trip_date: 2026-12-20
 }

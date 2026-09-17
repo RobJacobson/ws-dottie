@@ -1,15 +1,19 @@
 meta {
   name: GetFareLineItemsVerbose
- type: http
- seq: 3
+  type: http
+  seq: 3
 }
 
 get {
-  url: {{wsf_fares_base_url}}/fareLineItemsVerbose/{{trip_date}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_fares_base_url}}/farelineitemsverbose/{{trip_date}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  trip_date: 2026-12-20
 }

@@ -1,0 +1,20 @@
+meta {
+  name: GetTerminalsAndMatesByRoute
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{wsf_schedule_base_url}}/terminalsandmatesbyroute/{{trip_date}}/{{route_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  trip_date: 2026-12-20
+  route_id: 9
+}

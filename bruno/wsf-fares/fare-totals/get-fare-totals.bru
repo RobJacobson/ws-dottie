@@ -1,15 +1,24 @@
 meta {
   name: GetFareTotals
- type: http
- seq: 1
+  type: http
+  seq: 1
 }
 
 get {
-  url: {{wsf_fares_base_url}}/fareTotals/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_fares_base_url}}/faretotals/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/{{round_trip}}/{{fare_line_item_id}}/{{quantity}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  trip_date: 2026-12-20
+  departing_terminal_id: 7
+  arriving_terminal_id: 3
+  round_trip: false
+  fare_line_item_id: 1,2
+  quantity: 3,1
 }

@@ -1,16 +1,28 @@
 meta {
   name: SearchAlerts
- type: http
- seq: 5
+  type: http
+  seq: 5
 }
 
 get {
-  url: {{wsdot_highway_alerts_base_url}}/SearchAlertsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&SearchText={{search_text}}
- body: none
- auth: inherit
+  url: {{wsdot_highway_alerts_base_url}}/SearchAlertsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&StateRoute={{state_route}}&SearchTimeStart={{search_time_start}}&SearchTimeEnd={{search_time_end}}&StartingMilepost={{starting_milepost}}&EndingMilepost={{ending_milepost}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- AccessCode: {{WSDOT_ACCESS_TOKEN}}
- SearchText: {{search_text}}
+  AccessCode: {{WSDOT_ACCESS_TOKEN}}
+  StateRoute: {{state_route}}
+  SearchTimeStart: {{search_time_start}}
+  SearchTimeEnd: {{search_time_end}}
+  StartingMilepost: {{starting_milepost}}
+  EndingMilepost: {{ending_milepost}}
+}
+
+vars:pre-request {
+  state_route: 405
+  search_time_start: 2026-08-16T00:00:00Z
+  search_time_end: 2026-09-16T23:59:59Z
+  starting_milepost: 10
+  ending_milepost: 20
 }

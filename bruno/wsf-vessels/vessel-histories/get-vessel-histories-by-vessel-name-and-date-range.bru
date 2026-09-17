@@ -1,15 +1,21 @@
 meta {
   name: GetVesselHistoriesByVesselNameAndDateRange
- type: http
- seq: 2
+  type: http
+  seq: 2
 }
 
 get {
-  url: {{wsf_vessels_base_url}}/vesselHistories/{{vessel_name}}/{{date_start}}/{{date_end}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
- body: none
- auth: inherit
+  url: {{wsf_vessels_base_url}}/vesselhistory/{{vessel_name}}/{{date_start}}/{{date_end}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
+  body: none
+  auth: inherit
 }
 
 params:query {
- apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
+}
+
+vars:pre-request {
+  vessel_name: Cathlamet
+  date_start: 2025-10-01
+  date_end: 2025-10-31
 }
